@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useAuthWeb3 } from "../../hooks/useWeb3";
+import { useAuthWeb3 } from "../../../../../../client/src/hooks/useWeb3";
 // import useDeviceDetect from "../../hooks/device/useDeviceDetect";
 
 import { Portal } from "../Portal";
@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = () => {
             </label>
             <ul
               tabIndex={0}
-              className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
+              className="dropdown-content menu rounded-box menu-compact bg-base-100 mt-3 w-52 p-2 shadow"
             >
               <li>
                 <label htmlFor="profile-dialog">

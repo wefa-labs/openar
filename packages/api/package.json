@@ -3,10 +3,6 @@
   "license": "MIT",
   "version": "0.0.0",
   "private": true,
-  "description": "API for WEFA app",
-  "repository": {
-    "url": "https://github.com/wefa-tech/project-flashpoint/packages/api"
-  },
   "keywords": [
     "node",
     "graphql-codegen",
@@ -20,10 +16,10 @@
     "docker:build": "docker build -t api .",
     "docker:compose": "docker-compose up -d --build",
     "docker:run": "docker run -p 80:80 api",
-    "format": "yarn prettier && yarn lint",
+    "format": "pnpm run prettier && pnpm run lint",
     "prettier": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts,.tsx --quiet --fix",
-    "dev": "yarn docker:compose && bob-tsm --node-env=dev --cjs --watch=src src/index.ts",
+    "dev": "pnpm run docker:compose && bob-tsm --node-env=dev --cjs --watch=src src/index.ts",
     "test": "cross-env jest",
     "start": "bob-tsm --node-env=prod --cjs src/index.ts"
   },

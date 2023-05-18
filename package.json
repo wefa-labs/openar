@@ -3,31 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
-  "workspaces": [
-    "packages/**"
-  ],
   "repository": {
     "url": "https://github.com/wefa-tech/autonomous-worlds-hackathon"
   },
   "scripts": {
-    "initialize": "yarn workspace contracts initialize",
-    "dev": "run-pty % yarn dev:node % yarn dev:client % yarn dev:api % yarn dev:contracts",
+    "build": "pnpm recursive run build",
+    "dev": "concurrently -n contracts,client -c cyan,magenta 'cd packages/contracts && pnpm run dev' 'cd packages/client && pnpm run dev'",
     "dev:api": "yarn workspace api run dev",
-    "dev:node": "yarn workspace contracts run devnode",
-    "dev:client": "yarn workspace client dev",
-    "dev:contracts": "yarn workspace contracts run dev",
-    "build": "run-pty % yarn build:contracts % yarn build:client % yarn build:api % yarn build:circuits",
-    "build:api": "yarn workspace api start",
-    "build:client": "yarn workspace client build",
-    "build:contracts": "yarn workspace contracts deploy",
-    "test": "run-pty % yarn test:contracts % yarn test:client",
-    "test:ci": "yarn test && start-server-and-test dev https://localhost:3000 cypress run",
-    "test:e2e": "start-server-and-test dev https://localhost:3000 cypress open",
-    "test:api": "yarn workspace api test",
-    "test:client": "yarn workspace client test",
-    "test:contracts": "yarn workspace contracts test"
+    "dev:client": "pnpm --filter 'client' run dev",
+    "dev:contracts": "pnpm --filter 'contracts' dev",
+    "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
+    "initialize": "pnpm recursive run initialize",
+    "mud:up": "pnpm recursive exec mud set-version -v canary && pnpm install",
+    "prepare": "(forge --version || pnpm foundry:up)",
+    "test": "pnpm recursive run test"
   },
   "devDependencies": {
+    "@latticexyz/cli": "2.0.0-alpha.1.148+85e38ba8",
+    "@typescript-eslint/eslint-plugin": "5.46.1",
+    "@typescript-eslint/parser": "5.46.1",
     "@testing-library/cypress": "9.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -39,6 +33,13 @@
     "prettier-plugin-tailwindcss": "^0.2.3",
     "run-pty": "^4.0.3",
     "start-server-and-test": "2.0.0",
-    "typescript": "5.0.2"
+    "concurrently": "^8.0.1",
+    "eslint": "8.29.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.5"
+  },
+  "engines": {
+    "node": "18.x",
+    "pnpm": "8.x"
   }
 }
