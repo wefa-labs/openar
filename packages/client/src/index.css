@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+* {
+  overscroll-behavior-y: contain;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  max-width: 100vw;
+  width: 100vw;
+  scrollbar-width: none;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.unselectable {
+  user-select: none;
+}
+
+.dot {
+  position: absolute;
+  opacity: 0.27;
+  animation: dot-fade 1s infinite;
+  @apply w-4;
+  @apply h-4;
+  @apply rounded-full;
+}
+
+@keyframes dot-fade {
+  0%,
+  50%,
+  100% {
+    opacity: 0.27;
+  }
+  25% {
+    opacity: 1;
+  }
+}
