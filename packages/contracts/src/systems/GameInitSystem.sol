@@ -12,7 +12,7 @@ import { OwnedBy } from "../codegen/tables/OwnedBy.sol";
 // import { HealthStatus, GrowthLevel } from "../codegen/Types.sol";
 import { addressToEntityKey } from "../addressToEntityKey.sol";
 
-contract CollectibleSystem is System {
+contract GameInitSystem is System {
   function create(
     address userAddrs
   ) public returns (bytes32) {

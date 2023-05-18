@@ -1,6 +1,7 @@
 import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
+  worldContractName: "dvr",
   enums: {
     RoleEnum: ["X", "O"],
   },
@@ -21,8 +22,10 @@ export default mudConfig({
     },
     Match: {
       schema: {
-        board: "int32[]",
+        board: "int32[9]",
         winner: "address",
+        currentPlayer: "address",
+        turnCount: "int32",
       },
     },
     Identity: {
@@ -55,12 +58,12 @@ export default mudConfig({
     MintSystem: {
       name: "Mint",
       openAccess: false,
-      accessList: ["Collectible"],
+      accessList: ["CollectibleSystem"],
     },
     TransferSystem: {
       name: "Transfer",
       openAccess: false,
-      accessList: ["Collectible"],
+      accessList: ["CollectibleSystem"],
     },
   },
   // modules: [],
