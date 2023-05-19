@@ -71,7 +71,10 @@ export function defineContractComponents(world: World) {
         world,
         {
           board: RecsType.NumberArray,
+          players: RecsType.StringArray,
           winner: RecsType.String,
+          currentPlayer: RecsType.String,
+          turnCount: RecsType.Number,
         },
         {
           metadata: {
@@ -97,12 +100,12 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    OwnedBy: (() => {
-      const tableId = new TableId("", "OwnedBy");
+    PlayerID: (() => {
+      const tableId = new TableId("", "PlayerID");
       return defineComponent(
         world,
         {
-          value: RecsType.BigInt,
+          value: RecsType.String,
         },
         {
           metadata: {

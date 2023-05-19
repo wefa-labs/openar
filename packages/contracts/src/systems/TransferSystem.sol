@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {System} from "@latticexyz/world/src/System.sol";
+import { System } from "@latticexyz/world/src/System.sol";
 
-import {Balance} from "../codegen/tables/Balance.sol";
-import {Owner} from "../codegen/tables/Owner.sol";
+import { Balance, Owner } from "../codegen/Tables.sol";
 
 contract TransferSystem is System {
     event Transfer(address from, address to, uint256 token);

@@ -22,10 +22,11 @@ export default mudConfig({
     },
     Match: {
       schema: {
-        board: "int32[9]",
+        board: "uint8[9]",
+        players: "bytes32[2]",
         winner: "address",
-        currentPlayer: "address",
-        turnCount: "int32",
+        currentPlayer: "bytes32",
+        turnCount: "uint8",
       },
     },
     Identity: {
@@ -34,8 +35,9 @@ export default mudConfig({
         createdAt: "uint256",
       },
     },
-    OwnedBy: {
-      schema: "uint256",
+    PlayerID: {
+      keySchema: { user: "address", gameId: "bytes32" },
+      schema: "bytes32",
     },
     Counter: {
       keySchema: {},

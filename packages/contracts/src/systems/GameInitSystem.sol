@@ -2,34 +2,61 @@
 pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
+import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// Compoonents - Write
-import { Identity, IdentityData } from "../codegen/tables/Identity.sol";
-import { TokenID } from "../codegen/tables/TokenID.sol";
-import { Role } from "../codegen/tables/Role.sol";
-import { OwnedBy } from "../codegen/tables/OwnedBy.sol";
-
-// import { HealthStatus, GrowthLevel } from "../codegen/Types.sol";
-import { addressToEntityKey } from "../addressToEntityKey.sol";
+import { RoleEnum } from "../codegen/Types.sol";
+import { Identity, IdentityData, Match, MatchData, Role, PlayerID } from "../codegen/Tables.sol";
 
 contract GameInitSystem is System {
   function create(
-    address userAddrs
+    RoleEnum role,
+    string memory name
   ) public returns (bytes32) {
-    // require(healthStatus != HealthStatus.DEAD, "plant is dead");
-    address spaceAddrs = _msgSender();
-    bytes32 player = addressToEntityKey(userAddrs);
+    address user = _msgSender();
 
-    return player;
+    bytes32 gameId = getUniqueEntity();
+    bytes32 playerId = getUniqueEntity();
+
+    Identity.set(gameId, IdentityData({
+      name: name,
+      createdAt: block.timestamp // solhint-disable-line not-rely-on-time
+    }));
+    Match.set(gameId, MatchData({
+      board: [7,7,7,7,7,7,7,7,7],
+      players: [playerId, bytes32(0)],
+      winner: address(0),
+      currentPlayer: bytes32(0),
+      turnCount: 0
+    }));
+
+    PlayerID.set(user, gameId, playerId);
+    Role.set(playerId, role);
+
+    return gameId;
   }
 
   function join(
-    address userAddrs
-  ) public returns (bytes32) {
-    // require(healthStatus != HealthStatus.DEAD, "plant is dead");
-    address spaceAddrs = _msgSender();
-    bytes32 player = addressToEntityKey(userAddrs);
+    bytes32 gameId
+  ) public returns (RoleEnum) {
+    address playerAddrs = _msgSender();
 
-    return player;
+    // Check if game exists
+    IdentityData memory game = Identity.get(gameId);
+    require(game.createdAt != 0, "game doesn't exist");
+
+    MatchData memory matchData = Match.get(gameId);
+    // Check if game is full
+    require(matchData.players[1] == bytes32(0), "game is full");
+    // Check if player is already in game
+    require(PlayerID.get(playerAddrs, gameId) != bytes32(0), "already in game");
+
+    bytes32 playerId = getUniqueEntity();
+    PlayerID.set(playerAddrs, gameId, playerId);
+
+    RoleEnum opponentRole = Role.get(matchData.players[0]);
+    RoleEnum role = opponentRole == RoleEnum.X ? RoleEnum.O : RoleEnum.X;
+    Role.set(playerId, role);
+
+    return role;
   }
 }

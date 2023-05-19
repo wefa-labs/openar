@@ -9,5 +9,5 @@ import { Owner, OwnerTableId } from "./tables/Owner.sol";
 import { Role, RoleTableId } from "./tables/Role.sol";
 import { Match, MatchData, MatchTableId } from "./tables/Match.sol";
 import { Identity, IdentityData, IdentityTableId } from "./tables/Identity.sol";
-import { OwnedBy, OwnedByTableId } from "./tables/OwnedBy.sol";
+import { PlayerID, PlayerIDTableId } from "./tables/PlayerID.sol";
 import { Counter, CounterTableId } from "./tables/Counter.sol";
