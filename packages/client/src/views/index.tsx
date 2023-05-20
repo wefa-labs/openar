@@ -5,7 +5,7 @@ import { useRefresh } from "../hooks/useRefresh";
 import useDeviceDetect from "../hooks/device/useDeviceDetect";
 
 import Deck from "./Deck";
-import World from "./World";
+import Explore from "./Explore";
 import Profile from "./Profile";
 
 export default function Views() {
@@ -60,7 +60,7 @@ export default function Views() {
         >
           <Routes location={location}>
             <Route path="/deck" element={<Deck />} />
-            <Route path="/world" element={<World />} />
+            <Route path="/world" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Navigate to="/world" />} />
           </Routes>

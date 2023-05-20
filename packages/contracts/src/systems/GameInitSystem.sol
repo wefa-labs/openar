@@ -40,14 +40,11 @@ contract GameInitSystem is System {
   ) public returns (RoleEnum) {
     address playerAddrs = _msgSender();
 
-    // Check if game exists
     IdentityData memory game = Identity.get(gameId);
     require(game.createdAt != 0, "game doesn't exist");
 
     MatchData memory matchData = Match.get(gameId);
-    // Check if game is full
     require(matchData.players[1] == bytes32(0), "game is full");
-    // Check if player is already in game
     require(PlayerID.get(playerAddrs, gameId) != bytes32(0), "already in game");
 
     bytes32 playerId = getUniqueEntity();
