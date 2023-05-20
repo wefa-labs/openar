@@ -2,7 +2,7 @@ import { a, SpringValue, Interpolation } from "@react-spring/web";
 import React from "react";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 
-import { useDevice } from "../../../../../../client/src/hooks/device/useDevice";
+import { useDevice } from "../../hooks/device/useDevice";
 import { Portal } from "../Portal";
 import { DeckCardData } from "./Card";
 

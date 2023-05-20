@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build",
     "dev": "wait-port localhost:8545 && vite --host",
     "initialize": "pnpm build",
     "preview": "vite preview",
@@ -23,6 +23,7 @@
     "@latticexyz/utils": "2.0.0-alpha.1.148+85e38ba8",
     "@latticexyz/world": "2.0.0-alpha.1.148+85e38ba8",
     "@react-spring/web": "9.6.1",
+    "@types/lodash": "4.14.194",
     "@use-gesture/react": "10.2.26",
     "@wagmi/chains": "^0.2.22",
     "@xstate/react": "^3.2.1",

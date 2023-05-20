@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useDrag } from "@use-gesture/react";
 import { useSpring, useTrail, config } from "@react-spring/web";
 
-import { useWefadex } from "../../hooks/wefadex/useWefadex";
-
 import { DeckSheetData } from "./Components";
 
 export const height = window.innerHeight - 24;
@@ -16,8 +14,8 @@ export const useDeck = () => {
     type: "creature",
     actions: [],
   });
-
-  const { plants, creatures, mintCreature } = useWefadex();
+  const [plants, setPlants] = useState<Plant[]>([]);
+  const [creatures, setCreatures] = useState<Critter[]>([]);
 
   const [{ y }, api] = useSpring(() => ({ y: height }));
   const plantTrail = useTrail(plants?.length ?? 0, {
@@ -95,7 +93,6 @@ export const useDeck = () => {
     name,
     plants,
     creatures,
-    mintCreature,
     plantTrail,
     creatureTrail,
     openSheet,

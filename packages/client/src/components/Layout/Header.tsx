@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useAuthWeb3 } from "../../../../../../client/src/hooks/useWeb3";
+import { useAuthWeb3 } from "../../hooks/useWeb3";
 // import useDeviceDetect from "../../hooks/device/useDeviceDetect";
 
 import { Portal } from "../Portal";

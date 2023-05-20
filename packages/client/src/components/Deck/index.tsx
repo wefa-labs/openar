@@ -18,10 +18,7 @@ export const Wefadex: React.FC<WefadexProps> = () => {
     openSheet,
     closeSheet,
     sheetData,
-    mintCreature,
   } = useDeck();
-
-  console.log("Creatures", creatures);
 
   const display = y.to((py) => (py < height ? "block" : "none"));
   const bgStyle = {
@@ -78,7 +75,7 @@ export const Wefadex: React.FC<WefadexProps> = () => {
                 {
                   name: "Evolve",
                   onClick: () => {
-                    mintCreature(creatures[index].id);
+                    // mintCreature(creatures[index].id);
                   },
                   tooltip: "Evolve your creature!",
                 },

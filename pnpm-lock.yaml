@@ -182,6 +182,9 @@ importers:
       '@react-spring/web':
         specifier: 9.6.1
         version: 9.6.1(react-dom@18.2.0)(react@18.2.0)
+      '@types/lodash':
+        specifier: 4.14.194
+        version: 4.14.194
       '@use-gesture/react':
         specifier: 10.2.26
         version: 10.2.26(react@18.2.0)
@@ -4426,6 +4429,10 @@ packages:
   /@types/json-schema@7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
+
+  /@types/lodash@4.14.194:
+    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
+    dev: false
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}

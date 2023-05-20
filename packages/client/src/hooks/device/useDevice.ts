@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { apiClient } from "../../modules/axios";
-import { useNotification } from "../../../../test/packages/client/src/components/Layout/Notifications";
+import { useNotification } from "../../components/Layout/Notifications";
 
 type ErrorType =
   | "register"
