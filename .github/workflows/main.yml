@@ -22,8 +22,7 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
 
       - name: Run tests
-        run: forge test -vvv
-      
+        run: forge test -vvv      
 #       - name: Run Initialize
 #         run: pnpm
 
