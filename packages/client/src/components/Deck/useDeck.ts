@@ -14,19 +14,10 @@ export const useDeck = () => {
     type: "creature",
     actions: [],
   });
-  const [plants, setPlants] = useState<Plant[]>([]);
   const [creatures, setCreatures] = useState<Critter[]>([]);
 
   const [{ y }, api] = useSpring(() => ({ y: height }));
-  const plantTrail = useTrail(plants?.length ?? 0, {
-    from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
-    config: {
-      ...config.gentle,
-      friction: 20,
-      clamp: true,
-    },
-  });
+
   const creatureTrail = useTrail(creatures?.length ?? 0, {
     from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
@@ -91,9 +82,7 @@ export const useDeck = () => {
   return {
     y,
     name,
-    plants,
     creatures,
-    plantTrail,
     creatureTrail,
     openSheet,
     closeSheet,

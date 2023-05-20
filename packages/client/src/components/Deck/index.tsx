@@ -11,9 +11,7 @@ export const Wefadex: React.FC<WefadexProps> = () => {
   const {
     y,
     bind,
-    plantTrail,
     creatureTrail,
-    plants,
     creatures,
     openSheet,
     closeSheet,
@@ -37,23 +35,6 @@ export const Wefadex: React.FC<WefadexProps> = () => {
         <label htmlFor="webauth-dialog" className="btn">
           Register
         </label>
-        <h3 className=" text-2xl font-semibold">Plants</h3>
-        <ul className="carousel-center carousel space-x-4">
-          {plantTrail.map((props, index) => (
-            <DeckCard
-              {...plants[index]}
-              key={plants[index].id}
-              style={props}
-              onClick={() =>
-                openSheet({
-                  canceled: false,
-                  data: { ...plants[index], type: "plant", actions: [] },
-                })
-              }
-              actions={[]}
-            />
-          ))}
-        </ul>
         <h3 className="text-2xl font-semibold">Creatures</h3>
         <ul className="carousel-center carousel space-x-4">
           {creatureTrail.map((props, index) => (

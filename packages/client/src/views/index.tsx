@@ -60,9 +60,9 @@ export default function Views() {
         >
           <Routes location={location}>
             <Route path="/deck" element={<Deck />} />
-            <Route path="/world" element={<Explore />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<Navigate to="/world" />} />
+            <Route path="*" element={<Navigate to="/explore" />} />
           </Routes>
         </a.main>
       ))}
