@@ -1,0 +1,35 @@
+on:
+  - pull_request
+  - push
+
+name: Deploy Contracts
+
+jobs:
+  check:
+    name: Mud Contracts
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.2
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Run Tests & Lint
+        working-directory: ./packages/contracts
+        run: |
+          pnpm i
+          pnpm run initialize
+          pnpm run test
+          pnpm run lint
+
+      - name: Deploy Contracts to Testnet
+        working-directory: ./packages/contracts
+        run: |
+          pnpm deploy:testnet
+

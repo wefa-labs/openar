@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "pnpm recursive run build",
-    "dev": "concurrently -n contracts,client -c cyan,magenta 'cd packages/contracts && pnpm run dev' 'cd packages/client && pnpm run dev'",
-    "dev:api": "yarn workspace api run dev",
+    "dev": "concurrently -n contracts,client,api -c cyan,magenta,yellow 'cd packages/contracts/tictactoe && pnpm run dev' 'cd packages/client && pnpm run dev' 'cd packages/api && pnpm run dev'",
+    "dev:api": "pnpm --filter 'api' run dev",
     "dev:client": "pnpm --filter 'client' run dev",
     "dev:contracts": "pnpm --filter 'contracts' dev",
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
