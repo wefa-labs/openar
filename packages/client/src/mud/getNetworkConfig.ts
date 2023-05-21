@@ -1,5 +1,5 @@
 import { SetupContractConfig, getBurnerWallet } from "@latticexyz/std-client";
-import worldsJson from "contracts/tictactoe/worlds.json";
+import worldsJson from "contracts-tictactoe/worlds.json";
 import { supportedChains } from "./supportedChains";
 
 const worlds = worldsJson as Partial<
@@ -45,11 +45,9 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
     provider: {
       chainId,
       jsonRpcUrl: import.meta.env.DEV
-        ? "https://localhost:3006"
+        ? "https://localhost:3007"
         : chain.rpcUrls.default.http[0],
-      wsRpcUrl: import.meta.env.DEV
-        ? "wss://localhost:3006"
-        : params.get("wsRpc") ?? chain.rpcUrls.default.webSocket?.[0],
+      wsRpcUrl: params.get("wsRpc") ?? chain.rpcUrls.default.webSocket?.[0],
     },
     privateKey: getBurnerWallet().value,
     chainId,
