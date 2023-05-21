@@ -15,6 +15,7 @@ export default mudConfig({
       keySchema: { id: "bytes32" },
       schema: "GridSizeEnum",
     },
+
     Identity: {
       keySchema: { id: "bytes32" },
       schema: {
@@ -23,9 +24,12 @@ export default mudConfig({
         image: "string",
       },
     },
-    Cell: {
+    Space: {
       keySchema: { owner: "address", token: "uint32", gridId: "bytes32" },
-      schema: "bytes32[]",
+      schema: {
+        id: "uint8",
+        value: "bytes32[]",
+      },
     },
     Grid: {
       // Introduce higher level primitive to enable custom mapss
@@ -42,9 +46,9 @@ export default mudConfig({
     },
   },
   systems: {
-    CellSystem: {
+    SpaceSystem: {
       // Set space owner using address
-      name: "CellSystem",
+      name: "SpaceSystem",
       openAccess: true,
     },
     GridSystem: {

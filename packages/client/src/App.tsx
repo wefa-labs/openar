@@ -2,10 +2,7 @@ import { WagmiConfig } from "wagmi";
 import { BrowserRouter } from "react-router-dom";
 
 import { wagmiClient } from "./modules/wagmi";
-import {
-  DeviceDetectProvider,
-  isHandheld,
-} from "./hooks/device/useDeviceDetect";
+import { DeviceDetectProvider, isHandheld } from "./hooks/useDeviceDetect";
 
 import { Appbar } from "./components/Layout/AppBar";
 import { Header } from "./components/Layout/Header";

@@ -2,14 +2,14 @@ import React from "react";
 
 import { useTheme } from "../../hooks/useTheme";
 import { useAuthWeb3 } from "../../hooks/useWeb3";
-import useDeviceDetect from "../../hooks/device/useDeviceDetect";
+import useDeviceDetect from "../../hooks/useDeviceDetect";
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
   const { theme, toggleTheme } = useTheme();
   const { isDesktop } = useDeviceDetect();
-  const { error, address, authenticate } = useAuthWeb3();
+  const { address, authenticate } = useAuthWeb3();
 
   return (
     <header className="navbar bg-transparent px-8">
