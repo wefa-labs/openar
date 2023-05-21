@@ -15,7 +15,6 @@ export default mudConfig({
       keySchema: { id: "bytes32" },
       schema: "GridSizeEnum",
     },
-
     Identity: {
       keySchema: { id: "bytes32" },
       schema: {
@@ -40,7 +39,8 @@ export default mudConfig({
       keySchema: { owner: "address", mapID: "bytes32" },
       schema: "bytes32",
     },
-    GridCount: {
+    // Testing Purposes
+    Counter: {
       keySchema: {},
       schema: "uint32",
     },
@@ -60,6 +60,7 @@ export default mudConfig({
       name: "MapSystem",
       openAccess: true,
     },
+    // Testing Purposes
     IncrementSystem: {
       name: "Increment",
       openAccess: false,
