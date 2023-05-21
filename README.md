@@ -1,10 +1,10 @@
-# Autonomous World Hackathon -- DVR
+# Autonomous World Hackathon - Dragons and Rollies
 
-Repo for Dragonflies and Rollie Pollies Augmented Reality Game.
+Repo for Dragons and Rollies Augmented Reality Game.
 
 ## Project Description
 
-Dragons Vs Rollies the 1st multiplatform game of many that can be played both in 2D and Augmented Reality. Dragon vs Rollies is Tic Tac Toe where the X is the dragonfly and O Rolly Polly. Users pick a team (Water Earth Fire Air) and are able to create, join, or spectate multilpe games with friends. Winners are able to claim collectibles and earn prestige for their team with a daily leaderboard for teams.
+Dragons and Rollies the 1st multiplatform game of many that can be played both in 2D and Augmented Reality. Dragon vs Rollies is Tic Tac Toe where the X is the dragonfly and O Rolly Polly. Users pick a team (Water Earth Fire Air) and are able to create, join, or spectate multilpe games with friends. Winners are able to claim collectibles and earn prestige for their team with a daily leaderboard for teams.
 
 ## Features
 
@@ -32,9 +32,9 @@ Mud opens up the spatial world and the ability to create experiences that can ha
 
 To run this repo you'll need a few things
 
-1. **git** (download)[https://git-scm.com/downloads] opens in a new tab
-2. **foundry** (forge, anvil, cast) ((download)[https://book.getfoundry.sh/getting-started/installation](opens in a new tab), make sure to foundryup at least once)
-3. **node.js** (v16+) (download)[https://nodejs.org/en/download/]
+1. **git** [download](https://git-scm.com/downloads) opens in a new tab
+2. **foundry** (forge, anvil, cast) [download](https://book.getfoundry.sh/getting-started/installation), make sure to foundryup at least once)
+3. **node.js** (v16+) [download](https://nodejs.org/en/download/)
 4. **pnpm**: after installing node: `npm install --global pnpm`
 
 #### Windows Steps
@@ -48,9 +48,9 @@ To run this repo you'll need a few things
 To start the project run: `pnpm run dev`
 
 You should see this if all things went well
-![alt text](https://v2.mud.dev/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fquick-start-mud-cli.f66792ef.png&w=1200&q=75)
+![Dev Terminal for MUD development](https://v2.mud.dev/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fquick-start-mud-cli.f66792ef.png&w=1200&q=75)
 
-After deployment is successful, pop over to the web client which if port `3000` is open it is using (localhost)[http://localhost:3000/] and checkout your live app. When you visit you’ll see an increment button and dev tools open in the right-hand panel. Try clicking the button and seeing what updates in the dev tools!
+After deployment is successful, pop over to the web client which if port `3000` is open it is using (localhost)(http://localhost:3000/) and checkout your live app. When you visit you’ll see an increment button and dev tools open in the right-hand panel. Try clicking the button and seeing what updates in the dev tools!
 
 ## Contact Information
 
