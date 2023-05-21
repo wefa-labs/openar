@@ -3,44 +3,63 @@ import { mudConfig } from "@latticexyz/world/register";
 export default mudConfig({
   namespace: "openar",
   enums: {
+    StateEnum: ["Active", "Frozen"],
     GridSizeEnum: ["Three", "Nine"],
   },
   tables: {
-    Grid: {
-      keySchema: { owner: "address", id: "bytes32" },
+    State: {
+      keySchema: { id: "bytes32" },
+      schema: "StateEnum",
+    },
+    GridSize: {
+      keySchema: { id: "bytes32" },
+      schema: "GridSizeEnum",
+    },
+    Identity: {
+      keySchema: { id: "bytes32" },
       schema: {
-        size: "GridSizeEnum",
-        spaces: "uint8[]",
+        name: "string",
+        description: "string",
+        image: "string",
       },
     },
-    Space: {
-      keySchema: { owner: "address", token: "uint32" },
-      schema: "uint8",
+    Cell: {
+      keySchema: { owner: "address", token: "uint32", gridId: "bytes32" },
+      schema: "bytes32[]",
+    },
+    Grid: {
+      // Introduce higher level primitive to enable custom mapss
+      keySchema: { owner: "address", mapID: "bytes32" },
+      schema: "uint8[]",
+    },
+    Map: {
+      keySchema: { owner: "address", mapID: "bytes32" },
+      schema: "bytes32",
     },
     GridCount: {
       keySchema: {},
       schema: "uint32",
     },
-    SpaceCount: {
-      keySchema: {},
-      schema: "uint32",
-    },
   },
   systems: {
+    CellSystem: {
+      // Set space owner using address
+      name: "CellSystem",
+      openAccess: true,
+    },
     GridSystem: {
       // Claim or Transfer to another user or game namespace
       name: "GridSystem",
       openAccess: true,
     },
-    SpaceSystem: {
-      // Set space owner using address
-      name: "SpaceSystem",
+    MapSystem: {
+      name: "MapSystem",
       openAccess: true,
     },
     IncrementSystem: {
       name: "Increment",
       openAccess: false,
-      accessList: ["GridSystem", "SpaceSystem"],
+      accessList: ["GridSystem"],
     },
   },
 });

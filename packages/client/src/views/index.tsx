@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import useDeviceDetect from "../hooks/device/useDeviceDetect";
 
-import Deck from "./Deck";
+import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
 
@@ -30,7 +30,7 @@ export default function Views() {
       style={style}
     >
       <Routes location={location}>
-        <Route path="/deck" element={<Deck />} />
+        <Route path="/play" element={<Play />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="/explore" />} />

@@ -17,13 +17,14 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("tictactoe"), bytes16("Match")));
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("checkers"), bytes16("Match")));
 bytes32 constant MatchTableId = _tableId;
 
 struct MatchData {
   uint8[9] board;
   bytes32[2] players;
   address winner;
+  bool trophyClaimed;
   bytes32 currentPlayer;
   uint8 turnCount;
 }
@@ -31,12 +32,13 @@ struct MatchData {
 library Match {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](5);
+    SchemaType[] memory _schema = new SchemaType[](6);
     _schema[0] = SchemaType.UINT8_ARRAY;
     _schema[1] = SchemaType.BYTES32_ARRAY;
     _schema[2] = SchemaType.ADDRESS;
-    _schema[3] = SchemaType.BYTES32;
-    _schema[4] = SchemaType.UINT8;
+    _schema[3] = SchemaType.BOOL;
+    _schema[4] = SchemaType.BYTES32;
+    _schema[5] = SchemaType.UINT8;
 
     return SchemaLib.encode(_schema);
   }
@@ -50,12 +52,13 @@ library Match {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](5);
+    string[] memory _fieldNames = new string[](6);
     _fieldNames[0] = "board";
     _fieldNames[1] = "players";
     _fieldNames[2] = "winner";
-    _fieldNames[3] = "currentPlayer";
-    _fieldNames[4] = "turnCount";
+    _fieldNames[3] = "trophyClaimed";
+    _fieldNames[4] = "currentPlayer";
+    _fieldNames[5] = "turnCount";
     return ("Match", _fieldNames);
   }
 
@@ -351,12 +354,46 @@ library Match {
     _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((winner)));
   }
 
+  /** Get trophyClaimed */
+  function getTrophyClaimed(bytes32 key) internal view returns (bool trophyClaimed) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    return (_toBool(uint8(Bytes.slice1(_blob, 0))));
+  }
+
+  /** Get trophyClaimed (using the specified store) */
+  function getTrophyClaimed(IStore _store, bytes32 key) internal view returns (bool trophyClaimed) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    return (_toBool(uint8(Bytes.slice1(_blob, 0))));
+  }
+
+  /** Set trophyClaimed */
+  function setTrophyClaimed(bytes32 key, bool trophyClaimed) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((trophyClaimed)));
+  }
+
+  /** Set trophyClaimed (using the specified store) */
+  function setTrophyClaimed(IStore _store, bytes32 key, bool trophyClaimed) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((trophyClaimed)));
+  }
+
   /** Get currentPlayer */
   function getCurrentPlayer(bytes32 key) internal view returns (bytes32 currentPlayer) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 4);
     return (Bytes.slice32(_blob, 0));
   }
 
@@ -365,7 +402,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 4);
     return (Bytes.slice32(_blob, 0));
   }
 
@@ -374,7 +411,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((currentPlayer)));
+    StoreSwitch.setField(_tableId, _keyTuple, 4, abi.encodePacked((currentPlayer)));
   }
 
   /** Set currentPlayer (using the specified store) */
@@ -382,7 +419,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((currentPlayer)));
+    _store.setField(_tableId, _keyTuple, 4, abi.encodePacked((currentPlayer)));
   }
 
   /** Get turnCount */
@@ -390,7 +427,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 4);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 5);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -399,7 +436,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 4);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 5);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -408,7 +445,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 4, abi.encodePacked((turnCount)));
+    StoreSwitch.setField(_tableId, _keyTuple, 5, abi.encodePacked((turnCount)));
   }
 
   /** Set turnCount (using the specified store) */
@@ -416,7 +453,7 @@ library Match {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    _store.setField(_tableId, _keyTuple, 4, abi.encodePacked((turnCount)));
+    _store.setField(_tableId, _keyTuple, 5, abi.encodePacked((turnCount)));
   }
 
   /** Get the full data */
@@ -443,10 +480,11 @@ library Match {
     uint8[9] memory board,
     bytes32[2] memory players,
     address winner,
+    bool trophyClaimed,
     bytes32 currentPlayer,
     uint8 turnCount
   ) internal {
-    bytes memory _data = encode(board, players, winner, currentPlayer, turnCount);
+    bytes memory _data = encode(board, players, winner, trophyClaimed, currentPlayer, turnCount);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -461,10 +499,11 @@ library Match {
     uint8[9] memory board,
     bytes32[2] memory players,
     address winner,
+    bool trophyClaimed,
     bytes32 currentPlayer,
     uint8 turnCount
   ) internal {
-    bytes memory _data = encode(board, players, winner, currentPlayer, turnCount);
+    bytes memory _data = encode(board, players, winner, trophyClaimed, currentPlayer, turnCount);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -474,30 +513,41 @@ library Match {
 
   /** Set the full data using the data struct */
   function set(bytes32 key, MatchData memory _table) internal {
-    set(key, _table.board, _table.players, _table.winner, _table.currentPlayer, _table.turnCount);
+    set(key, _table.board, _table.players, _table.winner, _table.trophyClaimed, _table.currentPlayer, _table.turnCount);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 key, MatchData memory _table) internal {
-    set(_store, key, _table.board, _table.players, _table.winner, _table.currentPlayer, _table.turnCount);
+    set(
+      _store,
+      key,
+      _table.board,
+      _table.players,
+      _table.winner,
+      _table.trophyClaimed,
+      _table.currentPlayer,
+      _table.turnCount
+    );
   }
 
   /** Decode the tightly packed blob using this table's schema */
   function decode(bytes memory _blob) internal view returns (MatchData memory _table) {
-    // 53 is the total byte length of static data
-    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 53));
+    // 54 is the total byte length of static data
+    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 54));
 
     _table.winner = (address(Bytes.slice20(_blob, 0)));
 
-    _table.currentPlayer = (Bytes.slice32(_blob, 20));
+    _table.trophyClaimed = (_toBool(uint8(Bytes.slice1(_blob, 20))));
 
-    _table.turnCount = (uint8(Bytes.slice1(_blob, 52)));
+    _table.currentPlayer = (Bytes.slice32(_blob, 21));
+
+    _table.turnCount = (uint8(Bytes.slice1(_blob, 53)));
 
     // Store trims the blob if dynamic fields are all empty
-    if (_blob.length > 53) {
+    if (_blob.length > 54) {
       uint256 _start;
       // skip static data length + dynamic lengths word
-      uint256 _end = 85;
+      uint256 _end = 86;
 
       _start = _end;
       _end += _encodedLengths.atIndex(0);
@@ -514,6 +564,7 @@ library Match {
     uint8[9] memory board,
     bytes32[2] memory players,
     address winner,
+    bool trophyClaimed,
     bytes32 currentPlayer,
     uint8 turnCount
   ) internal view returns (bytes memory) {
@@ -525,6 +576,7 @@ library Match {
     return
       abi.encodePacked(
         winner,
+        trophyClaimed,
         currentPlayer,
         turnCount,
         _encodedLengths.unwrap(),
@@ -590,4 +642,10 @@ function fromStaticArray_bytes32_2(bytes32[2] memory _value) view returns (bytes
     toPointer := add(_result, 0x20)
   }
   Memory.copy(fromPointer, toPointer, 64);
+}
+
+function _toBool(uint8 value) pure returns (bool result) {
+  assembly {
+    result := value
+  }
 }

@@ -59,7 +59,6 @@ export function defineContractComponents(world: World) {
           board: RecsType.NumberArray,
           players: RecsType.StringArray,
           winner: RecsType.String,
-          trophyClaimed: RecsType.Boolean,
           currentPlayer: RecsType.String,
           turnCount: RecsType.Number,
         },

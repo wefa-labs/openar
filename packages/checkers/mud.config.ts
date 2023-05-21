@@ -1,7 +1,7 @@
 import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
-  namespace: "tictactoe",
+  namespace: "checkers",
   enums: {
     RoleEnum: ["O", "X"],
   },
@@ -10,7 +10,7 @@ export default mudConfig({
       schema: "RoleEnum",
     },
     PlayerID: {
-      keySchema: { user: "address", gameId: "bytes32" },
+      keySchema: { user: "address", gridId: "bytes32" },
       schema: "bytes32",
     },
     Identity: {
@@ -21,7 +21,7 @@ export default mudConfig({
     },
     Match: {
       schema: {
-        board: "uint8[9]",
+        board: "uint8[64]",
         players: "bytes32[2]",
         winner: "address",
         currentPlayer: "bytes32",

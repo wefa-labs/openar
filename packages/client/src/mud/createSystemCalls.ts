@@ -10,24 +10,33 @@ export function createSystemCalls(
   { Counter }: ClientComponents
 ) {
   const increment = async () => {
-    const tx = await worldSend("increment", []);
+    const tx = await worldSend("tictactoe_Increment_increment", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(Counter, singletonEntity);
   };
 
   const createGame = async (role: 0 | 1, name: string) => {
-    const tx = await worldSend("create", [role, name]);
+    const tx = await worldSend("tictactoe_GameInit_create", [role, name]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const joinGame = async (gameId: string) => {
-    const tx = await worldSend("join", [gameId]);
+    const tx = await worldSend("tictactoe_GameInit_join", [gameId]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
+  const claimPosition = async (gameId: string, position: number) => {
+    const tx = await worldSend("tictactoe_GameMove_claimPosition", [
+      gameId,
+      position,
+    ]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   return {
     increment,
     createGame,
+    claimPosition,
     joinGame,
   };
 }
