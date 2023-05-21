@@ -33,5 +33,9 @@ export default function useDeviceDetect() {
     throw new Error("useDeviceDetect must be used within a DeviceProvider");
   }
 
-  return context;
+  return {
+    isDesktop: context === "desktop",
+    isHandheld: context === "handheld",
+    isHandsfree: context === "handsfree",
+  };
 }

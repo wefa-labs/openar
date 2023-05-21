@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --text-color: #000;
+  --surface-color: #fff;
+  --gradient-start: #774d71;
+  --gradient-end: #a1bafe;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-} */
+[data-theme="dark"] {
+  --text-color: #fff;
+  --surface-color: #292929;
+  --gradient-start: #501e55;
+  --gradient-end: #24205e;
+}
+
 
 * {
   overscroll-behavior-y: contain;
@@ -22,13 +23,19 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  max-width: 100vw;
   width: 100vw;
+  height: 100vh;
   scrollbar-width: none;
-  overflow: hidden;
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow-x: hidden;
   font-family: "Inter", sans-serif;
+  background-image: linear-gradient(320deg, var(--gradient-start), var(--gradient-end) 54%);
+}
 
-  @apply bg-slate-100;
+#react-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 ::-webkit-scrollbar {

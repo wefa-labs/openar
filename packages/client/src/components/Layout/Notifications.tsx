@@ -1,8 +1,7 @@
 import { nanoid } from "nanoid";
 import React, { useState, useMemo, useContext } from "react";
 import { a, useTransition } from "@react-spring/web";
-
-import { Portal } from "../Portal";
+import { createPortal } from "react-dom";
 
 type ToastType = "success" | "error" | "warning" | "info";
 
@@ -88,7 +87,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
       }}
     >
       {children}
-      <Portal>
+      {createPortal(
         <div className="pointer-events-none fixed bottom-6 right-6 z-40 m-[0_auto] flex w-[0_auto] flex-col items-center sm:items-end">
           {transitions(({ life, ...style }, item) => (
             <a.li
@@ -119,8 +118,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
               </div>
             </a.li>
           ))}
-        </div>
-      </Portal>
+        </div>,
+        document.body
+      )}
     </NotificationsContext.Provider>
   );
 };

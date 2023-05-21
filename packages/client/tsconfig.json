@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["vite/client"],
+    "types": ["vite/client", "vitest/globals"],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",

@@ -108,4 +108,10 @@ export default defineConfig({
   build: {
     target: "es2022",
   },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/__tests__/setup.ts",
+    css: true,
+  },
 });

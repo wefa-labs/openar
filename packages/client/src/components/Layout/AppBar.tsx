@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RC as CardsIcon } from "../../assets/cards.svg";
 import { RC as WorldIcon } from "../../assets/world.svg";
 import { RC as ProfileIcon } from "../../assets/profile.svg";
+import useDeviceDetect from "../../hooks/device/useDeviceDetect";
 
 const tabs: {
   path: string;
@@ -15,13 +16,13 @@ const tabs: {
   >;
 }[] = [
   {
-    path: "/deck",
-    title: "Deck",
+    path: "/play",
+    title: "Play",
     Icon: CardsIcon,
   },
   {
-    path: "/world",
-    title: "World",
+    path: "/explore",
+    title: "Explore",
     Icon: WorldIcon,
   },
   {
@@ -33,6 +34,8 @@ const tabs: {
 
 export const Appbar = () => {
   const { pathname } = useLocation();
+  const { isDesktop } = useDeviceDetect();
+
   const spring = useSpring({
     from: {
       opacity: 0,
@@ -50,13 +53,20 @@ export const Appbar = () => {
   });
 
   return (
-    <a.nav className="btm-nav z-50 bg-white py-4" style={spring}>
+    <a.nav
+      className={
+        isDesktop
+          ? "tabs w-full bg-white rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
+          : "btm-nav z-50 bg-white py-4"
+      }
+      style={spring}
+    >
       {tabs.map(({ path, Icon, title }) => (
         <Link to={path} key={title}>
           <button
             className={`flex flex-col items-center ${
-              pathname === path ? "active" : ""
-            }`}
+              pathname === path ? "active tab-active" : ""
+            } ${isDesktop ? "tab" : ""}}`}
           >
             <Icon
               width={32}

@@ -3,8 +3,8 @@ import React from "react";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 
 import { useDevice } from "../../hooks/device/useDevice";
-import { Portal } from "../Portal";
 import { DeckCardData } from "./Card";
+import { createPortal } from "react-dom";
 
 export interface DeckSheetData extends DeckCardData {
   type: "creature" | "plant";
@@ -73,8 +73,8 @@ export const DeckDialog: React.FC<DeckDialogProps> = () => {
     handlesync,
   } = useDevice();
 
-  return (
-    <Portal>
+  return createPortal(
+    <>
       <input type="checkbox" id="webauth-dialog" className="modal-toggle" />
       <label htmlFor="webauth-dialog" className="modal cursor-pointer">
         <label
@@ -104,6 +104,7 @@ export const DeckDialog: React.FC<DeckDialogProps> = () => {
           {<p className="text-red-500">{error}</p>}
         </label>
       </label>
-    </Portal>
+    </>,
+    document.body
   );
 };
