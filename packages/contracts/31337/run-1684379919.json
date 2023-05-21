@@ -1,0 +1,35 @@
+{
+  "transactions": [
+    {
+      "hash": "0x1d1a5e8711a9cd081c30dfe51f434682bcee7d4524e33a01458aa713a7669fbd",
+      "transactionType": "CALL",
+      "contractName": null,
+      "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "function": null,
+      "arguments": null,
+      "rpc": "http://127.0.0.1:8545",
+      "transaction": {
+        "type": "0x02",
+        "from": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "to": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+        "gas": "0x22ace",
+        "value": "0x0",
+        "data": "0xd09de08a",
+        "nonce": "0xc",
+        "accessList": []
+      },
+      "additionalContracts": []
+    }
+  ],
+  "receipts": [],
+  "libraries": [],
+  "pending": [
+    "0x1d1a5e8711a9cd081c30dfe51f434682bcee7d4524e33a01458aa713a7669fbd"
+  ],
+  "path": "/Users/afo/Code/wefa/autonomous-worlds-hackathon/packages/test/packages/contracts/broadcast/PostDeploy.s.sol/31337/run-latest.json",
+  "returns": {},
+  "timestamp": 1684379919,
+  "chain": 31337,
+  "multi": false,
+  "commit": null
+}

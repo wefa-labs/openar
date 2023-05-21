@@ -2,7 +2,6 @@ import { getComponentValue } from "@latticexyz/recs";
 import { awaitStreamValue } from "@latticexyz/utils";
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
-import { Wefadex } from "../components/Deck";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
