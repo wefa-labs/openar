@@ -1,4 +1,5 @@
 import React from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { useTheme } from "../../hooks/useTheme";
 import { useAuthWeb3 } from "../../hooks/useWeb3";
@@ -9,7 +10,7 @@ interface HeaderProps {}
 export const Header: React.FC<HeaderProps> = () => {
   const { theme, toggleTheme } = useTheme();
   const { isDesktop } = useDeviceDetect();
-  const { address, handleConnect } = useAuthWeb3();
+  const { address } = useAuthWeb3();
 
   return (
     <header className="navbar bg-transparent px-8">
@@ -46,9 +47,7 @@ export const Header: React.FC<HeaderProps> = () => {
                 </div>
               </label>
             ) : (
-              <button onClick={handleConnect} className="btn-primary btn">
-                Connect
-              </button>
+              <ConnectButton />
             )}
           </>
         )}

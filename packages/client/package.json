@@ -22,6 +22,7 @@
     "@latticexyz/std-client": "2.0.0-alpha.1.182",
     "@latticexyz/utils": "2.0.0-alpha.1.182",
     "@latticexyz/world": "2.0.0-alpha.1.182",
+    "@rainbow-me/rainbowkit": "1.0.0",
     "@react-spring/web": "9.6.1",
     "@types/lodash": "4.14.194",
     "@use-gesture/react": "10.2.26",
