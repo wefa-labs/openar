@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "forge clean && forge build",
-    "deploy": "run initialize && mud deploy",
-    "deploy:testnet": "pnpm run initialize && mud deploy --profile=lattice-testnet",
+    "deploy": "dotenv && pnpm run initialize && mud deploy",
     "dev": "pnpm mud dev-contracts --tsgenOutput ../../client/src/modules/openar",
     "initialize": "pnpm run tablegen && pnpm run worldgen && pnpm run build && pnpm run worldtypes && pnpm run tsgen",
     "tablegen": "mud tablegen",
@@ -31,9 +30,6 @@
     "@types/node": "^18.15.11",
     "ds-test": "https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084",
     "forge-std": "https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3",
-    "prettier": "^2.6.2",
-    "prettier-plugin-solidity": "^1.0.0-beta.19",
-    "solhint": "^3.3.7",
     "typechain": "^8.1.1"
   }
 }

@@ -62,61 +62,6 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
 
-  packages/checkers:
-    dependencies:
-      '@ethersproject/abi':
-        specifier: ^5.7.0
-        version: 5.7.0
-      '@ethersproject/bytes':
-        specifier: ^5.7.0
-        version: 5.7.0
-      '@ethersproject/providers':
-        specifier: ^5.7.2
-        version: 5.7.2
-      '@latticexyz/cli':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)
-      '@latticexyz/schema-type':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(typescript@5.0.4)(zod@3.21.4)
-      '@latticexyz/std-contracts':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182
-      '@latticexyz/store':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(typescript@5.0.4)
-      '@latticexyz/world':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(typescript@5.0.4)
-      ethers:
-        specifier: ^5.7.2
-        version: 5.7.2
-    devDependencies:
-      '@typechain/ethers-v5':
-        specifier: ^10.2.0
-        version: 10.2.0(@ethersproject/abi@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.1.1)(typescript@5.0.4)
-      '@types/node':
-        specifier: ^18.15.11
-        version: 18.15.12
-      ds-test:
-        specifier: https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084
-        version: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
-      forge-std:
-        specifier: https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
-        version: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
-      prettier-plugin-solidity:
-        specifier: ^1.0.0-beta.19
-        version: 1.0.0-beta.19(prettier@2.8.8)
-      solhint:
-        specifier: ^3.3.7
-        version: 3.3.7
-      typechain:
-        specifier: ^8.1.1
-        version: 8.1.1(typescript@5.0.4)
-
   packages/client:
     dependencies:
       '@ethersproject/providers':
@@ -175,7 +120,7 @@ importers:
         version: 6.0.3
       checkers:
         specifier: workspace:*
-        version: link:../checkers
+        version: link:../contracts/checkers
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -184,7 +129,7 @@ importers:
         version: 4.0.2
       openar:
         specifier: workspace:*
-        version: link:../openar
+        version: link:../contracts/openar
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -199,7 +144,7 @@ importers:
         version: 1.1.6(ethers@5.7.2)
       tictactoe:
         specifier: workspace:*
-        version: link:../tictactoe
+        version: link:../contracts/tictactoe
       viem:
         specifier: ~0.3.19
         version: 0.3.29(typescript@5.0.4)(zod@3.21.4)
@@ -277,35 +222,7 @@ importers:
         specifier: 0.30.1
         version: 0.30.1(jsdom@22.0.0)
 
-  packages/openar:
-    dependencies:
-      '@ethersproject/abi':
-        specifier: ^5.7.0
-        version: 5.7.0
-      '@ethersproject/bytes':
-        specifier: ^5.7.0
-        version: 5.7.0
-      '@ethersproject/providers':
-        specifier: ^5.7.2
-        version: 5.7.2
-      '@latticexyz/cli':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)
-      '@latticexyz/schema-type':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(typescript@5.0.4)(zod@3.21.4)
-      '@latticexyz/std-contracts':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182
-      '@latticexyz/store':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(typescript@5.0.4)
-      '@latticexyz/world':
-        specifier: 2.0.0-alpha.1.182
-        version: 2.0.0-alpha.1.182(typescript@5.0.4)
-      ethers:
-        specifier: ^5.7.2
-        version: 5.7.2
+  packages/contracts:
     devDependencies:
       '@typechain/ethers-v5':
         specifier: ^10.2.0
@@ -332,7 +249,7 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1(typescript@5.0.4)
 
-  packages/tictactoe:
+  packages/contracts/checkers:
     dependencies:
       '@ethersproject/abi':
         specifier: ^5.7.0
@@ -374,15 +291,98 @@ importers:
       forge-std:
         specifier: https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
         version: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
-      prettier-plugin-solidity:
-        specifier: ^1.0.0-beta.19
-        version: 1.0.0-beta.19(prettier@2.8.8)
-      solhint:
-        specifier: ^3.3.7
-        version: 3.3.7
+      typechain:
+        specifier: ^8.1.1
+        version: 8.1.1(typescript@5.0.4)
+
+  packages/contracts/openar:
+    dependencies:
+      '@ethersproject/abi':
+        specifier: ^5.7.0
+        version: 5.7.0
+      '@ethersproject/bytes':
+        specifier: ^5.7.0
+        version: 5.7.0
+      '@ethersproject/providers':
+        specifier: ^5.7.2
+        version: 5.7.2
+      '@latticexyz/cli':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)
+      '@latticexyz/schema-type':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/std-contracts':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182
+      '@latticexyz/store':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(typescript@5.0.4)
+      '@latticexyz/world':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(typescript@5.0.4)
+      ethers:
+        specifier: ^5.7.2
+        version: 5.7.2
+    devDependencies:
+      '@typechain/ethers-v5':
+        specifier: ^10.2.0
+        version: 10.2.0(@ethersproject/abi@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.1.1)(typescript@5.0.4)
+      '@types/node':
+        specifier: ^18.15.11
+        version: 18.15.12
+      ds-test:
+        specifier: https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084
+        version: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
+      forge-std:
+        specifier: https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
+        version: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
+      typechain:
+        specifier: ^8.1.1
+        version: 8.1.1(typescript@5.0.4)
+
+  packages/contracts/tictactoe:
+    dependencies:
+      '@ethersproject/abi':
+        specifier: ^5.7.0
+        version: 5.7.0
+      '@ethersproject/bytes':
+        specifier: ^5.7.0
+        version: 5.7.0
+      '@ethersproject/providers':
+        specifier: ^5.7.2
+        version: 5.7.2
+      '@latticexyz/cli':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)
+      '@latticexyz/schema-type':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/std-contracts':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182
+      '@latticexyz/store':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(typescript@5.0.4)
+      '@latticexyz/world':
+        specifier: 2.0.0-alpha.1.182
+        version: 2.0.0-alpha.1.182(typescript@5.0.4)
+      ethers:
+        specifier: ^5.7.2
+        version: 5.7.2
+    devDependencies:
+      '@typechain/ethers-v5':
+        specifier: ^10.2.0
+        version: 10.2.0(@ethersproject/abi@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.1.1)(typescript@5.0.4)
+      '@types/node':
+        specifier: ^18.15.11
+        version: 18.15.12
+      ds-test:
+        specifier: https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084
+        version: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
+      forge-std:
+        specifier: https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
+        version: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
       typechain:
         specifier: ^8.1.1
         version: 8.1.1(typescript@5.0.4)

@@ -5,18 +5,26 @@ import {
   getSnapSyncRecords,
 } from "@latticexyz/network";
 import { getNetworkConfig } from "./getNetworkConfig";
-import { defineContractComponents } from "./contractComponents";
+import { defineContractComponents as openArComps } from "./contractComponents";
+import { defineContractComponents as checkersArComps } from "./checkers/contractComponents";
+import { defineContractComponents as tictactoeArComp } from "./tictactoe/contractComponents";
+
 import { world } from "./world";
 import { Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { IWorld__factory } from "openar/types/ethers-contracts/factories/IWorld__factory";
 import { getTableIds } from "@latticexyz/utils";
-import storeConfig from "tictactoe/mud.config";
+import storeConfig from "openar/mud.config";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
 export async function setupNetwork() {
-  const contractComponents = defineContractComponents(world); // Do the Spread
+  const contractComponents = {
+    ...openArComps(world),
+    ...checkersArComps(world),
+    ...tictactoeArComp(world),
+  };
+
   const networkConfig = await getNetworkConfig();
   const result = await setupMUDV2Network<
     typeof contractComponents,

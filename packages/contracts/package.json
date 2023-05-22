@@ -4,15 +4,17 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "pnpm recursive run build",
-    "deploy": "pnpm recursive run deploy",
-    "deploy:testnet": "pnpm recursive run deploy:testnet",
-    "dev": "pnpm recursive run dev",
     "initialize": "pnpm recursive run initialize",
+    "dev": "pnpm recursive run dev",
+    "test": "pnpm recursive run test",
+    "build": "pnpm recursive run build",
+    "deploy:local": "pnpm recursive run deploy",
+    "deploy:testnet": "pnpm recursive run deploy:testnet",
+    "deploy:optimism-testnet": "pnpm recursive run deploy -- --profile=optimism-testnet",
+    "deploy:optimism": "pnpm recursive run deploy -- --profile=optimism",
     "lint": "pnpm run prettier && pnpm run solhint",
     "prettier": "prettier --write 'src/**/*.sol'",
-    "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix",
-    "test": "pnpm recursive run test"
+    "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^10.2.0",

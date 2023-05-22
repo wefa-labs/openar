@@ -1,7 +1,6 @@
 import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
-  deploysDirectory: "../client/muk",
   namespace: "checkers",
   enums: {
     RoleEnum: ["O", "X"],

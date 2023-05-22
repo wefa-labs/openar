@@ -4,8 +4,14 @@ export default mudConfig({
   namespace: "openar",
   enums: {
     StateEnum: ["Active", "Frozen"],
+    SizeEnum: ["Small", "Medium", "Large"],
   },
   tables: {
+    // Testing Purposes
+    Counter: {
+      keySchema: {},
+      schema: "uint32",
+    },
     State: {
       keySchema: { id: "bytes32" },
       schema: "StateEnum",
@@ -27,22 +33,18 @@ export default mudConfig({
     },
     Grid: {
       keySchema: { owner: "address", mapID: "bytes32" },
-      schema: "uint8[]",
+      schema: "uint8[64]",
     },
     Map: {
-      keySchema: { owner: "address", mapID: "bytes32" },
+      keySchema: { owner: "address" },
       schema: "bytes32",
-    },
-    // Testing Purposes
-    Counter: {
-      keySchema: {},
-      schema: "uint32",
     },
   },
   systems: {
     SpaceSystem: {
       name: "SpaceSystem",
-      openAccess: true,
+      openAccess: false,
+      accessList: ["GridSystem"],
     },
     GridSystem: {
       name: "GridSystem",
