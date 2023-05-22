@@ -22,10 +22,18 @@ contract GameInitSystem is System {
       createdAt: block.timestamp // solhint-disable-line not-rely-on-time
     }));
     Match.set(gameId, MatchData({
-      board: [7,7,7,7,7,7,7,7,7],
+      board: [
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2,
+        2,2,2,2,2,2,2,2
+        ],
       players: [playerId, bytes32(0)],
       winner: address(0),
-      trophyClaimed: false,
       currentPlayer: bytes32(0),
       turnCount: 0
     }));

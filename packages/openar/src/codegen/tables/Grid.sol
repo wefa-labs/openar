@@ -17,23 +17,14 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-// Import user types
-import { GridSizeEnum } from "./../Types.sol";
-
 bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("openar"), bytes16("Grid")));
 bytes32 constant GridTableId = _tableId;
-
-struct GridData {
-  GridSizeEnum size;
-  uint8[] spaces;
-}
 
 library Grid {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](2);
-    _schema[0] = SchemaType.UINT8;
-    _schema[1] = SchemaType.UINT8_ARRAY;
+    SchemaType[] memory _schema = new SchemaType[](1);
+    _schema[0] = SchemaType.UINT8_ARRAY;
 
     return SchemaLib.encode(_schema);
   }
@@ -48,9 +39,8 @@ library Grid {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](2);
-    _fieldNames[0] = "size";
-    _fieldNames[1] = "spaces";
+    string[] memory _fieldNames = new string[](1);
+    _fieldNames[0] = "value";
     return ("Grid", _fieldNames);
   }
 
@@ -76,277 +66,168 @@ library Grid {
     _store.setMetadata(_tableId, _tableName, _fieldNames);
   }
 
-  /** Get size */
-  function getSize(address owner, bytes32 id) internal view returns (GridSizeEnum size) {
+  /** Get value */
+  function get(address owner, bytes32 mapID) internal view returns (uint8[] memory value) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return GridSizeEnum(uint8(Bytes.slice1(_blob, 0)));
+    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
   }
 
-  /** Get size (using the specified store) */
-  function getSize(IStore _store, address owner, bytes32 id) internal view returns (GridSizeEnum size) {
+  /** Get value (using the specified store) */
+  function get(IStore _store, address owner, bytes32 mapID) internal view returns (uint8[] memory value) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return GridSizeEnum(uint8(Bytes.slice1(_blob, 0)));
-  }
-
-  /** Set size */
-  function setSize(address owner, bytes32 id, GridSizeEnum size) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(size)));
-  }
-
-  /** Set size (using the specified store) */
-  function setSize(IStore _store, address owner, bytes32 id, GridSizeEnum size) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(size)));
-  }
-
-  /** Get spaces */
-  function getSpaces(address owner, bytes32 id) internal view returns (uint8[] memory spaces) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
   }
 
-  /** Get spaces (using the specified store) */
-  function getSpaces(IStore _store, address owner, bytes32 id) internal view returns (uint8[] memory spaces) {
+  /** Set value */
+  function set(address owner, bytes32 mapID, uint8[] memory value) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
-    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode((value)));
   }
 
-  /** Set spaces */
-  function setSpaces(address owner, bytes32 id, uint8[] memory spaces) internal {
+  /** Set value (using the specified store) */
+  function set(IStore _store, address owner, bytes32 mapID, uint8[] memory value) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 1, EncodeArray.encode((spaces)));
+    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode((value)));
   }
 
-  /** Set spaces (using the specified store) */
-  function setSpaces(IStore _store, address owner, bytes32 id, uint8[] memory spaces) internal {
+  /** Get the length of value */
+  function length(address owner, bytes32 mapID) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    _store.setField(_tableId, _keyTuple, 1, EncodeArray.encode((spaces)));
-  }
-
-  /** Get the length of spaces */
-  function lengthSpaces(address owner, bytes32 id) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 1, getSchema());
+    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 0, getSchema());
     return _byteLength / 1;
   }
 
-  /** Get the length of spaces (using the specified store) */
-  function lengthSpaces(IStore _store, address owner, bytes32 id) internal view returns (uint256) {
+  /** Get the length of value (using the specified store) */
+  function length(IStore _store, address owner, bytes32 mapID) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 1, getSchema());
+    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 0, getSchema());
     return _byteLength / 1;
   }
 
-  /** Get an item of spaces (unchecked, returns invalid data if index overflows) */
-  function getItemSpaces(address owner, bytes32 id, uint256 _index) internal view returns (uint8) {
+  /** Get an item of value (unchecked, returns invalid data if index overflows) */
+  function getItem(address owner, bytes32 mapID, uint256 _index) internal view returns (uint8) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
+    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
-  /** Get an item of spaces (using the specified store) (unchecked, returns invalid data if index overflows) */
-  function getItemSpaces(IStore _store, address owner, bytes32 id, uint256 _index) internal view returns (uint8) {
+  /** Get an item of value (using the specified store) (unchecked, returns invalid data if index overflows) */
+  function getItem(IStore _store, address owner, bytes32 mapID, uint256 _index) internal view returns (uint8) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
+    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
-  /** Push an element to spaces */
-  function pushSpaces(address owner, bytes32 id, uint8 _element) internal {
+  /** Push an element to value */
+  function push(address owner, bytes32 mapID, uint8 _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    StoreSwitch.pushToField(_tableId, _keyTuple, 1, abi.encodePacked((_element)));
+    StoreSwitch.pushToField(_tableId, _keyTuple, 0, abi.encodePacked((_element)));
   }
 
-  /** Push an element to spaces (using the specified store) */
-  function pushSpaces(IStore _store, address owner, bytes32 id, uint8 _element) internal {
+  /** Push an element to value (using the specified store) */
+  function push(IStore _store, address owner, bytes32 mapID, uint8 _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    _store.pushToField(_tableId, _keyTuple, 1, abi.encodePacked((_element)));
+    _store.pushToField(_tableId, _keyTuple, 0, abi.encodePacked((_element)));
   }
 
-  /** Pop an element from spaces */
-  function popSpaces(address owner, bytes32 id) internal {
+  /** Pop an element from value */
+  function pop(address owner, bytes32 mapID) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    StoreSwitch.popFromField(_tableId, _keyTuple, 1, 1);
+    StoreSwitch.popFromField(_tableId, _keyTuple, 0, 1);
   }
 
-  /** Pop an element from spaces (using the specified store) */
-  function popSpaces(IStore _store, address owner, bytes32 id) internal {
+  /** Pop an element from value (using the specified store) */
+  function pop(IStore _store, address owner, bytes32 mapID) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    _store.popFromField(_tableId, _keyTuple, 1, 1);
+    _store.popFromField(_tableId, _keyTuple, 0, 1);
   }
 
-  /** Update an element of spaces at `_index` */
-  function updateSpaces(address owner, bytes32 id, uint256 _index, uint8 _element) internal {
+  /** Update an element of value at `_index` */
+  function update(address owner, bytes32 mapID, uint256 _index, uint8 _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    StoreSwitch.updateInField(_tableId, _keyTuple, 1, _index * 1, abi.encodePacked((_element)));
+    StoreSwitch.updateInField(_tableId, _keyTuple, 0, _index * 1, abi.encodePacked((_element)));
   }
 
-  /** Update an element of spaces (using the specified store) at `_index` */
-  function updateSpaces(IStore _store, address owner, bytes32 id, uint256 _index, uint8 _element) internal {
+  /** Update an element of value (using the specified store) at `_index` */
+  function update(IStore _store, address owner, bytes32 mapID, uint256 _index, uint8 _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
-    _store.updateInField(_tableId, _keyTuple, 1, _index * 1, abi.encodePacked((_element)));
-  }
-
-  /** Get the full data */
-  function get(address owner, bytes32 id) internal view returns (GridData memory _table) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
-    return decode(_blob);
-  }
-
-  /** Get the full data (using the specified store) */
-  function get(IStore _store, address owner, bytes32 id) internal view returns (GridData memory _table) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
-    return decode(_blob);
-  }
-
-  /** Set the full data using individual values */
-  function set(address owner, bytes32 id, GridSizeEnum size, uint8[] memory spaces) internal {
-    bytes memory _data = encode(size, spaces);
-
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    StoreSwitch.setRecord(_tableId, _keyTuple, _data);
-  }
-
-  /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, address owner, bytes32 id, GridSizeEnum size, uint8[] memory spaces) internal {
-    bytes memory _data = encode(size, spaces);
-
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
-
-    _store.setRecord(_tableId, _keyTuple, _data);
-  }
-
-  /** Set the full data using the data struct */
-  function set(address owner, bytes32 id, GridData memory _table) internal {
-    set(owner, id, _table.size, _table.spaces);
-  }
-
-  /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, address owner, bytes32 id, GridData memory _table) internal {
-    set(_store, owner, id, _table.size, _table.spaces);
-  }
-
-  /** Decode the tightly packed blob using this table's schema */
-  function decode(bytes memory _blob) internal view returns (GridData memory _table) {
-    // 1 is the total byte length of static data
-    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 1));
-
-    _table.size = GridSizeEnum(uint8(Bytes.slice1(_blob, 0)));
-
-    // Store trims the blob if dynamic fields are all empty
-    if (_blob.length > 1) {
-      uint256 _start;
-      // skip static data length + dynamic lengths word
-      uint256 _end = 33;
-
-      _start = _end;
-      _end += _encodedLengths.atIndex(0);
-      _table.spaces = (SliceLib.getSubslice(_blob, _start, _end).decodeArray_uint8());
-    }
+    _store.updateInField(_tableId, _keyTuple, 0, _index * 1, abi.encodePacked((_element)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(GridSizeEnum size, uint8[] memory spaces) internal view returns (bytes memory) {
+  function encode(uint8[] memory value) internal view returns (bytes memory) {
     uint40[] memory _counters = new uint40[](1);
-    _counters[0] = uint40(spaces.length * 1);
+    _counters[0] = uint40(value.length * 1);
     PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
 
-    return abi.encodePacked(size, _encodedLengths.unwrap(), EncodeArray.encode((spaces)));
+    return abi.encodePacked(_encodedLengths.unwrap(), EncodeArray.encode((value)));
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(address owner, bytes32 id) internal pure returns (bytes32[] memory _keyTuple) {
+  function encodeKeyTuple(address owner, bytes32 mapID) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(address owner, bytes32 id) internal {
+  function deleteRecord(address owner, bytes32 mapID) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, address owner, bytes32 id) internal {
+  function deleteRecord(IStore _store, address owner, bytes32 mapID) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
-    _keyTuple[1] = bytes32((id));
+    _keyTuple[1] = bytes32((mapID));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

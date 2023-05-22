@@ -689,7 +689,7 @@ const _abi = [
         type: "string",
       },
     ],
-    name: "openar_GridSystem_claim",
+    name: "openar_GridSystem_claimGrid",
     outputs: [
       {
         internalType: "bytes32",
@@ -708,7 +708,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "openar_GridSystem_transfer",
+    name: "openar_GridSystem_transferGrid",
     outputs: [
       {
         internalType: "bytes32",
@@ -739,13 +739,51 @@ const _abi = [
         name: "gameId",
         type: "bytes32",
       },
+    ],
+    name: "openar_MapSystem_claimMap",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+    ],
+    name: "openar_MapSystem_createMap",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "gameId",
+        type: "bytes32",
+      },
       {
         internalType: "uint8",
         name: "x",
         type: "uint8",
       },
     ],
-    name: "openar_SpaceSystem_setOwner",
+    name: "openar_SpaceSystem_setSpace",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

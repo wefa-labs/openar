@@ -41,7 +41,7 @@ contract GameMoveSystem is System {
     Match.set(gameId, matchData);
   }
 
-  function checkWin(uint8[9] memory board) private pure returns (bool) {
+  function checkWin(uint8[64] memory board) private pure returns (bool) {
     // Check rows
     for (uint8 row = 0; row < 3; row++) {
         if (board[row * 3] != 0 && board[row * 3] == board[row * 3 + 1] && board[row * 3] == board[row * 3 + 2]) {

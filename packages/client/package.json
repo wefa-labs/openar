@@ -28,7 +28,7 @@
     "@wagmi/chains": "^0.2.22",
     "@xstate/react": "^3.2.1",
     "axios": "1.3.6",
-    "contracts-tictactoe": "workspace:*",
+    "tictactoe": "workspace:*",
     "ethers": "^5.7.2",
     "nanoid": "4.0.2",
     "react": "^18.2.0",

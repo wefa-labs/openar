@@ -14,13 +14,27 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "./common";
+import type {
+  TypedEventFilter,
+  TypedEvent,
+  TypedListener,
+  OnEvent,
+  PromiseOrValue,
+} from "./common";
 
 export interface IWorldInterface extends utils.Interface {
   functions: {
     "call(bytes16,bytes16,bytes)": FunctionFragment;
+    "checkers_GameInit_create(uint8,string)": FunctionFragment;
+    "checkers_GameInit_join(bytes32)": FunctionFragment;
+    "checkers_GameMove_claimPosition(bytes32,uint8)": FunctionFragment;
+    "checkers_Increment_increment()": FunctionFragment;
     "deleteRecord(bytes32,bytes32[])": FunctionFragment;
     "deleteRecord(bytes16,bytes16,bytes32[])": FunctionFragment;
     "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
@@ -57,10 +71,6 @@ export interface IWorldInterface extends utils.Interface {
     "setMetadata(bytes32,string,string[])": FunctionFragment;
     "setRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
     "setRecord(bytes32,bytes32[],bytes)": FunctionFragment;
-    "checkers_GameInit_create(uint8,string)": FunctionFragment;
-    "checkers_GameInit_join(bytes32)": FunctionFragment;
-    "checkers_GameMove_claimPosition(bytes32,uint8)": FunctionFragment;
-    "checkers_Increment_increment()": FunctionFragment;
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)": FunctionFragment;
     "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)": FunctionFragment;
   };
@@ -68,6 +78,10 @@ export interface IWorldInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "call"
+      | "checkers_GameInit_create"
+      | "checkers_GameInit_join"
+      | "checkers_GameMove_claimPosition"
+      | "checkers_Increment_increment"
       | "deleteRecord(bytes32,bytes32[])"
       | "deleteRecord(bytes16,bytes16,bytes32[])"
       | "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)"
@@ -104,17 +118,33 @@ export interface IWorldInterface extends utils.Interface {
       | "setMetadata(bytes32,string,string[])"
       | "setRecord(bytes16,bytes16,bytes32[],bytes)"
       | "setRecord(bytes32,bytes32[],bytes)"
-      | "checkers_GameInit_create"
-      | "checkers_GameInit_join"
-      | "checkers_GameMove_claimPosition"
-      | "checkers_Increment_increment"
       | "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"
       | "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "call",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkers_GameInit_create",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkers_GameInit_join",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkers_GameMove_claimPosition",
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkers_Increment_increment",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRecord(bytes32,bytes32[])",
@@ -122,7 +152,11 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)",
@@ -135,11 +169,19 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getField",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getFieldLength",
@@ -161,19 +203,33 @@ export interface IWorldInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(functionFragment: "getKeySchema", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: "getKeySchema",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: "getRecord(bytes32,bytes32[],bytes32)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getRecord(bytes32,bytes32[])",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(functionFragment: "getSchema", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: "getSchema",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: "grantAccess",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "installModule",
@@ -224,20 +280,41 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerFunctionSelector",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerHook",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
-  encodeFunctionData(functionFragment: "registerNamespace", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: "registerNamespace",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: "registerRootFunctionSelector",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerSchema",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerStoreHook",
@@ -245,23 +322,45 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerSystem",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerSystemHook",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTable",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTableHook",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeAccess",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
@@ -284,11 +383,20 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setMetadata(bytes16,bytes16,string,string[])",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setMetadata(bytes32,string,string[])",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)",
@@ -301,18 +409,12 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRecord(bytes32,bytes32[],bytes)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "checkers_GameInit_create",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "checkers_GameInit_join", values: [PromiseOrValue<BytesLike>]): string;
-  encodeFunctionData(
-    functionFragment: "checkers_GameMove_claimPosition",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "checkers_Increment_increment", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "updateInField(bytes32,bytes32[],uint8,uint256,bytes)",
     values: [
@@ -336,52 +438,157 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "call", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deleteRecord(bytes32,bytes32[])", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "checkers_GameInit_create",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "checkers_GameInit_join",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "checkers_GameMove_claimPosition",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "checkers_Increment_increment",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "deleteRecord(bytes32,bytes32[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getField", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getFieldLength", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getFieldSlice", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getKeySchema", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getRecord(bytes32,bytes32[],bytes32)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getRecord(bytes32,bytes32[])", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getFieldLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getFieldSlice",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getKeySchema",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRecord(bytes32,bytes32[],bytes32)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRecord(bytes32,bytes32[])",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getSchema", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "grantAccess", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "installModule", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "installRootModule", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "grantAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "installModule",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "installRootModule",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "isStore", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "popFromField(bytes32,bytes32[],uint8,uint256)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pushToField(bytes32,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerFunctionSelector", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerNamespace", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerRootFunctionSelector", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerSchema", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerStoreHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerSystem", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerSystemHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerTable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerTableHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "revokeAccess", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setField(bytes32,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setField(bytes16,bytes16,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setMetadata(bytes16,bytes16,string,string[])", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setMetadata(bytes32,string,string[])", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setRecord(bytes32,bytes32[],bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "checkers_GameInit_create", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "checkers_GameInit_join", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "checkers_GameMove_claimPosition", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "checkers_Increment_increment", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "popFromField(bytes32,bytes32[],uint8,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "pushToField(bytes32,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerFunctionSelector",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerNamespace",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerRootFunctionSelector",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerSchema",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerStoreHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerSystem",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerSystemHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerTable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerTableHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokeAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setField(bytes16,bytes16,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMetadata(bytes16,bytes16,string,string[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMetadata(bytes32,string,string[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRecord(bytes32,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "updateInField(bytes32,bytes32[],uint8,uint256,bytes)",
     data: BytesLike
@@ -415,18 +622,26 @@ export interface StoreDeleteRecordEventObject {
   table: string;
   key: string[];
 }
-export type StoreDeleteRecordEvent = TypedEvent<[string, string[]], StoreDeleteRecordEventObject>;
+export type StoreDeleteRecordEvent = TypedEvent<
+  [string, string[]],
+  StoreDeleteRecordEventObject
+>;
 
-export type StoreDeleteRecordEventFilter = TypedEventFilter<StoreDeleteRecordEvent>;
+export type StoreDeleteRecordEventFilter =
+  TypedEventFilter<StoreDeleteRecordEvent>;
 
 export interface StoreEphemeralRecordEventObject {
   table: string;
   key: string[];
   data: string;
 }
-export type StoreEphemeralRecordEvent = TypedEvent<[string, string[], string], StoreEphemeralRecordEventObject>;
+export type StoreEphemeralRecordEvent = TypedEvent<
+  [string, string[], string],
+  StoreEphemeralRecordEventObject
+>;
 
-export type StoreEphemeralRecordEventFilter = TypedEventFilter<StoreEphemeralRecordEvent>;
+export type StoreEphemeralRecordEventFilter =
+  TypedEventFilter<StoreEphemeralRecordEvent>;
 
 export interface StoreSetFieldEventObject {
   table: string;
@@ -434,7 +649,10 @@ export interface StoreSetFieldEventObject {
   schemaIndex: number;
   data: string;
 }
-export type StoreSetFieldEvent = TypedEvent<[string, string[], number, string], StoreSetFieldEventObject>;
+export type StoreSetFieldEvent = TypedEvent<
+  [string, string[], number, string],
+  StoreSetFieldEventObject
+>;
 
 export type StoreSetFieldEventFilter = TypedEventFilter<StoreSetFieldEvent>;
 
@@ -443,7 +661,10 @@ export interface StoreSetRecordEventObject {
   key: string[];
   data: string;
 }
-export type StoreSetRecordEvent = TypedEvent<[string, string[], string], StoreSetRecordEventObject>;
+export type StoreSetRecordEvent = TypedEvent<
+  [string, string[], string],
+  StoreSetRecordEventObject
+>;
 
 export type StoreSetRecordEventFilter = TypedEventFilter<StoreSetRecordEvent>;
 
@@ -460,9 +681,13 @@ export interface IWorld extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(
+    eventFilter?: TypedEventFilter<TEvent>
+  ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -475,6 +700,27 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<BytesLike>,
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    checkers_GameInit_create(
+      role: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    checkers_GameInit_join(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    checkers_GameMove_claimPosition(
+      gameId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    checkers_Increment_increment(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "deleteRecord(bytes32,bytes32[])"(
@@ -530,7 +776,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { data: string }>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & { schema: string }>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { schema: string }>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -545,7 +794,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { data: string }>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & { schema: string }>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { schema: string }>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -727,27 +979,6 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    checkers_GameInit_create(
-      role: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    checkers_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    checkers_Increment_increment(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -773,6 +1004,27 @@ export interface IWorld extends BaseContract {
     name: PromiseOrValue<BytesLike>,
     funcSelectorAndArgs: PromiseOrValue<BytesLike>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  checkers_GameInit_create(
+    role: PromiseOrValue<BigNumberish>,
+    name: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  checkers_GameInit_join(
+    gameId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  checkers_GameMove_claimPosition(
+    gameId: PromiseOrValue<BytesLike>,
+    x: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  checkers_Increment_increment(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "deleteRecord(bytes32,bytes32[])"(
@@ -828,7 +1080,10 @@ export interface IWorld extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+  getKeySchema(
+    table: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   "getRecord(bytes32,bytes32[],bytes32)"(
     table: PromiseOrValue<BytesLike>,
@@ -843,7 +1098,10 @@ export interface IWorld extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+  getSchema(
+    table: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   grantAccess(
     namespace: PromiseOrValue<BytesLike>,
@@ -1025,25 +1283,6 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  checkers_GameInit_create(
-    role: PromiseOrValue<BigNumberish>,
-    name: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  checkers_GameInit_join(
-    gameId: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  checkers_GameMove_claimPosition(
-    gameId: PromiseOrValue<BytesLike>,
-    x: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  checkers_Increment_increment(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
   "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
     table: PromiseOrValue<BytesLike>,
     key: PromiseOrValue<BytesLike>[],
@@ -1070,6 +1309,25 @@ export interface IWorld extends BaseContract {
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    checkers_GameInit_create(
+      role: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    checkers_GameInit_join(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<number>;
+
+    checkers_GameMove_claimPosition(
+      gameId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    checkers_Increment_increment(overrides?: CallOverrides): Promise<number>;
 
     "deleteRecord(bytes32,bytes32[])"(
       table: PromiseOrValue<BytesLike>,
@@ -1124,7 +1382,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1139,7 +1400,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -1211,7 +1475,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    registerNamespace(namespace: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
+    registerNamespace(
+      namespace: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     registerRootFunctionSelector(
       namespace: PromiseOrValue<BytesLike>,
@@ -1318,22 +1585,6 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    checkers_GameInit_create(
-      role: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    checkers_GameInit_join(gameId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<number>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    checkers_Increment_increment(overrides?: CallOverrides): Promise<number>;
-
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -1358,7 +1609,10 @@ export interface IWorld extends BaseContract {
     "HelloWorld()"(): HelloWorldEventFilter;
     HelloWorld(): HelloWorldEventFilter;
 
-    "StoreDeleteRecord(bytes32,bytes32[])"(table?: null, key?: null): StoreDeleteRecordEventFilter;
+    "StoreDeleteRecord(bytes32,bytes32[])"(
+      table?: null,
+      key?: null
+    ): StoreDeleteRecordEventFilter;
     StoreDeleteRecord(table?: null, key?: null): StoreDeleteRecordEventFilter;
 
     "StoreEphemeralRecord(bytes32,bytes32[],bytes)"(
@@ -1366,7 +1620,11 @@ export interface IWorld extends BaseContract {
       key?: null,
       data?: null
     ): StoreEphemeralRecordEventFilter;
-    StoreEphemeralRecord(table?: null, key?: null, data?: null): StoreEphemeralRecordEventFilter;
+    StoreEphemeralRecord(
+      table?: null,
+      key?: null,
+      data?: null
+    ): StoreEphemeralRecordEventFilter;
 
     "StoreSetField(bytes32,bytes32[],uint8,bytes)"(
       table?: null,
@@ -1374,10 +1632,23 @@ export interface IWorld extends BaseContract {
       schemaIndex?: null,
       data?: null
     ): StoreSetFieldEventFilter;
-    StoreSetField(table?: null, key?: null, schemaIndex?: null, data?: null): StoreSetFieldEventFilter;
+    StoreSetField(
+      table?: null,
+      key?: null,
+      schemaIndex?: null,
+      data?: null
+    ): StoreSetFieldEventFilter;
 
-    "StoreSetRecord(bytes32,bytes32[],bytes)"(table?: null, key?: null, data?: null): StoreSetRecordEventFilter;
-    StoreSetRecord(table?: null, key?: null, data?: null): StoreSetRecordEventFilter;
+    "StoreSetRecord(bytes32,bytes32[],bytes)"(
+      table?: null,
+      key?: null,
+      data?: null
+    ): StoreSetRecordEventFilter;
+    StoreSetRecord(
+      table?: null,
+      key?: null,
+      data?: null
+    ): StoreSetRecordEventFilter;
   };
 
   estimateGas: {
@@ -1386,6 +1657,27 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<BytesLike>,
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    checkers_GameInit_create(
+      role: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    checkers_GameInit_join(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    checkers_GameMove_claimPosition(
+      gameId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    checkers_Increment_increment(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "deleteRecord(bytes32,bytes32[])"(
@@ -1441,7 +1733,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1456,7 +1751,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -1638,25 +1936,6 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    checkers_GameInit_create(
-      role: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    checkers_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    checkers_Increment_increment(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -1683,6 +1962,27 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<BytesLike>,
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkers_GameInit_create(
+      role: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkers_GameInit_join(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkers_GameMove_claimPosition(
+      gameId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkers_Increment_increment(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "deleteRecord(bytes32,bytes32[])"(
@@ -1738,7 +2038,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1753,7 +2056,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -1932,27 +2238,6 @@ export interface IWorld extends BaseContract {
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
       data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    checkers_GameInit_create(
-      role: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    checkers_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    checkers_Increment_increment(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

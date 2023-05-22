@@ -9,9 +9,9 @@ import { defineContractComponents } from "./contractComponents";
 import { world } from "./world";
 import { Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
-import { IWorld__factory } from "contracts-tictactoe/types/ethers-contracts/factories/IWorld__factory";
+import { IWorld__factory } from "tictactoe/types/ethers-contracts/factories/IWorld__factory";
 import { getTableIds } from "@latticexyz/utils";
-import storeConfig from "contracts-tictactoe/mud.config";
+import storeConfig from "tictactoe/mud.config";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 

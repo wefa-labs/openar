@@ -4,16 +4,11 @@ export default mudConfig({
   namespace: "openar",
   enums: {
     StateEnum: ["Active", "Frozen"],
-    GridSizeEnum: ["Three", "Nine"],
   },
   tables: {
     State: {
       keySchema: { id: "bytes32" },
       schema: "StateEnum",
-    },
-    GridSize: {
-      keySchema: { id: "bytes32" },
-      schema: "GridSizeEnum",
     },
     Identity: {
       keySchema: { id: "bytes32" },
@@ -26,12 +21,11 @@ export default mudConfig({
     Space: {
       keySchema: { owner: "address", token: "uint32", gridId: "bytes32" },
       schema: {
-        id: "uint8",
+        position: "uint8",
         value: "bytes32[]",
       },
     },
     Grid: {
-      // Introduce higher level primitive to enable custom mapss
       keySchema: { owner: "address", mapID: "bytes32" },
       schema: "uint8[]",
     },
@@ -47,12 +41,10 @@ export default mudConfig({
   },
   systems: {
     SpaceSystem: {
-      // Set space owner using address
       name: "SpaceSystem",
       openAccess: true,
     },
     GridSystem: {
-      // Claim or Transfer to another user or game namespace
       name: "GridSystem",
       openAccess: true,
     },
@@ -63,8 +55,7 @@ export default mudConfig({
     // Testing Purposes
     IncrementSystem: {
       name: "Increment",
-      openAccess: false,
-      accessList: ["GridSystem"],
+      openAccess: true,
     },
   },
 });

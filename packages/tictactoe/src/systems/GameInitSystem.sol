@@ -25,7 +25,6 @@ contract GameInitSystem is System {
       board: [7,7,7,7,7,7,7,7,7],
       players: [playerId, bytes32(0)],
       winner: address(0),
-      trophyClaimed: false,
       currentPlayer: bytes32(0),
       turnCount: 0
     }));

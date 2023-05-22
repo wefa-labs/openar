@@ -328,6 +328,80 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "enum RoleEnum",
+        name: "role",
+        type: "uint8",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+    ],
+    name: "checkers_GameInit_create",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "gameId",
+        type: "bytes32",
+      },
+    ],
+    name: "checkers_GameInit_join",
+    outputs: [
+      {
+        internalType: "enum RoleEnum",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "gameId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "x",
+        type: "uint8",
+      },
+    ],
+    name: "checkers_GameMove_claimPosition",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "checkers_Increment_increment",
+    outputs: [
+      {
+        internalType: "uint32",
+        name: "",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "bytes32",
         name: "table",
         type: "bytes32",
@@ -1245,80 +1319,6 @@ const _abi = [
     ],
     name: "setRecord",
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "enum RoleEnum",
-        name: "role",
-        type: "uint8",
-      },
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-    ],
-    name: "checkers_GameInit_create",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "gameId",
-        type: "bytes32",
-      },
-    ],
-    name: "checkers_GameInit_join",
-    outputs: [
-      {
-        internalType: "enum RoleEnum",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "gameId",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint8",
-        name: "x",
-        type: "uint8",
-      },
-    ],
-    name: "checkers_GameMove_claimPosition",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "checkers_Increment_increment",
-    outputs: [
-      {
-        internalType: "uint32",
-        name: "",
-        type: "uint32",
-      },
-    ],
     stateMutability: "nonpayable",
     type: "function",
   },

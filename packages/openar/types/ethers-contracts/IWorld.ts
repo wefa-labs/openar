@@ -46,10 +46,12 @@ export interface IWorldInterface extends utils.Interface {
     "installModule(address,bytes)": FunctionFragment;
     "installRootModule(address,bytes)": FunctionFragment;
     "isStore()": FunctionFragment;
-    "openar_GridSystem_claim(string)": FunctionFragment;
-    "openar_GridSystem_transfer(bytes32)": FunctionFragment;
+    "openar_GridSystem_claimGrid(string)": FunctionFragment;
+    "openar_GridSystem_transferGrid(bytes32)": FunctionFragment;
     "openar_Increment_increment()": FunctionFragment;
-    "openar_SpaceSystem_setOwner(bytes32,uint8)": FunctionFragment;
+    "openar_MapSystem_claimMap(bytes32)": FunctionFragment;
+    "openar_MapSystem_createMap(string)": FunctionFragment;
+    "openar_SpaceSystem_setSpace(bytes32,uint8)": FunctionFragment;
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)": FunctionFragment;
     "popFromField(bytes32,bytes32[],uint8,uint256)": FunctionFragment;
     "pushToField(bytes32,bytes32[],uint8,bytes)": FunctionFragment;
@@ -93,10 +95,12 @@ export interface IWorldInterface extends utils.Interface {
       | "installModule"
       | "installRootModule"
       | "isStore"
-      | "openar_GridSystem_claim"
-      | "openar_GridSystem_transfer"
+      | "openar_GridSystem_claimGrid"
+      | "openar_GridSystem_transferGrid"
       | "openar_Increment_increment"
-      | "openar_SpaceSystem_setOwner"
+      | "openar_MapSystem_claimMap"
+      | "openar_MapSystem_createMap"
+      | "openar_SpaceSystem_setSpace"
       | "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"
       | "popFromField(bytes32,bytes32[],uint8,uint256)"
       | "pushToField(bytes32,bytes32[],uint8,bytes)"
@@ -225,11 +229,11 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "isStore", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "openar_GridSystem_claim",
+    functionFragment: "openar_GridSystem_claimGrid",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "openar_GridSystem_transfer",
+    functionFragment: "openar_GridSystem_transferGrid",
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
@@ -237,7 +241,15 @@ export interface IWorldInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "openar_SpaceSystem_setOwner",
+    functionFragment: "openar_MapSystem_claimMap",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "openar_MapSystem_createMap",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "openar_SpaceSystem_setSpace",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -490,11 +502,11 @@ export interface IWorldInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "isStore", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "openar_GridSystem_claim",
+    functionFragment: "openar_GridSystem_claimGrid",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "openar_GridSystem_transfer",
+    functionFragment: "openar_GridSystem_transferGrid",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -502,7 +514,15 @@ export interface IWorldInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "openar_SpaceSystem_setOwner",
+    functionFragment: "openar_MapSystem_claimMap",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "openar_MapSystem_createMap",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "openar_SpaceSystem_setSpace",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -799,12 +819,12 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<[void]>;
 
-    openar_GridSystem_claim(
+    openar_GridSystem_claimGrid(
       name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    openar_GridSystem_transfer(
+    openar_GridSystem_transferGrid(
       gameId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -813,7 +833,17 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    openar_SpaceSystem_setOwner(
+    openar_MapSystem_claimMap(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    openar_MapSystem_createMap(
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    openar_SpaceSystem_setSpace(
       gameId: PromiseOrValue<BytesLike>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1102,12 +1132,12 @@ export interface IWorld extends BaseContract {
 
   isStore(overrides?: CallOverrides): Promise<void>;
 
-  openar_GridSystem_claim(
+  openar_GridSystem_claimGrid(
     name: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  openar_GridSystem_transfer(
+  openar_GridSystem_transferGrid(
     gameId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1116,7 +1146,17 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  openar_SpaceSystem_setOwner(
+  openar_MapSystem_claimMap(
+    gameId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  openar_MapSystem_createMap(
+    name: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  openar_SpaceSystem_setSpace(
     gameId: PromiseOrValue<BytesLike>,
     x: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1405,19 +1445,29 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<void>;
 
-    openar_GridSystem_claim(
+    openar_GridSystem_claimGrid(
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    openar_GridSystem_transfer(
+    openar_GridSystem_transferGrid(
       gameId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     openar_Increment_increment(overrides?: CallOverrides): Promise<number>;
 
-    openar_SpaceSystem_setOwner(
+    openar_MapSystem_claimMap(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    openar_MapSystem_createMap(
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    openar_SpaceSystem_setSpace(
       gameId: PromiseOrValue<BytesLike>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1753,12 +1803,12 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<BigNumber>;
 
-    openar_GridSystem_claim(
+    openar_GridSystem_claimGrid(
       name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    openar_GridSystem_transfer(
+    openar_GridSystem_transferGrid(
       gameId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1767,7 +1817,17 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    openar_SpaceSystem_setOwner(
+    openar_MapSystem_claimMap(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    openar_MapSystem_createMap(
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    openar_SpaceSystem_setSpace(
       gameId: PromiseOrValue<BytesLike>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2057,12 +2117,12 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    openar_GridSystem_claim(
+    openar_GridSystem_claimGrid(
       name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    openar_GridSystem_transfer(
+    openar_GridSystem_transferGrid(
       gameId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -2071,7 +2131,17 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    openar_SpaceSystem_setOwner(
+    openar_MapSystem_claimMap(
+      gameId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    openar_MapSystem_createMap(
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    openar_SpaceSystem_setSpace(
       gameId: PromiseOrValue<BytesLike>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

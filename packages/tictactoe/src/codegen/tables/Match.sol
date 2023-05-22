@@ -17,11 +17,11 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("checkers"), bytes16("Match")));
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("tictactoe"), bytes16("Match")));
 bytes32 constant MatchTableId = _tableId;
 
 struct MatchData {
-  uint8[64] board;
+  uint8[9] board;
   bytes32[2] players;
   address winner;
   bytes32 currentPlayer;
@@ -82,37 +82,37 @@ library Match {
   }
 
   /** Get board */
-  function getBoard(bytes32 key) internal view returns (uint8[64] memory board) {
+  function getBoard(bytes32 key) internal view returns (uint8[9] memory board) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return toStaticArray_uint8_64(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+    return toStaticArray_uint8_9(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
   }
 
   /** Get board (using the specified store) */
-  function getBoard(IStore _store, bytes32 key) internal view returns (uint8[64] memory board) {
+  function getBoard(IStore _store, bytes32 key) internal view returns (uint8[9] memory board) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return toStaticArray_uint8_64(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+    return toStaticArray_uint8_9(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
   }
 
   /** Set board */
-  function setBoard(bytes32 key, uint8[64] memory board) internal {
+  function setBoard(bytes32 key, uint8[9] memory board) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_64(board)));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_9(board)));
   }
 
   /** Set board (using the specified store) */
-  function setBoard(IStore _store, bytes32 key, uint8[64] memory board) internal {
+  function setBoard(IStore _store, bytes32 key, uint8[9] memory board) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
 
-    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_64(board)));
+    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_9(board)));
   }
 
   /** Get the length of board */
@@ -440,7 +440,7 @@ library Match {
   /** Set the full data using individual values */
   function set(
     bytes32 key,
-    uint8[64] memory board,
+    uint8[9] memory board,
     bytes32[2] memory players,
     address winner,
     bytes32 currentPlayer,
@@ -458,7 +458,7 @@ library Match {
   function set(
     IStore _store,
     bytes32 key,
-    uint8[64] memory board,
+    uint8[9] memory board,
     bytes32[2] memory players,
     address winner,
     bytes32 currentPlayer,
@@ -501,7 +501,7 @@ library Match {
 
       _start = _end;
       _end += _encodedLengths.atIndex(0);
-      _table.board = toStaticArray_uint8_64(SliceLib.getSubslice(_blob, _start, _end).decodeArray_uint8());
+      _table.board = toStaticArray_uint8_9(SliceLib.getSubslice(_blob, _start, _end).decodeArray_uint8());
 
       _start = _end;
       _end += _encodedLengths.atIndex(1);
@@ -511,7 +511,7 @@ library Match {
 
   /** Tightly pack full data using this table's schema */
   function encode(
-    uint8[64] memory board,
+    uint8[9] memory board,
     bytes32[2] memory players,
     address winner,
     bytes32 currentPlayer,
@@ -528,7 +528,7 @@ library Match {
         currentPlayer,
         turnCount,
         _encodedLengths.unwrap(),
-        EncodeArray.encode(fromStaticArray_uint8_64(board)),
+        EncodeArray.encode(fromStaticArray_uint8_9(board)),
         EncodeArray.encode(fromStaticArray_bytes32_2(players))
       );
   }
@@ -556,7 +556,7 @@ library Match {
   }
 }
 
-function toStaticArray_uint8_64(uint8[] memory _value) pure returns (uint8[64] memory _result) {
+function toStaticArray_uint8_9(uint8[] memory _value) pure returns (uint8[9] memory _result) {
   // in memory static arrays are just dynamic arrays without the length byte
   assembly {
     _result := add(_value, 0x20)
@@ -570,15 +570,15 @@ function toStaticArray_bytes32_2(bytes32[] memory _value) pure returns (bytes32[
   }
 }
 
-function fromStaticArray_uint8_64(uint8[64] memory _value) view returns (uint8[] memory _result) {
-  _result = new uint8[](64);
+function fromStaticArray_uint8_9(uint8[9] memory _value) view returns (uint8[] memory _result) {
+  _result = new uint8[](9);
   uint256 fromPointer;
   uint256 toPointer;
   assembly {
     fromPointer := _value
     toPointer := add(_result, 0x20)
   }
-  Memory.copy(fromPointer, toPointer, 2048);
+  Memory.copy(fromPointer, toPointer, 288);
 }
 
 function fromStaticArray_bytes32_2(bytes32[2] memory _value) view returns (bytes32[] memory _result) {

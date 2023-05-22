@@ -17,22 +17,24 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("checkers"), bytes16("PlayerID")));
-bytes32 constant PlayerIDTableId = _tableId;
+// Import user types
+import { StateEnum } from "./../Types.sol";
 
-library PlayerID {
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("openar"), bytes16("State")));
+bytes32 constant StateTableId = _tableId;
+
+library State {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](1);
-    _schema[0] = SchemaType.BYTES32;
+    _schema[0] = SchemaType.UINT8;
 
     return SchemaLib.encode(_schema);
   }
 
   function getKeySchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](2);
-    _schema[0] = SchemaType.ADDRESS;
-    _schema[1] = SchemaType.BYTES32;
+    SchemaType[] memory _schema = new SchemaType[](1);
+    _schema[0] = SchemaType.BYTES32;
 
     return SchemaLib.encode(_schema);
   }
@@ -41,7 +43,7 @@ library PlayerID {
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](1);
     _fieldNames[0] = "value";
-    return ("PlayerID", _fieldNames);
+    return ("State", _fieldNames);
   }
 
   /** Register the table's schema */
@@ -67,69 +69,62 @@ library PlayerID {
   }
 
   /** Get value */
-  function get(address user, bytes32 gridId) internal view returns (bytes32 value) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function get(bytes32 id) internal view returns (StateEnum value) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return (Bytes.slice32(_blob, 0));
+    return StateEnum(uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Get value (using the specified store) */
-  function get(IStore _store, address user, bytes32 gridId) internal view returns (bytes32 value) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function get(IStore _store, bytes32 id) internal view returns (StateEnum value) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return (Bytes.slice32(_blob, 0));
+    return StateEnum(uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Set value */
-  function set(address user, bytes32 gridId, bytes32 value) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function set(bytes32 id, StateEnum value) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(value)));
   }
 
   /** Set value (using the specified store) */
-  function set(IStore _store, address user, bytes32 gridId, bytes32 value) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function set(IStore _store, bytes32 id, StateEnum value) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
 
-    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
+    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(value)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(bytes32 value) internal view returns (bytes memory) {
+  function encode(StateEnum value) internal view returns (bytes memory) {
     return abi.encodePacked(value);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(address user, bytes32 gridId) internal pure returns (bytes32[] memory _keyTuple) {
-    _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function encodeKeyTuple(bytes32 id) internal pure returns (bytes32[] memory _keyTuple) {
+    _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(address user, bytes32 gridId) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function deleteRecord(bytes32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, address user, bytes32 gridId) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((gridId));
+  function deleteRecord(IStore _store, bytes32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

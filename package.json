@@ -9,9 +9,9 @@
   "scripts": {
     "build": "pnpm recursive run build",
     "docker:compose": "docker-compose up -d --build",
-    "dev": "concurrently -n contracts,client,proxy -c cyan,magenta,yellow 'cd packages/contracts && pnpm run dev' 'cd packages/client && pnpm run dev' 'pnpm run docker:compose'",
+    "dev": "concurrently -n contracts,client,proxy -c cyan,magenta,yellow 'cd packages/tictactoe && pnpm run dev' 'cd packages/client && pnpm run dev' 'pnpm run docker:compose'",
     "dev:client": "pnpm --filter 'client' run dev",
-    "dev:contracts": "pnpm --filter 'contracts' dev",
+    "dev:contracts": "pnpm --filter 'tictactoe' dev",
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
     "initialize": "pnpm recursive run initialize",
     "mud:up": "pnpm recursive exec mud set-version -v canary && pnpm install",
