@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom/client";
 // import { mount as mountDevTools } from "@latticexyz/dev-tools";
 import App from "./App";
-import { setup } from "./mud/setup";
-import { MUDProvider } from "./MUDContext";
+import { setup } from "./modules/openar/setup";
+import { MUDProvider } from "./hooks/useMud";
 
 import "./index.css";
 

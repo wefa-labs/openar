@@ -2,7 +2,7 @@ import { WagmiConfig } from "wagmi";
 import { BrowserRouter } from "react-router-dom";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
-import { wagmiClient, chains } from "./modules/wagmi";
+import { config, chains } from "./modules/wagmi";
 import { DeviceDetectProvider, isHandheld } from "./hooks/useDeviceDetect";
 
 import { Appbar } from "./components/Layout/AppBar";
@@ -13,7 +13,7 @@ import Views from "./views";
 
 function App() {
   return (
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig config={config}>
       <RainbowKitProvider chains={chains}>
         <DeviceDetectProvider value={isHandheld ? "handheld" : "desktop"}>
           <NotificationProvider>

@@ -1,6 +1,6 @@
 import { useComponentValue } from "@latticexyz/react";
 
-import { useMUD } from "../../../MUDContext";
+import { useMUD } from "../../../hooks/useMud";
 
 export default function Incrementer() {
   const {

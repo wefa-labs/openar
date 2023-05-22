@@ -17,10 +17,10 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 
-const wagmiClient = createConfig({
+const config = createConfig({
   autoConnect: false,
   connectors,
   publicClient,
 });
 
-export { chains, wagmiClient };
+export { chains, config };
