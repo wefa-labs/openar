@@ -2,22 +2,22 @@
 pragma solidity >=0.8.0;
 
 import { Script } from "forge-std/Script.sol";
-// import { console } from "forge-std/console.sol";
+import { console } from "forge-std/console.sol";
 import { IWorld } from "../src/codegen/world/IWorld.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
-    // Load the private key from the `PRIVATE_KEY` environment variable (in .env)
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
-    // Start broadcasting transactions from the deployer account
     vm.startBroadcast(deployerPrivateKey);
 
-    // ------------------ EXAMPLES ------------------
+    // Give write acess to game namespaces
+    IWorld(worldAddress).grantAccess("tictactoe", "SpaceSystem", address(this));
+    IWorld(worldAddress).grantAccess("checkers", "SpaceSystem", address(this));
 
-    // Call increment on the world via the registered function selector
-    uint32 newValue = IWorld(worldAddress).openar_Increment_increment();
-    // console.log("Increment via IWorld:", newValue);
+    // TODO: Add NFT deployment of creature contracts
+
+    console.log("PostDeploy: granted access to SpaceSystem");
 
     vm.stopBroadcast();
   }

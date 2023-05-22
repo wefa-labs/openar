@@ -17,6 +17,7 @@ contract PostDeploy is Script {
 
     // Call increment on the world via the registered function selector
     uint32 newValue = IWorld(worldAddress).checkers_Increment_increment();
+    // TODO: Add NFT deployment of creature contracts
     console.log("Increment via IWorld:", newValue);
 
     vm.stopBroadcast();

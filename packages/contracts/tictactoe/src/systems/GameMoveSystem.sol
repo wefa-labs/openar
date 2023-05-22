@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
 
-import { Match, MatchData, Role, PlayerID } from "../codegen/Tables.sol";
+import { Match, MatchData, Role } from "../codegen/Tables.sol";
 
 contract GameMoveSystem is System {
   function claimPosition(
@@ -12,19 +12,18 @@ contract GameMoveSystem is System {
   ) public {
     address user = _msgSender();
 
-    bytes32 playerId = PlayerID.get(user, gameId);
-    require(playerId != bytes32(0), "player not in game");
+    // require(playerId != bytes32(0), "player not in game");
 
     // Check some  match conditions
     MatchData memory matchData = Match.get(gameId);
     require(matchData.turnCount == 10, "game drawn");
     require(matchData.winner == address(0), "game won");
-    require(matchData.currentPlayer == playerId, "not your turn");
+    // require(matchData.currentPlayer == playerId, "not your turn");
     require(x < 9, "position out of bounds");
     require(matchData.board[x] == 7, "position already claimed");
 
     // Update match state
-    matchData.board[x] = uint8(Role.get(playerId));
+    // matchData.board[x] = uint8(Role.get(playerId));
     matchData.turnCount += 1;
 
     // Check if player has won if more than 4 turns have passed
@@ -35,7 +34,7 @@ contract GameMoveSystem is System {
       matchData.currentPlayer = bytes32(0);
       matchData.turnCount = 10; // Set turnCount to 10 to indicate the game has ended
     } else {
-      matchData.currentPlayer = matchData.players[matchData.turnCount % 2];
+      // matchData.currentPlayer = matchData.players[matchData.turnCount % 2];
     }
 
     Match.set(gameId, matchData);

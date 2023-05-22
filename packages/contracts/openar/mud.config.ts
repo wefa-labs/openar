@@ -41,6 +41,11 @@ export default mudConfig({
     },
   },
   systems: {
+    // Testing Purposes
+    IncrementSystem: {
+      name: "Increment",
+      openAccess: true,
+    },
     SpaceSystem: {
       name: "SpaceSystem",
       openAccess: false,
@@ -52,11 +57,6 @@ export default mudConfig({
     },
     MapSystem: {
       name: "MapSystem",
-      openAccess: true,
-    },
-    // Testing Purposes
-    IncrementSystem: {
-      name: "Increment",
       openAccess: true,
     },
   },

@@ -3,47 +3,47 @@ import { mudConfig } from "@latticexyz/world/register";
 export default mudConfig({
   namespace: "checkers",
   enums: {
-    RoleEnum: ["O", "X"],
+    RoleEnum: ["Red", "Black"],
   },
   tables: {
+    // Test Purposes
+    Counter: {
+      keySchema: {},
+      schema: "uint32",
+    },
     Role: {
+      keySchema: { user: "address", gameId: "bytes32" },
       schema: "RoleEnum",
     },
-    PlayerID: {
-      keySchema: { user: "address", gridId: "bytes32" },
-      schema: "bytes32",
-    },
     Identity: {
+      keySchema: { id: "bytes32" },
       schema: {
         name: "string",
         createdAt: "uint256",
       },
     },
     Match: {
+      keySchema: { id: "bytes32" },
       schema: {
         board: "uint8[64]",
-        players: "bytes32[2]",
         winner: "address",
         currentPlayer: "bytes32",
         turnCount: "uint8",
       },
     },
-    Counter: {
-      keySchema: {},
-      schema: "uint32",
-    },
   },
   systems: {
+    // Test Purposes
+    IncrementSystem: {
+      name: "Increment",
+      openAccess: true,
+    },
     GameInitSystem: {
       name: "GameInit",
       openAccess: true,
     },
     GameMoveSystem: {
       name: "GameMove",
-      openAccess: true,
-    },
-    IncrementSystem: {
-      name: "Increment",
       openAccess: true,
     },
   },

@@ -67,41 +67,41 @@ library Grid {
   }
 
   /** Get value */
-  function get(address owner, bytes32 mapID) internal view returns (uint8[] memory value) {
+  function get(address owner, bytes32 mapID) internal view returns (uint8[64] memory value) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
     _keyTuple[1] = bytes32((mapID));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+    return toStaticArray_uint8_64(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
   }
 
   /** Get value (using the specified store) */
-  function get(IStore _store, address owner, bytes32 mapID) internal view returns (uint8[] memory value) {
+  function get(IStore _store, address owner, bytes32 mapID) internal view returns (uint8[64] memory value) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
     _keyTuple[1] = bytes32((mapID));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+    return toStaticArray_uint8_64(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
   }
 
   /** Set value */
-  function set(address owner, bytes32 mapID, uint8[] memory value) internal {
+  function set(address owner, bytes32 mapID, uint8[64] memory value) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
     _keyTuple[1] = bytes32((mapID));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode((value)));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_64(value)));
   }
 
   /** Set value (using the specified store) */
-  function set(IStore _store, address owner, bytes32 mapID, uint8[] memory value) internal {
+  function set(IStore _store, address owner, bytes32 mapID, uint8[64] memory value) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32(uint256(uint160((owner))));
     _keyTuple[1] = bytes32((mapID));
 
-    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode((value)));
+    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_64(value)));
   }
 
   /** Get the length of value */
@@ -199,12 +199,12 @@ library Grid {
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(uint8[] memory value) internal view returns (bytes memory) {
+  function encode(uint8[64] memory value) internal view returns (bytes memory) {
     uint40[] memory _counters = new uint40[](1);
     _counters[0] = uint40(value.length * 1);
     PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
 
-    return abi.encodePacked(_encodedLengths.unwrap(), EncodeArray.encode((value)));
+    return abi.encodePacked(_encodedLengths.unwrap(), EncodeArray.encode(fromStaticArray_uint8_64(value)));
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
@@ -231,4 +231,22 @@ library Grid {
 
     _store.deleteRecord(_tableId, _keyTuple);
   }
+}
+
+function toStaticArray_uint8_64(uint8[] memory _value) pure returns (uint8[64] memory _result) {
+  // in memory static arrays are just dynamic arrays without the length byte
+  assembly {
+    _result := add(_value, 0x20)
+  }
+}
+
+function fromStaticArray_uint8_64(uint8[64] memory _value) view returns (uint8[] memory _result) {
+  _result = new uint8[](64);
+  uint256 fromPointer;
+  uint256 toPointer;
+  assembly {
+    fromPointer := _value
+    toPointer := add(_result, 0x20)
+  }
+  Memory.copy(fromPointer, toPointer, 2048);
 }

@@ -43,6 +43,9 @@ importers:
       prettier:
         specifier: ^2.8.4
         version: 2.8.8
+      prettier-plugin-solidity:
+        specifier: ^1.0.0-beta.19
+        version: 1.0.0-beta.19(prettier@2.8.8)
       prettier-plugin-tailwindcss:
         specifier: ^0.2.3
         version: 0.2.3(prettier@2.8.8)
@@ -52,6 +55,9 @@ importers:
       run-pty:
         specifier: ^4.0.3
         version: 4.0.3
+      solhint:
+        specifier: ^3.3.7
+        version: 3.3.7
       start-server-and-test:
         specifier: 2.0.0
         version: 2.0.0
@@ -236,15 +242,6 @@ importers:
       forge-std:
         specifier: https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
         version: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
-      prettier:
-        specifier: ^2.6.2
-        version: 2.8.8
-      prettier-plugin-solidity:
-        specifier: ^1.0.0-beta.19
-        version: 1.0.0-beta.19(prettier@2.8.8)
-      solhint:
-        specifier: ^3.3.7
-        version: 3.3.7
       typechain:
         specifier: ^8.1.1
         version: 8.1.1(typescript@5.0.4)

@@ -11,7 +11,7 @@ contract GridSystem is System {
     address user = _msgSender();
 
     bytes32 gameId = getUniqueEntity();
-    bytes32 playerId = getUniqueEntity();
+    // bytes32 playerId = getUniqueEntity();
 
     return gameId;
   }

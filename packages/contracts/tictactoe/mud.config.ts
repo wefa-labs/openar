@@ -6,6 +6,7 @@ export default mudConfig({
     RoleEnum: ["O", "X"],
   },
   tables: {
+    // Test Purposes
     Counter: {
       keySchema: {},
       schema: "uint32",
@@ -23,7 +24,6 @@ export default mudConfig({
     Match: {
       schema: {
         board: "uint8[9]",
-        players: "bytes32[2]",
         winner: "address",
         currentPlayer: "bytes32",
         turnCount: "uint8",
