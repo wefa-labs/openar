@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "pnpm recursive run build",
-    "dev": "concurrently -n contracts,client,api -c cyan,magenta,yellow 'cd packages/contracts && pnpm run dev' 'cd packages/client && pnpm run dev' 'cd packages/api && pnpm run dev'",
-    "dev:api": "pnpm --filter 'api' run dev",
+    "docker:compose": "docker-compose up -d --build",
+    "dev": "concurrently -n contracts,client,proxy -c cyan,magenta,yellow 'cd packages/contracts && pnpm run dev' 'cd packages/client && pnpm run dev' 'pnpm run docker:compose'",
     "dev:client": "pnpm --filter 'client' run dev",
     "dev:contracts": "pnpm --filter 'contracts' dev",
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
