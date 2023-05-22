@@ -1,4 +1,4 @@
-import { createClient, configureChains } from "wagmi";
+import { createConfig, configureChains } from "wagmi";
 import { optimismGoerli, optimism } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -6,7 +6,7 @@ import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 
 import "@rainbow-me/rainbowkit/styles.css";
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient } = configureChains(
   [optimismGoerli, optimism],
   [alchemyProvider({ apiKey: import.meta.env.ALCHEMY_ID }), publicProvider()]
 );
@@ -17,14 +17,10 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 
-export const generateClient = () =>
-  createClient({
-    autoConnect: false,
-    connectors,
-    provider,
-    webSocketProvider,
-  });
+const wagmiClient = createConfig({
+  autoConnect: false,
+  connectors,
+  publicClient,
+});
 
-export { chains };
-
-export const wagmiClient = generateClient();
+export { chains, wagmiClient };
