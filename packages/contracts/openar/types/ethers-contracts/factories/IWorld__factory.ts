@@ -758,6 +758,21 @@ const _abi = [
         name: "name",
         type: "string",
       },
+      {
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+      {
+        internalType: "enum SizeEnum",
+        name: "size",
+        type: "uint8",
+      },
     ],
     name: "openar_MapSystem_createMap",
     outputs: [

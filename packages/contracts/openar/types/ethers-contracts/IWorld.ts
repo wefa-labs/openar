@@ -50,7 +50,7 @@ export interface IWorldInterface extends utils.Interface {
     "openar_GridSystem_transferGrid(bytes32)": FunctionFragment;
     "openar_Increment_increment()": FunctionFragment;
     "openar_MapSystem_claimMap(bytes32)": FunctionFragment;
-    "openar_MapSystem_createMap(string)": FunctionFragment;
+    "openar_MapSystem_createMap(string,string,string,uint8)": FunctionFragment;
     "openar_SpaceSystem_setSpace(bytes32,uint8)": FunctionFragment;
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)": FunctionFragment;
     "popFromField(bytes32,bytes32[],uint8,uint256)": FunctionFragment;
@@ -246,7 +246,12 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "openar_MapSystem_createMap",
-    values: [PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "openar_SpaceSystem_setSpace",
@@ -840,6 +845,9 @@ export interface IWorld extends BaseContract {
 
     openar_MapSystem_createMap(
       name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      size: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1153,6 +1161,9 @@ export interface IWorld extends BaseContract {
 
   openar_MapSystem_createMap(
     name: PromiseOrValue<string>,
+    description: PromiseOrValue<string>,
+    image: PromiseOrValue<string>,
+    size: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1464,6 +1475,9 @@ export interface IWorld extends BaseContract {
 
     openar_MapSystem_createMap(
       name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      size: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -1824,6 +1838,9 @@ export interface IWorld extends BaseContract {
 
     openar_MapSystem_createMap(
       name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      size: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2138,6 +2155,9 @@ export interface IWorld extends BaseContract {
 
     openar_MapSystem_createMap(
       name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      size: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

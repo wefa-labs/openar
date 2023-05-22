@@ -16,6 +16,14 @@ export default mudConfig({
       keySchema: { id: "bytes32" },
       schema: "StateEnum",
     },
+    Size: {
+      keySchema: { id: "bytes32" },
+      schema: "SizeEnum",
+    },
+    Owner: {
+      keySchema: { id: "bytes32" },
+      schema: "address",
+    },
     Identity: {
       keySchema: { id: "bytes32" },
       schema: {
@@ -25,15 +33,27 @@ export default mudConfig({
       },
     },
     Space: {
-      keySchema: { owner: "address", token: "uint32", gridId: "bytes32" },
+      keySchema: { owner: "address", gridId: "bytes32" },
       schema: {
-        position: "uint8",
+        x: "uint8",
+        y: "uint8",
         value: "bytes32[]",
       },
     },
+    Range: {
+      keySchema: { id: "bytes32" },
+      schema: {
+        xRange: "uint8[2]",
+        yRange: "uint8[2]",
+      },
+    },
+    GridCount: {
+      keySchema: { mapId: "bytes32" },
+      schema: "uint32",
+    },
     Grid: {
       keySchema: { owner: "address", mapID: "bytes32" },
-      schema: "uint8[64]",
+      schema: "bytes32",
     },
     Map: {
       keySchema: { owner: "address" },

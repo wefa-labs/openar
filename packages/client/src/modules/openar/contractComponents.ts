@@ -35,6 +35,36 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Size: (() => {
+      const tableId = new TableId("openar", "Size");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Owner: (() => {
+      const tableId = new TableId("openar", "Owner");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Identity: (() => {
       const tableId = new TableId("openar", "Identity");
       return defineComponent(
@@ -57,8 +87,40 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          position: RecsType.Number,
+          x: RecsType.Number,
+          y: RecsType.Number,
           value: RecsType.StringArray,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Range: (() => {
+      const tableId = new TableId("openar", "Range");
+      return defineComponent(
+        world,
+        {
+          xRange: RecsType.NumberArray,
+          yRange: RecsType.NumberArray,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    GridCount: (() => {
+      const tableId = new TableId("openar", "GridCount");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
         },
         {
           metadata: {
@@ -73,7 +135,7 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          value: RecsType.NumberArray,
+          value: RecsType.String,
         },
         {
           metadata: {
