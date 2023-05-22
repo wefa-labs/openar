@@ -9,7 +9,7 @@ import { defineContractComponents } from "./contractComponents";
 import { world } from "./world";
 import { Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
-import { IWorld__factory } from "tictactoe/types/ethers-contracts/factories/IWorld__factory";
+import { IWorld__factory } from "openar/types/ethers-contracts/factories/IWorld__factory";
 import { getTableIds } from "@latticexyz/utils";
 import storeConfig from "tictactoe/mud.config";
 
