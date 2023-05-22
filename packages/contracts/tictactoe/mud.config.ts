@@ -6,12 +6,13 @@ export default mudConfig({
     RoleEnum: ["O", "X"],
   },
   tables: {
-    Role: {
-      schema: "RoleEnum",
+    Counter: {
+      keySchema: {},
+      schema: "uint32",
     },
-    PlayerID: {
+    Role: {
       keySchema: { user: "address", gameId: "bytes32" },
-      schema: "bytes32",
+      schema: "RoleEnum",
     },
     Identity: {
       schema: {
@@ -27,10 +28,6 @@ export default mudConfig({
         currentPlayer: "bytes32",
         turnCount: "uint8",
       },
-    },
-    Counter: {
-      keySchema: {},
-      schema: "uint32",
     },
   },
   systems: {

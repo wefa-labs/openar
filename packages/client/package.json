@@ -65,7 +65,6 @@
     "vite": "^4.2.1",
     "vite-plugin-mkcert": "1.15.0",
     "vite-plugin-svgr": "^3.2.0",
-    "vite-plugin-pwa": "0.14.7",
-    "wait-port": "^1.0.4"
+    "vite-plugin-pwa": "0.14.7"
   }
 }

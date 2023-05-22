@@ -16,7 +16,7 @@ import storeConfig from "tictactoe/mud.config";
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
 export async function setupNetwork() {
-  const contractComponents = defineContractComponents(world);
+  const contractComponents = defineContractComponents(world); // Do the Spread
   const networkConfig = await getNetworkConfig();
   const result = await setupMUDV2Network<
     typeof contractComponents,
