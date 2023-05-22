@@ -684,9 +684,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "name",
-        type: "string",
+        internalType: "bytes32",
+        name: "mapId",
+        type: "bytes32",
       },
     ],
     name: "openar_GridSystem_claimGrid",
@@ -704,8 +704,62 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "gameId",
+        name: "mapId",
         type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "gridId",
+        type: "bytes32",
+      },
+      {
+        internalType: "enum StateEnum",
+        name: "state",
+        type: "uint8",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+    ],
+    name: "openar_GridSystem_setGrid",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "mapId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "gridId",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
     ],
     name: "openar_GridSystem_transferGrid",
@@ -727,25 +781,6 @@ const _abi = [
         internalType: "uint32",
         name: "",
         type: "uint32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "gameId",
-        type: "bytes32",
-      },
-    ],
-    name: "openar_MapSystem_claimMap",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
       },
     ],
     stateMutability: "nonpayable",
@@ -789,13 +824,28 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "gameId",
+        name: "mapId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "gridId",
         type: "bytes32",
       },
       {
         internalType: "uint8",
         name: "x",
         type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "y",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32[]",
+        name: "value",
+        type: "bytes32[]",
       },
     ],
     name: "openar_SpaceSystem_setSpace",

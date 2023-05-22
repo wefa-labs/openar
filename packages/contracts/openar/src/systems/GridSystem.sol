@@ -47,7 +47,7 @@ contract GridSystem is System {
     address user = _msgSender();
 
     // Check if valid grid
-    require(Grid.get(user , gridId) != bytes32, "not grid owner");
+    require(Grid.get(user , gridId) != bytes32(0), "not grid owner");
     require(State.get(mapId) == StateEnum.Active, "map not active");
     require(State.get(gridId) == StateEnum.Active, "grid not active");
 
@@ -68,22 +68,22 @@ contract GridSystem is System {
     address client = _msgSender();
 
     // Check if valid grid
-    require(Grid.get(client, gridId) != bytes32, "not grid owner");
+    require(Grid.get(client, gridId) != bytes32(0), "not grid owner");
     require(State.get(mapId) == StateEnum.Active, "map not active");
     require(State.get(gridId) == StateEnum.Active, "grid not active");
 
     State.set(gridId, state);
     IdentityData memory identity = Identity.get(gridId);
 
-    if (bytes32(name) != 0) {
+    if (bytes(name).length > 0) {
       identity.name = name;
     }
 
-    if (bytes32(description) != 0) {
+    if (bytes(description).length > 0) {
       identity.description = description;
     }
 
-    if (bytes32(image) != 0) {
+    if (bytes(image).length > 0) {
       identity.image = image;
     }
 
