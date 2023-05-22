@@ -21,16 +21,16 @@ bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("checkers"), bytes1
 bytes32 constant IdentityTableId = _tableId;
 
 struct IdentityData {
-  string name;
   uint256 createdAt;
+  string name;
 }
 
 library Identity {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](2);
-    _schema[0] = SchemaType.STRING;
-    _schema[1] = SchemaType.UINT256;
+    _schema[0] = SchemaType.UINT256;
+    _schema[1] = SchemaType.STRING;
 
     return SchemaLib.encode(_schema);
   }
@@ -45,8 +45,8 @@ library Identity {
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](2);
-    _fieldNames[0] = "name";
-    _fieldNames[1] = "createdAt";
+    _fieldNames[0] = "createdAt";
+    _fieldNames[1] = "name";
     return ("Identity", _fieldNames);
   }
 
@@ -72,130 +72,12 @@ library Identity {
     _store.setMetadata(_tableId, _tableName, _fieldNames);
   }
 
-  /** Get name */
-  function getName(bytes32 id) internal view returns (string memory name) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return (string(_blob));
-  }
-
-  /** Get name (using the specified store) */
-  function getName(IStore _store, bytes32 id) internal view returns (string memory name) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return (string(_blob));
-  }
-
-  /** Set name */
-  function setName(bytes32 id, string memory name) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 0, bytes((name)));
-  }
-
-  /** Set name (using the specified store) */
-  function setName(IStore _store, bytes32 id, string memory name) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    _store.setField(_tableId, _keyTuple, 0, bytes((name)));
-  }
-
-  /** Get the length of name */
-  function lengthName(bytes32 id) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 0, getSchema());
-    return _byteLength / 1;
-  }
-
-  /** Get the length of name (using the specified store) */
-  function lengthName(IStore _store, bytes32 id) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 0, getSchema());
-    return _byteLength / 1;
-  }
-
-  /** Get an item of name (unchecked, returns invalid data if index overflows) */
-  function getItemName(bytes32 id, uint256 _index) internal view returns (string memory) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
-    return (string(_blob));
-  }
-
-  /** Get an item of name (using the specified store) (unchecked, returns invalid data if index overflows) */
-  function getItemName(IStore _store, bytes32 id, uint256 _index) internal view returns (string memory) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
-    return (string(_blob));
-  }
-
-  /** Push a slice to name */
-  function pushName(bytes32 id, string memory _slice) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    StoreSwitch.pushToField(_tableId, _keyTuple, 0, bytes((_slice)));
-  }
-
-  /** Push a slice to name (using the specified store) */
-  function pushName(IStore _store, bytes32 id, string memory _slice) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    _store.pushToField(_tableId, _keyTuple, 0, bytes((_slice)));
-  }
-
-  /** Pop a slice from name */
-  function popName(bytes32 id) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    StoreSwitch.popFromField(_tableId, _keyTuple, 0, 1);
-  }
-
-  /** Pop a slice from name (using the specified store) */
-  function popName(IStore _store, bytes32 id) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    _store.popFromField(_tableId, _keyTuple, 0, 1);
-  }
-
-  /** Update a slice of name at `_index` */
-  function updateName(bytes32 id, uint256 _index, string memory _slice) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    StoreSwitch.updateInField(_tableId, _keyTuple, 0, _index * 1, bytes((_slice)));
-  }
-
-  /** Update a slice of name (using the specified store) at `_index` */
-  function updateName(IStore _store, bytes32 id, uint256 _index, string memory _slice) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
-
-    _store.updateInField(_tableId, _keyTuple, 0, _index * 1, bytes((_slice)));
-  }
-
   /** Get createdAt */
   function getCreatedAt(bytes32 id) internal view returns (uint256 createdAt) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((id));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (uint256(Bytes.slice32(_blob, 0)));
   }
 
@@ -204,7 +86,7 @@ library Identity {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((id));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (uint256(Bytes.slice32(_blob, 0)));
   }
 
@@ -213,7 +95,7 @@ library Identity {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((id));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((createdAt)));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((createdAt)));
   }
 
   /** Set createdAt (using the specified store) */
@@ -221,7 +103,125 @@ library Identity {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((id));
 
-    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((createdAt)));
+    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((createdAt)));
+  }
+
+  /** Get name */
+  function getName(bytes32 id) internal view returns (string memory name) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
+    return (string(_blob));
+  }
+
+  /** Get name (using the specified store) */
+  function getName(IStore _store, bytes32 id) internal view returns (string memory name) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
+    return (string(_blob));
+  }
+
+  /** Set name */
+  function setName(bytes32 id, string memory name) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 1, bytes((name)));
+  }
+
+  /** Set name (using the specified store) */
+  function setName(IStore _store, bytes32 id, string memory name) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    _store.setField(_tableId, _keyTuple, 1, bytes((name)));
+  }
+
+  /** Get the length of name */
+  function lengthName(bytes32 id) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 1, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get the length of name (using the specified store) */
+  function lengthName(IStore _store, bytes32 id) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 1, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get an item of name (unchecked, returns invalid data if index overflows) */
+  function getItemName(bytes32 id, uint256 _index) internal view returns (string memory) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
+    return (string(_blob));
+  }
+
+  /** Get an item of name (using the specified store) (unchecked, returns invalid data if index overflows) */
+  function getItemName(IStore _store, bytes32 id, uint256 _index) internal view returns (string memory) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 1, getSchema(), _index * 1, (_index + 1) * 1);
+    return (string(_blob));
+  }
+
+  /** Push a slice to name */
+  function pushName(bytes32 id, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    StoreSwitch.pushToField(_tableId, _keyTuple, 1, bytes((_slice)));
+  }
+
+  /** Push a slice to name (using the specified store) */
+  function pushName(IStore _store, bytes32 id, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    _store.pushToField(_tableId, _keyTuple, 1, bytes((_slice)));
+  }
+
+  /** Pop a slice from name */
+  function popName(bytes32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    StoreSwitch.popFromField(_tableId, _keyTuple, 1, 1);
+  }
+
+  /** Pop a slice from name (using the specified store) */
+  function popName(IStore _store, bytes32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    _store.popFromField(_tableId, _keyTuple, 1, 1);
+  }
+
+  /** Update a slice of name at `_index` */
+  function updateName(bytes32 id, uint256 _index, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    StoreSwitch.updateInField(_tableId, _keyTuple, 1, _index * 1, bytes((_slice)));
+  }
+
+  /** Update a slice of name (using the specified store) at `_index` */
+  function updateName(IStore _store, bytes32 id, uint256 _index, string memory _slice) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((id));
+
+    _store.updateInField(_tableId, _keyTuple, 1, _index * 1, bytes((_slice)));
   }
 
   /** Get the full data */
@@ -243,8 +243,8 @@ library Identity {
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 id, string memory name, uint256 createdAt) internal {
-    bytes memory _data = encode(name, createdAt);
+  function set(bytes32 id, uint256 createdAt, string memory name) internal {
+    bytes memory _data = encode(createdAt, name);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((id));
@@ -253,8 +253,8 @@ library Identity {
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 id, string memory name, uint256 createdAt) internal {
-    bytes memory _data = encode(name, createdAt);
+  function set(IStore _store, bytes32 id, uint256 createdAt, string memory name) internal {
+    bytes memory _data = encode(createdAt, name);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((id));
@@ -264,12 +264,12 @@ library Identity {
 
   /** Set the full data using the data struct */
   function set(bytes32 id, IdentityData memory _table) internal {
-    set(id, _table.name, _table.createdAt);
+    set(id, _table.createdAt, _table.name);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 id, IdentityData memory _table) internal {
-    set(_store, id, _table.name, _table.createdAt);
+    set(_store, id, _table.createdAt, _table.name);
   }
 
   /** Decode the tightly packed blob using this table's schema */
@@ -292,7 +292,7 @@ library Identity {
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(string memory name, uint256 createdAt) internal view returns (bytes memory) {
+  function encode(uint256 createdAt, string memory name) internal view returns (bytes memory) {
     uint40[] memory _counters = new uint40[](1);
     _counters[0] = uint40(bytes(name).length);
     PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);

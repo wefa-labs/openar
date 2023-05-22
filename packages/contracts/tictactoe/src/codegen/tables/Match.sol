@@ -21,27 +21,28 @@ bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("tictactoe"), bytes
 bytes32 constant MatchTableId = _tableId;
 
 struct MatchData {
-  uint8[9] board;
-  address winner;
   bytes32 currentPlayer;
   uint8 turnCount;
+  address winner;
+  uint8[9] board;
 }
 
 library Match {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](4);
-    _schema[0] = SchemaType.UINT8_ARRAY;
-    _schema[1] = SchemaType.ADDRESS;
-    _schema[2] = SchemaType.BYTES32;
-    _schema[3] = SchemaType.UINT8;
+    _schema[0] = SchemaType.BYTES32;
+    _schema[1] = SchemaType.UINT8;
+    _schema[2] = SchemaType.ADDRESS;
+    _schema[3] = SchemaType.UINT8_ARRAY;
 
     return SchemaLib.encode(_schema);
   }
 
   function getKeySchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](1);
+    SchemaType[] memory _schema = new SchemaType[](2);
     _schema[0] = SchemaType.BYTES32;
+    _schema[1] = SchemaType.BYTES32;
 
     return SchemaLib.encode(_schema);
   }
@@ -49,10 +50,10 @@ library Match {
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](4);
-    _fieldNames[0] = "board";
-    _fieldNames[1] = "winner";
-    _fieldNames[2] = "currentPlayer";
-    _fieldNames[3] = "turnCount";
+    _fieldNames[0] = "currentPlayer";
+    _fieldNames[1] = "turnCount";
+    _fieldNames[2] = "winner";
+    _fieldNames[3] = "board";
     return ("Match", _fieldNames);
   }
 
@@ -78,250 +79,286 @@ library Match {
     _store.setMetadata(_tableId, _tableName, _fieldNames);
   }
 
-  /** Get board */
-  function getBoard(bytes32 key) internal view returns (uint8[9] memory board) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  /** Get currentPlayer */
+  function getCurrentPlayer(bytes32 id, bytes32 gridId) internal view returns (bytes32 currentPlayer) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return toStaticArray_uint8_9(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
-  }
-
-  /** Get board (using the specified store) */
-  function getBoard(IStore _store, bytes32 key) internal view returns (uint8[9] memory board) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return toStaticArray_uint8_9(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
-  }
-
-  /** Set board */
-  function setBoard(bytes32 key, uint8[9] memory board) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_9(board)));
-  }
-
-  /** Set board (using the specified store) */
-  function setBoard(IStore _store, bytes32 key, uint8[9] memory board) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode(fromStaticArray_uint8_9(board)));
-  }
-
-  /** Get the length of board */
-  function lengthBoard(bytes32 key) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 0, getSchema());
-    return _byteLength / 1;
-  }
-
-  /** Get the length of board (using the specified store) */
-  function lengthBoard(IStore _store, bytes32 key) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 0, getSchema());
-    return _byteLength / 1;
-  }
-
-  /** Get an item of board (unchecked, returns invalid data if index overflows) */
-  function getItemBoard(bytes32 key, uint256 _index) internal view returns (uint8) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
-    return (uint8(Bytes.slice1(_blob, 0)));
-  }
-
-  /** Get an item of board (using the specified store) (unchecked, returns invalid data if index overflows) */
-  function getItemBoard(IStore _store, bytes32 key, uint256 _index) internal view returns (uint8) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 1, (_index + 1) * 1);
-    return (uint8(Bytes.slice1(_blob, 0)));
-  }
-
-  /** Push an element to board */
-  function pushBoard(bytes32 key, uint8 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    StoreSwitch.pushToField(_tableId, _keyTuple, 0, abi.encodePacked((_element)));
-  }
-
-  /** Push an element to board (using the specified store) */
-  function pushBoard(IStore _store, bytes32 key, uint8 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    _store.pushToField(_tableId, _keyTuple, 0, abi.encodePacked((_element)));
-  }
-
-  /** Pop an element from board */
-  function popBoard(bytes32 key) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    StoreSwitch.popFromField(_tableId, _keyTuple, 0, 1);
-  }
-
-  /** Pop an element from board (using the specified store) */
-  function popBoard(IStore _store, bytes32 key) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    _store.popFromField(_tableId, _keyTuple, 0, 1);
-  }
-
-  /** Update an element of board at `_index` */
-  function updateBoard(bytes32 key, uint256 _index, uint8 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    StoreSwitch.updateInField(_tableId, _keyTuple, 0, _index * 1, abi.encodePacked((_element)));
-  }
-
-  /** Update an element of board (using the specified store) at `_index` */
-  function updateBoard(IStore _store, bytes32 key, uint256 _index, uint8 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    _store.updateInField(_tableId, _keyTuple, 0, _index * 1, abi.encodePacked((_element)));
-  }
-
-  /** Get winner */
-  function getWinner(bytes32 key) internal view returns (address winner) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
-    return (address(Bytes.slice20(_blob, 0)));
-  }
-
-  /** Get winner (using the specified store) */
-  function getWinner(IStore _store, bytes32 key) internal view returns (address winner) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
-    return (address(Bytes.slice20(_blob, 0)));
-  }
-
-  /** Set winner */
-  function setWinner(bytes32 key, address winner) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((winner)));
-  }
-
-  /** Set winner (using the specified store) */
-  function setWinner(IStore _store, bytes32 key, address winner) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((winner)));
-  }
-
-  /** Get currentPlayer */
-  function getCurrentPlayer(bytes32 key) internal view returns (bytes32 currentPlayer) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (Bytes.slice32(_blob, 0));
   }
 
   /** Get currentPlayer (using the specified store) */
-  function getCurrentPlayer(IStore _store, bytes32 key) internal view returns (bytes32 currentPlayer) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function getCurrentPlayer(IStore _store, bytes32 id, bytes32 gridId) internal view returns (bytes32 currentPlayer) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
   }
 
   /** Set currentPlayer */
-  function setCurrentPlayer(bytes32 key, bytes32 currentPlayer) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function setCurrentPlayer(bytes32 id, bytes32 gridId, bytes32 currentPlayer) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((currentPlayer)));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((currentPlayer)));
   }
 
   /** Set currentPlayer (using the specified store) */
-  function setCurrentPlayer(IStore _store, bytes32 key, bytes32 currentPlayer) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function setCurrentPlayer(IStore _store, bytes32 id, bytes32 gridId, bytes32 currentPlayer) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((currentPlayer)));
+    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((currentPlayer)));
   }
 
   /** Get turnCount */
-  function getTurnCount(bytes32 key) internal view returns (uint8 turnCount) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function getTurnCount(bytes32 id, bytes32 gridId) internal view returns (uint8 turnCount) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Get turnCount (using the specified store) */
-  function getTurnCount(IStore _store, bytes32 key) internal view returns (uint8 turnCount) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function getTurnCount(IStore _store, bytes32 id, bytes32 gridId) internal view returns (uint8 turnCount) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Set turnCount */
-  function setTurnCount(bytes32 key, uint8 turnCount) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function setTurnCount(bytes32 id, bytes32 gridId, uint8 turnCount) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((turnCount)));
+    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((turnCount)));
   }
 
   /** Set turnCount (using the specified store) */
-  function setTurnCount(IStore _store, bytes32 key, uint8 turnCount) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function setTurnCount(IStore _store, bytes32 id, bytes32 gridId, uint8 turnCount) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
-    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((turnCount)));
+    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((turnCount)));
+  }
+
+  /** Get winner */
+  function getWinner(bytes32 id, bytes32 gridId) internal view returns (address winner) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
+    return (address(Bytes.slice20(_blob, 0)));
+  }
+
+  /** Get winner (using the specified store) */
+  function getWinner(IStore _store, bytes32 id, bytes32 gridId) internal view returns (address winner) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
+    return (address(Bytes.slice20(_blob, 0)));
+  }
+
+  /** Set winner */
+  function setWinner(bytes32 id, bytes32 gridId, address winner) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((winner)));
+  }
+
+  /** Set winner (using the specified store) */
+  function setWinner(IStore _store, bytes32 id, bytes32 gridId, address winner) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((winner)));
+  }
+
+  /** Get board */
+  function getBoard(bytes32 id, bytes32 gridId) internal view returns (uint8[9] memory board) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    return toStaticArray_uint8_9(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+  }
+
+  /** Get board (using the specified store) */
+  function getBoard(IStore _store, bytes32 id, bytes32 gridId) internal view returns (uint8[9] memory board) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    return toStaticArray_uint8_9(SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+  }
+
+  /** Set board */
+  function setBoard(bytes32 id, bytes32 gridId, uint8[9] memory board) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 3, EncodeArray.encode(fromStaticArray_uint8_9(board)));
+  }
+
+  /** Set board (using the specified store) */
+  function setBoard(IStore _store, bytes32 id, bytes32 gridId, uint8[9] memory board) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    _store.setField(_tableId, _keyTuple, 3, EncodeArray.encode(fromStaticArray_uint8_9(board)));
+  }
+
+  /** Get the length of board */
+  function lengthBoard(bytes32 id, bytes32 gridId) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 3, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get the length of board (using the specified store) */
+  function lengthBoard(IStore _store, bytes32 id, bytes32 gridId) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 3, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get an item of board (unchecked, returns invalid data if index overflows) */
+  function getItemBoard(bytes32 id, bytes32 gridId, uint256 _index) internal view returns (uint8) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 3, getSchema(), _index * 1, (_index + 1) * 1);
+    return (uint8(Bytes.slice1(_blob, 0)));
+  }
+
+  /** Get an item of board (using the specified store) (unchecked, returns invalid data if index overflows) */
+  function getItemBoard(IStore _store, bytes32 id, bytes32 gridId, uint256 _index) internal view returns (uint8) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 3, getSchema(), _index * 1, (_index + 1) * 1);
+    return (uint8(Bytes.slice1(_blob, 0)));
+  }
+
+  /** Push an element to board */
+  function pushBoard(bytes32 id, bytes32 gridId, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    StoreSwitch.pushToField(_tableId, _keyTuple, 3, abi.encodePacked((_element)));
+  }
+
+  /** Push an element to board (using the specified store) */
+  function pushBoard(IStore _store, bytes32 id, bytes32 gridId, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    _store.pushToField(_tableId, _keyTuple, 3, abi.encodePacked((_element)));
+  }
+
+  /** Pop an element from board */
+  function popBoard(bytes32 id, bytes32 gridId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    StoreSwitch.popFromField(_tableId, _keyTuple, 3, 1);
+  }
+
+  /** Pop an element from board (using the specified store) */
+  function popBoard(IStore _store, bytes32 id, bytes32 gridId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    _store.popFromField(_tableId, _keyTuple, 3, 1);
+  }
+
+  /** Update an element of board at `_index` */
+  function updateBoard(bytes32 id, bytes32 gridId, uint256 _index, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    StoreSwitch.updateInField(_tableId, _keyTuple, 3, _index * 1, abi.encodePacked((_element)));
+  }
+
+  /** Update an element of board (using the specified store) at `_index` */
+  function updateBoard(IStore _store, bytes32 id, bytes32 gridId, uint256 _index, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
+
+    _store.updateInField(_tableId, _keyTuple, 3, _index * 1, abi.encodePacked((_element)));
   }
 
   /** Get the full data */
-  function get(bytes32 key) internal view returns (MatchData memory _table) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function get(bytes32 id, bytes32 gridId) internal view returns (MatchData memory _table) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Get the full data (using the specified store) */
-  function get(IStore _store, bytes32 key) internal view returns (MatchData memory _table) {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function get(IStore _store, bytes32 id, bytes32 gridId) internal view returns (MatchData memory _table) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 key, uint8[9] memory board, address winner, bytes32 currentPlayer, uint8 turnCount) internal {
-    bytes memory _data = encode(board, winner, currentPlayer, turnCount);
+  function set(
+    bytes32 id,
+    bytes32 gridId,
+    bytes32 currentPlayer,
+    uint8 turnCount,
+    address winner,
+    uint8[9] memory board
+  ) internal {
+    bytes memory _data = encode(currentPlayer, turnCount, winner, board);
 
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -329,28 +366,30 @@ library Match {
   /** Set the full data using individual values (using the specified store) */
   function set(
     IStore _store,
-    bytes32 key,
-    uint8[9] memory board,
-    address winner,
+    bytes32 id,
+    bytes32 gridId,
     bytes32 currentPlayer,
-    uint8 turnCount
+    uint8 turnCount,
+    address winner,
+    uint8[9] memory board
   ) internal {
-    bytes memory _data = encode(board, winner, currentPlayer, turnCount);
+    bytes memory _data = encode(currentPlayer, turnCount, winner, board);
 
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using the data struct */
-  function set(bytes32 key, MatchData memory _table) internal {
-    set(key, _table.board, _table.winner, _table.currentPlayer, _table.turnCount);
+  function set(bytes32 id, bytes32 gridId, MatchData memory _table) internal {
+    set(id, gridId, _table.currentPlayer, _table.turnCount, _table.winner, _table.board);
   }
 
   /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, bytes32 key, MatchData memory _table) internal {
-    set(_store, key, _table.board, _table.winner, _table.currentPlayer, _table.turnCount);
+  function set(IStore _store, bytes32 id, bytes32 gridId, MatchData memory _table) internal {
+    set(_store, id, gridId, _table.currentPlayer, _table.turnCount, _table.winner, _table.board);
   }
 
   /** Decode the tightly packed blob using this table's schema */
@@ -358,11 +397,11 @@ library Match {
     // 53 is the total byte length of static data
     PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 53));
 
-    _table.winner = (address(Bytes.slice20(_blob, 0)));
+    _table.currentPlayer = (Bytes.slice32(_blob, 0));
 
-    _table.currentPlayer = (Bytes.slice32(_blob, 20));
+    _table.turnCount = (uint8(Bytes.slice1(_blob, 32)));
 
-    _table.turnCount = (uint8(Bytes.slice1(_blob, 52)));
+    _table.winner = (address(Bytes.slice20(_blob, 33)));
 
     // Store trims the blob if dynamic fields are all empty
     if (_blob.length > 53) {
@@ -378,10 +417,10 @@ library Match {
 
   /** Tightly pack full data using this table's schema */
   function encode(
-    uint8[9] memory board,
-    address winner,
     bytes32 currentPlayer,
-    uint8 turnCount
+    uint8 turnCount,
+    address winner,
+    uint8[9] memory board
   ) internal view returns (bytes memory) {
     uint40[] memory _counters = new uint40[](1);
     _counters[0] = uint40(board.length * 1);
@@ -389,32 +428,35 @@ library Match {
 
     return
       abi.encodePacked(
-        winner,
         currentPlayer,
         turnCount,
+        winner,
         _encodedLengths.unwrap(),
         EncodeArray.encode(fromStaticArray_uint8_9(board))
       );
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
-    _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function encodeKeyTuple(bytes32 id, bytes32 gridId) internal pure returns (bytes32[] memory _keyTuple) {
+    _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(bytes32 key) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function deleteRecord(bytes32 id, bytes32 gridId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 key) internal {
-    bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+  function deleteRecord(IStore _store, bytes32 id, bytes32 gridId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((id));
+    _keyTuple[1] = bytes32((gridId));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }
