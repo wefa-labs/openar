@@ -40,8 +40,8 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          name: RecsType.String,
           createdAt: RecsType.BigInt,
+          name: RecsType.String,
         },
         {
           metadata: {
@@ -56,10 +56,10 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          board: RecsType.NumberArray,
-          winner: RecsType.String,
-          currentPlayer: RecsType.String,
           turnCount: RecsType.Number,
+          currentPlayer: RecsType.String,
+          winner: RecsType.String,
+          board: RecsType.NumberArray,
         },
         {
           metadata: {

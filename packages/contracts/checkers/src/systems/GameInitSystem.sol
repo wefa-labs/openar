@@ -10,7 +10,8 @@ import { Identity, IdentityData, Match, MatchData, Role } from "../codegen/Table
 contract GameInitSystem is System {
   function create(
     RoleEnum role,
-    string memory name
+    string memory name,
+    bytes32 gridId
   ) public returns (bytes32) {
     address user = _msgSender();
 
@@ -20,7 +21,7 @@ contract GameInitSystem is System {
       name: name,
       createdAt: block.timestamp // solhint-disable-line not-rely-on-time
     }));
-    Match.set(gameId, MatchData({
+    Match.set(gameId, gridId, MatchData({
        board: [
         2,2,2,2,2,2,2,2,
         2,2,2,2,2,2,2,2,
@@ -41,14 +42,15 @@ contract GameInitSystem is System {
   }
 
   function join(
-    bytes32 gameId
+    bytes32 gameId,
+    bytes32 gridId
   ) public returns (RoleEnum) {
     address user = _msgSender();
 
     IdentityData memory game = Identity.get(gameId);
     require(game.createdAt != 0, "game doesn't exist");
 
-    MatchData memory matchData = Match.get(gameId);
+    MatchData memory matchData = Match.get(gameId, gridId);
     // require(matchData.players[1] == bytes32(0), "game is full");
     // require(PlayerID.get(playerAddrs, gameId) != bytes32(0), "already in game");
 

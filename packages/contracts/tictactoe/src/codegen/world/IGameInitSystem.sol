@@ -6,7 +6,7 @@ pragma solidity >=0.8.0;
 import { RoleEnum } from "./../Types.sol";
 
 interface IGameInitSystem {
-  function tictactoe_GameInit_create(RoleEnum role, string memory name) external returns (bytes32);
+  function tictactoe_GameInit_create(RoleEnum role, string memory name, bytes32 gridId) external returns (bytes32);
 
-  function tictactoe_GameInit_join(bytes32 gameId) external returns (RoleEnum);
+  function tictactoe_GameInit_join(bytes32 gameId, bytes32 gridId) external returns (RoleEnum);
 }

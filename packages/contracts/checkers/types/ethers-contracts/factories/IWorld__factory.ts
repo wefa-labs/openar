@@ -337,6 +337,11 @@ const _abi = [
         name: "name",
         type: "string",
       },
+      {
+        internalType: "bytes32",
+        name: "gridId",
+        type: "bytes32",
+      },
     ],
     name: "checkers_GameInit_create",
     outputs: [
@@ -354,6 +359,11 @@ const _abi = [
       {
         internalType: "bytes32",
         name: "gameId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "gridId",
         type: "bytes32",
       },
     ],

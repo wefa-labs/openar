@@ -4,10 +4,10 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "build": "forge clean && forge build",
     "initialize": "pnpm run tablegen && pnpm run worldgen && pnpm run build && pnpm run worldtypes && pnpm run tsgen",
     "dev": "wait-port localhost:8545 && pnpm run deploy",
     "test": "tsc --noEmit && mud test",
-    "build": "forge clean && forge build",
     "deploy": "dotenv && pnpm run initialize && mud deploy",
     "tablegen": "mud tablegen",
     "tsgen": "mud tsgen --configPath mud.config.ts --out ../../client/src/modules/openar/checkers",

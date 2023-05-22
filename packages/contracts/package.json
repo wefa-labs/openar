@@ -4,10 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "initialize": "pnpm recursive run initialize",
     "dev": "pnpm recursive run dev",
-    "test": "pnpm recursive run test",
-    "build": "pnpm recursive run build",
     "deploy:local": "pnpm recursive run deploy",
     "deploy:testnet": "pnpm recursive run deploy -- --profile=lattice-testnet",
     "deploy:optimism-testnet": "pnpm recursive run deploy -- --profile=optimism-testnet",

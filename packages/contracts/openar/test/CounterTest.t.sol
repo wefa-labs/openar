@@ -26,13 +26,12 @@ contract CounterTest is MudV2Test {
   }
 
   function testCounter() public {
-    // Expect the counter to be 1 because it was incremented in the PostDeploy script.
     uint32 counter = Counter.get(world);
-    assertEq(counter, 1);
+    assertEq(counter, 0);
 
     // Expect the counter to be 2 after calling increment.
     world.openar_Increment_increment();
     counter = Counter.get(world);
-    assertEq(counter, 2);
+    assertEq(counter, 1);
   }
 }

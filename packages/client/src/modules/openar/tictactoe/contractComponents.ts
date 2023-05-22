@@ -6,7 +6,7 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 export function defineContractComponents(world: World) {
   return {
     Counter: (() => {
-      const tableId = new TableId("checkers", "Counter");
+      const tableId = new TableId("tictactoe", "Counter");
       return defineComponent(
         world,
         {
@@ -21,7 +21,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Role: (() => {
-      const tableId = new TableId("checkers", "Role");
+      const tableId = new TableId("tictactoe", "Role");
       return defineComponent(
         world,
         {
@@ -36,12 +36,12 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Identity: (() => {
-      const tableId = new TableId("checkers", "Identity");
+      const tableId = new TableId("tictactoe", "Identity");
       return defineComponent(
         world,
         {
-          name: RecsType.String,
           createdAt: RecsType.BigInt,
+          name: RecsType.String,
         },
         {
           metadata: {
@@ -52,14 +52,14 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Match: (() => {
-      const tableId = new TableId("checkers", "Match");
+      const tableId = new TableId("tictactoe", "Match");
       return defineComponent(
         world,
         {
-          board: RecsType.NumberArray,
-          winner: RecsType.String,
           currentPlayer: RecsType.String,
           turnCount: RecsType.Number,
+          winner: RecsType.String,
+          board: RecsType.NumberArray,
         },
         {
           metadata: {

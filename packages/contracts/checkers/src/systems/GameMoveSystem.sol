@@ -15,29 +15,29 @@ contract GameMoveSystem is System {
     // require(playerId != bytes32(0), "player not in game");
 
     // Check some  match conditions
-    MatchData memory matchData = Match.get(gameId);
-    require(matchData.turnCount == 10, "game drawn");
-    require(matchData.winner == address(0), "game won");
-    // require(matchData.currentPlayer == playerId, "not your turn");
-    require(x < 9, "position out of bounds");
-    require(matchData.board[x] == 7, "position already claimed");
+    // MatchData memory matchData = Match.get(gameId);
+    // require(matchData.turnCount == 10, "game drawn");
+    // require(matchData.winner == address(0), "game won");
+    // // require(matchData.currentPlayer == playerId, "not your turn");
+    // require(x < 9, "position out of bounds");
+    // require(matchData.board[x] == 7, "position already claimed");
 
-    // Update match state
-    // matchData.board[x] = uint8(Role.get(playerId));
-    matchData.turnCount += 1;
+    // // Update match state
+    // // matchData.board[x] = uint8(Role.get(playerId));
+    // matchData.turnCount += 1;
 
-    // Check if player has won if more than 4 turns have passed
-    if (matchData.turnCount >= 5 && checkWin(matchData.board)) {
-      matchData.winner = user;
-      matchData.currentPlayer = bytes32(0);
-    } else if (matchData.turnCount == 9) {
-      matchData.currentPlayer = bytes32(0);
-      matchData.turnCount = 10; // Set turnCount to 10 to indicate the game has ended
-    } else {
-      // matchData.currentPlayer = matchData.players[matchData.turnCount % 2];
-    }
+    // // Check if player has won if more than 4 turns have passed
+    // if (matchData.turnCount >= 5 && checkWin(matchData.board)) {
+    //   matchData.winner = user;
+    //   matchData.currentPlayer = bytes32(0);
+    // } else if (matchData.turnCount == 9) {
+    //   matchData.currentPlayer = bytes32(0);
+    //   matchData.turnCount = 10; // Set turnCount to 10 to indicate the game has ended
+    // } else {
+    //   // matchData.currentPlayer = matchData.players[matchData.turnCount % 2];
+    // }
 
-    Match.set(gameId, matchData);
+    // Match.set(gameId, matchData);
   }
 
   function checkWin(uint8[64] memory board) private pure returns (bool) {

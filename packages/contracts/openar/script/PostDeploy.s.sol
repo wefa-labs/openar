@@ -12,8 +12,8 @@ contract PostDeploy is Script {
     vm.startBroadcast(deployerPrivateKey);
 
     // Give write acess to game namespaces
-    IWorld(worldAddress).grantAccess("tictactoe", "SpaceSystem", address(this));
-    IWorld(worldAddress).grantAccess("checkers", "SpaceSystem", address(this));
+    // IWorld(worldAddress).grantAccess("tictactoe", "SpaceSystem", address(this));
+    // IWorld(worldAddress).grantAccess("checkers", "SpaceSystem", address(this));
 
     // TODO: Add NFT deployment of creature contracts
 
