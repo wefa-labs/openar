@@ -16,17 +16,19 @@ export default mudConfig({
       schema: "RoleEnum",
     },
     Identity: {
+      keySchema: { id: "bytes32" },
       schema: {
-        name: "string",
         createdAt: "uint256",
+        name: "string",
       },
     },
     Match: {
+      keySchema: { id: "bytes32", gridId: "bytes32" },
       schema: {
-        board: "uint8[9]",
-        winner: "address",
         currentPlayer: "bytes32",
         turnCount: "uint8",
+        winner: "address",
+        board: "uint8[9]",
       },
     },
   },

@@ -18,17 +18,17 @@ export default mudConfig({
     Identity: {
       keySchema: { id: "bytes32" },
       schema: {
-        name: "string",
         createdAt: "uint256",
+        name: "string",
       },
     },
     Match: {
-      keySchema: { id: "bytes32" },
+      keySchema: { id: "bytes32", gridId: "bytes32" },
       schema: {
-        board: "uint8[64]",
-        winner: "address",
-        currentPlayer: "bytes32",
         turnCount: "uint8",
+        currentPlayer: "bytes32",
+        winner: "address",
+        board: "uint8[64]",
       },
     },
   },
