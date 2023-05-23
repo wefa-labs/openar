@@ -18,7 +18,9 @@ function Tile(props:ThreeElements['mesh']){
   
     const [claim, setClaim] = useState(props.userData?.tileState)
 
-
+    // here would be a decent place to put animation logic 
+    //  props.userData.animation = hasWon ? "winning" : "losing"
+    // don't really have time to implement
 
     return (
     <>
@@ -66,7 +68,7 @@ export default function Board(props:ThreeElements['mesh']){
     const victoryCondition = true
   
     const [boardState, setBoardState] = useState([7,7,7,7,7,7,7,7,7])
-    // still needs image
+    
     return (
       <mesh {...props}>
 
@@ -77,6 +79,7 @@ export default function Board(props:ThreeElements['mesh']){
         <meshBasicMaterial alphaTest={0.001} transparent={true} side={THREE.DoubleSide} attach="material" toneMapped={false} map={texture} alphaMap={texture}/>
       </mesh>
       
+      {/* There is probably a cleaner way that propogating through userData but this works. */}
       <Tile userData={{tileState:boardState[0], index:0, gameID:props.userData?.gameID, setPlayer:setPlayer, player:player}} position={[-1.1,0,-2.1]}></Tile>
       <Tile userData={{tileState:boardState[1], index:1, gameID:props.userData?.gameID, setPlayer:setPlayer, player:player}} position={[0,0,-2.1]}></Tile>
       <Tile userData={{tileState:boardState[2], index:2, gameID:props.userData?.gameID, setPlayer:setPlayer, player:player}} position={[1.1,0,-2.1]}></Tile>

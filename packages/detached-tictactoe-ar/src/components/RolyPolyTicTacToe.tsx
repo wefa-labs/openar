@@ -7,11 +7,12 @@ Command: npx gltfjsx Kugelmonster3.glb --transform
 */
 
 import { useRef, useEffect, useMemo } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
 import { useGraph } from "@react-three/fiber";
 import { DoubleSide } from 'three'
-import { useControls } from 'leva'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
+
+useTexture.preload('/RolyPolyTicTacToeTextureRGB.jpg')
 
 export default function RolypolyTicTacToe(props:any) {
 
@@ -23,6 +24,9 @@ export default function RolypolyTicTacToe(props:any) {
     const clone = useMemo(() => SkeletonUtils.clone(scene), [scene])
     const { nodes } = useGraph(clone) as any
     // const { actions } = useAnimations(animations, group)
+
+    const shadowTexture = useTexture('/RolyPolyTicTacToeTextureRGB.jpg')
+    shadowTexture.flipY = false  
     
     /**
      * Texture Loading
@@ -35,7 +39,6 @@ export default function RolypolyTicTacToe(props:any) {
      */
     const animationsToPlay = useAnimations(animations, group);
     console.log(animationsToPlay) // Control what is loaded
-
     /**
      * Prepare Graphical User Interface - Leva
      */
@@ -56,7 +59,7 @@ export default function RolypolyTicTacToe(props:any) {
         {                       
             action?.fadeOut(0.5) // -> ending smooth
         }
-    }, [animeRolyPoly])
+    }, [props.animation || animeRolyPoly])
 
     const headColorRoly='#2eba4c'
     const bodyColorRoly='#0076d7'
@@ -72,37 +75,37 @@ export default function RolypolyTicTacToe(props:any) {
                 <primitive object={nodes.root_1} />
                 <skinnedMesh name="antennasTop" geometry={nodes.antennasTop.geometry} skeleton={nodes.antennasTop.skeleton} >
                     <meshBasicMaterial 
-                        // map={shadowTexture} 
+                        map={shadowTexture} 
                         side={ DoubleSide } color={ [ 0.5, 1,  0.5 * glowRoly ] } toneMapped={ false }
                     />
                 </skinnedMesh>
                 <skinnedMesh name="body" geometry={nodes.body.geometry} skeleton={nodes.body.skeleton} >
                     <meshBasicMaterial 
-                        // map={shadowTexture} 
+                        map={shadowTexture} 
                         side={ DoubleSide } color={ [ 1, 2,  1 * glowRoly ] } toneMapped={ false }
                     />
                 </skinnedMesh>
                 <skinnedMesh name="eyes" geometry={nodes.eyes.geometry} skeleton={nodes.eyes.skeleton} >
                     <meshBasicMaterial 
-                        // map={shadowTexture} 
+                        map={shadowTexture} 
                         side={ DoubleSide } color={ headColorRoly } toneMapped={ false }
                     />
                 </skinnedMesh>
                 <skinnedMesh name="head" geometry={nodes.head.geometry} skeleton={nodes.head.skeleton} >
                     <meshBasicMaterial 
-                        // map={shadowTexture}
+                        map={shadowTexture}
                         side={ DoubleSide } color={ armsLegsColorRoly } toneMapped={ false } 
                     />
                 </skinnedMesh>
                 <skinnedMesh name="legs" geometry={nodes.legs.geometry} skeleton={nodes.legs.skeleton} >
                     <meshBasicMaterial 
-                        // map={shadowTexture}
+                        map={shadowTexture}
                         side={ DoubleSide } color={ armsLegsColorRoly } toneMapped={ false } 
                     />
                 </skinnedMesh>
                 <skinnedMesh name="shield" geometry={nodes.shield.geometry} skeleton={nodes.shield.skeleton} >
                     <meshBasicMaterial 
-                        // map={shadowTexture}  
+                        map={shadowTexture}  
                         side={ DoubleSide } color={ bodyColorRoly } transparent={ true } opacity={ opacityRoly }
                     />
                 </skinnedMesh>

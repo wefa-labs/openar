@@ -7,10 +7,12 @@ Command: npx gltfjsx Kugelmonster3.glb --transform
 */
 
 import { useRef, useEffect, useMemo } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
 import { useLoader, useGraph } from '@react-three/fiber'
 import { TextureLoader, DoubleSide } from 'three'
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
+
+useTexture.preload('/DragonflyTextureRGB.jpg')
 
 export default function DragonflyTicTacToe(props:any) 
 {
@@ -31,10 +33,8 @@ export default function DragonflyTicTacToe(props:any)
     /**
      * Texture Loading
      */
-    const shadowTexture = useLoader(TextureLoader,  '/DragonflyTicTacToeShadowTexture.jpg')
-    const wingsCoveringTexture = useLoader(TextureLoader,  '/dragonflyBake1024x1024.jpg')
+    const shadowTexture = useTexture('/DragonflyTextureRGB.jpg')
     shadowTexture.flipY = false  // Texture looks weired: Flip y
-    wingsCoveringTexture.flipY = false  // Texture looks weired: Flip y
 
     
     /**
@@ -62,7 +62,7 @@ export default function DragonflyTicTacToe(props:any)
         {                       
             action?.fadeOut(0.1) // -> ending smooth
         }
-    }, [AnimTicTacToe])
+    }, [props.animation || AnimTicTacToe])
     
     const headColor='#2eba4c';
     const bodyColor='#0076d7';
@@ -86,30 +86,27 @@ export default function DragonflyTicTacToe(props:any)
                         <skinnedMesh name="body" geometry={nodes.body.geometry} skeleton={nodes.body.skeleton} >
                             <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ bodyColor } toneMapped={ false }/>
                         </skinnedMesh>
-                        <skinnedMesh name="eyes" geometry={nodes.eyes.geometry} skeleton={nodes.eyes.skeleton} >
-                            <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ headColor } toneMapped={ false }/>
-                        </skinnedMesh>
                         <skinnedMesh name="feetsHips" geometry={nodes.feetsHips.geometry} skeleton={nodes.feetsHips.skeleton} >
                             <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ bodyColor } toneMapped={ false } />
                         </skinnedMesh>
                         <skinnedMesh name="hands" geometry={nodes.hands.geometry} skeleton={nodes.hands.skeleton} >
                             <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ bodyColor } toneMapped={ false } />
                         </skinnedMesh>
-                        <skinnedMesh name="head_1" geometry={nodes.head_1.geometry}skeleton={nodes.head_1.skeleton} >
+                        <skinnedMesh name="head" geometry={nodes.head_1.geometry}skeleton={nodes.head_1.skeleton} >
                             <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ headColor } toneMapped={ false }/>
                         </skinnedMesh>
                         <skinnedMesh name="legs" geometry={nodes.legs.geometry} skeleton={nodes.legs.skeleton} >
                             <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ armsLegsColor } toneMapped={ false } />
                         </skinnedMesh>
                         <skinnedMesh name="wingsCovering" geometry={nodes.wingsCovering.geometry} skeleton={nodes.wingsCovering.skeleton} >
-                            <meshBasicMaterial map={ wingsCoveringTexture } side={ DoubleSide }  toneMapped={ false } transparent={ true } opacity={ opacity}/>
+                            <meshBasicMaterial map={ shadowTexture } side={ DoubleSide }  toneMapped={ false } transparent={ true } opacity={ opacity}/>
                         </skinnedMesh>
                         <skinnedMesh name="wingsStructure" geometry={nodes.wingsStructure.geometry} skeleton={nodes.wingsStructure.skeleton} >
                             <meshBasicMaterial map={shadowTexture} side={ DoubleSide } color={ [ 1  , 4 , 2 * glow ] } toneMapped={ false }/>
                         </skinnedMesh>
                     </group>
                 </group>
-            </group>           
+            </group>       
        </>
     );
 }
