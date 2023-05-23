@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { mount as mountDevTools } from "@latticexyz/dev-tools";
+// import { mount as mountDevTools } from "@latticexyz/dev-tools";
 import App from "./App";
 import { setup } from "./modules/openar/setup";
 import { MUDProvider } from "./hooks/useMud";
@@ -16,5 +16,5 @@ setup().then((result) => {
       <App />
     </MUDProvider>
   );
-  mountDevTools();
+  // mountDevTools();
 });
