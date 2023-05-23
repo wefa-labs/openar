@@ -20,12 +20,12 @@ contract PostDeploy is Script {
     // ------------------ EXAMPLES ------------------
 
     // Deploy a new collectible contract
-    new TicTacToeCollectible();
-    console.log("Deployed TicTacToeCollectible");
+    // new TicTacToeCollectible();
+    // console.log("Deployed TicTacToeCollectible");
 
     // Call create on the world via the registered function selector
-    bytes32 newValue = IWorld(worldAddress).tictactoe_GameStart_create(RoleEnum.X, "TicTacToe", bytes32(0));
-    console.log("Increment via IWorld:", uint256(newValue));
+    // bytes32 newValue = IWorld(worldAddress).tictactoe_GameStart_create(RoleEnum.X, "TicTacToe", bytes32(0));
+    // console.log("Increment via IWorld:", uint256(newValue));
 
     vm.stopBroadcast();
   }

@@ -15,6 +15,7 @@ import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { IWorld__factory } from "openar/types/ethers-contracts/factories/IWorld__factory";
 import { getTableIds } from "@latticexyz/utils";
 import storeConfig from "openar/mud.config";
+import { isHandheld } from "../../hooks/useDeviceDetect";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
@@ -41,33 +42,44 @@ export async function setupNetwork() {
   // Request drip from faucet
   const signer = result.network.signer.get();
   if (networkConfig.faucetServiceUrl && signer) {
-    const address = await signer.getAddress();
+    const address = await signer.getAddress().catch(() => {
+      console.log("[Dev Faucet]: No signer address found");
+    });
+
     console.info("[Dev Faucet]: Player address -> ", address);
 
     const faucet = createFaucetService(networkConfig.faucetServiceUrl);
 
-    const requestDrip = async () => {
-      const balance = await signer.getBalance();
-      console.info(`[Dev Faucet]: Player balance -> ${balance}`);
-      const lowBalance = balance?.lte(utils.parseEther("1"));
-      if (lowBalance) {
-        console.info("[Dev Faucet]: Balance is low, dripping funds to player");
-        // Double drip
-        await faucet.dripDev({ address });
-        await faucet.dripDev({ address });
-      }
-    };
+    if (address) {
+      const requestDrip = async () => {
+        const balance = await signer.getBalance();
+        console.info(`[Dev Faucet]: Player balance -> ${balance}`);
+        const lowBalance = balance?.lte(utils.parseEther("1"));
+        if (lowBalance) {
+          console.info(
+            "[Dev Faucet]: Balance is low, dripping funds to player"
+          );
+          // Double drip
+          await faucet.dripDev({ address });
+          await faucet.dripDev({ address });
+        }
+      };
 
-    requestDrip();
+      requestDrip();
+
+      setInterval(requestDrip, 20000);
+    }
+
     // Request a drip every 20 seconds
-    setInterval(requestDrip, 20000);
   }
 
   const provider = result.network.providers.get().json;
   const metamaskProvider = new Web3Provider((window as any).ethereum);
   const metamaskSigner = metamaskProvider.getSigner();
 
-  const signerOrProvider = metamaskSigner ?? signer ?? provider;
+  const signerOrProvider = isHandheld
+    ? signer ?? provider
+    : metamaskSigner ?? signer ?? provider;
   // Create a World contract instance
   const worldContract = IWorld__factory.connect(
     networkConfig.worldAddress,
