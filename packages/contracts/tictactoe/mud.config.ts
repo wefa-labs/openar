@@ -6,13 +6,8 @@ export default mudConfig({
     RoleEnum: ["O", "X"],
   },
   tables: {
-    // Test Purposes
-    Counter: {
-      keySchema: {},
-      schema: "uint32",
-    },
     Role: {
-      keySchema: { user: "address", gameId: "bytes32" },
+      keySchema: { user: "address", matchId: "bytes32" },
       schema: "RoleEnum",
     },
     Identity: {
@@ -23,24 +18,41 @@ export default mudConfig({
       },
     },
     Match: {
-      keySchema: { id: "bytes32", gridId: "bytes32" },
+      keySchema: { matchId: "bytes32", position: "uint8" },
       schema: {
-        currentPlayer: "bytes32",
         turnCount: "uint8",
+        id: "bytes32",
+        gridId: "bytes32",
+        gridPosition: "uint8", // TODO: Integrate for 9 grid tic tac toe, hardcoded to 0 for now.
+        currentPlayer: "address",
         winner: "address",
+        players: "address[2]",
         board: "uint8[9]",
       },
     },
+    Game: {
+      keySchema: { gameId: "bytes32" },
+      schema: {
+        matches: "bytes32[]",
+        winner: "address",
+      },
+    },
+    // SANITY CHECK
+    Counter: {
+      keySchema: {},
+      schema: "uint32",
+    },
   },
   systems: {
-    GameInitSystem: {
-      name: "GameInit",
+    GameStartSystem: {
+      name: "GameStart",
       openAccess: true,
     },
     GameMoveSystem: {
       name: "GameMove",
       openAccess: true,
     },
+    // SANITY CHECK
     IncrementSystem: {
       name: "Increment",
       openAccess: true,

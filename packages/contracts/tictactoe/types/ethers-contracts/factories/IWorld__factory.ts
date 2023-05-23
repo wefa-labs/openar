@@ -1251,6 +1251,24 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bytes32",
+        name: "matchId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "x",
+        type: "uint8",
+      },
+    ],
+    name: "tictactoe_GameMove_claimPosition",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "enum RoleEnum",
         name: "role",
         type: "uint8",
@@ -1266,7 +1284,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "tictactoe_GameInit_create",
+    name: "tictactoe_GameStart_create",
     outputs: [
       {
         internalType: "bytes32",
@@ -1281,16 +1299,11 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "gameId",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "gridId",
+        name: "matchId",
         type: "bytes32",
       },
     ],
-    name: "tictactoe_GameInit_join",
+    name: "tictactoe_GameStart_join",
     outputs: [
       {
         internalType: "enum RoleEnum",
@@ -1298,24 +1311,6 @@ const _abi = [
         type: "uint8",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "gameId",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint8",
-        name: "x",
-        type: "uint8",
-      },
-    ],
-    name: "tictactoe_GameMove_claimPosition",
-    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },

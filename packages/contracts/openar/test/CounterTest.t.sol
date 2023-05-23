@@ -6,6 +6,7 @@ import { MudV2Test } from "@latticexyz/std-contracts/src/test/MudV2Test.t.sol";
 import { getKeysWithValue } from "@latticexyz/world/src/modules/keyswithvalue/getKeysWithValue.sol";
 
 import { IWorld } from "../src/codegen/world/IWorld.sol";
+import { SizeEnum, StateEnum } from "../src/codegen/Types.sol";
 import { Counter, CounterTableId } from "../src/codegen/Tables.sol";
 
 contract CounterTest is MudV2Test {
@@ -34,4 +35,31 @@ contract CounterTest is MudV2Test {
     counter = Counter.get(world);
     assertEq(counter, 1);
   }
+
+  function testCreateMap() public {
+    bytes32 mapId = world.openar_MapSystem_createMap("Test", "mapId should be Test", "Image", SizeEnum.Mini);
+  }
+
+  // function testClaimGrid() public {
+  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
+  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
+  // }
+
+  // function testTransferGrid() public {
+  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
+  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
+  //   world.openar_GridSystem_transferGrid(gridId, address(this));
+  // }
+
+  // function testSetGrid() public {
+  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
+  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
+  //   world.openar_SpaceSystem_setSpace(mapId, gridId, State.Active, "Test","Test Description", "Image");
+  // }
+
+  // function testSetSpace() public {
+  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
+  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
+  //   world.openar_SpaceSystem_setSpace(mapId, gridId, State.Active, "Test","Test Description", "Image");
+  // }
 }

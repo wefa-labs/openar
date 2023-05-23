@@ -5,21 +5,6 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 
 export function defineContractComponents(world: World) {
   return {
-    Counter: (() => {
-      const tableId = new TableId("openar", "Counter");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.Number,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
     State: (() => {
       const tableId = new TableId("openar", "State");
       return defineComponent(
@@ -87,40 +72,7 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          x: RecsType.Number,
-          y: RecsType.Number,
           value: RecsType.StringArray,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    Range: (() => {
-      const tableId = new TableId("openar", "Range");
-      return defineComponent(
-        world,
-        {
-          xRange: RecsType.NumberArray,
-          yRange: RecsType.NumberArray,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
-    GridCount: (() => {
-      const tableId = new TableId("openar", "GridCount");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.Number,
         },
         {
           metadata: {
@@ -135,7 +87,8 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          value: RecsType.String,
+          id: RecsType.String,
+          position: RecsType.Number,
         },
         {
           metadata: {
@@ -150,7 +103,23 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          value: RecsType.String,
+          id: RecsType.String,
+          gridCount: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Counter: (() => {
+      const tableId = new TableId("openar", "Counter");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
         },
         {
           metadata: {

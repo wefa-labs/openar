@@ -7,37 +7,35 @@ import { Match, MatchData, Role } from "../codegen/Tables.sol";
 
 contract GameMoveSystem is System {
   function claimPosition(
-    bytes32 gameId,
+    bytes32 matchId,
     uint8 x
   ) public {
+    require(x < 9, "position out of bounds");
+
     address user = _msgSender();
 
-    // require(playerId != bytes32(0), "player not in game");
+    // Check some  match conditions
+    MatchData memory matchData = Match.get(matchId, 0 );
+    require(matchData.turnCount == 10, "game drawn");
+    require(matchData.winner == address(0), "game won");
+    require(matchData.currentPlayer == user, "not your turn");
+    require(matchData.board[x] == 7, "position already claimed");
 
-    // // Check some  match conditions
-    // MatchData memory matchData = Match.get(gameId);
-    // require(matchData.turnCount == 10, "game drawn");
-    // require(matchData.winner == address(0), "game won");
-    // // require(matchData.currentPlayer == playerId, "not your turn");
-    // require(x < 9, "position out of bounds");
-    // require(matchData.board[x] == 7, "position already claimed");
+    // Update match state
+    matchData.board[x] = uint8(Role.get(user, matchId));
+    matchData.turnCount += 1;
 
-    // // Update match state
-    // // matchData.board[x] = uint8(Role.get(playerId));
-    // matchData.turnCount += 1;
+    if (matchData.turnCount >= 5 && checkWin(matchData.board)) {
+      matchData.winner = user;
+      matchData.currentPlayer = address(0);
+    } else if (matchData.turnCount == 9) {
+      matchData.currentPlayer = address(0);
+      matchData.turnCount = 10; // Set turnCount to 10 to indicate the game has ended
+    } else {
+      matchData.currentPlayer = matchData.players[0] == user ? matchData.players[1] : matchData.players[0];      
+    }
 
-    // // Check if player has won if more than 4 turns have passed
-    // if (matchData.turnCount >= 5 && checkWin(matchData.board)) {
-    //   matchData.winner = user;
-    //   matchData.currentPlayer = bytes32(0);
-    // } else if (matchData.turnCount == 9) {
-    //   matchData.currentPlayer = bytes32(0);
-    //   matchData.turnCount = 10; // Set turnCount to 10 to indicate the game has ended
-    // } else {
-    //   // matchData.currentPlayer = matchData.players[matchData.turnCount % 2];
-    // }
-
-    // Match.set(gameId, matchData);
+    Match.set(matchId, 0, matchData);
   }
 
   function checkWin(uint8[9] memory board) private pure returns (bool) {

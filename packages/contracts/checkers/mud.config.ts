@@ -6,7 +6,7 @@ export default mudConfig({
     RoleEnum: ["Red", "Black"],
   },
   tables: {
-    // Test Purposes
+    // SANITY CHECK
     Counter: {
       keySchema: {},
       schema: "uint32",
@@ -33,7 +33,7 @@ export default mudConfig({
     },
   },
   systems: {
-    // Test Purposes
+    // SANITY CHECK
     IncrementSystem: {
       name: "Increment",
       openAccess: true,

@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 import { System } from "@latticexyz/world/src/System.sol";
 
 import { StateEnum } from "../codegen/Types.sol";
-import { Map, Grid, Space, State } from "../codegen/Tables.sol";
+import { Map, Grid, GridData, Space, State, Size, Owner } from "../codegen/Tables.sol";
 
 contract SpaceSystem is System {
   function setSpace(
@@ -16,11 +16,14 @@ contract SpaceSystem is System {
   ) public {
     address client = _msgSender();
 
-    // Check Grid ownership
+    require(x < 9, "x out of range");
+    require(y < 9, "y out of range");
+    require(Map.get(mapId).id == mapId, "map not found");
     require(State.get(mapId) == StateEnum.Active, "map not active");
-    require(Grid.get(client, mapId) != bytes32(0), "not grid owner");
-
-    // Set Space
-    Space.set(client, gridId, x, y, value);    
+    require(Grid.get(mapId, gridId).id == gridId, "grid not found");
+    require(Owner.get(gridId) == client, "not grid owner");
+    require(State.get(gridId) == StateEnum.Active, "grid not active");
+    
+    Space.set(mapId, gridId, x, y, value);    
   }
 }

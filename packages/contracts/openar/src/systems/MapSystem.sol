@@ -5,7 +5,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
 import { SizeEnum, StateEnum } from "../codegen/Types.sol";
-import { Map, Identity, IdentityData, Size, State } from "../codegen/Tables.sol";
+import { Map, MapData, Identity, IdentityData, Size, State, Owner } from "../codegen/Tables.sol";
 
 contract MapSystem is System {
   function createMap(
@@ -22,8 +22,12 @@ contract MapSystem is System {
       description: description,
       image: image
     }));
-    Map.set(owner, mapId);    
-    // Size.set(mapId. SizeEnum.Small); // 27x27 grid broken into 9x9 squares.
+    Map.set(mapId, MapData({
+      id: mapId,
+      gridCount: 0
+    }));    
+    Owner.set(mapId, owner);
+    // Size.set(mapId. SizeEnum.Mini);
     State.set(mapId, StateEnum.Active);
 
     return mapId;

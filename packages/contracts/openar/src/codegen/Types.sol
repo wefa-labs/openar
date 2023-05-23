@@ -8,6 +8,7 @@ enum StateEnum {
 }
 
 enum SizeEnum {
+  Mini,
   Small,
   Medium,
   Large

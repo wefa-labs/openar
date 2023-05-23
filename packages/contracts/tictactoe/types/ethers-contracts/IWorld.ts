@@ -67,9 +67,9 @@ export interface IWorldInterface extends utils.Interface {
     "setMetadata(bytes32,string,string[])": FunctionFragment;
     "setRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
     "setRecord(bytes32,bytes32[],bytes)": FunctionFragment;
-    "tictactoe_GameInit_create(uint8,string,bytes32)": FunctionFragment;
-    "tictactoe_GameInit_join(bytes32,bytes32)": FunctionFragment;
     "tictactoe_GameMove_claimPosition(bytes32,uint8)": FunctionFragment;
+    "tictactoe_GameStart_create(uint8,string,bytes32)": FunctionFragment;
+    "tictactoe_GameStart_join(bytes32)": FunctionFragment;
     "tictactoe_Increment_increment()": FunctionFragment;
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)": FunctionFragment;
     "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)": FunctionFragment;
@@ -114,9 +114,9 @@ export interface IWorldInterface extends utils.Interface {
       | "setMetadata(bytes32,string,string[])"
       | "setRecord(bytes16,bytes16,bytes32[],bytes)"
       | "setRecord(bytes32,bytes32[],bytes)"
-      | "tictactoe_GameInit_create"
-      | "tictactoe_GameInit_join"
       | "tictactoe_GameMove_claimPosition"
+      | "tictactoe_GameStart_create"
+      | "tictactoe_GameStart_join"
       | "tictactoe_Increment_increment"
       | "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"
       | "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)"
@@ -400,7 +400,11 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "tictactoe_GameInit_create",
+    functionFragment: "tictactoe_GameMove_claimPosition",
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tictactoe_GameStart_create",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -408,12 +412,8 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "tictactoe_GameInit_join",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tictactoe_GameMove_claimPosition",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+    functionFragment: "tictactoe_GameStart_join",
+    values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "tictactoe_Increment_increment",
@@ -578,15 +578,15 @@ export interface IWorldInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "tictactoe_GameInit_create",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tictactoe_GameInit_join",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "tictactoe_GameMove_claimPosition",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tictactoe_GameStart_create",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tictactoe_GameStart_join",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -962,22 +962,21 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    tictactoe_GameInit_create(
+    tictactoe_GameMove_claimPosition(
+      matchId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    tictactoe_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    tictactoe_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
+    tictactoe_GameStart_join(
+      matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1268,22 +1267,21 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  tictactoe_GameInit_create(
+  tictactoe_GameMove_claimPosition(
+    matchId: PromiseOrValue<BytesLike>,
+    x: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  tictactoe_GameStart_create(
     role: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
     gridId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  tictactoe_GameInit_join(
-    gameId: PromiseOrValue<BytesLike>,
-    gridId: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  tictactoe_GameMove_claimPosition(
-    gameId: PromiseOrValue<BytesLike>,
-    x: PromiseOrValue<BigNumberish>,
+  tictactoe_GameStart_join(
+    matchId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1574,24 +1572,23 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    tictactoe_GameInit_create(
+    tictactoe_GameMove_claimPosition(
+      matchId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    tictactoe_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+    tictactoe_GameStart_join(
+      matchId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<number>;
-
-    tictactoe_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     tictactoe_Increment_increment(overrides?: CallOverrides): Promise<number>;
 
@@ -1925,22 +1922,21 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    tictactoe_GameInit_create(
+    tictactoe_GameMove_claimPosition(
+      matchId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    tictactoe_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    tictactoe_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
+    tictactoe_GameStart_join(
+      matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2232,22 +2228,21 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    tictactoe_GameInit_create(
+    tictactoe_GameMove_claimPosition(
+      matchId: PromiseOrValue<BytesLike>,
+      x: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    tictactoe_GameInit_join(
-      gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    tictactoe_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
+    tictactoe_GameStart_join(
+      matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

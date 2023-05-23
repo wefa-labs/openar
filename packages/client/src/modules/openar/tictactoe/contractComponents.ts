@@ -5,21 +5,6 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 
 export function defineContractComponents(world: World) {
   return {
-    Counter: (() => {
-      const tableId = new TableId("tictactoe", "Counter");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.Number,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
     Role: (() => {
       const tableId = new TableId("tictactoe", "Role");
       return defineComponent(
@@ -56,10 +41,45 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          currentPlayer: RecsType.String,
           turnCount: RecsType.Number,
+          id: RecsType.String,
+          gridId: RecsType.String,
+          gridPosition: RecsType.Number,
+          currentPlayer: RecsType.String,
           winner: RecsType.String,
+          players: RecsType.StringArray,
           board: RecsType.NumberArray,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Game: (() => {
+      const tableId = new TableId("tictactoe", "Game");
+      return defineComponent(
+        world,
+        {
+          matches: RecsType.StringArray,
+          winner: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Counter: (() => {
+      const tableId = new TableId("tictactoe", "Counter");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
         },
         {
           metadata: {
