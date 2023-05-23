@@ -31,9 +31,9 @@ import type {
 export interface IWorldInterface extends utils.Interface {
   functions: {
     "call(bytes16,bytes16,bytes)": FunctionFragment;
-    "checkers_GameInit_create(uint8,string,bytes32)": FunctionFragment;
-    "checkers_GameInit_join(bytes32,bytes32)": FunctionFragment;
-    "checkers_GameMove_claimPosition(bytes32,uint8)": FunctionFragment;
+    "checkers_GameMove_movePosition(bytes32,bytes32,uint8,uint8)": FunctionFragment;
+    "checkers_GameStart_create(uint8,string,bytes32)": FunctionFragment;
+    "checkers_GameStart_join(bytes32,bytes32)": FunctionFragment;
     "checkers_Increment_increment()": FunctionFragment;
     "deleteRecord(bytes32,bytes32[])": FunctionFragment;
     "deleteRecord(bytes16,bytes16,bytes32[])": FunctionFragment;
@@ -78,9 +78,9 @@ export interface IWorldInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "call"
-      | "checkers_GameInit_create"
-      | "checkers_GameInit_join"
-      | "checkers_GameMove_claimPosition"
+      | "checkers_GameMove_movePosition"
+      | "checkers_GameStart_create"
+      | "checkers_GameStart_join"
       | "checkers_Increment_increment"
       | "deleteRecord(bytes32,bytes32[])"
       | "deleteRecord(bytes16,bytes16,bytes32[])"
@@ -131,7 +131,16 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "checkers_GameInit_create",
+    functionFragment: "checkers_GameMove_movePosition",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "checkers_GameStart_create",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -139,12 +148,8 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "checkers_GameInit_join",
+    functionFragment: "checkers_GameStart_join",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "checkers_GameMove_claimPosition",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "checkers_Increment_increment",
@@ -443,15 +448,15 @@ export interface IWorldInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: "call", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "checkers_GameInit_create",
+    functionFragment: "checkers_GameMove_movePosition",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "checkers_GameInit_join",
+    functionFragment: "checkers_GameStart_create",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "checkers_GameMove_claimPosition",
+    functionFragment: "checkers_GameStart_join",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -706,22 +711,24 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    checkers_GameInit_create(
+    checkers_GameMove_movePosition(
+      gameId: PromiseOrValue<BytesLike>,
+      gridId: PromiseOrValue<BytesLike>,
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    checkers_GameInit_join(
+    checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
       gridId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1012,22 +1019,24 @@ export interface IWorld extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  checkers_GameInit_create(
+  checkers_GameMove_movePosition(
+    gameId: PromiseOrValue<BytesLike>,
+    gridId: PromiseOrValue<BytesLike>,
+    from: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  checkers_GameStart_create(
     role: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
     gridId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  checkers_GameInit_join(
+  checkers_GameStart_join(
     gameId: PromiseOrValue<BytesLike>,
     gridId: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  checkers_GameMove_claimPosition(
-    gameId: PromiseOrValue<BytesLike>,
-    x: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1318,24 +1327,26 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    checkers_GameInit_create(
+    checkers_GameMove_movePosition(
+      gameId: PromiseOrValue<BytesLike>,
+      gridId: PromiseOrValue<BytesLike>,
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    checkers_GameInit_join(
+    checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<number>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     checkers_Increment_increment(overrides?: CallOverrides): Promise<number>;
 
@@ -1669,22 +1680,24 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    checkers_GameInit_create(
+    checkers_GameMove_movePosition(
+      gameId: PromiseOrValue<BytesLike>,
+      gridId: PromiseOrValue<BytesLike>,
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    checkers_GameInit_join(
+    checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
       gridId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1976,22 +1989,24 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    checkers_GameInit_create(
+    checkers_GameMove_movePosition(
+      gameId: PromiseOrValue<BytesLike>,
+      gridId: PromiseOrValue<BytesLike>,
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       gridId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    checkers_GameInit_join(
+    checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
       gridId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    checkers_GameMove_claimPosition(
-      gameId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

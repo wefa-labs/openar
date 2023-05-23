@@ -328,6 +328,34 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bytes32",
+        name: "gameId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "gridId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "from",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "to",
+        type: "uint8",
+      },
+    ],
+    name: "checkers_GameMove_movePosition",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "enum RoleEnum",
         name: "role",
         type: "uint8",
@@ -343,7 +371,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "checkers_GameInit_create",
+    name: "checkers_GameStart_create",
     outputs: [
       {
         internalType: "bytes32",
@@ -367,7 +395,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "checkers_GameInit_join",
+    name: "checkers_GameStart_join",
     outputs: [
       {
         internalType: "enum RoleEnum",
@@ -375,24 +403,6 @@ const _abi = [
         type: "uint8",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "gameId",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint8",
-        name: "x",
-        type: "uint8",
-      },
-    ],
-    name: "checkers_GameMove_claimPosition",
-    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },

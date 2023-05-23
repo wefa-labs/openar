@@ -5,7 +5,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
 import { RoleEnum } from "../codegen/Types.sol";
-import { Identity, IdentityData, Match, MatchData, Role } from "../codegen/Tables.sol";
+import { Identity, Match, MatchData, Role } from "../codegen/Tables.sol";
 
 contract GameStartSystem is System {
   function create(
@@ -19,10 +19,7 @@ contract GameStartSystem is System {
 
     bytes32 matchId = getUniqueEntity();
 
-    Identity.set(matchId, IdentityData({
-      name: name,
-      createdAt: block.timestamp // solhint-disable-line not-rely-on-time
-    }));
+    Identity.set(matchId,name);
     Match.set(matchId, 0, MatchData({
       turnCount: 0,
       id: matchId,
@@ -55,6 +52,8 @@ contract GameStartSystem is System {
     RoleEnum opponentRole = Role.get(matchData.players[0], matchId);
     RoleEnum role = opponentRole == RoleEnum.X ? RoleEnum.O : RoleEnum.X;
     Role.set(user, matchId, role);
+
+    Match.set(matchId, 0, matchData);
 
     return role;
   }

@@ -23,8 +23,8 @@ bytes32 constant MatchTableId = _tableId;
 struct MatchData {
   uint8 turnCount;
   bytes32 id;
-  bytes32 gridId;
   uint8 gridPosition;
+  bytes32 gridId;
   address currentPlayer;
   address winner;
   address[2] players;
@@ -37,8 +37,8 @@ library Match {
     SchemaType[] memory _schema = new SchemaType[](8);
     _schema[0] = SchemaType.UINT8;
     _schema[1] = SchemaType.BYTES32;
-    _schema[2] = SchemaType.BYTES32;
-    _schema[3] = SchemaType.UINT8;
+    _schema[2] = SchemaType.UINT8;
+    _schema[3] = SchemaType.BYTES32;
     _schema[4] = SchemaType.ADDRESS;
     _schema[5] = SchemaType.ADDRESS;
     _schema[6] = SchemaType.ADDRESS_ARRAY;
@@ -60,8 +60,8 @@ library Match {
     string[] memory _fieldNames = new string[](8);
     _fieldNames[0] = "turnCount";
     _fieldNames[1] = "id";
-    _fieldNames[2] = "gridId";
-    _fieldNames[3] = "gridPosition";
+    _fieldNames[2] = "gridPosition";
+    _fieldNames[3] = "gridId";
     _fieldNames[4] = "currentPlayer";
     _fieldNames[5] = "winner";
     _fieldNames[6] = "players";
@@ -167,51 +167,13 @@ library Match {
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((id)));
   }
 
-  /** Get gridId */
-  function getGridId(bytes32 matchId, uint8 position) internal view returns (bytes32 gridId) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((matchId));
-    _keyTuple[1] = bytes32(uint256((position)));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
-    return (Bytes.slice32(_blob, 0));
-  }
-
-  /** Get gridId (using the specified store) */
-  function getGridId(IStore _store, bytes32 matchId, uint8 position) internal view returns (bytes32 gridId) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((matchId));
-    _keyTuple[1] = bytes32(uint256((position)));
-
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
-    return (Bytes.slice32(_blob, 0));
-  }
-
-  /** Set gridId */
-  function setGridId(bytes32 matchId, uint8 position, bytes32 gridId) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((matchId));
-    _keyTuple[1] = bytes32(uint256((position)));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((gridId)));
-  }
-
-  /** Set gridId (using the specified store) */
-  function setGridId(IStore _store, bytes32 matchId, uint8 position, bytes32 gridId) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((matchId));
-    _keyTuple[1] = bytes32(uint256((position)));
-
-    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((gridId)));
-  }
-
   /** Get gridPosition */
   function getGridPosition(bytes32 matchId, uint8 position) internal view returns (uint8 gridPosition) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((matchId));
     _keyTuple[1] = bytes32(uint256((position)));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -221,7 +183,7 @@ library Match {
     _keyTuple[0] = bytes32((matchId));
     _keyTuple[1] = bytes32(uint256((position)));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
@@ -231,7 +193,7 @@ library Match {
     _keyTuple[0] = bytes32((matchId));
     _keyTuple[1] = bytes32(uint256((position)));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((gridPosition)));
+    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((gridPosition)));
   }
 
   /** Set gridPosition (using the specified store) */
@@ -240,7 +202,45 @@ library Match {
     _keyTuple[0] = bytes32((matchId));
     _keyTuple[1] = bytes32(uint256((position)));
 
-    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((gridPosition)));
+    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((gridPosition)));
+  }
+
+  /** Get gridId */
+  function getGridId(bytes32 matchId, uint8 position) internal view returns (bytes32 gridId) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((position)));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    return (Bytes.slice32(_blob, 0));
+  }
+
+  /** Get gridId (using the specified store) */
+  function getGridId(IStore _store, bytes32 matchId, uint8 position) internal view returns (bytes32 gridId) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((position)));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    return (Bytes.slice32(_blob, 0));
+  }
+
+  /** Set gridId */
+  function setGridId(bytes32 matchId, uint8 position, bytes32 gridId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((position)));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((gridId)));
+  }
+
+  /** Set gridId (using the specified store) */
+  function setGridId(IStore _store, bytes32 matchId, uint8 position, bytes32 gridId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((position)));
+
+    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((gridId)));
   }
 
   /** Get currentPlayer */
@@ -622,14 +622,14 @@ library Match {
     uint8 position,
     uint8 turnCount,
     bytes32 id,
-    bytes32 gridId,
     uint8 gridPosition,
+    bytes32 gridId,
     address currentPlayer,
     address winner,
     address[2] memory players,
     uint8[9] memory board
   ) internal {
-    bytes memory _data = encode(turnCount, id, gridId, gridPosition, currentPlayer, winner, players, board);
+    bytes memory _data = encode(turnCount, id, gridPosition, gridId, currentPlayer, winner, players, board);
 
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((matchId));
@@ -645,14 +645,14 @@ library Match {
     uint8 position,
     uint8 turnCount,
     bytes32 id,
-    bytes32 gridId,
     uint8 gridPosition,
+    bytes32 gridId,
     address currentPlayer,
     address winner,
     address[2] memory players,
     uint8[9] memory board
   ) internal {
-    bytes memory _data = encode(turnCount, id, gridId, gridPosition, currentPlayer, winner, players, board);
+    bytes memory _data = encode(turnCount, id, gridPosition, gridId, currentPlayer, winner, players, board);
 
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((matchId));
@@ -668,8 +668,8 @@ library Match {
       position,
       _table.turnCount,
       _table.id,
-      _table.gridId,
       _table.gridPosition,
+      _table.gridId,
       _table.currentPlayer,
       _table.winner,
       _table.players,
@@ -685,8 +685,8 @@ library Match {
       position,
       _table.turnCount,
       _table.id,
-      _table.gridId,
       _table.gridPosition,
+      _table.gridId,
       _table.currentPlayer,
       _table.winner,
       _table.players,
@@ -703,9 +703,9 @@ library Match {
 
     _table.id = (Bytes.slice32(_blob, 1));
 
-    _table.gridId = (Bytes.slice32(_blob, 33));
+    _table.gridPosition = (uint8(Bytes.slice1(_blob, 33)));
 
-    _table.gridPosition = (uint8(Bytes.slice1(_blob, 65)));
+    _table.gridId = (Bytes.slice32(_blob, 34));
 
     _table.currentPlayer = (address(Bytes.slice20(_blob, 66)));
 
@@ -731,8 +731,8 @@ library Match {
   function encode(
     uint8 turnCount,
     bytes32 id,
-    bytes32 gridId,
     uint8 gridPosition,
+    bytes32 gridId,
     address currentPlayer,
     address winner,
     address[2] memory players,
@@ -747,8 +747,8 @@ library Match {
       abi.encodePacked(
         turnCount,
         id,
-        gridId,
         gridPosition,
+        gridId,
         currentPlayer,
         winner,
         _encodedLengths.unwrap(),

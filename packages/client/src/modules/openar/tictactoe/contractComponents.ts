@@ -25,7 +25,6 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          createdAt: RecsType.BigInt,
           name: RecsType.String,
         },
         {
@@ -43,8 +42,8 @@ export function defineContractComponents(world: World) {
         {
           turnCount: RecsType.Number,
           id: RecsType.String,
-          gridId: RecsType.String,
           gridPosition: RecsType.Number,
+          gridId: RecsType.String,
           currentPlayer: RecsType.String,
           winner: RecsType.String,
           players: RecsType.StringArray,
@@ -63,8 +62,8 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          matches: RecsType.StringArray,
           winner: RecsType.String,
+          matchesPlayed: RecsType.Number,
         },
         {
           metadata: {

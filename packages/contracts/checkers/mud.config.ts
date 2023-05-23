@@ -6,11 +6,6 @@ export default mudConfig({
     RoleEnum: ["Red", "Black"],
   },
   tables: {
-    // SANITY CHECK
-    Counter: {
-      keySchema: {},
-      schema: "uint32",
-    },
     Role: {
       keySchema: { user: "address", gameId: "bytes32" },
       schema: "RoleEnum",
@@ -18,32 +13,38 @@ export default mudConfig({
     Identity: {
       keySchema: { id: "bytes32" },
       schema: {
-        createdAt: "uint256",
         name: "string",
       },
     },
-    Match: {
-      keySchema: { id: "bytes32", gridId: "bytes32" },
+    Game: {
+      keySchema: { gameId: "bytes32", gridId: "bytes32" },
       schema: {
         turnCount: "uint8",
-        currentPlayer: "bytes32",
+        id: "bytes32",
+        currentPlayer: "address",
         winner: "address",
+        players: "address[2]",
         board: "uint8[64]",
       },
     },
+    // SANITY CHECK
+    Counter: {
+      keySchema: {},
+      schema: "uint32",
+    },
   },
   systems: {
-    // SANITY CHECK
-    IncrementSystem: {
-      name: "Increment",
-      openAccess: true,
-    },
-    GameInitSystem: {
-      name: "GameInit",
+    GameStartSystem: {
+      name: "GameStart",
       openAccess: true,
     },
     GameMoveSystem: {
       name: "GameMove",
+      openAccess: true,
+    },
+    // SANITY CHECK
+    IncrementSystem: {
+      name: "Increment",
       openAccess: true,
     },
   },
