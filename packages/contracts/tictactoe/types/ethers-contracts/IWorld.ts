@@ -67,6 +67,7 @@ export interface IWorldInterface extends utils.Interface {
     "setMetadata(bytes32,string,string[])": FunctionFragment;
     "setRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
     "setRecord(bytes32,bytes32[],bytes)": FunctionFragment;
+    "tictactoe_GameColllectible_claim(bytes32)": FunctionFragment;
     "tictactoe_GameMove_claimPosition(bytes32,uint8)": FunctionFragment;
     "tictactoe_GameStart_create(uint8,string,bytes32)": FunctionFragment;
     "tictactoe_GameStart_join(bytes32)": FunctionFragment;
@@ -114,6 +115,7 @@ export interface IWorldInterface extends utils.Interface {
       | "setMetadata(bytes32,string,string[])"
       | "setRecord(bytes16,bytes16,bytes32[],bytes)"
       | "setRecord(bytes32,bytes32[],bytes)"
+      | "tictactoe_GameColllectible_claim"
       | "tictactoe_GameMove_claimPosition"
       | "tictactoe_GameStart_create"
       | "tictactoe_GameStart_join"
@@ -400,6 +402,10 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "tictactoe_GameColllectible_claim",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "tictactoe_GameMove_claimPosition",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -575,6 +581,10 @@ export interface IWorldInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setRecord(bytes32,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tictactoe_GameColllectible_claim",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -962,6 +972,11 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    tictactoe_GameColllectible_claim(
+      matchId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     tictactoe_GameMove_claimPosition(
       matchId: PromiseOrValue<BytesLike>,
       x: PromiseOrValue<BigNumberish>,
@@ -1264,6 +1279,11 @@ export interface IWorld extends BaseContract {
     table: PromiseOrValue<BytesLike>,
     key: PromiseOrValue<BytesLike>[],
     data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  tictactoe_GameColllectible_claim(
+    matchId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1571,6 +1591,11 @@ export interface IWorld extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    tictactoe_GameColllectible_claim(
+      matchId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     tictactoe_GameMove_claimPosition(
       matchId: PromiseOrValue<BytesLike>,
@@ -1922,6 +1947,11 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    tictactoe_GameColllectible_claim(
+      matchId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     tictactoe_GameMove_claimPosition(
       matchId: PromiseOrValue<BytesLike>,
       x: PromiseOrValue<BigNumberish>,
@@ -2225,6 +2255,11 @@ export interface IWorld extends BaseContract {
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
       data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    tictactoe_GameColllectible_claim(
+      matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

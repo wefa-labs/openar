@@ -16,6 +16,7 @@ contract GameStartSystem is System {
     address user = _msgSender();
 
     // TODO: Transfer grid ownership to system
+    // world.transferGridOwnership(gridId, address(this));
 
     bytes32 matchId = getUniqueEntity();
 

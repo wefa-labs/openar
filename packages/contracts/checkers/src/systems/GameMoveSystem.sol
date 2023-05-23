@@ -23,6 +23,8 @@ contract GameMoveSystem is System {
     require(gameData.winner == address(0), "game won");
     require(gameData.currentPlayer == user, "not your turn");
     
+    // TODO: Update space on grid in openar namespace.
+
     // Game.set(gameId, gameData);
   }
 }

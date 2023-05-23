@@ -803,11 +803,6 @@ const _abi = [
         name: "image",
         type: "string",
       },
-      {
-        internalType: "enum SizeEnum",
-        name: "size",
-        type: "uint8",
-      },
     ],
     name: "openar_MapSystem_createMap",
     outputs: [

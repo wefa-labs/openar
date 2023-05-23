@@ -45,7 +45,7 @@ export default mudConfig({
         gridCount: "uint32",
       },
     },
-    // Testing Purposes
+    // SANITY CHECK
     Counter: {
       keySchema: {},
       schema: "uint32",
@@ -54,8 +54,7 @@ export default mudConfig({
   systems: {
     SpaceSystem: {
       name: "SpaceSystem",
-      openAccess: false,
-      accessList: ["GridSystem"],
+      openAccess: true, // TODO: Bring back access control when grant acess is functioning
     },
     GridSystem: {
       name: "GridSystem",
@@ -65,7 +64,7 @@ export default mudConfig({
       name: "MapSystem",
       openAccess: true,
     },
-    // Testing Purposes
+    // SANITY CHECK
     IncrementSystem: {
       name: "Increment",
       openAccess: true,

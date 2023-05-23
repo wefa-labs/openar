@@ -81,7 +81,7 @@ contract GridSystem is System {
     require(Owner.get(gridId) == client, "not grid owner");
     require(State.get(gridId) == StateEnum.Active, "grid not active");
 
-    GridData memory grid = Grid.get(mapId, gridId);
+    // GridData  memory grid = Grid.get(mapId, gridId);
     IdentityData memory identity = Identity.get(gridId);
 
     if (bytes(name).length > 0) {

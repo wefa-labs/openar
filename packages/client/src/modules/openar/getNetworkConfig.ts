@@ -26,7 +26,7 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   }
 
   const world = worlds[chain.id.toString()];
-  const worldAddress = params.get("worldAddress") || world?.address;
+  const worldAddress = "0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62";
 
   if (!worldAddress) {
     throw new Error(
