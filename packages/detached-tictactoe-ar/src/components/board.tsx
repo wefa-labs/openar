@@ -6,6 +6,10 @@ import DragonflyTicTacToe from '../components/DragonflyTicTacToe'
 import RolyPolyTicTacToe from '../components/RolyPolyTicTacToe'
 
 import img from '../assets/tictac.png';
+import winImg from '../assets/win.png';
+import loseImg from '../assets/lose.png';
+import theirturnImg from '../assets/theirturn.png';
+import playerturnImg from '../assets/playerturn.png';
 
 function Tile(props:ThreeElements['mesh']){
     // This reference gives us direct access to the THREE.Mesh object
@@ -38,18 +42,36 @@ function Tile(props:ThreeElements['mesh']){
       </>
     )
 }
+
+
+function ARText(props:ThreeElements['mesh']){
+  
+  const texture = useLoader(THREE.TextureLoader, props.userData?.img)
+
+
+  return  <mesh {...props}>
+    <mesh scale={[1,1,1]}>
+        <planeBufferGeometry attach="geometry" args={[2, 0.5]} />
+        <meshBasicMaterial alphaTest={0.001} transparent={true} side={THREE.DoubleSide} attach="material" toneMapped={false} map={texture} alphaMap={texture}/>
+        </mesh>
+  </mesh>
+}
   
 export default function Board(props:ThreeElements['mesh']){
   
     const texture = useLoader(THREE.TextureLoader, img)
 
     const [player, setPlayer] = useState(true)
+    const gameOver = false
+    const victoryCondition = true
   
     const [boardState, setBoardState] = useState([7,7,7,7,7,7,7,7,7])
     // still needs image
     return (
       <mesh {...props}>
-  
+
+        {player ? <ARText rotation={[0,0,0]} position={[0, 1, -2]} userData={{img:playerturnImg}}></ARText>:<ARText rotation={[0,0,0]} position={[0, 1, -2]}  userData={{img:theirturnImg}}></ARText>}
+        {gameOver && (victoryCondition ? <ARText rotation={[0,0,0]} position={[0, 0.5, -1.5]} userData={{img:winImg}}></ARText>:<ARText rotation={[0,0,0]} position={[0, 0.5, -1.5]}  userData={{img:loseImg}}></ARText>)}
       <mesh rotation={[-Math.PI/2,0,0]} position={[0, 0, -1]} scale={[1,1,1]}>
         <planeBufferGeometry attach="geometry" args={[3, 3]} />
         <meshBasicMaterial alphaTest={0.001} transparent={true} side={THREE.DoubleSide} attach="material" toneMapped={false} map={texture} alphaMap={texture}/>
