@@ -1,13 +1,13 @@
 import { createConfig, configureChains } from "wagmi";
-import { optimismGoerli, optimism } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
+import { latticeTestnet } from "@latticexyz/common/chains";
 
 import "@rainbow-me/rainbowkit/styles.css";
 
 const { chains, publicClient } = configureChains(
-  [optimismGoerli, optimism],
+  [latticeTestnet],
   [alchemyProvider({ apiKey: import.meta.env.ALCHEMY_ID }), publicProvider()]
 );
 

@@ -14,7 +14,7 @@ contract GameCollectibleSystem is System {
   ) public returns (string memory meta) {
     address user = _msgSender();
     
-    // TODO: Check uf already minted using the match ID as the token ID
+    // TODO: Check if already minted using the match ID as the token ID
 
     MatchData memory matchData = Match.get(matchId, 0);
 

@@ -6,12 +6,10 @@
   "scripts": {
     "dev": "pnpm recursive run dev",
     "deploy": "pnpm deploy:checkers && pnpm deploy:tictactoe && pnpm deploy:openar",
-    "deploy:openar": "cd openar && pnpm run deploy --profile=optimism-goerli --priorityFeeMultiplier=10",
-    "deploy:checkers": "cd checkers && pnpm run deploy --profile=optimism-goerli",
-    "deploy:tictactoe": "cd tictactoe && pnpm run deploy --profile=optimism-goerli",
+    "deploy:openar": "cd openar && pnpm run deploy --profile=lattice-testnet --worldAddress=0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62",
+    "deploy:checkers": "cd checkers && pnpm run deploy --profile=lattice-testnet --worldAddress=0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62",
+    "deploy:tictactoe": "cd tictactoe && pnpm run deploy --profile=lattice-testnet --worldAddress=0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62",
     "deploy:testnet": "pnpm recursive run deploy --profile=lattice-testnet",
-    "deploy:optimism-testnet": "pnpm recursive run deploy --profile=optimism-goerli",
-    "deploy:optimism": "pnpm recursive run deploy --profile=optimism",
     "lint": "pnpm run prettier && pnpm run solhint",
     "prettier": "prettier --write 'src/**/*.sol'",
     "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix"

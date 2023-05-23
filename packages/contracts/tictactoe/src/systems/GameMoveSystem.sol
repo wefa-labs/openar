@@ -36,6 +36,7 @@ contract GameMoveSystem is System {
     }
 
     // TODO: Update space on grid in openar namespace.
+    // world.setSpace(matchData.gridId, matchData.gridPosition, matchData.board[x]);
 
     Match.set(matchId, 0, matchData);
   }
