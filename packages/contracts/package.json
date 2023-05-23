@@ -5,10 +5,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm recursive run dev",
-    "deploy:local": "pnpm recursive run deploy",
-    "deploy:testnet": "pnpm recursive run deploy -- --profile=lattice-testnet",
-    "deploy:optimism-testnet": "pnpm recursive run deploy -- --profile=optimism-testnet",
-    "deploy:optimism": "pnpm recursive run deploy -- --profile=optimism",
+    "deploy": "pnpm deploy:checkers && pnpm deploy:tictactoe && pnpm deploy:openar",
+    "deploy:openar": "cd openar && pnpm run deploy --profile=lattice-testnet --priorityFeeMultiplier=3",
+    "deploy:checkers": "cd checkers && pnpm run deploy --profile=optimism-goerli",
+    "deploy:tictactoe": "cd tictactoe && pnpm run deploy --profile=optimism-goerli",
+    "deploy:testnet": "pnpm recursive run deploy --profile=lattice-testnet",
+    "deploy:optimism-testnet": "pnpm recursive run deploy --profile=optimism-goerli",
+    "deploy:optimism": "pnpm recursive run deploy --profile=optimism",
     "lint": "pnpm run prettier && pnpm run solhint",
     "prettier": "prettier --write 'src/**/*.sol'",
     "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix"

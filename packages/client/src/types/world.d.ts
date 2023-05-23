@@ -1,20 +1,3 @@
-enum HealthStatus {
-  HEALTHY,
-  SICK,
-  DEAD,
-}
-
-declare interface Health {
-  current: number;
-  max: number;
-  status: HealthStatus;
-}
-
-declare interface Attributes {
-  energy: number;
-  power: number;
-}
-
 declare interface Identity {
   name: string;
   description?: ?string;
@@ -26,10 +9,9 @@ declare interface Asset {
   model: string; // CID
 }
 
-declare interface Critter extends Identity, Asset, HealthCare {
+declare interface Critter extends Identity, Asset {
   id: `0x${string}`; // Address
-  trainer: `0x${string}`; // Address
-  attributes?: Attributes;
+  owner: `0x${string}`; // Address
 }
 
 declare interface TicTacToe {
@@ -63,15 +45,13 @@ enum Status {
 
 // For Three.js Visualization
 declare interface Grid {
-  status: Status;
   owner: `0x${string}`; // Address of user or gane system in control
-  game: TicTacToe | Checkers | null;
+  status: Status;
+  game: "TicTacToe" | "Checkers" | null; // This combines with status to determine color state
   name: string;
+  position: number;
   description?: ?string;
   image: string; // CID
-  rangeX: [number, number];
-  rangeY: [number, number];
-  createdAt: number;
 }
 
 enum Size {
@@ -92,3 +72,42 @@ declare interface Map {
 }
 
 // The mini grid
+
+// Generate mock data
+const gridData: Grid[] = [
+  {
+    owner: "0x1234567890abcdef",
+    status: Status.ACTIVE,
+    game: "TicTacToe",
+    name: "Grid 1",
+    position: 0,
+    description: "Description 1",
+    image: "CID1",
+  },
+  {
+    owner: "0xfedcba0987654321",
+    status: Status.FROZEN,
+    game: "TicTacToe",
+    name: "Grid 2",
+    position: 1,
+    image: "CID2",
+  },
+  {
+    owner: "0xabcdef1234567890",
+    status: Status.ACTIVE,
+    game: null,
+    name: "Grid 3",
+    position: 2,
+    description: null,
+    image: "CID3",
+  },
+  {
+    owner: "0xabcdef1234567890",
+    status: Status.ACTIVE,
+    game: "Checkers",
+    name: "Grid 4",
+    position: 3,
+    description: "Description 4",
+    image: "CID3",
+  },
+];

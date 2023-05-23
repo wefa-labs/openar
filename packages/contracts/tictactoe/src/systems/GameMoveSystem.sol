@@ -35,6 +35,8 @@ contract GameMoveSystem is System {
       matchData.currentPlayer = matchData.players[0] == user ? matchData.players[1] : matchData.players[0];      
     }
 
+    // TODO: Update space on grid in openar namespace.
+
     Match.set(matchId, 0, matchData);
   }
 

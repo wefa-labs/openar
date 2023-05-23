@@ -6,9 +6,10 @@ import { SetupNetworkResult } from "./setupNetwork";
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 enum MapSize {
-  Small = 0,
-  Medium = 1,
-  Large = 2,
+  Mini,
+  Small,
+  Medium,
+  Large,
 }
 
 enum TicTacToeRole {
@@ -37,23 +38,33 @@ export function createSystemCalls(
     image: string,
     size: MapSize
   ) => {
-    const tx = await worldSend("openar_MapSystem_createMap", [""]);
+    const tx = await worldSend("openar_MapSystem_createMap", [
+      name,
+      description,
+      image,
+      size,
+    ]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
+  const claimGrid = async (mapId: string) => {
+    const tx = await worldSend("openar_GridSystem_claimGrid", [mapId]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const createCheckersGame = async (name: string, role: CheckerRole) => {
-    const tx = await worldSend("openar_MapSystem_createMap", [""]);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    // const tx = await worldSend("", [""]);
+    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const joinCheckersGame = async (gameId: string) => {
-    const tx = await worldSend("openar_MapSystem_createMap", [""]);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    // const tx = await worldSend("openar_MapSystem_createMap", [""]);
+    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const makeCheckerMove = async (gameId: number, from: number, to: number) => {
-    const tx = await worldSend("openar_MapSystem_createMap", [""]);
-    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+    // const tx = await worldSend("openar_MapSystem_createMap", [""]);
+    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   const createTicTacToeGame = async (name: string, role: TicTacToeRole) => {
@@ -77,15 +88,12 @@ export function createSystemCalls(
   return {
     increment,
     createMap,
-    createCheckersGame,
-    joinCheckersGame,
-    makeCheckerMove,
+    claimGrid,
     createTicTacToeGame,
     joinTicTacToeGame,
     claimTicTacToePosition,
+    createCheckersGame,
+    joinCheckersGame,
+    makeCheckerMove,
   };
 }
-
-// role on Wefa
-// get other people involve
-// weeding, planting, harvesting

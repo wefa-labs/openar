@@ -50,7 +50,7 @@ export interface IWorldInterface extends utils.Interface {
     "openar_GridSystem_setGrid(bytes32,bytes32,uint8,string,string,string)": FunctionFragment;
     "openar_GridSystem_transferGrid(bytes32,bytes32,address)": FunctionFragment;
     "openar_Increment_increment()": FunctionFragment;
-    "openar_MapSystem_createMap(string,string,string,uint8)": FunctionFragment;
+    "openar_MapSystem_createMap(string,string,string)": FunctionFragment;
     "openar_SpaceSystem_setSpace(bytes32,bytes32,uint8,uint8,bytes32[])": FunctionFragment;
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)": FunctionFragment;
     "popFromField(bytes32,bytes32[],uint8,uint256)": FunctionFragment;
@@ -260,8 +260,7 @@ export interface IWorldInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
+      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
@@ -871,7 +870,6 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<string>,
       description: PromiseOrValue<string>,
       image: PromiseOrValue<string>,
-      size: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1197,7 +1195,6 @@ export interface IWorld extends BaseContract {
     name: PromiseOrValue<string>,
     description: PromiseOrValue<string>,
     image: PromiseOrValue<string>,
-    size: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1521,7 +1518,6 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<string>,
       description: PromiseOrValue<string>,
       image: PromiseOrValue<string>,
-      size: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -1894,7 +1890,6 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<string>,
       description: PromiseOrValue<string>,
       image: PromiseOrValue<string>,
-      size: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2221,7 +2216,6 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<string>,
       description: PromiseOrValue<string>,
       image: PromiseOrValue<string>,
-      size: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

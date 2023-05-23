@@ -11,8 +11,8 @@ contract MapSystem is System {
   function createMap(
     string memory name,
     string memory description,
-    string memory image,
-    SizeEnum size
+    string memory image
+    // SizeEnum size
   ) public returns (bytes32) {
     address owner = _msgSender();
     bytes32 mapId = getUniqueEntity();
@@ -27,7 +27,7 @@ contract MapSystem is System {
       gridCount: 0
     }));    
     Owner.set(mapId, owner);
-    // Size.set(mapId. SizeEnum.Mini);
+    Size.set(mapId, SizeEnum.Mini);
     State.set(mapId, StateEnum.Active);
 
     return mapId;

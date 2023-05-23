@@ -11,7 +11,7 @@ import { defineContractComponents as tictactoeArComp } from "./tictactoe/contrac
 
 import { world } from "./world";
 import { Contract, Signer, utils } from "ethers";
-import { JsonRpcProvider } from "@ethersproject/providers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { IWorld__factory } from "openar/types/ethers-contracts/factories/IWorld__factory";
 import { getTableIds } from "@latticexyz/utils";
 import storeConfig from "openar/mud.config";
@@ -64,7 +64,10 @@ export async function setupNetwork() {
   }
 
   const provider = result.network.providers.get().json;
-  const signerOrProvider = signer ?? provider;
+  const metamaskProvider = new Web3Provider((window as any).ethereum);
+  const metamaskSigner = metamaskProvider.getSigner();
+
+  const signerOrProvider = metamaskSigner ?? signer ?? provider;
   // Create a World contract instance
   const worldContract = IWorld__factory.connect(
     networkConfig.worldAddress,
@@ -90,7 +93,7 @@ export async function setupNetwork() {
   const fastTxExecutor =
     signer?.provider instanceof JsonRpcProvider
       ? await createFastTxExecutor(
-          signer as Signer & { provider: JsonRpcProvider }
+          signerOrProvider as Signer & { provider: JsonRpcProvider }
         )
       : null;
 

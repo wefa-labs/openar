@@ -37,7 +37,7 @@ contract CounterTest is MudV2Test {
   }
 
   function testCreateMap() public {
-    bytes32 mapId = world.openar_MapSystem_createMap("Test", "mapId should be Test", "Image", SizeEnum.Mini);
+    world.openar_MapSystem_createMap("Test", "mapId should be Test", "Image");
   }
 
   // function testClaimGrid() public {

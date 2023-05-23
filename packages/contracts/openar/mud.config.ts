@@ -54,8 +54,7 @@ export default mudConfig({
   systems: {
     SpaceSystem: {
       name: "SpaceSystem",
-      openAccess: false,
-      accessList: ["GridSystem"],
+      openAccess: true, // TODO: Bring back access control when grant acess is functioning
     },
     GridSystem: {
       name: "GridSystem",
