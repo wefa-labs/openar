@@ -15,6 +15,8 @@ contract PostDeploy is Script {
     // IWorld(worldAddress).grantAccess("tictactoe", "SpaceSystem", address(this));
     // IWorld(worldAddress).grantAccess("checkers", "SpaceSystem", address(this));
 
+    // TODO: Add NFT deployment of creature contracts
+
     console.log("PostDeploy: granted access to SpaceSystem");
 
     vm.stopBroadcast();
