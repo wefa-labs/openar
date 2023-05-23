@@ -4,6 +4,10 @@ pragma solidity >=0.8.0;
 import { Script } from "forge-std/Script.sol";
 import { console } from "forge-std/console.sol";
 import { IWorld } from "../src/codegen/world/IWorld.sol";
+import { RoleEnum } from "../src/codegen/Types.sol";
+
+
+import { TicTacToeCollectible } from "../src/Collectible.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
@@ -15,10 +19,13 @@ contract PostDeploy is Script {
 
     // ------------------ EXAMPLES ------------------
 
-    // Call increment on the world via the registered function selector
-    uint32 newValue = IWorld(worldAddress).tictactoe_Increment_increment();
-    // TODO: Add NFT deployment of creature contracts
-    console.log("Increment via IWorld:", newValue);
+    // Deploy a new collectible contract
+    new TicTacToeCollectible();
+    console.log("Deployed TicTacToeCollectible");
+
+    // Call create on the world via the registered function selector
+    bytes32 newValue = IWorld(worldAddress).tictactoe_GameStart_create(RoleEnum.X, "TicTacToe", bytes32(0));
+    console.log("Increment via IWorld:", uint256(newValue));
 
     vm.stopBroadcast();
   }

@@ -1255,6 +1255,25 @@ const _abi = [
         name: "matchId",
         type: "bytes32",
       },
+    ],
+    name: "tictactoe_GameColllectible_claim",
+    outputs: [
+      {
+        internalType: "string",
+        name: "meta",
+        type: "string",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "matchId",
+        type: "bytes32",
+      },
       {
         internalType: "uint8",
         name: "x",

@@ -51,6 +51,10 @@ export default mudConfig({
       name: "GameMove",
       openAccess: true,
     },
+    GameCollectibleSystem: {
+      name: "GameColllectible",
+      openAccess: true,
+    },
     // SANITY CHECK
     IncrementSystem: {
       name: "Increment",

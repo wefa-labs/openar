@@ -45,7 +45,7 @@ export default mudConfig({
         gridCount: "uint32",
       },
     },
-    // Testing Purposes
+    // SANITY CHECK
     Counter: {
       keySchema: {},
       schema: "uint32",
@@ -64,7 +64,7 @@ export default mudConfig({
       name: "MapSystem",
       openAccess: true,
     },
-    // Testing Purposes
+    // SANITY CHECK
     IncrementSystem: {
       name: "Increment",
       openAccess: true,

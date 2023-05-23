@@ -5,13 +5,6 @@ import { SetupNetworkResult } from "./setupNetwork";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
-enum MapSize {
-  Mini,
-  Small,
-  Medium,
-  Large,
-}
-
 enum TicTacToeRole {
   O = 0,
   X = 1,
@@ -26,23 +19,24 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity }: SetupNetworkResult,
   { Counter }: ClientComponents
 ) {
+  // SANITY CHECK
   const increment = async () => {
     const tx = await worldSend("openar_Increment_increment", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(Counter, singletonEntity);
   };
 
+  // OPENAR CALLS
   const createMap = async (
     name: string,
     description: string,
-    image: string,
-    size: MapSize
+    image: string
+    // size: MapSize
   ) => {
     const tx = await worldSend("openar_MapSystem_createMap", [
       name,
       description,
       image,
-      size,
     ]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
@@ -52,48 +46,81 @@ export function createSystemCalls(
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const createCheckersGame = async (name: string, role: CheckerRole) => {
-    // const tx = await worldSend("", [""]);
-    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  // CHECKERS CALLS
+  const createCheckersGame = async (
+    role: CheckerRole,
+    name: string,
+    gridId: string
+  ) => {
+    // @ts-ignore
+    const tx = await worldSend("checkers_GameStart_create", [
+      role,
+      name,
+      gridId,
+    ]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const joinCheckersGame = async (gameId: string) => {
-    // const tx = await worldSend("openar_MapSystem_createMap", [""]);
-    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  const joinCheckersGame = async (gameId: string, gridId: string) => {
+    // @ts-ignore
+    const tx = await worldSend("checkers_GameStart_join", [gameId, gridId]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const makeCheckerMove = async (gameId: number, from: number, to: number) => {
-    // const tx = await worldSend("openar_MapSystem_createMap", [""]);
-    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  const makeCheckerMove = async (
+    gameId: string,
+    gridId: string,
+    from: number,
+    to: number
+  ) => {
+    // @ts-ignore
+    const tx = await worldSend("checkers_GameMove_movePosition", [
+      gameId,
+      gridId,
+      from,
+      to,
+    ]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const createTicTacToeGame = async (name: string, role: TicTacToeRole) => {
-    // const tx = await worldSend("tictactoe_GameInit_create", [role, name]);
-    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  // TIC TAC TOE CALLS
+  const createTicTacToeMatch = async (name: string, role: TicTacToeRole) => {
+    // @ts-ignore
+    const tx = await worldSend("tictactoe_GameStart_create", [role, name]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const joinTicTacToeGame = async (gameId: string) => {
-    // const tx = await worldSend("tictactoe_GameInit_join", [gameId]);
-    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  const joinTicTacToeMatch = async (matchId: string) => {
+    // @ts-ignore
+    const tx = await worldSend("tictactoe_GameStart_join", [matchId]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const claimTicTacToePosition = async (gameId: string, position: number) => {
-    // const tx = await worldSend("tictactoe_GameMove_claimPosition", [
-    //   gameId,
-    //   position,
-    // ]);
-    // await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  const claimTicTacToePosition = async (matchId: string, position: number) => {
+    // @ts-ignore
+    const tx = await worldSend("tictactoe_GameMove_claimPosition", [
+      matchId,
+      position,
+    ]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+  };
+
+  const claimTicTacToeCollectible = async (matchId: string) => {
+    // @ts-ignore
+    const tx = await worldSend("tictactoe_GameCollectible_claim", [matchId]);
+    await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
   return {
     increment,
     createMap,
     claimGrid,
-    createTicTacToeGame,
-    joinTicTacToeGame,
-    claimTicTacToePosition,
     createCheckersGame,
     joinCheckersGame,
     makeCheckerMove,
+    createTicTacToeMatch,
+    joinTicTacToeMatch,
+    claimTicTacToePosition,
+    claimTicTacToeCollectible,
   };
 }

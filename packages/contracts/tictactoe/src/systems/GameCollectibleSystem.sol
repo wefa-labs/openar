@@ -9,7 +9,7 @@ import { Identity, Match, MatchData, Role } from "../codegen/Tables.sol";
 
 contract GameCollectibleSystem is System {
 
-  function mintCollectible(
+  function claim(
     bytes32 matchId
   ) public returns (string memory meta) {
     address user = _msgSender();
@@ -27,6 +27,8 @@ contract GameCollectibleSystem is System {
     Match.set(matchId, 0, matchData);
 
     // TODO: Mint NFT
+    // Randomly pick between Tic, Tac, and Toe as  the token URI
+
 
     return "metadata";
   }

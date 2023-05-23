@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "pnpm recursive run dev",
     "deploy": "pnpm deploy:checkers && pnpm deploy:tictactoe && pnpm deploy:openar",
-    "deploy:openar": "cd openar && pnpm run deploy --profile=lattice-testnet --priorityFeeMultiplier=3",
+    "deploy:openar": "cd openar && pnpm run deploy --profile=optimism-goerli --priorityFeeMultiplier=10",
     "deploy:checkers": "cd checkers && pnpm run deploy --profile=optimism-goerli",
     "deploy:tictactoe": "cd tictactoe && pnpm run deploy --profile=optimism-goerli",
     "deploy:testnet": "pnpm recursive run deploy --profile=lattice-testnet",
@@ -21,6 +21,10 @@
     "@types/node": "^18.15.11",
     "ds-test": "https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084",
     "forge-std": "https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3",
+    "prettier": "^2.8.4",
+    "prettier-plugin-tailwindcss": "^0.2.3",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint": "^3.3.7",
     "typechain": "^8.1.1"
   }
 }
