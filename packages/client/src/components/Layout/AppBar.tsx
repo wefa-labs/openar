@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RC as CardsIcon } from "../../assets/cards.svg";
 import { RC as WorldIcon } from "../../assets/world.svg";
 import { RC as ProfileIcon } from "../../assets/profile.svg";
-import useDeviceDetect from "../../hooks/useDeviceDetect";
+import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 const tabs: {
   path: string;

@@ -67,12 +67,14 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Space: (() => {
-      const tableId = new TableId("openar", "Space");
+    Cell: (() => {
+      const tableId = new TableId("openar", "Cell");
       return defineComponent(
         world,
         {
-          value: RecsType.StringArray,
+          x: RecsType.Number,
+          y: RecsType.Number,
+          values: RecsType.StringArray,
         },
         {
           metadata: {
@@ -82,8 +84,8 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Grid: (() => {
-      const tableId = new TableId("openar", "Grid");
+    Space: (() => {
+      const tableId = new TableId("openar", "Space");
       return defineComponent(
         world,
         {
@@ -98,13 +100,13 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Map: (() => {
-      const tableId = new TableId("openar", "Map");
+    ARWorld: (() => {
+      const tableId = new TableId("openar", "ARWorld");
       return defineComponent(
         world,
         {
           id: RecsType.String,
-          gridCount: RecsType.Number,
+          spaceCount: RecsType.Number,
         },
         {
           metadata: {

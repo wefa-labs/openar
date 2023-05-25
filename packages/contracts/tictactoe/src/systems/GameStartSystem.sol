@@ -11,12 +11,12 @@ contract GameStartSystem is System {
   function create(
     RoleEnum role,
     string memory name,
-    bytes32 gridId
+    bytes32 spaceId
   ) public returns (bytes32) {
     address user = _msgSender();
 
-    // TODO: Transfer grid ownership to system
-    // world.transferGridOwnership(gridId, address(this));
+    // TODO: Transfer space ownership to system
+    // world.transferGridOwnership(spaceId, address(this));
 
     bytes32 matchId = getUniqueEntity();
 
@@ -24,8 +24,8 @@ contract GameStartSystem is System {
     Match.set(matchId, 0, MatchData({
       turnCount: 0,
       id: matchId,
-      gridId: gridId,
-      gridPosition: 0,
+      spaceId: spaceId,
+      spacePosition: 0,
       currentPlayer: address(0),
       winner: address(0),
       players: [user, address(0)],

@@ -29,7 +29,6 @@ contract GameCollectibleSystem is System {
     // TODO: Mint NFT
     // Randomly pick between Tic, Tac, and Toe as  the token URI
 
-
     return "metadata";
   }
 }

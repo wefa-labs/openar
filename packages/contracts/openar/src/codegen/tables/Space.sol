@@ -20,29 +20,34 @@ import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCou
 bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("openar"), bytes16("Space")));
 bytes32 constant SpaceTableId = _tableId;
 
+struct SpaceData {
+  bytes32 id;
+  uint32 position;
+}
+
 library Space {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](1);
-    _schema[0] = SchemaType.BYTES32_ARRAY;
+    SchemaType[] memory _schema = new SchemaType[](2);
+    _schema[0] = SchemaType.BYTES32;
+    _schema[1] = SchemaType.UINT32;
 
     return SchemaLib.encode(_schema);
   }
 
   function getKeySchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](4);
+    SchemaType[] memory _schema = new SchemaType[](2);
     _schema[0] = SchemaType.BYTES32;
     _schema[1] = SchemaType.BYTES32;
-    _schema[2] = SchemaType.UINT32;
-    _schema[3] = SchemaType.UINT32;
 
     return SchemaLib.encode(_schema);
   }
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](1);
-    _fieldNames[0] = "value";
+    string[] memory _fieldNames = new string[](2);
+    _fieldNames[0] = "id";
+    _fieldNames[1] = "position";
     return ("Space", _fieldNames);
   }
 
@@ -68,228 +73,167 @@ library Space {
     _store.setMetadata(_tableId, _tableName, _fieldNames);
   }
 
-  /** Get value */
-  function get(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal view returns (bytes32[] memory value) {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Get id */
+  function getId(bytes32 worldID, bytes32 spaceId) internal view returns (bytes32 id) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
-    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_bytes32());
+    return (Bytes.slice32(_blob, 0));
   }
 
-  /** Get value (using the specified store) */
-  function get(
-    IStore _store,
-    bytes32 mapId,
-    bytes32 gridId,
-    uint32 x,
-    uint32 y
-  ) internal view returns (bytes32[] memory value) {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Get id (using the specified store) */
+  function getId(IStore _store, bytes32 worldID, bytes32 spaceId) internal view returns (bytes32 id) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
-    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_bytes32());
-  }
-
-  /** Set value */
-  function set(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y, bytes32[] memory value) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 0, EncodeArray.encode((value)));
-  }
-
-  /** Set value (using the specified store) */
-  function set(IStore _store, bytes32 mapId, bytes32 gridId, uint32 x, uint32 y, bytes32[] memory value) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-
-    _store.setField(_tableId, _keyTuple, 0, EncodeArray.encode((value)));
-  }
-
-  /** Get the length of value */
-  function length(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-
-    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 0, getSchema());
-    return _byteLength / 32;
-  }
-
-  /** Get the length of value (using the specified store) */
-  function length(IStore _store, bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal view returns (uint256) {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-
-    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 0, getSchema());
-    return _byteLength / 32;
-  }
-
-  /** Get an item of value (unchecked, returns invalid data if index overflows) */
-  function getItem(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y, uint256 _index) internal view returns (bytes32) {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-
-    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 32, (_index + 1) * 32);
     return (Bytes.slice32(_blob, 0));
   }
 
-  /** Get an item of value (using the specified store) (unchecked, returns invalid data if index overflows) */
-  function getItem(
-    IStore _store,
-    bytes32 mapId,
-    bytes32 gridId,
-    uint32 x,
-    uint32 y,
-    uint256 _index
-  ) internal view returns (bytes32) {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Set id */
+  function setId(bytes32 worldID, bytes32 spaceId, bytes32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 0, getSchema(), _index * 32, (_index + 1) * 32);
-    return (Bytes.slice32(_blob, 0));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((id)));
   }
 
-  /** Push an element to value */
-  function push(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y, bytes32 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Set id (using the specified store) */
+  function setId(IStore _store, bytes32 worldID, bytes32 spaceId, bytes32 id) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    StoreSwitch.pushToField(_tableId, _keyTuple, 0, abi.encodePacked((_element)));
+    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((id)));
   }
 
-  /** Push an element to value (using the specified store) */
-  function push(IStore _store, bytes32 mapId, bytes32 gridId, uint32 x, uint32 y, bytes32 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Get position */
+  function getPosition(bytes32 worldID, bytes32 spaceId) internal view returns (uint32 position) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    _store.pushToField(_tableId, _keyTuple, 0, abi.encodePacked((_element)));
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
+    return (uint32(Bytes.slice4(_blob, 0)));
   }
 
-  /** Pop an element from value */
-  function pop(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Get position (using the specified store) */
+  function getPosition(IStore _store, bytes32 worldID, bytes32 spaceId) internal view returns (uint32 position) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    StoreSwitch.popFromField(_tableId, _keyTuple, 0, 32);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
+    return (uint32(Bytes.slice4(_blob, 0)));
   }
 
-  /** Pop an element from value (using the specified store) */
-  function pop(IStore _store, bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Set position */
+  function setPosition(bytes32 worldID, bytes32 spaceId, uint32 position) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    _store.popFromField(_tableId, _keyTuple, 0, 32);
+    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((position)));
   }
 
-  /** Update an element of value at `_index` */
-  function update(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y, uint256 _index, bytes32 _element) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Set position (using the specified store) */
+  function setPosition(IStore _store, bytes32 worldID, bytes32 spaceId, uint32 position) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    StoreSwitch.updateInField(_tableId, _keyTuple, 0, _index * 32, abi.encodePacked((_element)));
+    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((position)));
   }
 
-  /** Update an element of value (using the specified store) at `_index` */
-  function update(
-    IStore _store,
-    bytes32 mapId,
-    bytes32 gridId,
-    uint32 x,
-    uint32 y,
-    uint256 _index,
-    bytes32 _element
-  ) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  /** Get the full data */
+  function get(bytes32 worldID, bytes32 spaceId) internal view returns (SpaceData memory _table) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
-    _store.updateInField(_tableId, _keyTuple, 0, _index * 32, abi.encodePacked((_element)));
+    bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
+    return decode(_blob);
+  }
+
+  /** Get the full data (using the specified store) */
+  function get(IStore _store, bytes32 worldID, bytes32 spaceId) internal view returns (SpaceData memory _table) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
+
+    bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
+    return decode(_blob);
+  }
+
+  /** Set the full data using individual values */
+  function set(bytes32 worldID, bytes32 spaceId, bytes32 id, uint32 position) internal {
+    bytes memory _data = encode(id, position);
+
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
+
+    StoreSwitch.setRecord(_tableId, _keyTuple, _data);
+  }
+
+  /** Set the full data using individual values (using the specified store) */
+  function set(IStore _store, bytes32 worldID, bytes32 spaceId, bytes32 id, uint32 position) internal {
+    bytes memory _data = encode(id, position);
+
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
+
+    _store.setRecord(_tableId, _keyTuple, _data);
+  }
+
+  /** Set the full data using the data struct */
+  function set(bytes32 worldID, bytes32 spaceId, SpaceData memory _table) internal {
+    set(worldID, spaceId, _table.id, _table.position);
+  }
+
+  /** Set the full data using the data struct (using the specified store) */
+  function set(IStore _store, bytes32 worldID, bytes32 spaceId, SpaceData memory _table) internal {
+    set(_store, worldID, spaceId, _table.id, _table.position);
+  }
+
+  /** Decode the tightly packed blob using this table's schema */
+  function decode(bytes memory _blob) internal pure returns (SpaceData memory _table) {
+    _table.id = (Bytes.slice32(_blob, 0));
+
+    _table.position = (uint32(Bytes.slice4(_blob, 32)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(bytes32[] memory value) internal view returns (bytes memory) {
-    uint40[] memory _counters = new uint40[](1);
-    _counters[0] = uint40(value.length * 32);
-    PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
-
-    return abi.encodePacked(_encodedLengths.unwrap(), EncodeArray.encode((value)));
+  function encode(bytes32 id, uint32 position) internal view returns (bytes memory) {
+    return abi.encodePacked(id, position);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(
-    bytes32 mapId,
-    bytes32 gridId,
-    uint32 x,
-    uint32 y
-  ) internal pure returns (bytes32[] memory _keyTuple) {
-    _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  function encodeKeyTuple(bytes32 worldID, bytes32 spaceId) internal pure returns (bytes32[] memory _keyTuple) {
+    _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  function deleteRecord(bytes32 worldID, bytes32 spaceId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 mapId, bytes32 gridId, uint32 x, uint32 y) internal {
-    bytes32[] memory _keyTuple = new bytes32[](4);
-    _keyTuple[0] = bytes32((mapId));
-    _keyTuple[1] = bytes32((gridId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
+  function deleteRecord(IStore _store, bytes32 worldID, bytes32 spaceId) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((worldID));
+    _keyTuple[1] = bytes32((spaceId));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

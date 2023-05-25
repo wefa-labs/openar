@@ -1,3 +1,3 @@
-export default function Play() {
+export default function Explore() {
   return <div>Explore</div>;
 }

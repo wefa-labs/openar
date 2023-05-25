@@ -16,5 +16,4 @@ setup().then((result) => {
       <App />
     </MUDProvider>
   );
-  // mountDevTools();
 });

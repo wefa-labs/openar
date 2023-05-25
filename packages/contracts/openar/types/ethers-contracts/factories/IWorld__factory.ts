@@ -685,11 +685,62 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "mapId",
+        name: "worldId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint32",
+        name: "position",
+        type: "uint32",
+      },
+      {
+        internalType: "uint8",
+        name: "x",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "y",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32[]",
+        name: "value",
+        type: "bytes32[]",
+      },
+    ],
+    name: "openar_CellSystem_setCell",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "openar_Increment_increment",
+    outputs: [
+      {
+        internalType: "uint32",
+        name: "",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "worldId",
         type: "bytes32",
       },
     ],
-    name: "openar_GridSystem_claimGrid",
+    name: "openar_SpaceSystem_claimSpace",
     outputs: [
       {
         internalType: "bytes32",
@@ -704,12 +755,12 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "mapId",
+        name: "worldId",
         type: "bytes32",
       },
       {
         internalType: "bytes32",
-        name: "gridId",
+        name: "spaceId",
         type: "bytes32",
       },
       {
@@ -733,7 +784,7 @@ const _abi = [
         type: "string",
       },
     ],
-    name: "openar_GridSystem_setGrid",
+    name: "openar_SpaceSystem_setSpace",
     outputs: [
       {
         internalType: "bytes32",
@@ -748,12 +799,12 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "mapId",
+        name: "worldId",
         type: "bytes32",
       },
       {
         internalType: "bytes32",
-        name: "gridId",
+        name: "spaceId",
         type: "bytes32",
       },
       {
@@ -762,25 +813,12 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "openar_GridSystem_transferGrid",
+    name: "openar_SpaceSystem_transferSpace",
     outputs: [
       {
         internalType: "bytes32",
         name: "",
         type: "bytes32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "openar_Increment_increment",
-    outputs: [
-      {
-        internalType: "uint32",
-        name: "",
-        type: "uint32",
       },
     ],
     stateMutability: "nonpayable",
@@ -804,7 +842,7 @@ const _abi = [
         type: "string",
       },
     ],
-    name: "openar_MapSystem_createMap",
+    name: "openar_WorldSystem_createWorld",
     outputs: [
       {
         internalType: "bytes32",
@@ -812,39 +850,6 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "mapId",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "gridId",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint8",
-        name: "x",
-        type: "uint8",
-      },
-      {
-        internalType: "uint8",
-        name: "y",
-        type: "uint8",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "value",
-        type: "bytes32[]",
-      },
-    ],
-    name: "openar_SpaceSystem_setSpace",
-    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },

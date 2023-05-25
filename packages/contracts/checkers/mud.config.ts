@@ -17,7 +17,7 @@ export default mudConfig({
       },
     },
     Game: {
-      keySchema: { gameId: "bytes32", gridId: "bytes32" },
+      keySchema: { gameId: "bytes32", spaceId: "bytes32" },
       schema: {
         turnCount: "uint8",
         id: "bytes32",
