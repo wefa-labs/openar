@@ -61,9 +61,7 @@ export async function setupNetwork() {
   // Request drip from faucet
   const signer = result.network.signer.get();
   if (networkConfig.faucetServiceUrl && signer) {
-    const address = await signer.getAddress().catch(() => {
-      console.log("[Dev Faucet]: No signer address found");
-    });
+    const address = await signer.getAddress();
 
     console.info("[Dev Faucet]: Player address -> ", address);
 
@@ -166,7 +164,7 @@ export async function setupNetwork() {
   return {
     ...result,
     worldContract,
-    worldSend: bindFastTxExecute(worldContract),
+    worldSend: bindFastTxExecute(openarWorldContract),
     fastTxExecutor,
   };
 }

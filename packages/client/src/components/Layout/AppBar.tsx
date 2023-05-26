@@ -57,7 +57,7 @@ export const Appbar = () => {
       className={
         isDesktop
           ? "tabs w-full bg-white rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
-          : "btm-nav z-50 bg-white py-4"
+          : "btm-nav z-50 bg-white py-4 fixed z-10"
       }
       style={spring}
     >

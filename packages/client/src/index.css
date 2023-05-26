@@ -16,7 +16,6 @@
   --gradient-end: #24205e;
 }
 
-
 * {
   overscroll-behavior-y: contain;
 }
@@ -29,15 +28,20 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
-  background-image: linear-gradient(320deg, var(--gradient-start), var(--gradient-end) 54%);
+  background-image: linear-gradient(
+    320deg,
+    var(--gradient-start),
+    var(--gradient-end) 54%
+  );
 }
 
-#react-root {
+#react-root,
+#react-root > div {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {

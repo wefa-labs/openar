@@ -30,7 +30,11 @@ export default function Profile() {
             <p>{balance?.decimals}</p>
           </div>
           <div>
-            <form onSubmit={handleWorldSubmit(onCreateWorld)}>
+            <form
+              onSubmit={handleWorldSubmit(onCreateWorld)}
+              className="flex flex-col w-20"
+            >
+              <button type="submit">Create World</button>
               <input
                 type="text"
                 placeholder="World Name"
@@ -46,7 +50,6 @@ export default function Profile() {
                 placeholder="World Image"
                 {...worldFormRegister("image")}
               />
-              <button type="submit">Create World</button>
             </form>
           </div>
         </div>

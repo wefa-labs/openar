@@ -21,6 +21,7 @@ export default defineConfig({
       includeAssets: [
         "assets/logo-64.png",
         "assets/logo-310.png",
+        "assets/logo-310.jpg",
         "masked-icon.svg",
         "assets/cards.png",
         "assets/world.png",
@@ -54,15 +55,15 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-        start_url: "./world",
+        start_url: "./explore",
         display: "fullscreen",
         theme_color: "#38bdf8",
         background_color: "#f0fdfa",
         shortcuts: [
           {
-            name: "Deck",
+            name: "Play",
             description: "Open Plant and Creature Wefadex",
-            url: "/deck",
+            url: "/play",
             icons: [
               {
                 src: "assets/cards.png",
@@ -72,9 +73,9 @@ export default defineConfig({
             ],
           },
           {
-            name: "World",
+            name: "Explore",
             description: "Explore the World",
-            url: "/world",
+            url: "/explore",
             icons: [
               {
                 src: "assets/world.png",
