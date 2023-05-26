@@ -1,3 +1,9 @@
+import Hero from "./ProfileHero";
+
 export default function Profile() {
-  return <div className="grid">Profile</div>;
+  return (
+    <>
+      <Hero/>
+    </>
+  );
 }
