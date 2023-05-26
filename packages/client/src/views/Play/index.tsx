@@ -1,24 +1,40 @@
-import { ARButton, XR } from "@react-three/xr";
-import { Canvas } from "@react-three/fiber";
+import { a, useTransition } from "@react-spring/web";
+
+import { usePlay } from "../../hooks/views/usePlay";
+
+import { Counter } from "./Counter";
+import { CheckersGame } from "./Checkers";
+import { TicTacToeGame } from "./TicTacToe";
 
 export default function Play() {
-  return (
-    <>
-      <ARButton />
-      <Canvas
-        // onCreated={onCanvasCreated}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <XR>
-          <Board position={[0, 0, -1]}></Board>
-        </XR>
-      </Canvas>
-    </>
-  );
+  const {
+    view,
+    // checkerGames,
+    // tictactoeGames,
+    // setView,
+    // createCheckersGame,
+    // createTicTacToeMatch,
+    // joinCheckersGame,
+    // joinTicTacToeMatch,
+  } = usePlay();
+
+  const transitions = useTransition(view, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: {
+      tension: 300,
+      friction: 20,
+      clamp: true,
+    },
+  });
+
+  return transitions((style, item) => (
+    <a.main className="" style={style}>
+      {item === "games" && <div>Games</div>}
+      {item === "counter" && <Counter />}
+      {item === "checkers" && <CheckersGame gameMode="2D" />}
+      {item === "tic-tac-toe" && <TicTacToeGame gameMode="2D" />}
+    </a.main>
+  ));
 }

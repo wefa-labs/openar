@@ -2,7 +2,7 @@ import { useComponentValue } from "@latticexyz/react";
 
 import { useMUD } from "../../../hooks/useMud";
 
-export default function Incrementer() {
+export const Counter = () => {
   const {
     components: { Counter },
     systemCalls: { increment },
@@ -23,8 +23,8 @@ export default function Incrementer() {
           console.log("new counter value:", await increment());
         }}
       >
-        Increment
+        Counter
       </button>
     </>
   );
-}
+};

@@ -1,9 +1,9 @@
 import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import { useTheme } from "../../hooks/useTheme";
+import { useTheme } from "../../hooks/app/useTheme";
 import { useAuthWeb3 } from "../../hooks/useWeb3";
-import useDeviceDetect from "../../hooks/useDeviceDetect";
+import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface HeaderProps {}
 
@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = () => {
   const { address } = useAuthWeb3();
 
   return (
-    <header className="navbar bg-transparent px-8">
+    <header className="navbar bg-transparent w-full px-8">
       <div className="navbar-start">
         <a href="/" className="font-bold tracking-wider text-2xl">
           Open AR

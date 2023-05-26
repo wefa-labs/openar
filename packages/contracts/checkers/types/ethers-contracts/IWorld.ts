@@ -713,7 +713,7 @@ export interface IWorld extends BaseContract {
 
     checkers_GameMove_movePosition(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       from: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -722,13 +722,13 @@ export interface IWorld extends BaseContract {
     checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1021,7 +1021,7 @@ export interface IWorld extends BaseContract {
 
   checkers_GameMove_movePosition(
     gameId: PromiseOrValue<BytesLike>,
-    gridId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
     from: PromiseOrValue<BigNumberish>,
     to: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1030,13 +1030,13 @@ export interface IWorld extends BaseContract {
   checkers_GameStart_create(
     role: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
-    gridId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   checkers_GameStart_join(
     gameId: PromiseOrValue<BytesLike>,
-    gridId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1329,7 +1329,7 @@ export interface IWorld extends BaseContract {
 
     checkers_GameMove_movePosition(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       from: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -1338,13 +1338,13 @@ export interface IWorld extends BaseContract {
     checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<number>;
 
@@ -1682,7 +1682,7 @@ export interface IWorld extends BaseContract {
 
     checkers_GameMove_movePosition(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       from: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1691,13 +1691,13 @@ export interface IWorld extends BaseContract {
     checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1991,7 +1991,7 @@ export interface IWorld extends BaseContract {
 
     checkers_GameMove_movePosition(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       from: PromiseOrValue<BigNumberish>,
       to: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -2000,13 +2000,13 @@ export interface IWorld extends BaseContract {
     checkers_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     checkers_GameStart_join(
       gameId: PromiseOrValue<BytesLike>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

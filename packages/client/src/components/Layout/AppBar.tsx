@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RC as CardsIcon } from "../../assets/cards.svg";
 import { RC as WorldIcon } from "../../assets/world.svg";
 import { RC as ProfileIcon } from "../../assets/profile.svg";
-import useDeviceDetect from "../../hooks/useDeviceDetect";
+import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 const tabs: {
   path: string;
@@ -57,7 +57,7 @@ export const Appbar = () => {
       className={
         isDesktop
           ? "tabs w-full bg-white rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
-          : "btm-nav z-50 bg-white py-4"
+          : "btm-nav z-50 bg-white py-4 fixed z-10"
       }
       style={spring}
     >

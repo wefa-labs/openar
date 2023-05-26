@@ -21,8 +21,8 @@ export default mudConfig({
       schema: {
         turnCount: "uint8",
         id: "bytes32",
-        gridPosition: "uint8", // TODO: Integrate for 9 grid tic tac toe, hardcoded to 0 for now.
-        gridId: "bytes32",
+        spacePosition: "uint8", // TODO: Integrate for 9 space tic tac toe, hardcoded to 0 for now.
+        spaceId: "bytes32",
         currentPlayer: "address",
         winner: "address",
         players: "address[2]",
@@ -30,7 +30,7 @@ export default mudConfig({
       },
     },
     Game: {
-      keySchema: { gameId: "bytes32", gridId: "bytes32" },
+      keySchema: { gameId: "bytes32", spaceId: "bytes32" },
       schema: {
         winner: "address",
         matchesPlayed: "uint8",
@@ -52,7 +52,7 @@ export default mudConfig({
       openAccess: true,
     },
     GameCollectibleSystem: {
-      name: "GameColllectible",
+      name: "GameCollectible",
       openAccess: true,
     },
     // SANITY CHECK

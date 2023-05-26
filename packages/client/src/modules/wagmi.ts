@@ -12,8 +12,7 @@ const { chains, publicClient } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "Open AR",
-  projectId: "ec43956523c23098d98f8fc8cc8db3c6",
+  appName: "OpenAR",
   chains,
 });
 

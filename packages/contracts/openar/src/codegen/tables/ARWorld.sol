@@ -17,15 +17,15 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("openar"), bytes16("Map")));
-bytes32 constant MapTableId = _tableId;
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("openar"), bytes16("ARWorld")));
+bytes32 constant ARWorldTableId = _tableId;
 
-struct MapData {
+struct ARWorldData {
   bytes32 id;
-  uint32 gridCount;
+  uint32 spaceCount;
 }
 
-library Map {
+library ARWorld {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](2);
@@ -46,8 +46,8 @@ library Map {
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](2);
     _fieldNames[0] = "id";
-    _fieldNames[1] = "gridCount";
-    return ("Map", _fieldNames);
+    _fieldNames[1] = "spaceCount";
+    return ("ARWorld", _fieldNames);
   }
 
   /** Register the table's schema */
@@ -73,151 +73,151 @@ library Map {
   }
 
   /** Get id */
-  function getId(bytes32 mapId) internal view returns (bytes32 id) {
+  function getId(bytes32 worldId) internal view returns (bytes32 id) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
   }
 
   /** Get id (using the specified store) */
-  function getId(IStore _store, bytes32 mapId) internal view returns (bytes32 id) {
+  function getId(IStore _store, bytes32 worldId) internal view returns (bytes32 id) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
   }
 
   /** Set id */
-  function setId(bytes32 mapId, bytes32 id) internal {
+  function setId(bytes32 worldId, bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((id)));
   }
 
   /** Set id (using the specified store) */
-  function setId(IStore _store, bytes32 mapId, bytes32 id) internal {
+  function setId(IStore _store, bytes32 worldId, bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((id)));
   }
 
-  /** Get gridCount */
-  function getGridCount(bytes32 mapId) internal view returns (uint32 gridCount) {
+  /** Get spaceCount */
+  function getSpaceCount(bytes32 worldId) internal view returns (uint32 spaceCount) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint32(Bytes.slice4(_blob, 0)));
   }
 
-  /** Get gridCount (using the specified store) */
-  function getGridCount(IStore _store, bytes32 mapId) internal view returns (uint32 gridCount) {
+  /** Get spaceCount (using the specified store) */
+  function getSpaceCount(IStore _store, bytes32 worldId) internal view returns (uint32 spaceCount) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint32(Bytes.slice4(_blob, 0)));
   }
 
-  /** Set gridCount */
-  function setGridCount(bytes32 mapId, uint32 gridCount) internal {
+  /** Set spaceCount */
+  function setSpaceCount(bytes32 worldId, uint32 spaceCount) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((gridCount)));
+    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((spaceCount)));
   }
 
-  /** Set gridCount (using the specified store) */
-  function setGridCount(IStore _store, bytes32 mapId, uint32 gridCount) internal {
+  /** Set spaceCount (using the specified store) */
+  function setSpaceCount(IStore _store, bytes32 worldId, uint32 spaceCount) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
-    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((gridCount)));
+    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((spaceCount)));
   }
 
   /** Get the full data */
-  function get(bytes32 mapId) internal view returns (MapData memory _table) {
+  function get(bytes32 worldId) internal view returns (ARWorldData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Get the full data (using the specified store) */
-  function get(IStore _store, bytes32 mapId) internal view returns (MapData memory _table) {
+  function get(IStore _store, bytes32 worldId) internal view returns (ARWorldData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 mapId, bytes32 id, uint32 gridCount) internal {
-    bytes memory _data = encode(id, gridCount);
+  function set(bytes32 worldId, bytes32 id, uint32 spaceCount) internal {
+    bytes memory _data = encode(id, spaceCount);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 mapId, bytes32 id, uint32 gridCount) internal {
-    bytes memory _data = encode(id, gridCount);
+  function set(IStore _store, bytes32 worldId, bytes32 id, uint32 spaceCount) internal {
+    bytes memory _data = encode(id, spaceCount);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using the data struct */
-  function set(bytes32 mapId, MapData memory _table) internal {
-    set(mapId, _table.id, _table.gridCount);
+  function set(bytes32 worldId, ARWorldData memory _table) internal {
+    set(worldId, _table.id, _table.spaceCount);
   }
 
   /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, bytes32 mapId, MapData memory _table) internal {
-    set(_store, mapId, _table.id, _table.gridCount);
+  function set(IStore _store, bytes32 worldId, ARWorldData memory _table) internal {
+    set(_store, worldId, _table.id, _table.spaceCount);
   }
 
   /** Decode the tightly packed blob using this table's schema */
-  function decode(bytes memory _blob) internal pure returns (MapData memory _table) {
+  function decode(bytes memory _blob) internal pure returns (ARWorldData memory _table) {
     _table.id = (Bytes.slice32(_blob, 0));
 
-    _table.gridCount = (uint32(Bytes.slice4(_blob, 32)));
+    _table.spaceCount = (uint32(Bytes.slice4(_blob, 32)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(bytes32 id, uint32 gridCount) internal view returns (bytes memory) {
-    return abi.encodePacked(id, gridCount);
+  function encode(bytes32 id, uint32 spaceCount) internal view returns (bytes memory) {
+    return abi.encodePacked(id, spaceCount);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(bytes32 mapId) internal pure returns (bytes32[] memory _keyTuple) {
+  function encodeKeyTuple(bytes32 worldId) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(bytes32 mapId) internal {
+  function deleteRecord(bytes32 worldId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 mapId) internal {
+  function deleteRecord(IStore _store, bytes32 worldId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((mapId));
+    _keyTuple[0] = bytes32((worldId));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

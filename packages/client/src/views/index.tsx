@@ -1,7 +1,7 @@
 import { a, useTransition } from "@react-spring/web";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-import useDeviceDetect from "../hooks/useDeviceDetect";
+import useDeviceDetect from "../hooks/app/useDeviceDetect";
 
 import Play from "./Play";
 import Explore from "./Explore";

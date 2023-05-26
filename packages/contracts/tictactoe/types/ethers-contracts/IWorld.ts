@@ -14,19 +14,9 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
+import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "./common";
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "./common";
 
 export interface IWorldInterface extends utils.Interface {
   functions: {
@@ -67,7 +57,7 @@ export interface IWorldInterface extends utils.Interface {
     "setMetadata(bytes32,string,string[])": FunctionFragment;
     "setRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
     "setRecord(bytes32,bytes32[],bytes)": FunctionFragment;
-    "tictactoe_GameColllectible_claim(bytes32)": FunctionFragment;
+    "tictactoe_GameCollectible_claim(bytes32)": FunctionFragment;
     "tictactoe_GameMove_claimPosition(bytes32,uint8)": FunctionFragment;
     "tictactoe_GameStart_create(uint8,string,bytes32)": FunctionFragment;
     "tictactoe_GameStart_join(bytes32)": FunctionFragment;
@@ -115,7 +105,7 @@ export interface IWorldInterface extends utils.Interface {
       | "setMetadata(bytes32,string,string[])"
       | "setRecord(bytes16,bytes16,bytes32[],bytes)"
       | "setRecord(bytes32,bytes32[],bytes)"
-      | "tictactoe_GameColllectible_claim"
+      | "tictactoe_GameCollectible_claim"
       | "tictactoe_GameMove_claimPosition"
       | "tictactoe_GameStart_create"
       | "tictactoe_GameStart_join"
@@ -126,11 +116,7 @@ export interface IWorldInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "call",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRecord(bytes32,bytes32[])",
@@ -138,11 +124,7 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[]
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)",
@@ -155,19 +137,11 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "getField",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getFieldLength",
@@ -189,33 +163,19 @@ export interface IWorldInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getKeySchema",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
+  encodeFunctionData(functionFragment: "getKeySchema", values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: "getRecord(bytes32,bytes32[],bytes32)",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "getRecord(bytes32,bytes32[])",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getSchema",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
+  encodeFunctionData(functionFragment: "getSchema", values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: "grantAccess",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "installModule",
@@ -266,41 +226,20 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerFunctionSelector",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerHook",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "registerNamespace",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
+  encodeFunctionData(functionFragment: "registerNamespace", values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: "registerRootFunctionSelector",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerSchema",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerStoreHook",
@@ -308,45 +247,23 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerSystem",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<boolean>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerSystemHook",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTable",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTableHook",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeAccess",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
@@ -369,20 +286,11 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setMetadata(bytes16,bytes16,string,string[])",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>[]
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "setMetadata(bytes32,string,string[])",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>[]
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)",
@@ -395,36 +303,19 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRecord(bytes32,bytes32[],bytes)",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>[],
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "tictactoe_GameColllectible_claim",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
+  encodeFunctionData(functionFragment: "tictactoe_GameCollectible_claim", values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: "tictactoe_GameMove_claimPosition",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "tictactoe_GameStart_create",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>
-    ]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "tictactoe_GameStart_join",
-    values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tictactoe_Increment_increment",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "tictactoe_GameStart_join", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: "tictactoe_Increment_increment", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "updateInField(bytes32,bytes32[],uint8,uint256,bytes)",
     values: [
@@ -448,161 +339,53 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "call", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteRecord(bytes32,bytes32[])",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "deleteRecord(bytes32,bytes32[])", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getField", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getFieldLength",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getFieldSlice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getKeySchema",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRecord(bytes32,bytes32[],bytes32)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRecord(bytes32,bytes32[])",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "getFieldLength", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getFieldSlice", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getKeySchema", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getRecord(bytes32,bytes32[],bytes32)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getRecord(bytes32,bytes32[])", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getSchema", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "grantAccess",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "installModule",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "installRootModule",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "grantAccess", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "installModule", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "installRootModule", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isStore", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "popFromField(bytes32,bytes32[],uint8,uint256)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "pushToField(bytes32,bytes32[],uint8,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerFunctionSelector",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerHook",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerNamespace",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerRootFunctionSelector",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerSchema",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerStoreHook",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerSystem",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerSystemHook",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerTable",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "registerTableHook",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "revokeAccess",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setField(bytes16,bytes16,bytes32[],uint8,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMetadata(bytes16,bytes16,string,string[])",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setMetadata(bytes32,string,string[])",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setRecord(bytes32,bytes32[],bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tictactoe_GameColllectible_claim",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tictactoe_GameMove_claimPosition",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tictactoe_GameStart_create",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tictactoe_GameStart_join",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "tictactoe_Increment_increment",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "popFromField(bytes32,bytes32[],uint8,uint256)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pushToField(bytes32,bytes32[],uint8,bytes)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerFunctionSelector", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerHook", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerNamespace", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerRootFunctionSelector", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerSchema", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerStoreHook", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerSystem", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerSystemHook", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerTable", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "registerTableHook", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "revokeAccess", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setField(bytes32,bytes32[],uint8,bytes)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setField(bytes16,bytes16,bytes32[],uint8,bytes)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setMetadata(bytes16,bytes16,string,string[])", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setMetadata(bytes32,string,string[])", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setRecord(bytes32,bytes32[],bytes)", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tictactoe_GameCollectible_claim", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tictactoe_GameMove_claimPosition", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tictactoe_GameStart_create", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tictactoe_GameStart_join", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tictactoe_Increment_increment", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "updateInField(bytes32,bytes32[],uint8,uint256,bytes)",
     data: BytesLike
@@ -636,26 +419,18 @@ export interface StoreDeleteRecordEventObject {
   table: string;
   key: string[];
 }
-export type StoreDeleteRecordEvent = TypedEvent<
-  [string, string[]],
-  StoreDeleteRecordEventObject
->;
+export type StoreDeleteRecordEvent = TypedEvent<[string, string[]], StoreDeleteRecordEventObject>;
 
-export type StoreDeleteRecordEventFilter =
-  TypedEventFilter<StoreDeleteRecordEvent>;
+export type StoreDeleteRecordEventFilter = TypedEventFilter<StoreDeleteRecordEvent>;
 
 export interface StoreEphemeralRecordEventObject {
   table: string;
   key: string[];
   data: string;
 }
-export type StoreEphemeralRecordEvent = TypedEvent<
-  [string, string[], string],
-  StoreEphemeralRecordEventObject
->;
+export type StoreEphemeralRecordEvent = TypedEvent<[string, string[], string], StoreEphemeralRecordEventObject>;
 
-export type StoreEphemeralRecordEventFilter =
-  TypedEventFilter<StoreEphemeralRecordEvent>;
+export type StoreEphemeralRecordEventFilter = TypedEventFilter<StoreEphemeralRecordEvent>;
 
 export interface StoreSetFieldEventObject {
   table: string;
@@ -663,10 +438,7 @@ export interface StoreSetFieldEventObject {
   schemaIndex: number;
   data: string;
 }
-export type StoreSetFieldEvent = TypedEvent<
-  [string, string[], number, string],
-  StoreSetFieldEventObject
->;
+export type StoreSetFieldEvent = TypedEvent<[string, string[], number, string], StoreSetFieldEventObject>;
 
 export type StoreSetFieldEventFilter = TypedEventFilter<StoreSetFieldEvent>;
 
@@ -675,10 +447,7 @@ export interface StoreSetRecordEventObject {
   key: string[];
   data: string;
 }
-export type StoreSetRecordEvent = TypedEvent<
-  [string, string[], string],
-  StoreSetRecordEventObject
->;
+export type StoreSetRecordEvent = TypedEvent<[string, string[], string], StoreSetRecordEventObject>;
 
 export type StoreSetRecordEventFilter = TypedEventFilter<StoreSetRecordEvent>;
 
@@ -695,13 +464,9 @@ export interface IWorld extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -769,10 +534,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { data: string }>;
 
-    getKeySchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string] & { schema: string }>;
+    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & { schema: string }>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -787,10 +549,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { data: string }>;
 
-    getSchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string] & { schema: string }>;
+    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & { schema: string }>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -972,7 +731,7 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    tictactoe_GameColllectible_claim(
+    tictactoe_GameCollectible_claim(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -986,7 +745,7 @@ export interface IWorld extends BaseContract {
     tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1079,10 +838,7 @@ export interface IWorld extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getKeySchema(
-    table: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   "getRecord(bytes32,bytes32[],bytes32)"(
     table: PromiseOrValue<BytesLike>,
@@ -1097,10 +853,7 @@ export interface IWorld extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getSchema(
-    table: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   grantAccess(
     namespace: PromiseOrValue<BytesLike>,
@@ -1282,7 +1035,7 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  tictactoe_GameColllectible_claim(
+  tictactoe_GameCollectible_claim(
     matchId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1296,7 +1049,7 @@ export interface IWorld extends BaseContract {
   tictactoe_GameStart_create(
     role: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
-    gridId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1389,10 +1142,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getKeySchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1407,10 +1157,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getSchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -1482,10 +1229,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    registerNamespace(
-      namespace: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    registerNamespace(namespace: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     registerRootFunctionSelector(
       namespace: PromiseOrValue<BytesLike>,
@@ -1592,10 +1336,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    tictactoe_GameColllectible_claim(
-      matchId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    tictactoe_GameCollectible_claim(matchId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     tictactoe_GameMove_claimPosition(
       matchId: PromiseOrValue<BytesLike>,
@@ -1606,14 +1347,11 @@ export interface IWorld extends BaseContract {
     tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    tictactoe_GameStart_join(
-      matchId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<number>;
+    tictactoe_GameStart_join(matchId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<number>;
 
     tictactoe_Increment_increment(overrides?: CallOverrides): Promise<number>;
 
@@ -1641,10 +1379,7 @@ export interface IWorld extends BaseContract {
     "HelloWorld()"(): HelloWorldEventFilter;
     HelloWorld(): HelloWorldEventFilter;
 
-    "StoreDeleteRecord(bytes32,bytes32[])"(
-      table?: null,
-      key?: null
-    ): StoreDeleteRecordEventFilter;
+    "StoreDeleteRecord(bytes32,bytes32[])"(table?: null, key?: null): StoreDeleteRecordEventFilter;
     StoreDeleteRecord(table?: null, key?: null): StoreDeleteRecordEventFilter;
 
     "StoreEphemeralRecord(bytes32,bytes32[],bytes)"(
@@ -1652,11 +1387,7 @@ export interface IWorld extends BaseContract {
       key?: null,
       data?: null
     ): StoreEphemeralRecordEventFilter;
-    StoreEphemeralRecord(
-      table?: null,
-      key?: null,
-      data?: null
-    ): StoreEphemeralRecordEventFilter;
+    StoreEphemeralRecord(table?: null, key?: null, data?: null): StoreEphemeralRecordEventFilter;
 
     "StoreSetField(bytes32,bytes32[],uint8,bytes)"(
       table?: null,
@@ -1664,23 +1395,10 @@ export interface IWorld extends BaseContract {
       schemaIndex?: null,
       data?: null
     ): StoreSetFieldEventFilter;
-    StoreSetField(
-      table?: null,
-      key?: null,
-      schemaIndex?: null,
-      data?: null
-    ): StoreSetFieldEventFilter;
+    StoreSetField(table?: null, key?: null, schemaIndex?: null, data?: null): StoreSetFieldEventFilter;
 
-    "StoreSetRecord(bytes32,bytes32[],bytes)"(
-      table?: null,
-      key?: null,
-      data?: null
-    ): StoreSetRecordEventFilter;
-    StoreSetRecord(
-      table?: null,
-      key?: null,
-      data?: null
-    ): StoreSetRecordEventFilter;
+    "StoreSetRecord(bytes32,bytes32[],bytes)"(table?: null, key?: null, data?: null): StoreSetRecordEventFilter;
+    StoreSetRecord(table?: null, key?: null, data?: null): StoreSetRecordEventFilter;
   };
 
   estimateGas: {
@@ -1744,10 +1462,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getKeySchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1762,10 +1477,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getSchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -1947,7 +1659,7 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    tictactoe_GameColllectible_claim(
+    tictactoe_GameCollectible_claim(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1961,7 +1673,7 @@ export interface IWorld extends BaseContract {
     tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1970,9 +1682,7 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    tictactoe_Increment_increment(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    tictactoe_Increment_increment(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
       table: PromiseOrValue<BytesLike>,
@@ -2055,10 +1765,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getKeySchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -2073,10 +1780,7 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getSchema(
-      table: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -2258,7 +1962,7 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    tictactoe_GameColllectible_claim(
+    tictactoe_GameCollectible_claim(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -2272,7 +1976,7 @@ export interface IWorld extends BaseContract {
     tictactoe_GameStart_create(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
-      gridId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

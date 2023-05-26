@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
 import { config, chains } from "./modules/wagmi";
-import { DeviceDetectProvider, isHandheld } from "./hooks/useDeviceDetect";
+import { DeviceDetectProvider, isHandheld } from "./hooks/app/useDeviceDetect";
 
 import { Appbar } from "./components/Layout/AppBar";
 import { Header } from "./components/Layout/Header";

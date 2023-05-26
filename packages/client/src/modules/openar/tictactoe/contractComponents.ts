@@ -42,8 +42,8 @@ export function defineContractComponents(world: World) {
         {
           turnCount: RecsType.Number,
           id: RecsType.String,
-          gridPosition: RecsType.Number,
-          gridId: RecsType.String,
+          spacePosition: RecsType.Number,
+          spaceId: RecsType.String,
           currentPlayer: RecsType.String,
           winner: RecsType.String,
           players: RecsType.StringArray,

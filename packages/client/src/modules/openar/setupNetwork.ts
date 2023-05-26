@@ -1,30 +1,49 @@
-import { setupMUDV2Network } from "@latticexyz/std-client";
 import {
   createFastTxExecutor,
   createFaucetService,
   getSnapSyncRecords,
 } from "@latticexyz/network";
+import { getTableIds } from "@latticexyz/utils";
+import { Contract, Signer, utils } from "ethers";
+import { setupMUDV2Network } from "@latticexyz/std-client";
+import { JsonRpcProvider } from "@ethersproject/providers";
+
+import openarStoreConfig from "openar/mud.config";
+import checkersStoreConfig from "checkers/mud.config";
+import tictactoeStoreConfig from "tictactoe/mud.config";
+import { IWorld__factory as OpenArWorld } from "openar/types/ethers-contracts/factories/IWorld__factory";
+import { IWorld__factory as CheckersWorld } from "checkers/types/ethers-contracts/factories/IWorld__factory";
+import { IWorld__factory as TictactoeWorld } from "tictactoe/types/ethers-contracts/factories/IWorld__factory";
+
+import { world } from "./world";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { defineContractComponents as openArComps } from "./contractComponents";
 import { defineContractComponents as checkersArComps } from "./checkers/contractComponents";
 import { defineContractComponents as tictactoeArComp } from "./tictactoe/contractComponents";
 
-import { world } from "./world";
-import { Contract, Signer, utils } from "ethers";
-import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
-import { IWorld__factory } from "openar/types/ethers-contracts/factories/IWorld__factory";
-import { getTableIds } from "@latticexyz/utils";
-import storeConfig from "openar/mud.config";
-import { isHandheld } from "../../hooks/useDeviceDetect";
-
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
 export async function setupNetwork() {
-  const contractComponents = {
-    ...openArComps(world),
-    ...checkersArComps(world),
-    ...tictactoeArComp(world),
-  };
+  const contractComponents = Object.assign(
+    {},
+    openArComps(world),
+    checkersArComps(world),
+    tictactoeArComp(world)
+  );
+
+  const storeConfig = Object.assign(
+    {},
+    openarStoreConfig,
+    checkersStoreConfig,
+    tictactoeStoreConfig
+  );
+
+  const worldAbi = Object.assign(
+    {},
+    CheckersWorld.abi,
+    OpenArWorld.abi,
+    TictactoeWorld.abi
+  );
 
   const networkConfig = await getNetworkConfig();
   const result = await setupMUDV2Network<
@@ -36,15 +55,13 @@ export async function setupNetwork() {
     contractComponents,
     syncThread: "main",
     storeConfig,
-    worldAbi: IWorld__factory.abi,
+    worldAbi,
   });
 
   // Request drip from faucet
   const signer = result.network.signer.get();
   if (networkConfig.faucetServiceUrl && signer) {
-    const address = await signer.getAddress().catch(() => {
-      console.log("[Dev Faucet]: No signer address found");
-    });
+    const address = await signer.getAddress();
 
     console.info("[Dev Faucet]: Player address -> ", address);
 
@@ -74,16 +91,30 @@ export async function setupNetwork() {
   }
 
   const provider = result.network.providers.get().json;
-  const metamaskProvider = new Web3Provider((window as any).ethereum);
-  const metamaskSigner = metamaskProvider.getSigner();
+  // const metamaskProvider = new Web3Provider((window as any).ethereum);
+  // const metamaskSigner = metamaskProvider.getSigner();
 
-  const signerOrProvider = isHandheld
-    ? signer ?? provider
-    : metamaskSigner ?? signer ?? provider;
+  const signerOrProvider = signer ?? provider;
+
   // Create a World contract instance
-  const worldContract = IWorld__factory.connect(
+  const openarWorldContract = OpenArWorld.connect(
     networkConfig.worldAddress,
     signerOrProvider
+  );
+  const checkersWorldContract = CheckersWorld.connect(
+    networkConfig.worldAddress,
+    signerOrProvider
+  );
+  const tictactoeWorldContract = TictactoeWorld.connect(
+    networkConfig.worldAddress,
+    signerOrProvider
+  );
+
+  const worldContract = Object.assign(
+    {},
+    openarWorldContract,
+    checkersWorldContract,
+    tictactoeWorldContract
   );
 
   if (networkConfig.snapSync) {
@@ -133,7 +164,7 @@ export async function setupNetwork() {
   return {
     ...result,
     worldContract,
-    worldSend: bindFastTxExecute(worldContract),
+    worldSend: bindFastTxExecute(openarWorldContract),
     fastTxExecutor,
   };
 }

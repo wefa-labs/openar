@@ -27,22 +27,27 @@ export default mudConfig({
         image: "string",
       },
     },
-    Space: {
-      keySchema: { mapId: "bytes32", gridId: "bytes32", x: "uint32", y: "uint32" },
-      schema: "bytes32[]",
+    Cell: {
+      keySchema: { worldId: "bytes32", spaceId: "bytes32", position: "uint32" },
+      schema: {
+        x: "uint32",
+        y: "uint32",
+        values: "bytes32[]",
+      },
     },
-    Grid: {
-      keySchema: { mapID: "bytes32", gridId: "bytes32" },
+    Space: {
+      keySchema: { worldID: "bytes32", spaceId: "bytes32" },
       schema: {
         id: "bytes32",
         position: "uint32",
+        // z: "uint32",
       },
     },
-    Map: {
-      keySchema: { mapId: "bytes32" },
+    ARWorld: {
+      keySchema: { worldId: "bytes32" },
       schema: {
         id: "bytes32",
-        gridCount: "uint32",
+        spaceCount: "uint32",
       },
     },
     // SANITY CHECK
@@ -52,16 +57,16 @@ export default mudConfig({
     },
   },
   systems: {
-    SpaceSystem: {
-      name: "SpaceSystem",
+    CellSystem: {
+      name: "CellSystem",
       openAccess: true, // TODO: Bring back access control when grant acess is functioning
     },
-    GridSystem: {
-      name: "GridSystem",
+    SpaceSystem: {
+      name: "SpaceSystem",
       openAccess: true,
     },
-    MapSystem: {
-      name: "MapSystem",
+    WorldSystem: {
+      name: "WorldSystem",
       openAccess: true,
     },
     // SANITY CHECK

@@ -11,16 +11,16 @@ contract GameStartSystem is System {
   function create(
     RoleEnum role,
     string memory name,
-    bytes32 gridId
+    bytes32 spaceId
   ) public returns (bytes32) {
     address user = _msgSender();
 
-    // TODO: Transfer grid ownership to system
+    // TODO: Transfer space ownership to system
 
     bytes32 gameId = getUniqueEntity();
 
     Identity.set(gameId, name);
-    Game.set(gameId, gridId, GameData({
+    Game.set(gameId, spaceId, GameData({
       turnCount: 0,
       id: gameId,
       currentPlayer: role == RoleEnum.Black ? user : address(0),
@@ -44,11 +44,11 @@ contract GameStartSystem is System {
 
   function join(
     bytes32 gameId,
-    bytes32 gridId
+    bytes32 spaceId
   ) public returns (RoleEnum) {
     address user = _msgSender();
 
-    GameData memory game = Game.get(gameId, gridId);
+    GameData memory game = Game.get(gameId, spaceId);
     require(game.id == gameId, "game not found");
     require(game.id != bytes32(0), "game doesn't exist");
     require(game.players[0] != user, "already in game");
@@ -61,7 +61,7 @@ contract GameStartSystem is System {
     game.players[1] = user;
     game.currentPlayer = role == RoleEnum.Black ? user : game.players[0];
 
-    Game.set(gameId, gridId, game);
+    Game.set(gameId, spaceId, game);
 
     return role;
   }

@@ -1,3 +1,3 @@
-export default function Play() {
-  return <div>Explore</div>;
+export default function Explore() {
+  return <div>Explore</div>; // TODO: Add Explore Canvas from Petra
 }

@@ -334,7 +334,7 @@ const _abi = [
       },
       {
         internalType: "bytes32",
-        name: "gridId",
+        name: "spaceId",
         type: "bytes32",
       },
       {
@@ -367,7 +367,7 @@ const _abi = [
       },
       {
         internalType: "bytes32",
-        name: "gridId",
+        name: "spaceId",
         type: "bytes32",
       },
     ],
@@ -391,7 +391,7 @@ const _abi = [
       },
       {
         internalType: "bytes32",
-        name: "gridId",
+        name: "spaceId",
         type: "bytes32",
       },
     ],

@@ -37,29 +37,29 @@ contract CounterTest is MudV2Test {
   }
 
   function testCreateMap() public {
-    world.openar_MapSystem_createMap("Test", "mapId should be Test", "Image");
+    world.openar_WorldSystem_createWorld("Test", "worldId should be Test", "Image");
   }
 
   // function testClaimGrid() public {
-  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
-  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
+  //   bytes32 worldId = world.openar_MapSystem_createMap(worldId, "Test", "worldId should be Test", "", SizeEnum.Mini);
+  //   bytes32 spaceId = world.openar_GridSystem_claimGrid(worldId);
   // }
 
   // function testTransferGrid() public {
-  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
-  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
-  //   world.openar_GridSystem_transferGrid(gridId, address(this));
+  //   bytes32 worldId = world.openar_MapSystem_createMap(worldId, "Test", "worldId should be Test", "", SizeEnum.Mini);
+  //   bytes32 spaceId = world.openar_GridSystem_claimGrid(worldId);
+  //   world.openar_GridSystem_transferGrid(spaceId, address(this));
   // }
 
   // function testSetGrid() public {
-  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
-  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
-  //   world.openar_SpaceSystem_setSpace(mapId, gridId, State.Active, "Test","Test Description", "Image");
+  //   bytes32 worldId = world.openar_MapSystem_createMap(worldId, "Test", "worldId should be Test", "", SizeEnum.Mini);
+  //   bytes32 spaceId = world.openar_GridSystem_claimGrid(worldId);
+  //   world.openar_SpaceSystem_setSpace(worldId, spaceId, State.Active, "Test","Test Description", "Image");
   // }
 
   // function testSetSpace() public {
-  //   bytes32 mapId = world.openar_MapSystem_createMap(mapId, "Test", "mapId should be Test", "", SizeEnum.Mini);
-  //   bytes32 gridId = world.openar_GridSystem_claimGrid(mapId);
-  //   world.openar_SpaceSystem_setSpace(mapId, gridId, State.Active, "Test","Test Description", "Image");
+  //   bytes32 worldId = world.openar_MapSystem_createMap(worldId, "Test", "worldId should be Test", "", SizeEnum.Mini);
+  //   bytes32 spaceId = world.openar_GridSystem_claimGrid(worldId);
+  //   world.openar_SpaceSystem_setSpace(worldId, spaceId, State.Active, "Test","Test Description", "Image");
   // }
 }

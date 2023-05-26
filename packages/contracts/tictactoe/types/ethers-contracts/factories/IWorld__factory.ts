@@ -1256,7 +1256,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "tictactoe_GameColllectible_claim",
+    name: "tictactoe_GameCollectible_claim",
     outputs: [
       {
         internalType: "string",
@@ -1299,7 +1299,7 @@ const _abi = [
       },
       {
         internalType: "bytes32",
-        name: "gridId",
+        name: "spaceId",
         type: "bytes32",
       },
     ],
