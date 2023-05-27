@@ -51,7 +51,7 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
         : "https://follower.testnet-chain.linfra.xyz",
       wsRpcUrl: import.meta.env.DEV
         ? params.get("wsRpc") ?? chain.rpcUrls.default.webSocket?.[0]
-        : "wss://follower.testnet-chain.linfra.xyz",
+        : undefined,
     },
     privateKey: getBurnerWallet().value,
     chainId,
