@@ -80,6 +80,20 @@ export default mudConfig({
       schema: "uint32",
     },
   },
+  systems: {
+    GameStartSystem: {
+      name: "GameStart",
+      openAccess: true,
+    },
+    GameMoveSystem: {
+      name: "GameMove",
+      openAccess: true,
+    },
+    GameCollectibleSystem: {
+      name: "GameCollectible",
+      openAccess: true,
+    },
+  },
   modules: [
     {
       name: "UniqueEntityModule",

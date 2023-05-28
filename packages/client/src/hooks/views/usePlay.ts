@@ -3,18 +3,13 @@ import { useState } from "react";
 import { useMUD } from "../useMud";
 import { useGames } from "../games/useGames";
 
-type ViewState = "games" | "tic-tac-toe" | "checkers" | "counter";
+type ViewState = "games" | "tic-tac-toe" | "counter";
 
 export const usePlay = () => {
   const [view, setView] = useState<ViewState>("counter");
 
   const {
-    systemCalls: {
-      createCheckersGame,
-      createTicTacToeMatch,
-      joinCheckersGame,
-      joinTicTacToeMatch,
-    },
+    systemCalls: { createTicTacToeMatch, joinTicTacToeMatch },
   } = useMUD();
   const { checkerGames, tictactoeGames } = useGames();
 
@@ -33,9 +28,7 @@ export const usePlay = () => {
     checkerGames,
     tictactoeGames,
     setView,
-    createCheckersGame,
     createTicTacToeMatch,
-    joinCheckersGame,
     joinTicTacToeMatch,
   };
 };

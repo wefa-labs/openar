@@ -3,7 +3,6 @@ import { a, useTransition } from "@react-spring/web";
 import { usePlay } from "../../hooks/views/usePlay";
 
 import { Counter } from "./Counter";
-import { CheckersGame } from "./Checkers";
 import { TicTacToeGame } from "./TicTacToe";
 
 export default function Play() {
@@ -33,7 +32,6 @@ export default function Play() {
     <a.main className="" style={style}>
       {item === "games" && <div>Games</div>}
       {item === "counter" && <Counter />}
-      {item === "checkers" && <CheckersGame gameMode="2D" />}
       {item === "tic-tac-toe" && <TicTacToeGame gameMode="2D" />}
     </a.main>
   ));

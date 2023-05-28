@@ -54,17 +54,17 @@ export default function Profile() {
           </div>
         </div>
         <ul>
-          {worlds.map((world) => (
+          {/* {worlds.map((world) => (
             <li key={world.value.id}>{world.value.spaceCount}</li>
-          ))}
+          ))} */}
         </ul>
       </section>
       <aside>
         <h3>Games</h3>
         <ul>
-          {games.map((game) => (
+          {/* {games.map((game) => (
             <li key={game.value.id}>{game.value.turnCount}</li>
-          ))}
+          ))} */}
         </ul>
       </aside>
     </div>
