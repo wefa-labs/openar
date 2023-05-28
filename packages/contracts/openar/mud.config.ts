@@ -3,15 +3,15 @@ import { mudConfig } from "@latticexyz/world/register";
 export default mudConfig({
   // namespace: "openar",
   enums: {
-    // RoleEnum: ["O", "X"],
+    RoleEnum: ["O", "X"],
     StateEnum: ["Active", "Frozen"],
     SizeEnum: ["Mini", "Small", "Medium", "Large"],
   },
   tables: {
-    // Role: {
-    //   keySchema: { user: "address", matchId: "bytes32" },
-    //   schema: "RoleEnum",
-    // },
+    Role: {
+      keySchema: { user: "address", matchId: "bytes32" },
+      schema: "RoleEnum",
+    },
     State: {
       keySchema: { id: "bytes32" },
       schema: "StateEnum",
@@ -32,30 +32,31 @@ export default mudConfig({
         image: "string",
       },
     },
-    // Match: {
-    //   keySchema: { gameId: "bytes32", matchId: "bytes32" },
-    //   schema: {
-    //     turnCount: "uint8",
-    //     id: "bytes32",
-    //     spacePosition: "uint8", // TODO: Integrate for 9 space tic tac toe, hardcoded to 0 for now.
-    //     currentPlayer: "address",
-    //     winner: "address",
-    //     players: "address[]",
-    //   },
-    // },
-    // Game: {
-    //   keySchema: { gameId: "bytes32" },
-    //   schema: {
-    //     level: "uint32",
-    //     spaceId: "bytes32",
-    //     winner: "address",
-    //     matchesPlayed: "uint8",
-    //   },
-    // },
-    Cell: {
-      keySchema: { worldId: "bytes32", spaceId: "bytes32", position: "uint32" },
+    Match: {
+      keySchema: { gameId: "bytes32", matchId: "bytes32" },
       schema: {
-        values: "bytes32[]",
+        turnCount: "uint8",
+        id: "bytes32",
+        spacePosition: "uint8", // TODO: Integrate for 9 space tic tac toe, hardcoded to 0 for now.
+        currentPlayer: "address",
+        winner: "address",
+        players: "address[]",
+      },
+    },
+    Game: {
+      keySchema: { gameId: "bytes32" },
+      schema: {
+        matchesPlayed: "uint8",
+        spaceY: "uint32",
+        spaceId: "bytes32",
+        winner: "address",
+        players: "address[]",
+      },
+    },
+    Cell: {
+      keySchema: { worldId: "bytes32", spaceId: "bytes32", x: "uint32", y: "uint32", z: "uint32" },
+      schema: {
+        values: "bytes32",
       },
     },
     Space: {

@@ -329,11 +329,77 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
+        name: "matchId",
+        type: "bytes32",
+      },
+    ],
+    name: "claim",
+    outputs: [
+      {
+        internalType: "string",
+        name: "meta",
+        type: "string",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "matchId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "x",
+        type: "uint8",
+      },
+    ],
+    name: "claimPosition",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
         name: "worldId",
         type: "bytes32",
       },
     ],
     name: "claimSpace",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "enum RoleEnum",
+        name: "role",
+        type: "uint8",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+    ],
+    name: "create",
     outputs: [
       {
         internalType: "bytes32",
@@ -740,6 +806,25 @@ const _abi = [
     name: "isStore",
     outputs: [],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "matchId",
+        type: "bytes32",
+      },
+    ],
+    name: "join",
+    outputs: [
+      {
+        internalType: "enum RoleEnum",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -1160,13 +1245,23 @@ const _abi = [
       },
       {
         internalType: "uint32",
-        name: "position",
+        name: "x",
         type: "uint32",
       },
       {
-        internalType: "bytes32[]",
+        internalType: "uint32",
+        name: "y",
+        type: "uint32",
+      },
+      {
+        internalType: "uint32",
+        name: "z",
+        type: "uint32",
+      },
+      {
+        internalType: "bytes32",
         name: "value",
-        type: "bytes32[]",
+        type: "bytes32",
       },
     ],
     name: "setCell",

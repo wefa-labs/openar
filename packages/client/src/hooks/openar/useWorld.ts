@@ -9,7 +9,7 @@ export const useWorld = (id: `0x${string}`) => {
   } = useMUD();
 
   const state = useRow(storeCache, {
-    key: { id },
+    key: [id],
     table: "State",
     namespace: "openar",
   });

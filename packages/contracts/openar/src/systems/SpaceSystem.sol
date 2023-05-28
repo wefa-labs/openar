@@ -50,6 +50,7 @@ contract SpaceSystem is System {
   function transferSpace(
     bytes32 worldId,
     bytes32 spaceId,
+    // address from,  // TODO: change from address to
     address to
   ) public returns (bytes32) {
     address client = _msgSender();

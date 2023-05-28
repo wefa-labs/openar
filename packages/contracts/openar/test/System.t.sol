@@ -33,7 +33,7 @@ contract SystemTest is MudV2Test {
 
   function testClaimSpace() public {
     bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
-    bytes32 spaceId = world.claimSpace(worldId);
+    world.claimSpace(worldId);
   }
 
   function testTransferSpace() public {
@@ -52,10 +52,7 @@ contract SystemTest is MudV2Test {
     bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
     bytes32 spaceId = world.claimSpace(worldId);
 
-    bytes32[] memory bytes32Array = new bytes32[](1);
-    bytes32Array[0] = bytes32(uint256(1));
-
-    world.setCell(worldId, spaceId, 0, bytes32Array);
+    world.setCell(worldId, spaceId, 0, 0, 0, bytes32(uint256(1)));
   }
 
 }

@@ -5,6 +5,21 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 
 export function defineContractComponents(world: World) {
   return {
+    Role: (() => {
+      const tableId = new TableId("", "Role");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     State: (() => {
       const tableId = new TableId("", "State");
       return defineComponent(
@@ -67,12 +82,51 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Match: (() => {
+      const tableId = new TableId("", "Match");
+      return defineComponent(
+        world,
+        {
+          turnCount: RecsType.Number,
+          id: RecsType.String,
+          spacePosition: RecsType.Number,
+          currentPlayer: RecsType.String,
+          winner: RecsType.String,
+          players: RecsType.StringArray,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Game: (() => {
+      const tableId = new TableId("", "Game");
+      return defineComponent(
+        world,
+        {
+          matchesPlayed: RecsType.Number,
+          spaceY: RecsType.Number,
+          spaceId: RecsType.String,
+          winner: RecsType.String,
+          players: RecsType.StringArray,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Cell: (() => {
       const tableId = new TableId("", "Cell");
       return defineComponent(
         world,
         {
-          values: RecsType.StringArray,
+          values: RecsType.String,
         },
         {
           metadata: {
