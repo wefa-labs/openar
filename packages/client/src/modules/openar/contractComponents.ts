@@ -6,7 +6,7 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 export function defineContractComponents(world: World) {
   return {
     State: (() => {
-      const tableId = new TableId("openar", "State");
+      const tableId = new TableId("", "State");
       return defineComponent(
         world,
         {
@@ -21,7 +21,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Size: (() => {
-      const tableId = new TableId("openar", "Size");
+      const tableId = new TableId("", "Size");
       return defineComponent(
         world,
         {
@@ -36,7 +36,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Owner: (() => {
-      const tableId = new TableId("openar", "Owner");
+      const tableId = new TableId("", "Owner");
       return defineComponent(
         world,
         {
@@ -51,7 +51,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Identity: (() => {
-      const tableId = new TableId("openar", "Identity");
+      const tableId = new TableId("", "Identity");
       return defineComponent(
         world,
         {
@@ -68,12 +68,10 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Cell: (() => {
-      const tableId = new TableId("openar", "Cell");
+      const tableId = new TableId("", "Cell");
       return defineComponent(
         world,
         {
-          x: RecsType.Number,
-          y: RecsType.Number,
           values: RecsType.StringArray,
         },
         {
@@ -85,7 +83,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Space: (() => {
-      const tableId = new TableId("openar", "Space");
+      const tableId = new TableId("", "Space");
       return defineComponent(
         world,
         {
@@ -101,7 +99,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     ARWorld: (() => {
-      const tableId = new TableId("openar", "ARWorld");
+      const tableId = new TableId("", "ARWorld");
       return defineComponent(
         world,
         {
@@ -117,7 +115,7 @@ export function defineContractComponents(world: World) {
       );
     })(),
     Counter: (() => {
-      const tableId = new TableId("openar", "Counter");
+      const tableId = new TableId("", "Counter");
       return defineComponent(
         world,
         {

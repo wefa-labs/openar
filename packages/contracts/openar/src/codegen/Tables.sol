@@ -7,7 +7,7 @@ import { State, StateTableId } from "./tables/State.sol";
 import { Size, SizeTableId } from "./tables/Size.sol";
 import { Owner, OwnerTableId } from "./tables/Owner.sol";
 import { Identity, IdentityData, IdentityTableId } from "./tables/Identity.sol";
-import { Cell, CellData, CellTableId } from "./tables/Cell.sol";
+import { Cell, CellTableId } from "./tables/Cell.sol";
 import { Space, SpaceData, SpaceTableId } from "./tables/Space.sol";
 import { ARWorld, ARWorldData, ARWorldTableId } from "./tables/ARWorld.sol";
 import { Counter, CounterTableId } from "./tables/Counter.sol";

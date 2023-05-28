@@ -329,6 +329,54 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
+        name: "worldId",
+        type: "bytes32",
+      },
+    ],
+    name: "claimSpace",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+    ],
+    name: "createWorld",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
         name: "table",
         type: "bytes32",
       },
@@ -639,6 +687,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "increment",
+    outputs: [
+      {
+        internalType: "uint32",
+        name: "",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "contract IModule",
@@ -679,178 +740,6 @@ const _abi = [
     name: "isStore",
     outputs: [],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "worldId",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "spaceId",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint32",
-        name: "position",
-        type: "uint32",
-      },
-      {
-        internalType: "uint8",
-        name: "x",
-        type: "uint8",
-      },
-      {
-        internalType: "uint8",
-        name: "y",
-        type: "uint8",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "value",
-        type: "bytes32[]",
-      },
-    ],
-    name: "openar_CellSystem_setCell",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "openar_Increment_increment",
-    outputs: [
-      {
-        internalType: "uint32",
-        name: "",
-        type: "uint32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "worldId",
-        type: "bytes32",
-      },
-    ],
-    name: "openar_SpaceSystem_claimSpace",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "worldId",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "spaceId",
-        type: "bytes32",
-      },
-      {
-        internalType: "enum StateEnum",
-        name: "state",
-        type: "uint8",
-      },
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "description",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "image",
-        type: "string",
-      },
-    ],
-    name: "openar_SpaceSystem_setSpace",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "worldId",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "spaceId",
-        type: "bytes32",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-    ],
-    name: "openar_SpaceSystem_transferSpace",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "description",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "image",
-        type: "string",
-      },
-    ],
-    name: "openar_WorldSystem_createWorld",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -1261,6 +1150,34 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
+        name: "worldId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint32",
+        name: "position",
+        type: "uint32",
+      },
+      {
+        internalType: "bytes32[]",
+        name: "value",
+        type: "bytes32[]",
+      },
+    ],
+    name: "setCell",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
         name: "table",
         type: "bytes32",
       },
@@ -1417,6 +1334,79 @@ const _abi = [
     ],
     name: "setRecord",
     outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "worldId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+      {
+        internalType: "enum StateEnum",
+        name: "state",
+        type: "uint8",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+    ],
+    name: "setSpace",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "worldId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+    ],
+    name: "transferSpace",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },

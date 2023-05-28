@@ -7,17 +7,17 @@ import { IWorld } from "../src/codegen/world/IWorld.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
+    // Load the private key from the `PRIVATE_KEY` environment variable (in .env)
     uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
+    // Start broadcasting transactions from the deployer account
     vm.startBroadcast(deployerPrivateKey);
 
-    // Give write acess to game namespaces
-    // IWorld(worldAddress).grantAccess("tictactoe", "SpaceSystem", address(this));
-    // IWorld(worldAddress).grantAccess("checkers", "SpaceSystem", address(this));
+    // ------------------ EXAMPLES ------------------
 
-    // TODO: Add NFT deployment of creature contracts
-
-    console.log("PostDeploy: granted access to SpaceSystem");
+    // Call increment on the world via the registered function selector
+    uint32 newValue = IWorld(worldAddress).increment();
+    console.log("Increment via IWorld:", newValue);
 
     vm.stopBroadcast();
   }

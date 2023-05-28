@@ -1,12 +1,17 @@
 import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
-  namespace: "openar",
+  // namespace: "openar",
   enums: {
+    // RoleEnum: ["O", "X"],
     StateEnum: ["Active", "Frozen"],
     SizeEnum: ["Mini", "Small", "Medium", "Large"],
   },
   tables: {
+    // Role: {
+    //   keySchema: { user: "address", matchId: "bytes32" },
+    //   schema: "RoleEnum",
+    // },
     State: {
       keySchema: { id: "bytes32" },
       schema: "StateEnum",
@@ -27,11 +32,29 @@ export default mudConfig({
         image: "string",
       },
     },
+    // Match: {
+    //   keySchema: { gameId: "bytes32", matchId: "bytes32" },
+    //   schema: {
+    //     turnCount: "uint8",
+    //     id: "bytes32",
+    //     spacePosition: "uint8", // TODO: Integrate for 9 space tic tac toe, hardcoded to 0 for now.
+    //     currentPlayer: "address",
+    //     winner: "address",
+    //     players: "address[]",
+    //   },
+    // },
+    // Game: {
+    //   keySchema: { gameId: "bytes32" },
+    //   schema: {
+    //     level: "uint32",
+    //     spaceId: "bytes32",
+    //     winner: "address",
+    //     matchesPlayed: "uint8",
+    //   },
+    // },
     Cell: {
       keySchema: { worldId: "bytes32", spaceId: "bytes32", position: "uint32" },
       schema: {
-        x: "uint32",
-        y: "uint32",
         values: "bytes32[]",
       },
     },
@@ -56,23 +79,11 @@ export default mudConfig({
       schema: "uint32",
     },
   },
-  systems: {
-    CellSystem: {
-      name: "CellSystem",
-      openAccess: true, // TODO: Bring back access control when grant acess is functioning
+  modules: [
+    {
+      name: "UniqueEntityModule",
+      root: true,
+      args: [],
     },
-    SpaceSystem: {
-      name: "SpaceSystem",
-      openAccess: true,
-    },
-    WorldSystem: {
-      name: "WorldSystem",
-      openAccess: true,
-    },
-    // SANITY CHECK
-    IncrementSystem: {
-      name: "Increment",
-      openAccess: true,
-    },
-  },
+  ],
 });

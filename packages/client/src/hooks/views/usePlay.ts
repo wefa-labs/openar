@@ -6,7 +6,7 @@ import { useGames } from "../games/useGames";
 type ViewState = "games" | "tic-tac-toe" | "checkers" | "counter";
 
 export const usePlay = () => {
-  const [view, setView] = useState<ViewState>("games");
+  const [view, setView] = useState<ViewState>("counter");
 
   const {
     systemCalls: {

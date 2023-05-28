@@ -20,7 +20,7 @@ import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCou
 // Import user types
 import { StateEnum } from "./../Types.sol";
 
-bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16("openar"), bytes16("State")));
+bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("State")));
 bytes32 constant StateTableId = _tableId;
 
 library State {

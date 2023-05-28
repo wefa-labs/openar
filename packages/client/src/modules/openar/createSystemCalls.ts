@@ -21,7 +21,7 @@ export function createSystemCalls(
 ) {
   // SANITY CHECK
   const increment = async () => {
-    const tx = await worldSend("openar_Increment_increment", []);
+    const tx = await worldSend("increment", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
     return getComponentValue(Counter, singletonEntity);
   };
@@ -33,16 +33,14 @@ export function createSystemCalls(
     image: string
     // size: WorldSize
   ) => {
-    const tx = await worldSend("openar_WorldSystem_createWorld", [
-      name,
-      description,
-      image,
-    ]);
+    const tx = await worldSend("createWorld", [name, description, image]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
+
+    console.log("world created");
   };
 
   const claimSpace = async (worldId: string) => {
-    const tx = await worldSend("openar_SpaceSystem_claimSpace", [worldId]);
+    const tx = await worldSend("claimSpace", [worldId]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 

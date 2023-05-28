@@ -14,13 +14,25 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from "./common";
+import type {
+  TypedEventFilter,
+  TypedEvent,
+  TypedListener,
+  OnEvent,
+  PromiseOrValue,
+} from "./common";
 
 export interface IWorldInterface extends utils.Interface {
   functions: {
     "call(bytes16,bytes16,bytes)": FunctionFragment;
+    "claimSpace(bytes32)": FunctionFragment;
+    "createWorld(string,string,string)": FunctionFragment;
     "deleteRecord(bytes32,bytes32[])": FunctionFragment;
     "deleteRecord(bytes16,bytes16,bytes32[])": FunctionFragment;
     "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
@@ -33,15 +45,10 @@ export interface IWorldInterface extends utils.Interface {
     "getRecord(bytes32,bytes32[])": FunctionFragment;
     "getSchema(bytes32)": FunctionFragment;
     "grantAccess(bytes16,bytes16,address)": FunctionFragment;
+    "increment()": FunctionFragment;
     "installModule(address,bytes)": FunctionFragment;
     "installRootModule(address,bytes)": FunctionFragment;
     "isStore()": FunctionFragment;
-    "openar_CellSystem_setCell(bytes32,bytes32,uint32,uint8,uint8,bytes32[])": FunctionFragment;
-    "openar_Increment_increment()": FunctionFragment;
-    "openar_SpaceSystem_claimSpace(bytes32)": FunctionFragment;
-    "openar_SpaceSystem_setSpace(bytes32,bytes32,uint8,string,string,string)": FunctionFragment;
-    "openar_SpaceSystem_transferSpace(bytes32,bytes32,address)": FunctionFragment;
-    "openar_WorldSystem_createWorld(string,string,string)": FunctionFragment;
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)": FunctionFragment;
     "popFromField(bytes32,bytes32[],uint8,uint256)": FunctionFragment;
     "pushToField(bytes32,bytes32[],uint8,bytes)": FunctionFragment;
@@ -57,12 +64,15 @@ export interface IWorldInterface extends utils.Interface {
     "registerTable(bytes16,bytes16,bytes32,bytes32)": FunctionFragment;
     "registerTableHook(bytes16,bytes16,address)": FunctionFragment;
     "revokeAccess(bytes16,bytes16,address)": FunctionFragment;
+    "setCell(bytes32,bytes32,uint32,bytes32[])": FunctionFragment;
     "setField(bytes32,bytes32[],uint8,bytes)": FunctionFragment;
     "setField(bytes16,bytes16,bytes32[],uint8,bytes)": FunctionFragment;
     "setMetadata(bytes16,bytes16,string,string[])": FunctionFragment;
     "setMetadata(bytes32,string,string[])": FunctionFragment;
     "setRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
     "setRecord(bytes32,bytes32[],bytes)": FunctionFragment;
+    "setSpace(bytes32,bytes32,uint8,string,string,string)": FunctionFragment;
+    "transferSpace(bytes32,bytes32,address)": FunctionFragment;
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)": FunctionFragment;
     "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)": FunctionFragment;
   };
@@ -70,6 +80,8 @@ export interface IWorldInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "call"
+      | "claimSpace"
+      | "createWorld"
       | "deleteRecord(bytes32,bytes32[])"
       | "deleteRecord(bytes16,bytes16,bytes32[])"
       | "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)"
@@ -82,15 +94,10 @@ export interface IWorldInterface extends utils.Interface {
       | "getRecord(bytes32,bytes32[])"
       | "getSchema"
       | "grantAccess"
+      | "increment"
       | "installModule"
       | "installRootModule"
       | "isStore"
-      | "openar_CellSystem_setCell"
-      | "openar_Increment_increment"
-      | "openar_SpaceSystem_claimSpace"
-      | "openar_SpaceSystem_setSpace"
-      | "openar_SpaceSystem_transferSpace"
-      | "openar_WorldSystem_createWorld"
       | "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"
       | "popFromField(bytes32,bytes32[],uint8,uint256)"
       | "pushToField(bytes32,bytes32[],uint8,bytes)"
@@ -106,19 +113,38 @@ export interface IWorldInterface extends utils.Interface {
       | "registerTable"
       | "registerTableHook"
       | "revokeAccess"
+      | "setCell"
       | "setField(bytes32,bytes32[],uint8,bytes)"
       | "setField(bytes16,bytes16,bytes32[],uint8,bytes)"
       | "setMetadata(bytes16,bytes16,string,string[])"
       | "setMetadata(bytes32,string,string[])"
       | "setRecord(bytes16,bytes16,bytes32[],bytes)"
       | "setRecord(bytes32,bytes32[],bytes)"
+      | "setSpace"
+      | "transferSpace"
       | "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"
       | "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "call",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "claimSpace",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createWorld",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRecord(bytes32,bytes32[])",
@@ -126,7 +152,11 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)",
@@ -139,11 +169,19 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getField",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getFieldLength",
@@ -165,20 +203,35 @@ export interface IWorldInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(functionFragment: "getKeySchema", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: "getKeySchema",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: "getRecord(bytes32,bytes32[],bytes32)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getRecord(bytes32,bytes32[])",
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]]
   ): string;
-  encodeFunctionData(functionFragment: "getSchema", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: "getSchema",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: "grantAccess",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
+  encodeFunctionData(functionFragment: "increment", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "installModule",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
@@ -188,38 +241,6 @@ export interface IWorldInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "isStore", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "openar_CellSystem_setCell",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>[]
-    ]
-  ): string;
-  encodeFunctionData(functionFragment: "openar_Increment_increment", values?: undefined): string;
-  encodeFunctionData(functionFragment: "openar_SpaceSystem_claimSpace", values: [PromiseOrValue<BytesLike>]): string;
-  encodeFunctionData(
-    functionFragment: "openar_SpaceSystem_setSpace",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "openar_SpaceSystem_transferSpace",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "openar_WorldSystem_createWorld",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
   encodeFunctionData(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     values: [
@@ -260,20 +281,41 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerFunctionSelector",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerHook",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
-  encodeFunctionData(functionFragment: "registerNamespace", values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: "registerNamespace",
+    values: [PromiseOrValue<BytesLike>]
+  ): string;
   encodeFunctionData(
     functionFragment: "registerRootFunctionSelector",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerSchema",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerStoreHook",
@@ -281,23 +323,54 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerSystem",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<boolean>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerSystemHook",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTable",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTableHook",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "revokeAccess",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setCell",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
@@ -320,11 +393,20 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setMetadata(bytes16,bytes16,string,string[])",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setMetadata(bytes32,string,string[])",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[]
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)",
@@ -337,7 +419,30 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "setRecord(bytes32,bytes32[],bytes)",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[], PromiseOrValue<BytesLike>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setSpace",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferSpace",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "updateInField(bytes32,bytes32[],uint8,uint256,bytes)",
@@ -362,54 +467,153 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "call", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deleteRecord(bytes32,bytes32[])", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "claimSpace", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "createWorld",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "deleteRecord(bytes32,bytes32[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "deleteRecord(bytes16,bytes16,bytes32[])",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "emitEphemeralRecord(bytes16,bytes16,bytes32[],bytes)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "emitEphemeralRecord(bytes32,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getField", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getFieldLength", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getFieldSlice", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getKeySchema", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getRecord(bytes32,bytes32[],bytes32)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getRecord(bytes32,bytes32[])", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getFieldLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getFieldSlice",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getKeySchema",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRecord(bytes32,bytes32[],bytes32)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRecord(bytes32,bytes32[])",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getSchema", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "grantAccess", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "installModule", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "installRootModule", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "grantAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "increment", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "installModule",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "installRootModule",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "isStore", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "openar_CellSystem_setCell", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "openar_Increment_increment", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "openar_SpaceSystem_claimSpace", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "openar_SpaceSystem_setSpace", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "openar_SpaceSystem_transferSpace", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "openar_WorldSystem_createWorld", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "popFromField(bytes32,bytes32[],uint8,uint256)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pushToField(bytes32,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerFunctionSelector", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerNamespace", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerRootFunctionSelector", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerSchema", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerStoreHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerSystem", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerSystemHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerTable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registerTableHook", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "revokeAccess", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setField(bytes32,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setField(bytes16,bytes16,bytes32[],uint8,bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setMetadata(bytes16,bytes16,string,string[])", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setMetadata(bytes32,string,string[])", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setRecord(bytes32,bytes32[],bytes)", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "popFromField(bytes32,bytes32[],uint8,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "pushToField(bytes32,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerFunctionSelector",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerNamespace",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerRootFunctionSelector",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerSchema",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerStoreHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerSystem",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerSystemHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerTable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerTableHook",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "revokeAccess",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setCell", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setField(bytes16,bytes16,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMetadata(bytes16,bytes16,string,string[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMetadata(bytes32,string,string[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRecord(bytes16,bytes16,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRecord(bytes32,bytes32[],bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setSpace", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferSpace",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "updateInField(bytes32,bytes32[],uint8,uint256,bytes)",
     data: BytesLike
@@ -443,18 +647,26 @@ export interface StoreDeleteRecordEventObject {
   table: string;
   key: string[];
 }
-export type StoreDeleteRecordEvent = TypedEvent<[string, string[]], StoreDeleteRecordEventObject>;
+export type StoreDeleteRecordEvent = TypedEvent<
+  [string, string[]],
+  StoreDeleteRecordEventObject
+>;
 
-export type StoreDeleteRecordEventFilter = TypedEventFilter<StoreDeleteRecordEvent>;
+export type StoreDeleteRecordEventFilter =
+  TypedEventFilter<StoreDeleteRecordEvent>;
 
 export interface StoreEphemeralRecordEventObject {
   table: string;
   key: string[];
   data: string;
 }
-export type StoreEphemeralRecordEvent = TypedEvent<[string, string[], string], StoreEphemeralRecordEventObject>;
+export type StoreEphemeralRecordEvent = TypedEvent<
+  [string, string[], string],
+  StoreEphemeralRecordEventObject
+>;
 
-export type StoreEphemeralRecordEventFilter = TypedEventFilter<StoreEphemeralRecordEvent>;
+export type StoreEphemeralRecordEventFilter =
+  TypedEventFilter<StoreEphemeralRecordEvent>;
 
 export interface StoreSetFieldEventObject {
   table: string;
@@ -462,7 +674,10 @@ export interface StoreSetFieldEventObject {
   schemaIndex: number;
   data: string;
 }
-export type StoreSetFieldEvent = TypedEvent<[string, string[], number, string], StoreSetFieldEventObject>;
+export type StoreSetFieldEvent = TypedEvent<
+  [string, string[], number, string],
+  StoreSetFieldEventObject
+>;
 
 export type StoreSetFieldEventFilter = TypedEventFilter<StoreSetFieldEvent>;
 
@@ -471,7 +686,10 @@ export interface StoreSetRecordEventObject {
   key: string[];
   data: string;
 }
-export type StoreSetRecordEvent = TypedEvent<[string, string[], string], StoreSetRecordEventObject>;
+export type StoreSetRecordEvent = TypedEvent<
+  [string, string[], string],
+  StoreSetRecordEventObject
+>;
 
 export type StoreSetRecordEventFilter = TypedEventFilter<StoreSetRecordEvent>;
 
@@ -488,9 +706,13 @@ export interface IWorld extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(
+    eventFilter?: TypedEventFilter<TEvent>
+  ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -503,6 +725,18 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<BytesLike>,
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    claimSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    createWorld(
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "deleteRecord(bytes32,bytes32[])"(
@@ -558,7 +792,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { data: string }>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & { schema: string }>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { schema: string }>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -573,12 +810,19 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string] & { data: string }>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string] & { schema: string }>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { schema: string }>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
       grantee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    increment(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -595,47 +839,6 @@ export interface IWorld extends BaseContract {
     ): Promise<ContractTransaction>;
 
     isStore(overrides?: CallOverrides): Promise<[void]>;
-
-    openar_CellSystem_setCell(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      position: PromiseOrValue<BigNumberish>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    openar_Increment_increment(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    openar_SpaceSystem_claimSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    openar_SpaceSystem_setSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      state: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    openar_SpaceSystem_transferSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    openar_WorldSystem_createWorld(
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
@@ -749,6 +952,14 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setCell(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      position: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     "setField(bytes32,bytes32[],uint8,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -796,6 +1007,23 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      state: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    transferSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -821,6 +1049,18 @@ export interface IWorld extends BaseContract {
     name: PromiseOrValue<BytesLike>,
     funcSelectorAndArgs: PromiseOrValue<BytesLike>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  claimSpace(
+    worldId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  createWorld(
+    name: PromiseOrValue<string>,
+    description: PromiseOrValue<string>,
+    image: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "deleteRecord(bytes32,bytes32[])"(
@@ -876,7 +1116,10 @@ export interface IWorld extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+  getKeySchema(
+    table: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   "getRecord(bytes32,bytes32[],bytes32)"(
     table: PromiseOrValue<BytesLike>,
@@ -891,12 +1134,19 @@ export interface IWorld extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+  getSchema(
+    table: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   grantAccess(
     namespace: PromiseOrValue<BytesLike>,
     name: PromiseOrValue<BytesLike>,
     grantee: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  increment(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -913,47 +1163,6 @@ export interface IWorld extends BaseContract {
   ): Promise<ContractTransaction>;
 
   isStore(overrides?: CallOverrides): Promise<void>;
-
-  openar_CellSystem_setCell(
-    worldId: PromiseOrValue<BytesLike>,
-    spaceId: PromiseOrValue<BytesLike>,
-    position: PromiseOrValue<BigNumberish>,
-    x: PromiseOrValue<BigNumberish>,
-    y: PromiseOrValue<BigNumberish>,
-    value: PromiseOrValue<BytesLike>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  openar_Increment_increment(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  openar_SpaceSystem_claimSpace(
-    worldId: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  openar_SpaceSystem_setSpace(
-    worldId: PromiseOrValue<BytesLike>,
-    spaceId: PromiseOrValue<BytesLike>,
-    state: PromiseOrValue<BigNumberish>,
-    name: PromiseOrValue<string>,
-    description: PromiseOrValue<string>,
-    image: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  openar_SpaceSystem_transferSpace(
-    worldId: PromiseOrValue<BytesLike>,
-    spaceId: PromiseOrValue<BytesLike>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  openar_WorldSystem_createWorld(
-    name: PromiseOrValue<string>,
-    description: PromiseOrValue<string>,
-    image: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
     namespace: PromiseOrValue<BytesLike>,
@@ -1067,6 +1276,14 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setCell(
+    worldId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
+    position: PromiseOrValue<BigNumberish>,
+    value: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   "setField(bytes32,bytes32[],uint8,bytes)"(
     table: PromiseOrValue<BytesLike>,
     key: PromiseOrValue<BytesLike>[],
@@ -1114,6 +1331,23 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setSpace(
+    worldId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
+    state: PromiseOrValue<BigNumberish>,
+    name: PromiseOrValue<string>,
+    description: PromiseOrValue<string>,
+    image: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  transferSpace(
+    worldId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
     table: PromiseOrValue<BytesLike>,
     key: PromiseOrValue<BytesLike>[],
@@ -1138,6 +1372,18 @@ export interface IWorld extends BaseContract {
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    claimSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    createWorld(
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -1194,7 +1440,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1209,7 +1458,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
@@ -1217,6 +1469,8 @@ export interface IWorld extends BaseContract {
       grantee: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    increment(overrides?: CallOverrides): Promise<number>;
 
     installModule(
       module: PromiseOrValue<string>,
@@ -1231,44 +1485,6 @@ export interface IWorld extends BaseContract {
     ): Promise<void>;
 
     isStore(overrides?: CallOverrides): Promise<void>;
-
-    openar_CellSystem_setCell(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      position: PromiseOrValue<BigNumberish>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    openar_Increment_increment(overrides?: CallOverrides): Promise<number>;
-
-    openar_SpaceSystem_claimSpace(worldId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
-
-    openar_SpaceSystem_setSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      state: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    openar_SpaceSystem_transferSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    openar_WorldSystem_createWorld(
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
@@ -1319,7 +1535,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    registerNamespace(namespace: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
+    registerNamespace(
+      namespace: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     registerRootFunctionSelector(
       namespace: PromiseOrValue<BytesLike>,
@@ -1379,6 +1598,14 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setCell(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      position: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BytesLike>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     "setField(bytes32,bytes32[],uint8,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -1426,6 +1653,23 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      state: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    transferSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -1450,7 +1694,10 @@ export interface IWorld extends BaseContract {
     "HelloWorld()"(): HelloWorldEventFilter;
     HelloWorld(): HelloWorldEventFilter;
 
-    "StoreDeleteRecord(bytes32,bytes32[])"(table?: null, key?: null): StoreDeleteRecordEventFilter;
+    "StoreDeleteRecord(bytes32,bytes32[])"(
+      table?: null,
+      key?: null
+    ): StoreDeleteRecordEventFilter;
     StoreDeleteRecord(table?: null, key?: null): StoreDeleteRecordEventFilter;
 
     "StoreEphemeralRecord(bytes32,bytes32[],bytes)"(
@@ -1458,7 +1705,11 @@ export interface IWorld extends BaseContract {
       key?: null,
       data?: null
     ): StoreEphemeralRecordEventFilter;
-    StoreEphemeralRecord(table?: null, key?: null, data?: null): StoreEphemeralRecordEventFilter;
+    StoreEphemeralRecord(
+      table?: null,
+      key?: null,
+      data?: null
+    ): StoreEphemeralRecordEventFilter;
 
     "StoreSetField(bytes32,bytes32[],uint8,bytes)"(
       table?: null,
@@ -1466,10 +1717,23 @@ export interface IWorld extends BaseContract {
       schemaIndex?: null,
       data?: null
     ): StoreSetFieldEventFilter;
-    StoreSetField(table?: null, key?: null, schemaIndex?: null, data?: null): StoreSetFieldEventFilter;
+    StoreSetField(
+      table?: null,
+      key?: null,
+      schemaIndex?: null,
+      data?: null
+    ): StoreSetFieldEventFilter;
 
-    "StoreSetRecord(bytes32,bytes32[],bytes)"(table?: null, key?: null, data?: null): StoreSetRecordEventFilter;
-    StoreSetRecord(table?: null, key?: null, data?: null): StoreSetRecordEventFilter;
+    "StoreSetRecord(bytes32,bytes32[],bytes)"(
+      table?: null,
+      key?: null,
+      data?: null
+    ): StoreSetRecordEventFilter;
+    StoreSetRecord(
+      table?: null,
+      key?: null,
+      data?: null
+    ): StoreSetRecordEventFilter;
   };
 
   estimateGas: {
@@ -1478,6 +1742,18 @@ export interface IWorld extends BaseContract {
       name: PromiseOrValue<BytesLike>,
       funcSelectorAndArgs: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    claimSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    createWorld(
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "deleteRecord(bytes32,bytes32[])"(
@@ -1533,7 +1809,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1548,12 +1827,19 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
       grantee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    increment(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1570,47 +1856,6 @@ export interface IWorld extends BaseContract {
     ): Promise<BigNumber>;
 
     isStore(overrides?: CallOverrides): Promise<BigNumber>;
-
-    openar_CellSystem_setCell(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      position: PromiseOrValue<BigNumberish>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    openar_Increment_increment(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    openar_SpaceSystem_claimSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    openar_SpaceSystem_setSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      state: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    openar_SpaceSystem_transferSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    openar_WorldSystem_createWorld(
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
 
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
@@ -1724,6 +1969,14 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setCell(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      position: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     "setField(bytes32,bytes32[],uint8,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -1768,6 +2021,23 @@ export interface IWorld extends BaseContract {
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
       data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      state: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transferSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1799,6 +2069,18 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    claimSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    createWorld(
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     "deleteRecord(bytes32,bytes32[])"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -1852,7 +2134,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getKeySchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getKeySchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     "getRecord(bytes32,bytes32[],bytes32)"(
       table: PromiseOrValue<BytesLike>,
@@ -1867,12 +2152,19 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getSchema(table: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSchema(
+      table: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     grantAccess(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
       grantee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    increment(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1889,49 +2181,6 @@ export interface IWorld extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     isStore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    openar_CellSystem_setCell(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      position: PromiseOrValue<BigNumberish>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    openar_Increment_increment(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    openar_SpaceSystem_claimSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    openar_SpaceSystem_setSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      state: PromiseOrValue<BigNumberish>,
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    openar_SpaceSystem_transferSpace(
-      worldId: PromiseOrValue<BytesLike>,
-      spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    openar_WorldSystem_createWorld(
-      name: PromiseOrValue<string>,
-      description: PromiseOrValue<string>,
-      image: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
@@ -2045,6 +2294,14 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setCell(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      position: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     "setField(bytes32,bytes32[],uint8,bytes)"(
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
@@ -2089,6 +2346,23 @@ export interface IWorld extends BaseContract {
       table: PromiseOrValue<BytesLike>,
       key: PromiseOrValue<BytesLike>[],
       data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      state: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      description: PromiseOrValue<string>,
+      image: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferSpace(
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

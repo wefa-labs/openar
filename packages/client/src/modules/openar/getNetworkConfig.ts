@@ -1,5 +1,5 @@
 import { SetupContractConfig, getBurnerWallet } from "@latticexyz/std-client";
-import worldsJson from "../../../../contracts/openar/worlds.json";
+import worldsJson from "openar/worlds.json";
 import { supportedChains } from "./supportedChains";
 
 const worlds = worldsJson as Partial<
@@ -20,14 +20,12 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   );
   const chainIndex = supportedChains.findIndex((c) => c.id === chainId);
   const chain = supportedChains[chainIndex];
-
   if (!chain) {
     throw new Error(`Chain ${chainId} not found`);
   }
 
   const world = worlds[chain.id.toString()];
-  const worldAddress = "0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62";
-
+  const worldAddress = params.get("worldAddress") || world?.address;
   if (!worldAddress) {
     throw new Error(
       `No world address found for chain ${chainId}. Did you run \`mud deploy\`?`
@@ -46,12 +44,8 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
     },
     provider: {
       chainId,
-      jsonRpcUrl: import.meta.env.DEV
-        ? "https://localhost:3007"
-        : "https://follower.testnet-chain.linfra.xyz",
-      wsRpcUrl: import.meta.env.DEV
-        ? params.get("wsRpc") ?? chain.rpcUrls.default.webSocket?.[0]
-        : undefined,
+      jsonRpcUrl: params.get("rpc") ?? chain.rpcUrls.default.http[0],
+      wsRpcUrl: params.get("wsRpc") ?? chain.rpcUrls.default.webSocket?.[0],
     },
     privateKey: getBurnerWallet().value,
     chainId,
