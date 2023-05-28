@@ -1,18 +1,29 @@
 {
-  "name": "contracts",
+  "name": "openar",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm recursive run dev",
-    "deploy": "pnpm deploy:checkers && pnpm deploy:tictactoe && pnpm deploy:openar",
-    "deploy:openar": "cd openar && pnpm run deploy --profile=lattice-testnet --worldAddress=0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62",
-    "deploy:checkers": "cd checkers && pnpm run deploy --profile=lattice-testnet --worldAddress=0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62",
-    "deploy:tictactoe": "cd tictactoe && pnpm run deploy --profile=lattice-testnet --worldAddress=0xCC83CC1B3a5c0253c620A9BBd94697C2f977aC62",
-    "deploy:testnet": "pnpm recursive run deploy --profile=lattice-testnet",
-    "lint": "pnpm run prettier && pnpm run solhint",
-    "prettier": "prettier --write 'src/**/*.sol'",
-    "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix"
+    "initialize": "pnpm run tablegen && pnpm run worldgen && pnpm run build && pnpm run worldtypes && pnpm run tsgen",
+    "dev": "pnpm mud dev-contracts --tsgenOutput ../client/src/modules/openar",
+    "test": "tsc --noEmit && mud test",
+    "build": "forge clean && forge build",
+    "deploy": "dotenv && pnpm run initialize && mud deploy",
+    "tablegen": "mud tablegen",
+    "tsgen": "mud tsgen --configPath mud.config.ts --out ../client/src/modules/openar",
+    "worldgen": "mud worldgen",
+    "worldtypes": "rimraf types && typechain --target=ethers-v5 out/IWorld.sol/IWorld.json"
+  },
+  "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@latticexyz/cli": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/schema-type": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/std-contracts": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/store": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/world": "2.0.0-alpha.1.197+5e6cc0f5",
+    "ethers": "^5.7.2"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^10.2.0",
@@ -22,6 +33,8 @@
     "prettier": "^2.8.4",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solhint": "^3.3.7",
+    "solhint-config-mud": "2.0.0-alpha.1.197+5e6cc0f5",
+    "solhint-plugin-mud": "2.0.0-alpha.1.197+5e6cc0f5",
     "typechain": "^8.1.1"
   }
 }
