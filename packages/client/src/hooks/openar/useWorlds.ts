@@ -26,7 +26,6 @@ export const useWorlds = () => {
 
   const worlds = useRows(storeCache, {
     table: "ARWorld",
-    namespace: "openar",
   });
 
   async function onCreateWorld(data: WorldInputData) {
