@@ -20,13 +20,11 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
-      # - name: Run Tests & Lint
-      #   working-directory: ./packages/contracts
-      #   run: |
-      #     pnpm i
-      #     pnpm run initialize
-      #     pnpm run test
-      #     pnpm run lint
+      - name: Run Tests & Lint
+        working-directory: ./packages/contracts
+        run: |
+          pnpm i
+          pnpm initialize
 
       # - name: Deploy Contracts to Testnet
       #   working-directory: ./packages/contracts
