@@ -65,9 +65,12 @@ declare interface Timestamps {
   updatedAt: number;
 }
 
-declare interface Critter extends Identity, Asset {
+declare interface Critter extends Identity, Asset, Timestamps {
   id: `0x${string}`; // Address
-  owner: `0x${string}`; // Address
+  trainer: `0x${string}`; // Address
+  spaceId: string; // Bytes32 ID
+  care: Care;
+  element: WefaElement;
 }
 
 declare interface Plant extends Identity, Timestamps, Asset {
@@ -119,4 +122,80 @@ declare interface ARWorld {
   status: ARStatus;
   spaces: ARSpace[];
   createdAt: number;
+}
+
+interface PlantResponse {
+  id: number;
+  custom_id?: null | string;
+  meta_data: {
+    latitude: null | number;
+    longitude: null | number;
+    date: string;
+    datetime: string;
+  };
+  uploaded_datetime: number;
+  finished_datetime: number;
+  images: {
+    file_name: string;
+    url: string;
+  }[];
+  suggestions: {
+    id: number;
+    plant_name: string;
+    plant_details: {
+      language: "en";
+      scientific_name: string;
+      structured_name: {
+        genus: string;
+        species: string;
+      };
+    };
+    probability: number;
+    confirmed: boolean;
+  }[];
+  modifiers: any[];
+  secret: string;
+  fail_cause: null | string;
+  countable: true | false;
+  feedback: null | string;
+  is_plant_probability: number;
+  is_plant: boolean;
+}
+
+interface PlantHealth {
+  id: number;
+  custom_id: null | string;
+  meta_data: {
+    latitude: null | number;
+    longitude: null | number;
+    date: string;
+    datetime: string;
+  };
+  uploaded_datetime: number;
+  finished_datetime: number;
+  images: {
+    file_name: string;
+    url: string;
+  }[];
+  suggestions: {
+    id: number;
+    plant_name: string;
+    plant_details: {
+      language: string;
+      scientific_name: string;
+      structured_name: {
+        genus: string;
+        species: string;
+      };
+    };
+    probability: number;
+    confirmed: boolean;
+  }[];
+  modifiers: string[];
+  secret: string;
+  fail_cause: null | string;
+  countable: boolean;
+  feedback: null | string;
+  is_plant_probability: number;
+  is_plant: boolean;
 }

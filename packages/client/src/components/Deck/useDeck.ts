@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDrag } from "@use-gesture/react";
 import { useSpring, useTrail, config } from "@react-spring/web";
 
-import { useWefadex } from "../../hooks/wefadex/useWefadex";
+import { useWefadex } from "../../hooks/wefa/useDeck";
 
 import { DeckSheetData } from "./Components";
 

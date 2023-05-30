@@ -2,7 +2,7 @@ import React from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { useTheme } from "../../hooks/app/useTheme";
-import { useAuthWeb3 } from "../../hooks/useWeb3";
+import { useAuthWeb3 } from "../../hooks/auth/useWeb3";
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface HeaderProps {}

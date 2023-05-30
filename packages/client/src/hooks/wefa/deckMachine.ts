@@ -1,5 +1,5 @@
 import { createMachine } from "xstate";
-import { fetchSigner, readContract } from "wagmi/actions";
+import { readContract } from "wagmi/actions";
 
 import { db, initDB } from "../../modules/idb";
 
@@ -69,7 +69,7 @@ export const deckMachine = createMachine(
     predictableActionArguments: true,
     type: "compound",
     strict: true,
-    tsTypes: {} as import("./machine.typegen").Typegen0,
+    tsTypes: {} as import("./deckMachine.typegen").Typegen0,
     initial: "idle",
     schema: {
       context: {
@@ -159,7 +159,7 @@ export const deckMachine = createMachine(
     },
     actions: {
       fetchCreatures: async (_context, _event) => {
-        await fetchSigner();
+        // await fetchSigner();
 
         const creatures: Critter[] = (await readContract<
           typeof ABI,

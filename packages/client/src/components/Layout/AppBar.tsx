@@ -16,13 +16,18 @@ const tabs: {
   >;
 }[] = [
   {
+    path: "/deck",
+    title: "Deck",
+    Icon: CardsIcon,
+  },
+  {
     path: "/play",
     title: "Play",
     Icon: CardsIcon,
   },
   {
-    path: "/explore",
-    title: "Explore",
+    path: "/world",
+    title: "World",
     Icon: WorldIcon,
   },
   {
