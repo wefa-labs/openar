@@ -18,3 +18,5 @@ steps:
       - "us-west1"
 images:
   - "gcr.io/wefa-app/api-dev:$COMMIT_SHA"
+options:
+  logging: CLOUD_LOGGING_ONLY

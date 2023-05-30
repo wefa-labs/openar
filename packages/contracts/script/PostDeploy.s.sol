@@ -7,8 +7,8 @@ import { IWorld } from "../src/codegen/world/IWorld.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
-    // Load the private key from the `PRIVATE_KEY` environment variable (in .env)
-    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    // Load the private key from the `CONTRACT_DEPLOYER_KEY` environment variable (in .env)
+    uint256 deployerPrivateKey = vm.envUint("CONTRACT_DEPLOYER_KEY");
 
     // Start broadcasting transactions from the deployer account
     vm.startBroadcast(deployerPrivateKey);
