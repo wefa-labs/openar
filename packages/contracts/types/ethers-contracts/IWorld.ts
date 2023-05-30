@@ -53,10 +53,13 @@ export interface IWorldInterface extends utils.Interface {
     "installRootModule(address,bytes)": FunctionFragment;
     "isStore()": FunctionFragment;
     "join(bytes32)": FunctionFragment;
+    "nurture(bytes32,int32)": FunctionFragment;
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)": FunctionFragment;
     "popFromField(bytes32,bytes32[],uint8,uint256)": FunctionFragment;
     "pushToField(bytes32,bytes32[],uint8,bytes)": FunctionFragment;
     "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)": FunctionFragment;
+    "redeem(string,string,int32,int32,uint8,address)": FunctionFragment;
+    "redeem(string,string,int32,int32,address)": FunctionFragment;
     "registerFunctionSelector(bytes16,bytes16,string,string)": FunctionFragment;
     "registerHook(bytes16,bytes16,address)": FunctionFragment;
     "registerNamespace(bytes16)": FunctionFragment;
@@ -106,10 +109,13 @@ export interface IWorldInterface extends utils.Interface {
       | "installRootModule"
       | "isStore"
       | "join"
+      | "nurture"
       | "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"
       | "popFromField(bytes32,bytes32[],uint8,uint256)"
       | "pushToField(bytes32,bytes32[],uint8,bytes)"
       | "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)"
+      | "redeem(string,string,int32,int32,uint8,address)"
+      | "redeem(string,string,int32,int32,address)"
       | "registerFunctionSelector"
       | "registerHook"
       | "registerNamespace"
@@ -270,6 +276,10 @@ export interface IWorldInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
+    functionFragment: "nurture",
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     values: [
       PromiseOrValue<BytesLike>,
@@ -305,6 +315,27 @@ export interface IWorldInterface extends utils.Interface {
       PromiseOrValue<BytesLike>[],
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeem(string,string,int32,int32,uint8,address)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeem(string,string,int32,int32,address)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
@@ -561,6 +592,7 @@ export interface IWorldInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "isStore", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "nurture", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     data: BytesLike
@@ -575,6 +607,14 @@ export interface IWorldInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "redeem(string,string,int32,int32,uint8,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "redeem(string,string,int32,int32,address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -900,6 +940,12 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    nurture(
+      _entity: PromiseOrValue<BytesLike>,
+      _energy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
@@ -931,6 +977,25 @@ export interface IWorld extends BaseContract {
       key: PromiseOrValue<BytesLike>[],
       schemaIndex: PromiseOrValue<BigNumberish>,
       dataToPush: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "redeem(string,string,int32,int32,uint8,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      userAddrs: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "redeem(string,string,int32,int32,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      longitude: PromiseOrValue<BigNumberish>,
+      latitude: PromiseOrValue<BigNumberish>,
+      spaceAddrs: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1249,6 +1314,12 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  nurture(
+    _entity: PromiseOrValue<BytesLike>,
+    _energy: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
     namespace: PromiseOrValue<BytesLike>,
     name: PromiseOrValue<BytesLike>,
@@ -1280,6 +1351,25 @@ export interface IWorld extends BaseContract {
     key: PromiseOrValue<BytesLike>[],
     schemaIndex: PromiseOrValue<BigNumberish>,
     dataToPush: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "redeem(string,string,int32,int32,uint8,address)"(
+    image: PromiseOrValue<string>,
+    meta: PromiseOrValue<string>,
+    long: PromiseOrValue<BigNumberish>,
+    lat: PromiseOrValue<BigNumberish>,
+    growthLevel: PromiseOrValue<BigNumberish>,
+    userAddrs: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "redeem(string,string,int32,int32,address)"(
+    image: PromiseOrValue<string>,
+    meta: PromiseOrValue<string>,
+    longitude: PromiseOrValue<BigNumberish>,
+    latitude: PromiseOrValue<BigNumberish>,
+    spaceAddrs: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1596,6 +1686,12 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<number>;
 
+    nurture(
+      _entity: PromiseOrValue<BytesLike>,
+      _energy: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
@@ -1629,6 +1725,25 @@ export interface IWorld extends BaseContract {
       dataToPush: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    "redeem(string,string,int32,int32,uint8,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      userAddrs: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    "redeem(string,string,int32,int32,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      longitude: PromiseOrValue<BigNumberish>,
+      latitude: PromiseOrValue<BigNumberish>,
+      spaceAddrs: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     registerFunctionSelector(
       namespace: PromiseOrValue<BytesLike>,
@@ -1992,6 +2107,12 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    nurture(
+      _entity: PromiseOrValue<BytesLike>,
+      _energy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
@@ -2023,6 +2144,25 @@ export interface IWorld extends BaseContract {
       key: PromiseOrValue<BytesLike>[],
       schemaIndex: PromiseOrValue<BigNumberish>,
       dataToPush: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "redeem(string,string,int32,int32,uint8,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      userAddrs: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "redeem(string,string,int32,int32,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      longitude: PromiseOrValue<BigNumberish>,
+      latitude: PromiseOrValue<BigNumberish>,
+      spaceAddrs: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2342,6 +2482,12 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    nurture(
+      _entity: PromiseOrValue<BytesLike>,
+      _energy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
       name: PromiseOrValue<BytesLike>,
@@ -2373,6 +2519,25 @@ export interface IWorld extends BaseContract {
       key: PromiseOrValue<BytesLike>[],
       schemaIndex: PromiseOrValue<BigNumberish>,
       dataToPush: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "redeem(string,string,int32,int32,uint8,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      userAddrs: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "redeem(string,string,int32,int32,address)"(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      longitude: PromiseOrValue<BigNumberish>,
+      latitude: PromiseOrValue<BigNumberish>,
+      spaceAddrs: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

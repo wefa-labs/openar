@@ -6,8 +6,6 @@ pragma solidity >=0.8.0;
 import { StateEnum } from "./../Types.sol";
 
 interface ISpaceSystem {
-  function claimSpace(bytes32 worldId) external returns (bytes32);
-
   function transferSpace(bytes32 worldId, bytes32 spaceId, address to) external returns (bytes32);
 
   function setSpace(

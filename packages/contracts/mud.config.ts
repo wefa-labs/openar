@@ -6,23 +6,29 @@ export default mudConfig({
     RoleEnum: ["O", "X"],
     StateEnum: ["Active", "Frozen"],
     SizeEnum: ["Mini", "Small", "Medium", "Large"],
+    ElementEnum: ["WATER", "EARTH", "FIRE", "AIR"],
+    GrowthLevelEnum: ["SEED", "BUDDING", "FLOWERING", "RIPENING"],
   },
   tables: {
+    State: "StateEnum",
+    Size: "SizeEnum",
+    Owner: "address",
+    Element: "ElementEnum",
     Role: {
       keySchema: { user: "address", matchId: "bytes32" },
       schema: "RoleEnum",
     },
-    State: {
-      keySchema: { id: "bytes32" },
-      schema: "StateEnum",
+    Asset: {
+      schema: {
+        image: "string",
+        model: "string",
+      },
     },
-    Size: {
-      keySchema: { id: "bytes32" },
-      schema: "SizeEnum",
-    },
-    Owner: {
-      keySchema: { id: "bytes32" },
-      schema: "address",
+    Care: {
+      schema: {
+        growthLevel: "GrowthLevelEnum",
+        checkedAt: "uint256",
+      },
     },
     Identity: {
       keySchema: { id: "bytes32" },
@@ -30,6 +36,7 @@ export default mudConfig({
         name: "string",
         description: "string",
         image: "string",
+        // createdAt: "uint256",
       },
     },
     Match: {
@@ -92,6 +99,20 @@ export default mudConfig({
     GameCollectibleSystem: {
       name: "GameCollectible",
       openAccess: true,
+    },
+    CreatureSystem: {
+      openAccess: true,
+    },
+    PlantSystem: {
+      openAccess: true,
+    },
+    SpaceSystem: {
+      openAccess: false,
+      accessList: ["GameStartSystem", "GameMoveSystem"],
+    },
+    CellSystem: {
+      openAccess: false,
+      accessList: ["GameStartSystem", "GameMoveSystem", "CreatureSystem", "PlantSystem"],
     },
   },
   modules: [

@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WefaElement {
+  WATER
+  EARTH
+  FIRE
+  AIR
+}
+
+enum IdentifierType {
+  ETHER
+  WEB
+  KEY
+}
+
+model Wefadex {
+  id                  String         @id
+  public_key          Bytes         
+  name                String?        @unique
+  counter             BigInt
+  identifier_id       String?
+
+  elements            WefaElement[]
+
+  identifier          Identifier?    @relation(fields: [identifier_id], references: [id])
+}
+
+model Identifier {
+  id                  String         @id
+  // username            String?        @unique
+  type                IdentifierType
+
+  wefadexs            Wefadex[]
+}
+
+
+
+

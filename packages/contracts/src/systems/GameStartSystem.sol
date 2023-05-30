@@ -5,7 +5,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
 import { RoleEnum } from "../codegen/Types.sol";
-import { Identity, IdentityData, Match, MatchData, Role } from "../codegen/Tables.sol";
+import { Identity, IdentityData, Match, MatchData, Role, Owner } from "../codegen/Tables.sol";
 
 contract GameStartSystem is System {
   function create(
@@ -16,7 +16,9 @@ contract GameStartSystem is System {
     address user = _msgSender();
 
     // TODO: Transfer space ownership to system
-    // world.transferGridOwnership(spaceId, address(this));
+    require(Owner.get(spaceId) == user, "not owner of space");
+
+    // _world(address(this)).transferSpace(spaceId, address(this));
 
     bytes32 matchId = getUniqueEntity();
 

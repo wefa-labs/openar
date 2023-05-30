@@ -830,6 +830,30 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bytes32",
+        name: "_entity",
+        type: "bytes32",
+      },
+      {
+        internalType: "int32",
+        name: "_energy",
+        type: "int32",
+      },
+    ],
+    name: "nurture",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "bytes16",
         name: "namespace",
         type: "bytes16",
@@ -946,6 +970,89 @@ const _abi = [
     ],
     name: "pushToField",
     outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "meta",
+        type: "string",
+      },
+      {
+        internalType: "int32",
+        name: "long",
+        type: "int32",
+      },
+      {
+        internalType: "int32",
+        name: "lat",
+        type: "int32",
+      },
+      {
+        internalType: "enum GrowthLevelEnum",
+        name: "growthLevel",
+        type: "uint8",
+      },
+      {
+        internalType: "address",
+        name: "userAddrs",
+        type: "address",
+      },
+    ],
+    name: "redeem",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "meta",
+        type: "string",
+      },
+      {
+        internalType: "int32",
+        name: "longitude",
+        type: "int32",
+      },
+      {
+        internalType: "int32",
+        name: "latitude",
+        type: "int32",
+      },
+      {
+        internalType: "address",
+        name: "spaceAddrs",
+        type: "address",
+      },
+    ],
+    name: "redeem",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },

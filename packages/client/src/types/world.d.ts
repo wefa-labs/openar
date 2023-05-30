@@ -1,3 +1,54 @@
+declare type WefaElement = "water" | "earth" | "fire" | "air";
+
+enum PlantType {
+  FLOWER = "flower",
+  FRUIT = "fruit",
+  VEGETABLE = "vegetable",
+  HERB = "herb",
+}
+
+enum PlantZone {
+  ZERO,
+  ONE,
+  TWO,
+  THREE,
+  FOUR,
+  FIVE,
+  SIX,
+  SEVEN,
+  EIGHT,
+  NINE,
+  TEN,
+  ELEVEN,
+  TWELVE,
+  THIRTEEN,
+}
+
+enum GrowthLevel {
+  SEED,
+  BUDDING,
+  FLOWERING,
+  RIPENING,
+}
+
+enum HealthStatus {
+  HEALTHY,
+  SICK,
+  DEAD,
+}
+
+enum Size {
+  MINI,
+  SMALL,
+  MEDIUM,
+  LARGE,
+}
+
+enum ARStatus {
+  ACTIVE,
+  FROZEN,
+}
+
 declare interface Identity {
   name: string;
   description?: string;
@@ -9,9 +60,23 @@ declare interface Asset {
   model: string; // CID
 }
 
+declare interface Timestamps {
+  createdAt: number;
+  updatedAt: number;
+}
+
 declare interface Critter extends Identity, Asset {
   id: `0x${string}`; // Address
   owner: `0x${string}`; // Address
+}
+
+declare interface Plant extends Identity, Timestamps, Asset {
+  id: `0x${string}`; // Address
+  caretaker: `0x${string}`; // Address
+  space: `0x${string}`; // Address
+  plantId: number;
+  health: Health;
+  care: Care;
 }
 
 declare interface TicTacToe {
@@ -26,19 +91,7 @@ declare interface TicTacToe {
   createdAt: number;
 }
 
-declare interface Checkers {
-  worldId: string;
-  spaceId: string;
-  gameId: string;
-  name: string;
-  board: (0 | 1 | 7)[];
-  turn: number;
-  currentPlayer: `0x${string}`; // Address
-  winner: `0x${string}`; // Address
-  createdAt: number;
-}
-
-declare interface OpenARCell {
+declare interface ARCell {
   owner: `0x${string}`; // Address of user or gane system in control
   spaceId: string;
   x: number;
@@ -46,36 +99,24 @@ declare interface OpenARCell {
   values: string[];
 }
 
-enum Status {
-  ACTIVE,
-  FROZEN,
-}
-
 // For Three.js Visualization
-declare interface OpenARWorld {
+declare interface ARSpace {
   owner: `0x${string}`; // Address of user or gane system in control
-  status: Status;
-  game?: "TicTacToe" | "Checkers" | null; // This combines with status to determine color state
+  status: ARStatus;
+  game?: "TicTacToe" | null; // This combines with status to determine color state
   name: string;
   position: number;
   description?: ?string;
   image: string; // CID,
-  cells: OpenARCell[];
+  cells: ARCell[];
 }
 
-enum Size {
-  MINI,
-  SMALL,
-  MEDIUM,
-  LARGE,
-}
-
-declare interface OpenARRealm {
+declare interface ARWorld {
   name: string;
   description?: ?string;
   image: string; // CID
   size: Size;
-  status: Status;
-  spaces: OpenARSpace[];
+  status: ARStatus;
+  spaces: ARSpace[];
   createdAt: number;
 }
