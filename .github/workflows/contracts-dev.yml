@@ -29,9 +29,9 @@ jobs:
           pnpm i
           pnpm initialize
 
-      - name: Deploy Contracts Locally
-        working-directory: ./packages/contracts
-        env:
-          PRIVATE_KEY: ${{ secrets.CONTRACT_DEPLOYER_KEY }}
-        run: |
-          pnpm deploy:local
+      # - name: Deploy Contracts Locally
+      #   working-directory: ./packages/contracts
+      #   env:
+      #     PRIVATE_KEY: ${{ secrets.CONTRACT_DEPLOYER_KEY }}
+      #   run: |
+      #     pnpm deploy:local
