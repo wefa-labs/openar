@@ -10,6 +10,7 @@ import { Header } from "./components/Layout/Header";
 import { NotificationProvider } from "./components/Layout/Notifications";
 
 import Views from "./views";
+import { ComingSoon } from "./components/Layout/ComingSoon";
 
 function App() {
   return (
@@ -18,9 +19,15 @@ function App() {
         <DeviceDetectProvider value={isHandheld ? "handheld" : "desktop"}>
           <NotificationProvider>
             <BrowserRouter>
-              <Header />
-              <Appbar />
-              <Views />
+              {import.meta.env.PROD ? (
+                <ComingSoon />
+              ) : (
+                <>
+                  <Header />
+                  <Appbar />
+                  <Views />
+                </>
+              )}
             </BrowserRouter>
           </NotificationProvider>
         </DeviceDetectProvider>
