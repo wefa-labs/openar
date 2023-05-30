@@ -38,6 +38,9 @@ importers:
       cypress:
         specifier: 12.8.1
         version: 12.8.1
+      dotenv:
+        specifier: 16.1.0
+        version: 16.1.0
       eslint:
         specifier: 8.29.0
         version: 8.29.0
@@ -2750,7 +2753,7 @@ packages:
       '@typechain/ethers-v5': 10.2.0(@ethersproject/abi@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.1.1)(typescript@4.9.5)
       chalk: 5.2.0
       chokidar: 3.5.3
-      dotenv: 16.0.3
+      dotenv: 16.1.0
       ejs: 3.1.9
       ethers: 5.7.2
       execa: 7.1.1
@@ -2794,7 +2797,7 @@ packages:
       '@typechain/ethers-v5': 10.2.0(@ethersproject/abi@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/providers@5.7.2)(ethers@5.7.2)(typechain@8.1.1)(typescript@4.9.5)
       chalk: 5.2.0
       chokidar: 3.5.3
-      dotenv: 16.0.3
+      dotenv: 16.1.0
       ejs: 3.1.9
       ethers: 5.7.2
       execa: 7.1.1
@@ -7126,6 +7129,10 @@ packages:
 
   /dotenv@16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+
+  /dotenv@16.1.0:
+    resolution: {integrity: sha512-XiwP/4cqatBNLEnKe169vPZCrovUmYngyVA4DgZ3uIVLJfZaBgr4uT0EF2TrEQqgWDDlekGo0muEYme5SR78Ww==}
     engines: {node: '>=12'}
 
   /draco3d@1.5.6:
