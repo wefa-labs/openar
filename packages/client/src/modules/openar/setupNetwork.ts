@@ -9,47 +9,22 @@ import { setupMUDV2Network } from "@latticexyz/std-client";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
 import openarStoreConfig from "openar/mud.config";
-// import checkersStoreConfig from "checkers/mud.config";
-// import tictactoeStoreConfig from "tictactoe/mud.config";
 import { IWorld__factory as OpenArWorld } from "openar/types/ethers-contracts/factories/IWorld__factory";
-// import { IWorld__factory as CheckersWorld } from "checkers/types/ethers-contracts/factories/IWorld__factory";
-// import { IWorld__factory as TictactoeWorld } from "tictactoe/types/ethers-contracts/factories/IWorld__factory";
 
 import { world } from "./world";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { defineContractComponents as openArComps } from "./contractComponents";
-// import { defineContractComponents as checkersArComps } from "./checkers/contractComponents";
-// import { defineContractComponents as tictactoeArComp } from "./tictactoe/contractComponents";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
 export async function setupNetwork() {
-  const contractComponents = Object.assign(
-    {},
-    openArComps(world)
-    // checkersArComps(world),
-    // tictactoeArComp(world)
-  );
-
-  const storeConfig = Object.assign(
-    {},
-    openarStoreConfig
-    // checkersStoreConfig,
-    // tictactoeStoreConfig
-  );
-
-  const worldAbi = Object.assign(
-    {},
-    // CheckersWorld.abi,
-    OpenArWorld.abi
-    // TictactoeWorld.abi
-  );
+  const contractComponents = openArComps(world);
 
   const networkConfig = await getNetworkConfig();
   const result = await setupMUDV2Network<typeof contractComponents, any>({
     networkConfig,
     world,
-    contractComponents: openArComps(world),
+    contractComponents,
     syncThread: "main",
     storeConfig: openarStoreConfig,
     worldAbi: OpenArWorld.abi,
