@@ -25,6 +25,7 @@ jobs:
         run: |
           pnpm i
           pnpm initialize
+          pnpm test
 
       # - name: Deploy Contracts to Testnet
       #   working-directory: ./packages/contracts
