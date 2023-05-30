@@ -1,12 +1,15 @@
 on:
-  - pull_request
-  - push
+  pull_request:
+    branches:
+      - wefa-alpha-dev
+  push:
+    branches:
+      - wefa-alpha-dev
 
-name: Contracts Testing & Deployment
+name: Contract Dev Testing
 
 jobs:
   check:
-    name: Ubuntu 20.04
     runs-on: ubuntu-latest
 
     steps:
@@ -25,9 +28,10 @@ jobs:
         run: |
           pnpm i
           pnpm initialize
-          pnpm test
 
-      # - name: Deploy Contracts to Testnet
-      #   working-directory: ./packages/contracts
-      #   run: |
-      #     pnpm deploy:testnet
+      - name: Deploy Contracts Locally
+        working-directory: ./packages/contracts
+        env:
+          PRIVATE_KEY: ${{ secrets.CONTRACT_DEPLOYER_KEY }}
+        run: |
+          pnpm deploy:local

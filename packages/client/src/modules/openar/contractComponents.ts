@@ -35,12 +35,12 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Owner: (() => {
-      const tableId = new TableId("", "Owner");
+    Element: (() => {
+      const tableId = new TableId("", "Element");
       return defineComponent(
         world,
         {
-          value: RecsType.String,
+          value: RecsType.Number,
         },
         {
           metadata: {
@@ -50,12 +50,12 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    Element: (() => {
-      const tableId = new TableId("", "Element");
+    Owner: (() => {
+      const tableId = new TableId("", "Owner");
       return defineComponent(
         world,
         {
-          value: RecsType.Number,
+          value: RecsType.String,
         },
         {
           metadata: {

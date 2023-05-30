@@ -8,7 +8,6 @@ import { RoleEnum } from "../codegen/Types.sol";
 import { Identity, Match, MatchData, Role } from "../codegen/Tables.sol";
 
 contract GameCollectibleSystem is System {
-
   function claim(
     bytes32 matchId
   ) public returns (string memory meta) {

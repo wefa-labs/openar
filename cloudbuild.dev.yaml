@@ -1,7 +1,14 @@
 steps:
   # Build the container image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/wefa-app/api-dev:$COMMIT_SHA", "."]
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/wefa-app/api-dev:$COMMIT_SHA",
+        "-f",
+        "packages/api/Dockerfile",
+      ]
   # Push the container image to Container Registry
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/wefa-app/api-dev:$COMMIT_SHA"]

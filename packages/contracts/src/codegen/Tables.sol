@@ -5,8 +5,8 @@ pragma solidity >=0.8.0;
 
 import { State, StateTableId } from "./tables/State.sol";
 import { Size, SizeTableId } from "./tables/Size.sol";
-import { Owner, OwnerTableId } from "./tables/Owner.sol";
 import { Element, ElementTableId } from "./tables/Element.sol";
+import { Owner, OwnerTableId } from "./tables/Owner.sol";
 import { Role, RoleTableId } from "./tables/Role.sol";
 import { Asset, AssetData, AssetTableId } from "./tables/Asset.sol";
 import { Care, CareData, CareTableId } from "./tables/Care.sol";

@@ -12,19 +12,21 @@ export default mudConfig({
   tables: {
     State: "StateEnum",
     Size: "SizeEnum",
-    Owner: "address",
     Element: "ElementEnum",
+    Owner: "address",
     Role: {
       keySchema: { user: "address", matchId: "bytes32" },
       schema: "RoleEnum",
     },
     Asset: {
+      keySchema: { id: "bytes32" },
       schema: {
         image: "string",
         model: "string",
       },
     },
     Care: {
+      keySchema: { id: "bytes32" },
       schema: {
         growthLevel: "GrowthLevelEnum",
         checkedAt: "uint256",
@@ -101,17 +103,19 @@ export default mudConfig({
       openAccess: true,
     },
     CreatureSystem: {
+      name: "Creature",
       openAccess: true,
     },
     PlantSystem: {
+      name: "Plant",
       openAccess: true,
     },
     SpaceSystem: {
-      openAccess: false,
+      openAccess: true,
       accessList: ["GameStartSystem", "GameMoveSystem"],
     },
     CellSystem: {
-      openAccess: false,
+      openAccess: true,
       accessList: ["GameStartSystem", "GameMoveSystem", "CreatureSystem", "PlantSystem"],
     },
   },

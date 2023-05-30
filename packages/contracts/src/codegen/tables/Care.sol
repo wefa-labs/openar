@@ -76,119 +76,119 @@ library Care {
   }
 
   /** Get growthLevel */
-  function getGrowthLevel(bytes32 key) internal view returns (GrowthLevelEnum growthLevel) {
+  function getGrowthLevel(bytes32 id) internal view returns (GrowthLevelEnum growthLevel) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return GrowthLevelEnum(uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Get growthLevel (using the specified store) */
-  function getGrowthLevel(IStore _store, bytes32 key) internal view returns (GrowthLevelEnum growthLevel) {
+  function getGrowthLevel(IStore _store, bytes32 id) internal view returns (GrowthLevelEnum growthLevel) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return GrowthLevelEnum(uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Set growthLevel */
-  function setGrowthLevel(bytes32 key, GrowthLevelEnum growthLevel) internal {
+  function setGrowthLevel(bytes32 id, GrowthLevelEnum growthLevel) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(growthLevel)));
   }
 
   /** Set growthLevel (using the specified store) */
-  function setGrowthLevel(IStore _store, bytes32 key, GrowthLevelEnum growthLevel) internal {
+  function setGrowthLevel(IStore _store, bytes32 id, GrowthLevelEnum growthLevel) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(growthLevel)));
   }
 
   /** Get checkedAt */
-  function getCheckedAt(bytes32 key) internal view returns (uint256 checkedAt) {
+  function getCheckedAt(bytes32 id) internal view returns (uint256 checkedAt) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
   }
 
   /** Get checkedAt (using the specified store) */
-  function getCheckedAt(IStore _store, bytes32 key) internal view returns (uint256 checkedAt) {
+  function getCheckedAt(IStore _store, bytes32 id) internal view returns (uint256 checkedAt) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
   }
 
   /** Set checkedAt */
-  function setCheckedAt(bytes32 key, uint256 checkedAt) internal {
+  function setCheckedAt(bytes32 id, uint256 checkedAt) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((checkedAt)));
   }
 
   /** Set checkedAt (using the specified store) */
-  function setCheckedAt(IStore _store, bytes32 key, uint256 checkedAt) internal {
+  function setCheckedAt(IStore _store, bytes32 id, uint256 checkedAt) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((checkedAt)));
   }
 
   /** Get the full data */
-  function get(bytes32 key) internal view returns (CareData memory _table) {
+  function get(bytes32 id) internal view returns (CareData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Get the full data (using the specified store) */
-  function get(IStore _store, bytes32 key) internal view returns (CareData memory _table) {
+  function get(IStore _store, bytes32 id) internal view returns (CareData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 key, GrowthLevelEnum growthLevel, uint256 checkedAt) internal {
+  function set(bytes32 id, GrowthLevelEnum growthLevel, uint256 checkedAt) internal {
     bytes memory _data = encode(growthLevel, checkedAt);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 key, GrowthLevelEnum growthLevel, uint256 checkedAt) internal {
+  function set(IStore _store, bytes32 id, GrowthLevelEnum growthLevel, uint256 checkedAt) internal {
     bytes memory _data = encode(growthLevel, checkedAt);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using the data struct */
-  function set(bytes32 key, CareData memory _table) internal {
-    set(key, _table.growthLevel, _table.checkedAt);
+  function set(bytes32 id, CareData memory _table) internal {
+    set(id, _table.growthLevel, _table.checkedAt);
   }
 
   /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, bytes32 key, CareData memory _table) internal {
-    set(_store, key, _table.growthLevel, _table.checkedAt);
+  function set(IStore _store, bytes32 id, CareData memory _table) internal {
+    set(_store, id, _table.growthLevel, _table.checkedAt);
   }
 
   /** Decode the tightly packed blob using this table's schema */
@@ -204,23 +204,23 @@ library Care {
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(bytes32 key) internal pure returns (bytes32[] memory _keyTuple) {
+  function encodeKeyTuple(bytes32 id) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(bytes32 key) internal {
+  function deleteRecord(bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 key) internal {
+  function deleteRecord(IStore _store, bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((key));
+    _keyTuple[0] = bytes32((id));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

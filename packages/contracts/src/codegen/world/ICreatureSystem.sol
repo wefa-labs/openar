@@ -10,7 +10,7 @@ interface ICreatureSystem {
     int32 longitude,
     int32 latitude,
     address spaceAddrs
-  ) external returns (bytes32);
+  ) external returns (address);
 
   function nurture(bytes32 _entity, int32 _energy) external returns (bytes memory);
 }

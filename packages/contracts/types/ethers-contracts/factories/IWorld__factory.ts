@@ -1009,9 +1009,9 @@ const _abi = [
     name: "redeem",
     outputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
       },
     ],
     stateMutability: "nonpayable",
@@ -1048,9 +1048,9 @@ const _abi = [
     name: "redeem",
     outputs: [
       {
-        internalType: "bytes32",
+        internalType: "address",
         name: "",
-        type: "bytes32",
+        type: "address",
       },
     ],
     stateMutability: "nonpayable",

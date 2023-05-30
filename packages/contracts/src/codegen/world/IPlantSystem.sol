@@ -13,5 +13,5 @@ interface IPlantSystem {
     int32 lat,
     GrowthLevelEnum growthLevel,
     address userAddrs
-  ) external returns (bytes32);
+  ) external returns (address);
 }
