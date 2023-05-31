@@ -11,7 +11,7 @@ const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");
 const root = ReactDOM.createRoot(rootElement);
 
-if (!import.meta.env.PROD) {
+if (import.meta.env.PROD) {
   root.render(<ComingSoon />);
 } else {
   setup().then((result) => {
@@ -20,6 +20,6 @@ if (!import.meta.env.PROD) {
         <App />
       </MUDProvider>
     );
-    mountDevTools();
+    // mountDevTools();
   });
 }
