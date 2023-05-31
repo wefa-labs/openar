@@ -1,3 +1,4 @@
+import Hero from "./ProfileHero";
 import { useProfile } from "../../hooks/views/useProfile";
 
 export default function Profile() {
@@ -59,6 +60,7 @@ export default function Profile() {
           ))} */}
         </ul>
       </section>
+      <Hero />
       <aside>
         <h3>Games</h3>
         <ul>

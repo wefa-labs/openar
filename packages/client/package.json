@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "wait-port localhost:8545 && vite --host",
+    "dev": " vite --host",
     "initialize": "pnpm build",
     "preview": "vite preview",
     "test": "tsc --noEmit"
@@ -28,6 +28,7 @@
     "@react-three/fiber": "^8.13.0",
     "@react-three/xr": "^5.5.0",
     "@simplewebauthn/browser": "7.2.0",
+    "@types/lodash": "4.14.194",
     "@use-gesture/react": "10.2.26",
     "@wagmi/chains": "^0.2.22",
     "@xstate/react": "^3.2.1",

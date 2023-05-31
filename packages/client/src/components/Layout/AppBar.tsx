@@ -57,7 +57,10 @@ export const Appbar = () => {
     },
   });
 
+
+    {/* Added a Div  to center Nav bar */}
   return (
+    <div className="flex items-center justify-center mt-2  mx-auto ">
     <a.nav
       className={
         isDesktop
@@ -91,5 +94,6 @@ export const Appbar = () => {
         </Link>
       ))}
     </a.nav>
+    </div>
   );
 };

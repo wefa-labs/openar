@@ -34,32 +34,25 @@ export async function setupNetwork() {
   const signer = result.network.signer.get();
   if (networkConfig.faucetServiceUrl && signer) {
     const address = await signer.getAddress();
-
     console.info("[Dev Faucet]: Player address -> ", address);
 
     const faucet = createFaucetService(networkConfig.faucetServiceUrl);
 
-    if (address) {
-      const requestDrip = async () => {
-        const balance = await signer.getBalance();
-        console.info(`[Dev Faucet]: Player balance -> ${balance}`);
-        const lowBalance = balance?.lte(utils.parseEther("1"));
-        if (lowBalance) {
-          console.info(
-            "[Dev Faucet]: Balance is low, dripping funds to player"
-          );
-          // Double drip
-          await faucet.dripDev({ address });
-          await faucet.dripDev({ address });
-        }
-      };
+    const requestDrip = async () => {
+      const balance = await signer.getBalance();
+      console.info(`[Dev Faucet]: Player balance -> ${balance}`);
+      const lowBalance = balance?.lte(utils.parseEther("1"));
+      if (lowBalance) {
+        console.info("[Dev Faucet]: Balance is low, dripping funds to player");
+        // Double drip
+        await faucet.dripDev({ address });
+        await faucet.dripDev({ address });
+      }
+    };
 
-      requestDrip();
-
-      setInterval(requestDrip, 20000);
-    }
-
+    requestDrip();
     // Request a drip every 20 seconds
+    setInterval(requestDrip, 20000);
   }
 
   const provider = result.network.providers.get().json;
@@ -108,7 +101,7 @@ export async function setupNetwork() {
   const fastTxExecutor =
     signer?.provider instanceof JsonRpcProvider
       ? await createFastTxExecutor(
-          signerOrProvider as Signer & { provider: JsonRpcProvider }
+          signer as Signer & { provider: JsonRpcProvider }
         )
       : null;
 

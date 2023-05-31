@@ -6,6 +6,12 @@ import { ClientComponents } from "./createClientComponents";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
+enum MapSize {
+  Small = 0,
+  Medium = 1,
+  Large = 2,
+}
+
 enum TicTacToeRole {
   O = 0,
   X = 1,
@@ -15,7 +21,6 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity }: SetupNetworkResult,
   { Counter }: ClientComponents
 ) {
-  // SANITY CHECK
   const increment = async () => {
     const tx = await worldSend("increment", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
@@ -72,6 +77,9 @@ export function createSystemCalls(
     createTicTacToeMatch,
     joinTicTacToeMatch,
     claimTicTacToePosition,
-    claimTicTacToeCollectible,
   };
 }
+
+// role on Wefa
+// get other people involve
+// weeding, planting, harvesting
