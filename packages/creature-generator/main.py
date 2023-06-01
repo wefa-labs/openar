@@ -12,6 +12,10 @@ from generator import generate_creature_route
 
 app = Flask(__name__)
 
+@app.route('/status')
+def status():
+    return jsonify({'status': 'ok'})
+    
 @app.route('/generate-creature', methods=['POST'])
 def generate_creature_route_handler():
     data = request.get_json()
