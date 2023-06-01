@@ -5,7 +5,7 @@
   "private": true,
   "description": "API for WEFA app",
   "repository": {
-    "url": "https://github.com/wefa-tech/project-flashpoint/packages/api"
+    "url": "https://github.com/wefa-tech/openar/packages/api"
   },
   "keywords": [
     "node",

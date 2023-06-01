@@ -408,6 +408,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1(typescript@5.0.4)
 
+  packages/creature-generator: {}
+
 packages:
 
   /@adobe/css-tools@4.2.0:
