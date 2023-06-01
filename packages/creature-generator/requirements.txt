@@ -1,4 +1,4 @@
 flask
 Pillow
 requests
-dotenv
+# dotenv
