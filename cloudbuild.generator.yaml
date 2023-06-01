@@ -1,13 +1,13 @@
 steps:
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     id: "creature-generator-deploy"
-    dir: "/packages/creature_generator"
+    dir: "/packages/creature-generator"
     args:
       - gcloud
       - functions
       - deploy
       - creature-generator
-      - --region=us-west2
+      - --region=us-west1
       - --source=.
       - --trigger-http
       - --runtime=python311
