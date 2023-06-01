@@ -1,5 +1,12 @@
+import { useState } from "react";
+import { a, useTransition } from "@react-spring/web";
+
 import Hero from "./ProfileHero";
 import { useProfile } from "../../hooks/views/useProfile";
+
+type Tab = "profile" | "settings" | "wallet";
+
+const tabs: Tab[] = ["profile", "settings", "wallet"];
 
 export default function Profile() {
   const {
@@ -17,11 +24,47 @@ export default function Profile() {
     worldFormRegister,
   } = useProfile();
 
+  const [tab, setTab] = useState<Tab>("profile");
+
+  const transition = useTransition(tab, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: {
+      tension: 300,
+      friction: 20,
+      clamp: true,
+    },
+  });
+
   return (
-    <div className="space">
-      Profile
-      <section>
-        <div>
+    <section className="flex flex-col gap-3 items-center py-12">
+      <div className="avatar placeholder">
+        <div className="bg-neutral-focus text-neutral-content rounded-full w-32">
+          <span className="text-4xl">KK</span>
+        </div>
+      </div>
+      <div className="tabs tabs-boxed">
+        {tabs.map((name) => (
+          <button
+            key={name}
+            className={`tab ${name === tab ? "tab-active" : ""}`}
+            onClick={() => setTab(name)}
+            type="button"
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+      {transition((style, tab) => (
+        <a.div style={style} className="flex-1">
+          {tab === "profile" && <div>Profile</div>}
+          {tab === "settings" && <div>Settings</div>}
+          {tab === "wallet" && <div>Wallet</div>}
+        </a.div>
+      ))}
+
+      {/* <div>
           <div>
             {avatar && <img src={avatar} alt="avatar" className="" />}
             <p>
@@ -53,14 +96,13 @@ export default function Profile() {
               />
             </form>
           </div>
-        </div>
-        <ul>
-          {/* {worlds.map((world) => (
+        </div> */}
+      <ul>
+        {/* {worlds.map((world) => (
             <li key={world.value.id}>{world.value.spaceCount}</li>
           ))} */}
-        </ul>
-      </section>
-      <Hero />
+      </ul>
+      {/* <Hero /> */}
       <aside>
         <h3>Games</h3>
         <ul>
@@ -69,6 +111,6 @@ export default function Profile() {
           ))} */}
         </ul>
       </aside>
-    </div>
+    </section>
   );
 }

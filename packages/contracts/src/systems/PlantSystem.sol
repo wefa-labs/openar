@@ -7,16 +7,19 @@ import {GrowthLevelEnum} from "../codegen/Types.sol";
 import {Identity, IdentityData, Asset, AssetData, Care, CareData, Element, Owner} from "../codegen/Tables.sol";
 
 contract PlantSystem is System {
-    function redeem(
+    function seedPlant(
         string memory image,
         string memory meta,
         int32 long,
         int32 lat,
         GrowthLevelEnum growthLevel,
-        address userAddrs
+        bytes32 spaceId,
+        uint8 cellPosition
     ) public returns (address) {
         // require(healthStatus != HealthStatusEnum.DEAD, "plant is dead");
         address user = _msgSender();
+
+        require(Owner.get(spaceId) == user, "not owner of space");
 
         // bool isMember = ISpace(spaceAddrs).isMember(userAddrs);
         // require(isMember, "not member of space");

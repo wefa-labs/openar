@@ -333,7 +333,7 @@ const _abi = [
         type: "bytes32",
       },
     ],
-    name: "claim",
+    name: "claimGameTrophy",
     outputs: [
       {
         internalType: "string",
@@ -348,8 +348,13 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "matchId",
+        name: "gameId",
         type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "matchNumber",
+        type: "uint8",
       },
       {
         internalType: "uint8",
@@ -395,11 +400,16 @@ const _abi = [
       },
       {
         internalType: "bytes32",
+        name: "worldId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
         name: "spaceId",
         type: "bytes32",
       },
     ],
-    name: "create",
+    name: "createGame",
     outputs: [
       {
         internalType: "bytes32",
@@ -812,11 +822,11 @@ const _abi = [
     inputs: [
       {
         internalType: "bytes32",
-        name: "matchId",
+        name: "gameId",
         type: "bytes32",
       },
     ],
-    name: "join",
+    name: "joinGame",
     outputs: [
       {
         internalType: "enum RoleEnum",
@@ -830,30 +840,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
-        name: "_entity",
-        type: "bytes32",
-      },
-      {
-        internalType: "int32",
-        name: "_energy",
-        type: "int32",
-      },
-    ],
-    name: "nurture",
-    outputs: [
-      {
-        internalType: "bytes",
-        name: "",
-        type: "bytes",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "bytes16",
         name: "namespace",
         type: "bytes16",
@@ -970,89 +956,6 @@ const _abi = [
     ],
     name: "pushToField",
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "image",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "meta",
-        type: "string",
-      },
-      {
-        internalType: "int32",
-        name: "long",
-        type: "int32",
-      },
-      {
-        internalType: "int32",
-        name: "lat",
-        type: "int32",
-      },
-      {
-        internalType: "enum GrowthLevelEnum",
-        name: "growthLevel",
-        type: "uint8",
-      },
-      {
-        internalType: "address",
-        name: "userAddrs",
-        type: "address",
-      },
-    ],
-    name: "redeem",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "image",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "meta",
-        type: "string",
-      },
-      {
-        internalType: "int32",
-        name: "longitude",
-        type: "int32",
-      },
-      {
-        internalType: "int32",
-        name: "latitude",
-        type: "int32",
-      },
-      {
-        internalType: "address",
-        name: "spaceAddrs",
-        type: "address",
-      },
-    ],
-    name: "redeem",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -1341,6 +1244,16 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "image",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
         internalType: "bytes32",
         name: "worldId",
         type: "bytes32",
@@ -1351,19 +1264,87 @@ const _abi = [
         type: "bytes32",
       },
       {
-        internalType: "uint32",
-        name: "x",
-        type: "uint32",
+        internalType: "uint8",
+        name: "cellPosition",
+        type: "uint8",
+      },
+    ],
+    name: "seedCreature",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "image",
+        type: "string",
       },
       {
-        internalType: "uint32",
-        name: "y",
-        type: "uint32",
+        internalType: "string",
+        name: "meta",
+        type: "string",
       },
       {
-        internalType: "uint32",
-        name: "z",
-        type: "uint32",
+        internalType: "int32",
+        name: "long",
+        type: "int32",
+      },
+      {
+        internalType: "int32",
+        name: "lat",
+        type: "int32",
+      },
+      {
+        internalType: "enum GrowthLevelEnum",
+        name: "growthLevel",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "cellPosition",
+        type: "uint8",
+      },
+    ],
+    name: "seedPlant",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "worldId",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes32",
+        name: "spaceId",
+        type: "bytes32",
+      },
+      {
+        internalType: "uint8",
+        name: "position",
+        type: "uint8",
       },
       {
         internalType: "bytes32",

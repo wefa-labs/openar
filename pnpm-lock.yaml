@@ -216,6 +216,9 @@ importers:
       '@simplewebauthn/browser':
         specifier: 7.2.0
         version: 7.2.0
+      '@types/lodash':
+        specifier: 4.14.194
+        version: 4.14.194
       '@use-gesture/react':
         specifier: 10.2.26
         version: 10.2.26(react@18.2.0)
@@ -283,9 +286,6 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.4.3
         version: 14.4.3(@testing-library/dom@9.3.0)
-      '@types/lodash':
-        specifier: 4.14.194
-        version: 4.14.194
       '@types/node':
         specifier: 18.15.12
         version: 18.15.12
@@ -4641,7 +4641,7 @@ packages:
 
   /@types/lodash@4.14.194:
     resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
-    dev: true
+    dev: false
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}

@@ -30,12 +30,10 @@ library Cell {
   }
 
   function getKeySchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](5);
+    SchemaType[] memory _schema = new SchemaType[](3);
     _schema[0] = SchemaType.BYTES32;
     _schema[1] = SchemaType.BYTES32;
-    _schema[2] = SchemaType.UINT32;
-    _schema[3] = SchemaType.UINT32;
-    _schema[4] = SchemaType.UINT32;
+    _schema[2] = SchemaType.UINT8;
 
     return SchemaLib.encode(_schema);
   }
@@ -43,7 +41,7 @@ library Cell {
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](1);
-    _fieldNames[0] = "values";
+    _fieldNames[0] = "value";
     return ("Cell", _fieldNames);
   }
 
@@ -69,104 +67,81 @@ library Cell {
     _store.setMetadata(_tableId, _tableName, _fieldNames);
   }
 
-  /** Get values */
-  function get(bytes32 worldId, bytes32 spaceId, uint32 x, uint32 y, uint32 z) internal view returns (bytes32 values) {
-    bytes32[] memory _keyTuple = new bytes32[](5);
+  /** Get value */
+  function get(bytes32 worldId, bytes32 spaceId, uint8 position) internal view returns (bytes32 value) {
+    bytes32[] memory _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
   }
 
-  /** Get values (using the specified store) */
-  function get(
-    IStore _store,
-    bytes32 worldId,
-    bytes32 spaceId,
-    uint32 x,
-    uint32 y,
-    uint32 z
-  ) internal view returns (bytes32 values) {
-    bytes32[] memory _keyTuple = new bytes32[](5);
+  /** Get value (using the specified store) */
+  function get(IStore _store, bytes32 worldId, bytes32 spaceId, uint8 position) internal view returns (bytes32 value) {
+    bytes32[] memory _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
   }
 
-  /** Set values */
-  function set(bytes32 worldId, bytes32 spaceId, uint32 x, uint32 y, uint32 z, bytes32 values) internal {
-    bytes32[] memory _keyTuple = new bytes32[](5);
+  /** Set value */
+  function set(bytes32 worldId, bytes32 spaceId, uint8 position, bytes32 value) internal {
+    bytes32[] memory _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((values)));
+    StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
   }
 
-  /** Set values (using the specified store) */
-  function set(IStore _store, bytes32 worldId, bytes32 spaceId, uint32 x, uint32 y, uint32 z, bytes32 values) internal {
-    bytes32[] memory _keyTuple = new bytes32[](5);
+  /** Set value (using the specified store) */
+  function set(IStore _store, bytes32 worldId, bytes32 spaceId, uint8 position, bytes32 value) internal {
+    bytes32[] memory _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
 
-    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((values)));
+    _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(bytes32 values) internal view returns (bytes memory) {
-    return abi.encodePacked(values);
+  function encode(bytes32 value) internal view returns (bytes memory) {
+    return abi.encodePacked(value);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(
     bytes32 worldId,
     bytes32 spaceId,
-    uint32 x,
-    uint32 y,
-    uint32 z
+    uint8 position
   ) internal pure returns (bytes32[] memory _keyTuple) {
-    _keyTuple = new bytes32[](5);
+    _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(bytes32 worldId, bytes32 spaceId, uint32 x, uint32 y, uint32 z) internal {
-    bytes32[] memory _keyTuple = new bytes32[](5);
+  function deleteRecord(bytes32 worldId, bytes32 spaceId, uint8 position) internal {
+    bytes32[] memory _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 worldId, bytes32 spaceId, uint32 x, uint32 y, uint32 z) internal {
-    bytes32[] memory _keyTuple = new bytes32[](5);
+  function deleteRecord(IStore _store, bytes32 worldId, bytes32 spaceId, uint8 position) internal {
+    bytes32[] memory _keyTuple = new bytes32[](3);
     _keyTuple[0] = bytes32((worldId));
     _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((x)));
-    _keyTuple[3] = bytes32(uint256((y)));
-    _keyTuple[4] = bytes32(uint256((z)));
+    _keyTuple[2] = bytes32(uint256((position)));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

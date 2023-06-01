@@ -16,20 +16,11 @@ contract SystemTest is MudV2Test {
     world = IWorld(worldAddress);
   }
 
-  // function testWorldExists() public {
-  //   uint256 codeSize;
-  //   address addr = worldAddress;
-  //   assembly {
-  //     codeSize := extcodesize(addr)
-  //   }
-  //   assertTrue(codeSize > 0);
-  // }
-
-  // function testCreateWorld() public {
-  //   bytes32 id =  world.createWorld("Test", "worldId should be Test", "Image");
-  //   // string memory data = Identity.getName(id);
-  //   // assertEq(data, "Test");
-  // }
+  function testCreateWorld() public {
+    bytes32 id =  world.createWorld("Test", "worldId should be Test", "Image");
+    // string memory data = Identity.getName(id);
+    // assertEq(data, "Test");
+  }
 
   // function testClaimSpace() public {
   //   bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");

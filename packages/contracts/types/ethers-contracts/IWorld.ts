@@ -31,10 +31,10 @@ import type {
 export interface IWorldInterface extends utils.Interface {
   functions: {
     "call(bytes16,bytes16,bytes)": FunctionFragment;
-    "claim(bytes32)": FunctionFragment;
-    "claimPosition(bytes32,uint8)": FunctionFragment;
+    "claimGameTrophy(bytes32)": FunctionFragment;
+    "claimPosition(bytes32,uint8,uint8)": FunctionFragment;
     "claimSpace(bytes32)": FunctionFragment;
-    "create(uint8,string,bytes32)": FunctionFragment;
+    "createGame(uint8,string,bytes32,bytes32)": FunctionFragment;
     "createWorld(string,string,string)": FunctionFragment;
     "deleteRecord(bytes32,bytes32[])": FunctionFragment;
     "deleteRecord(bytes16,bytes16,bytes32[])": FunctionFragment;
@@ -52,14 +52,11 @@ export interface IWorldInterface extends utils.Interface {
     "installModule(address,bytes)": FunctionFragment;
     "installRootModule(address,bytes)": FunctionFragment;
     "isStore()": FunctionFragment;
-    "join(bytes32)": FunctionFragment;
-    "nurture(bytes32,int32)": FunctionFragment;
+    "joinGame(bytes32)": FunctionFragment;
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)": FunctionFragment;
     "popFromField(bytes32,bytes32[],uint8,uint256)": FunctionFragment;
     "pushToField(bytes32,bytes32[],uint8,bytes)": FunctionFragment;
     "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)": FunctionFragment;
-    "redeem(string,string,int32,int32,uint8,address)": FunctionFragment;
-    "redeem(string,string,int32,int32,address)": FunctionFragment;
     "registerFunctionSelector(bytes16,bytes16,string,string)": FunctionFragment;
     "registerHook(bytes16,bytes16,address)": FunctionFragment;
     "registerNamespace(bytes16)": FunctionFragment;
@@ -71,7 +68,9 @@ export interface IWorldInterface extends utils.Interface {
     "registerTable(bytes16,bytes16,bytes32,bytes32)": FunctionFragment;
     "registerTableHook(bytes16,bytes16,address)": FunctionFragment;
     "revokeAccess(bytes16,bytes16,address)": FunctionFragment;
-    "setCell(bytes32,bytes32,uint32,uint32,uint32,bytes32)": FunctionFragment;
+    "seedCreature(string,string,bytes32,bytes32,uint8)": FunctionFragment;
+    "seedPlant(string,string,int32,int32,uint8,bytes32,uint8)": FunctionFragment;
+    "setCell(bytes32,bytes32,uint8,bytes32)": FunctionFragment;
     "setField(bytes32,bytes32[],uint8,bytes)": FunctionFragment;
     "setField(bytes16,bytes16,bytes32[],uint8,bytes)": FunctionFragment;
     "setMetadata(bytes16,bytes16,string,string[])": FunctionFragment;
@@ -87,10 +86,10 @@ export interface IWorldInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "call"
-      | "claim"
+      | "claimGameTrophy"
       | "claimPosition"
       | "claimSpace"
-      | "create"
+      | "createGame"
       | "createWorld"
       | "deleteRecord(bytes32,bytes32[])"
       | "deleteRecord(bytes16,bytes16,bytes32[])"
@@ -108,14 +107,11 @@ export interface IWorldInterface extends utils.Interface {
       | "installModule"
       | "installRootModule"
       | "isStore"
-      | "join"
-      | "nurture"
+      | "joinGame"
       | "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"
       | "popFromField(bytes32,bytes32[],uint8,uint256)"
       | "pushToField(bytes32,bytes32[],uint8,bytes)"
       | "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)"
-      | "redeem(string,string,int32,int32,uint8,address)"
-      | "redeem(string,string,int32,int32,address)"
       | "registerFunctionSelector"
       | "registerHook"
       | "registerNamespace"
@@ -127,6 +123,8 @@ export interface IWorldInterface extends utils.Interface {
       | "registerTable"
       | "registerTableHook"
       | "revokeAccess"
+      | "seedCreature"
+      | "seedPlant"
       | "setCell"
       | "setField(bytes32,bytes32[],uint8,bytes)"
       | "setField(bytes16,bytes16,bytes32[],uint8,bytes)"
@@ -149,22 +147,27 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "claim",
+    functionFragment: "claimGameTrophy",
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "claimPosition",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "claimSpace",
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "create",
+    functionFragment: "createGame",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
       PromiseOrValue<BytesLike>
     ]
   ): string;
@@ -272,12 +275,8 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "isStore", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "join",
+    functionFragment: "joinGame",
     values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "nurture",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
@@ -315,27 +314,6 @@ export interface IWorldInterface extends utils.Interface {
       PromiseOrValue<BytesLike>[],
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "redeem(string,string,int32,int32,uint8,address)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "redeem(string,string,int32,int32,address)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
     ]
   ): string;
   encodeFunctionData(
@@ -423,12 +401,32 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "seedCreature",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "seedPlant",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setCell",
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BytesLike>
     ]
@@ -528,13 +526,16 @@ export interface IWorldInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "call", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "claimGameTrophy",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "claimPosition",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "claimSpace", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "createGame", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createWorld",
     data: BytesLike
@@ -591,8 +592,7 @@ export interface IWorldInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "isStore", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "nurture", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "joinGame", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)",
     data: BytesLike
@@ -607,14 +607,6 @@ export interface IWorldInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "pushToField(bytes16,bytes16,bytes32[],uint8,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "redeem(string,string,int32,int32,uint8,address)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "redeem(string,string,int32,int32,address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -661,6 +653,11 @@ export interface IWorldInterface extends utils.Interface {
     functionFragment: "revokeAccess",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "seedCreature",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "seedPlant", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setCell", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setField(bytes32,bytes32[],uint8,bytes)",
@@ -804,13 +801,14 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    claim(
+    claimGameTrophy(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     claimPosition(
-      matchId: PromiseOrValue<BytesLike>,
+      gameId: PromiseOrValue<BytesLike>,
+      matchNumber: PromiseOrValue<BigNumberish>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -820,9 +818,10 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    create(
+    createGame(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -935,14 +934,8 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<[void]>;
 
-    join(
-      matchId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    nurture(
-      _entity: PromiseOrValue<BytesLike>,
-      _energy: PromiseOrValue<BigNumberish>,
+    joinGame(
+      gameId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -977,25 +970,6 @@ export interface IWorld extends BaseContract {
       key: PromiseOrValue<BytesLike>[],
       schemaIndex: PromiseOrValue<BigNumberish>,
       dataToPush: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "redeem(string,string,int32,int32,uint8,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      long: PromiseOrValue<BigNumberish>,
-      lat: PromiseOrValue<BigNumberish>,
-      growthLevel: PromiseOrValue<BigNumberish>,
-      userAddrs: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "redeem(string,string,int32,int32,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      longitude: PromiseOrValue<BigNumberish>,
-      latitude: PromiseOrValue<BigNumberish>,
-      spaceAddrs: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1077,12 +1051,30 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    seedCreature(
+      image: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    seedPlant(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setCell(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      z: PromiseOrValue<BigNumberish>,
+      position: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -1178,13 +1170,14 @@ export interface IWorld extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  claim(
+  claimGameTrophy(
     matchId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   claimPosition(
-    matchId: PromiseOrValue<BytesLike>,
+    gameId: PromiseOrValue<BytesLike>,
+    matchNumber: PromiseOrValue<BigNumberish>,
     x: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1194,9 +1187,10 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  create(
+  createGame(
     role: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
+    worldId: PromiseOrValue<BytesLike>,
     spaceId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1309,14 +1303,8 @@ export interface IWorld extends BaseContract {
 
   isStore(overrides?: CallOverrides): Promise<void>;
 
-  join(
-    matchId: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  nurture(
-    _entity: PromiseOrValue<BytesLike>,
-    _energy: PromiseOrValue<BigNumberish>,
+  joinGame(
+    gameId: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1351,25 +1339,6 @@ export interface IWorld extends BaseContract {
     key: PromiseOrValue<BytesLike>[],
     schemaIndex: PromiseOrValue<BigNumberish>,
     dataToPush: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "redeem(string,string,int32,int32,uint8,address)"(
-    image: PromiseOrValue<string>,
-    meta: PromiseOrValue<string>,
-    long: PromiseOrValue<BigNumberish>,
-    lat: PromiseOrValue<BigNumberish>,
-    growthLevel: PromiseOrValue<BigNumberish>,
-    userAddrs: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "redeem(string,string,int32,int32,address)"(
-    image: PromiseOrValue<string>,
-    meta: PromiseOrValue<string>,
-    longitude: PromiseOrValue<BigNumberish>,
-    latitude: PromiseOrValue<BigNumberish>,
-    spaceAddrs: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1451,12 +1420,30 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  seedCreature(
+    image: PromiseOrValue<string>,
+    name: PromiseOrValue<string>,
+    worldId: PromiseOrValue<BytesLike>,
+    spaceId: PromiseOrValue<BytesLike>,
+    cellPosition: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  seedPlant(
+    image: PromiseOrValue<string>,
+    meta: PromiseOrValue<string>,
+    long: PromiseOrValue<BigNumberish>,
+    lat: PromiseOrValue<BigNumberish>,
+    growthLevel: PromiseOrValue<BigNumberish>,
+    spaceId: PromiseOrValue<BytesLike>,
+    cellPosition: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setCell(
     worldId: PromiseOrValue<BytesLike>,
     spaceId: PromiseOrValue<BytesLike>,
-    x: PromiseOrValue<BigNumberish>,
-    y: PromiseOrValue<BigNumberish>,
-    z: PromiseOrValue<BigNumberish>,
+    position: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -1552,13 +1539,14 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    claim(
+    claimGameTrophy(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     claimPosition(
-      matchId: PromiseOrValue<BytesLike>,
+      gameId: PromiseOrValue<BytesLike>,
+      matchNumber: PromiseOrValue<BigNumberish>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1568,9 +1556,10 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    create(
+    createGame(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -1681,16 +1670,10 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<void>;
 
-    join(
-      matchId: PromiseOrValue<BytesLike>,
+    joinGame(
+      gameId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<number>;
-
-    nurture(
-      _entity: PromiseOrValue<BytesLike>,
-      _energy: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     "popFromField(bytes16,bytes16,bytes32[],uint8,uint256)"(
       namespace: PromiseOrValue<BytesLike>,
@@ -1725,25 +1708,6 @@ export interface IWorld extends BaseContract {
       dataToPush: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    "redeem(string,string,int32,int32,uint8,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      long: PromiseOrValue<BigNumberish>,
-      lat: PromiseOrValue<BigNumberish>,
-      growthLevel: PromiseOrValue<BigNumberish>,
-      userAddrs: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "redeem(string,string,int32,int32,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      longitude: PromiseOrValue<BigNumberish>,
-      latitude: PromiseOrValue<BigNumberish>,
-      spaceAddrs: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     registerFunctionSelector(
       namespace: PromiseOrValue<BytesLike>,
@@ -1823,12 +1787,30 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    seedCreature(
+      image: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    seedPlant(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     setCell(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      z: PromiseOrValue<BigNumberish>,
+      position: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1971,13 +1953,14 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    claim(
+    claimGameTrophy(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     claimPosition(
-      matchId: PromiseOrValue<BytesLike>,
+      gameId: PromiseOrValue<BytesLike>,
+      matchNumber: PromiseOrValue<BigNumberish>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1987,9 +1970,10 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    create(
+    createGame(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -2102,14 +2086,8 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<BigNumber>;
 
-    join(
-      matchId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    nurture(
-      _entity: PromiseOrValue<BytesLike>,
-      _energy: PromiseOrValue<BigNumberish>,
+    joinGame(
+      gameId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2144,25 +2122,6 @@ export interface IWorld extends BaseContract {
       key: PromiseOrValue<BytesLike>[],
       schemaIndex: PromiseOrValue<BigNumberish>,
       dataToPush: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    "redeem(string,string,int32,int32,uint8,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      long: PromiseOrValue<BigNumberish>,
-      lat: PromiseOrValue<BigNumberish>,
-      growthLevel: PromiseOrValue<BigNumberish>,
-      userAddrs: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    "redeem(string,string,int32,int32,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      longitude: PromiseOrValue<BigNumberish>,
-      latitude: PromiseOrValue<BigNumberish>,
-      spaceAddrs: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2244,12 +2203,30 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    seedCreature(
+      image: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    seedPlant(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setCell(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      z: PromiseOrValue<BigNumberish>,
+      position: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -2346,13 +2323,14 @@ export interface IWorld extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    claim(
+    claimGameTrophy(
       matchId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     claimPosition(
-      matchId: PromiseOrValue<BytesLike>,
+      gameId: PromiseOrValue<BytesLike>,
+      matchNumber: PromiseOrValue<BigNumberish>,
       x: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -2362,9 +2340,10 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    create(
+    createGame(
       role: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -2477,14 +2456,8 @@ export interface IWorld extends BaseContract {
 
     isStore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    join(
-      matchId: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    nurture(
-      _entity: PromiseOrValue<BytesLike>,
-      _energy: PromiseOrValue<BigNumberish>,
+    joinGame(
+      gameId: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2519,25 +2492,6 @@ export interface IWorld extends BaseContract {
       key: PromiseOrValue<BytesLike>[],
       schemaIndex: PromiseOrValue<BigNumberish>,
       dataToPush: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "redeem(string,string,int32,int32,uint8,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      long: PromiseOrValue<BigNumberish>,
-      lat: PromiseOrValue<BigNumberish>,
-      growthLevel: PromiseOrValue<BigNumberish>,
-      userAddrs: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "redeem(string,string,int32,int32,address)"(
-      image: PromiseOrValue<string>,
-      meta: PromiseOrValue<string>,
-      longitude: PromiseOrValue<BigNumberish>,
-      latitude: PromiseOrValue<BigNumberish>,
-      spaceAddrs: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2619,12 +2573,30 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    seedCreature(
+      image: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      worldId: PromiseOrValue<BytesLike>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    seedPlant(
+      image: PromiseOrValue<string>,
+      meta: PromiseOrValue<string>,
+      long: PromiseOrValue<BigNumberish>,
+      lat: PromiseOrValue<BigNumberish>,
+      growthLevel: PromiseOrValue<BigNumberish>,
+      spaceId: PromiseOrValue<BytesLike>,
+      cellPosition: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setCell(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      x: PromiseOrValue<BigNumberish>,
-      y: PromiseOrValue<BigNumberish>,
-      z: PromiseOrValue<BigNumberish>,
+      position: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

@@ -12,6 +12,10 @@ export const Header: React.FC<HeaderProps> = () => {
   const { isDesktop } = useDeviceDetect();
   const { address } = useAuthWeb3();
 
+  if (!address) {
+    return null;
+  }
+
   return (
     <header className="navbar bg-transparent w-full px-8">
       <div className="navbar-start">
