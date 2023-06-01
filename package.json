@@ -40,7 +40,6 @@
     "wait-port": "^1.0.4"
   },
   "engines": {
-    "node": "18.x",
     "pnpm": "8.x"
   }
 }
