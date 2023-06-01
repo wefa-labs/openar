@@ -22,4 +22,4 @@ def generate_creature_route_handler():
     return jsonify({'img': creature_img})
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
