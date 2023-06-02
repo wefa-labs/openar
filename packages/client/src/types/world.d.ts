@@ -124,7 +124,7 @@ declare interface ARWorld {
   createdAt: number;
 }
 
-interface PlantResponse {
+declare interface PlantResponse {
   id: number;
   custom_id?: null | string;
   meta_data: {
@@ -162,7 +162,7 @@ interface PlantResponse {
   is_plant: boolean;
 }
 
-interface PlantHealth {
+declare interface PlantHealth {
   id: number;
   custom_id: null | string;
   meta_data: {

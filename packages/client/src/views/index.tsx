@@ -35,7 +35,7 @@ export default function Views() {
         {/* <Route path="/play" element={<Play />} /> */}
         <Route path="/explore" element={<Explore />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<Navigate to="/world" />} />
+        <Route path="*" element={<Navigate to="/explore" />} />
       </Routes>
     </a.main>
   ));

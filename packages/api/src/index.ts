@@ -1,8 +1,8 @@
 // import fs from "fs";
 import dotenv from "dotenv";
 // import Redis from "ioredis";
-import RedisStore from "connect-redis";
-import session, { SessionStore } from "@fastify/session";
+// import RedisStore from "connect-redis";
+import session from "@fastify/session";
 
 dotenv.config();
 
@@ -56,6 +56,6 @@ server.get("/status", async function (_req, reply) {
 
 server.listen({ port, host });
 
-export default server;
-
 console.log(`🚀  Fastify server running at https://localhost:${port}/status`);
+
+export default server;

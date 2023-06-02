@@ -2,13 +2,13 @@ import React from "react";
 
 import { useTheme } from "../../hooks/app/useTheme";
 // import { useAuthWeb3 } from "../../hooks/auth/useWeb3";
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+// import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
   const { theme, toggleTheme } = useTheme();
-  const { isDesktop } = useDeviceDetect();
+  // const { isDesktop } = useDeviceDetect();
   // const { address } = useAuthWeb3();
 
   return (
@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = () => {
         </a>
       </div>
       <div className="navbar-end flex gap-4">
-        {isDesktop && (
+        {true && (
           <label className="swap swap-rotate" onClick={toggleTheme}>
             <svg
               className={`${
