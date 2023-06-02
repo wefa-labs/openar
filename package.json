@@ -15,6 +15,7 @@
     "dev:api": "pnpm --filter 'api' run dev",
     "dev:client": "pnpm --filter 'client' run dev",
     "dev:contracts": "pnpm --filter 'contracts' dev",
+    "dev:creature-generator": "cd packages/creature-generator && python3 -m http.server 8080",
     "test": "pnpm recursive run test",
     "build": "pnpm recursive run build"
   },

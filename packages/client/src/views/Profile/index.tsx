@@ -11,6 +11,8 @@ type Tab = "harvest" | "settings" | "wallet";
 
 const tabs: Tab[] = ["harvest", "settings"];
 
+// TODO: Cleanup Bleyle
+
 export default function Profile() {
   // const {
   //   address,

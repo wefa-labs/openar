@@ -24,7 +24,7 @@ interface DeckDialogProps {}
 
 export const UserStats: React.FC = () => {
   return (
-    <div className="relative flex items-center gap-3 px-3 py-2 shadow-lg">
+    <div className="relative flex items-center gap-3 px-3 py-2 shadow-lg bg-base-100">
       <div className="badge absolute right-3 top-2">LVL 33</div>
       <div className="placeholder avatar">
         <div className="w-24 rounded-xl">

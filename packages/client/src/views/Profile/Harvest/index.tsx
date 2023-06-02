@@ -1,6 +1,8 @@
 import { flower } from "../../../mocks/plantGlossary.json";
 interface ProfileHarvestProps {}
 
+const mockData = []; // TODO: replace with real data
+
 export const ProfileHarvest: React.FC<ProfileHarvestProps> = () => {
   const data = Object.values(flower);
   return (
