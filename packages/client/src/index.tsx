@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { mount as mountDevTools } from "@latticexyz/dev-tools";
+// import { mount as mountDevTools } from "@latticexyz/dev-tools";
 
 import App from "./App";
 import { MUDProvider } from "./hooks/useMud";

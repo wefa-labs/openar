@@ -1,5 +1,7 @@
 interface ProfileSettingsProps {}
 
+// TODO: Stylize Bleyle
+
 export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
   // TODO: add color mode toggle
 

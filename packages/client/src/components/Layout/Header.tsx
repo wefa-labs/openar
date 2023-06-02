@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = () => {
     <header className="navbar bg-transparent w-full px-8">
       <div className="navbar-start">
         <a href="/" className="font-bold tracking-wider text-2xl">
-          Open AR
+          WEFA
         </a>
       </div>
       <div className="navbar-end flex gap-4">

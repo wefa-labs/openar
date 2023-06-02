@@ -8,7 +8,10 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 const { chains, publicClient } = configureChains(
   [optimismGoerli, optimism],
-  [alchemyProvider({ apiKey: import.meta.env.ALCHEMY_ID }), publicProvider()]
+  [
+    alchemyProvider({ apiKey: import.meta.env.VITE_VERCEL_ALCHEMY_ID ?? "" }),
+    publicProvider(),
+  ]
 );
 
 const { connectors } = getDefaultWallets({

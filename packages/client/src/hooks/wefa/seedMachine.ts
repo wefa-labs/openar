@@ -20,12 +20,6 @@ enum GrowthLevel {
   RIPENING,
 }
 
-enum HealthStatus {
-  HEALTHY,
-  SICK,
-  DEAD,
-}
-
 const creatureImage: Record<WefaElement, string> = {
   water: "assets/water_butterfly.png",
   fire: "assets/fire_butterfly.png",

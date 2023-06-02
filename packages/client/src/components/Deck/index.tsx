@@ -7,6 +7,8 @@ import { DeckSheet, UserStats } from "./Components";
 
 interface WefadexProps {}
 
+// TODO: Stylize Bleyle following desings in Figma
+
 export const Wefadex: React.FC<WefadexProps> = () => {
   const {
     y,

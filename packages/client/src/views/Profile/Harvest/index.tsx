@@ -1,14 +1,27 @@
 import { flower } from "../../../mocks/plantGlossary.json";
 interface ProfileHarvestProps {}
 
-const mockData = []; // TODO: replace with real data
+interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon?: React.ReactNode; // Is an SVG element
+  color?: string; // Sets the border color
+  element?: WefaElement; // Set the background color if set
+}
+
+const mockData: Badge[] = [{ id: "1axe4", description: "", name: "" }]; // TODO: replace with real data
+
+// TODO: Stylize Bleyle using mockData
 
 export const ProfileHarvest: React.FC<ProfileHarvestProps> = () => {
-  const data = Object.values(flower);
   return (
     <ul className="flex flex-col gap-3 w-full h-full">
-      {data.map((flower) => (
-        <li key={flower.id} className="flex flex-col gap-3 w-full h-full">
+      {mockData.map((badge) => (
+        <li
+          key={badge.id}
+          className="flex flex-col gap-3 w-full h-full bg-base-100"
+        >
           <figure>
             <img
               src="/images/stock/photo-1635805737707-575885ab0820.jpg"

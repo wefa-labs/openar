@@ -22,6 +22,8 @@ export interface DeckSheetProps extends DeckSheetData, ReactDOMAttributes {
 
 interface DeckDialogProps {}
 
+// TODO: Stylize Bleyle following desings in Figma
+
 export const UserStats: React.FC = () => {
   return (
     <div className="relative flex items-center gap-3 px-3 py-2 shadow-lg bg-base-100">
@@ -42,6 +44,8 @@ export const UserStats: React.FC = () => {
     </div>
   );
 };
+
+// TODO: Stylize Bleyle following desings in Figma
 
 export const DeckSheet: React.FC<DeckSheetProps> = ({
   style,

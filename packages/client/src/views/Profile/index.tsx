@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { a, useTransition } from "@react-spring/web";
+import { a, useSpring, useTransition } from "@react-spring/web";
 
 // import Hero from "./ProfileHero";
-import { useProfile } from "../../hooks/views/useProfile";
+// import { useProfile } from "../../hooks/views/useProfile";
 
 import { ProfileHarvest } from "./Harvest";
 import { ProfileSettings } from "./Settings";
@@ -11,25 +11,15 @@ type Tab = "harvest" | "settings" | "wallet";
 
 const tabs: Tab[] = ["harvest", "settings"];
 
-// TODO: Cleanup Bleyle
+// TODO: Stylize Bleyle
 
 export default function Profile() {
-  // const {
-  //   address,
-  //   name,
-  //   avatar,
-  //   balance,
-  //   worlds,
-  //   games,
-  //   accountStatus,
-  //   // avatarStatus,
-  //   // nameStatus,
-  //   onCreateWorld,
-  //   handleWorldSubmit,
-  //   worldFormRegister,
-  // } = useProfile();
-
   const [tab, setTab] = useState<Tab>("harvest");
+
+  const avatarSpring = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, 100%, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
+  });
 
   const transition = useTransition(tab, {
     from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
@@ -44,7 +34,10 @@ export default function Profile() {
 
   return (
     <>
-      <div className=" flex flex-col basis-1/4 items-center gap-3">
+      <a.div
+        className="flex flex-col basis-1/4 items-center gap-3"
+        style={avatarSpring}
+      >
         <div className="avatar placeholder">
           <div className="bg-neutral-focus text-neutral-content rounded-full w-32">
             <span className="text-4xl">KK</span>
@@ -62,7 +55,7 @@ export default function Profile() {
             </button>
           ))}
         </div>
-      </div>
+      </a.div>
       {transition((style, tab) => (
         <a.div style={style} className="basis-3/4 w-full overflow-hidden">
           {tab === "harvest" && <ProfileHarvest />}
@@ -70,40 +63,6 @@ export default function Profile() {
           {tab === "settings" && <ProfileSettings />}
         </a.div>
       ))}
-
-      {/* <div>
-          <div>
-            {avatar && <img src={avatar} alt="avatar" className="" />}
-            <p>
-              {name} {accountStatus}
-            </p>
-            <p>{address}</p>
-            <p>{balance?.decimals}</p>
-          </div>
-          <div>
-            <form
-              onSubmit={handleWorldSubmit(onCreateWorld)}
-              className="flex flex-col w-20"
-            >
-              <button type="submit">Create World</button>
-              <input
-                type="text"
-                placeholder="World Name"
-                {...worldFormRegister("name")}
-              />
-              <input
-                type="text"
-                placeholder="World Description"
-                {...worldFormRegister("description")}
-              />
-              <input
-                type="text"
-                placeholder="World Image"
-                {...worldFormRegister("image")}
-              />
-            </form>
-          </div>
-        </div> */}
     </>
   );
 }

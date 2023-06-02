@@ -1,7 +1,13 @@
+/* 
+  Libraries
+*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 
+  Variables
+*/
 :root {
   --text-color: #000;
   --surface-color: #fff;
@@ -16,6 +22,9 @@
   --gradient-end: #24205e;
 }
 
+/* 
+  App
+*/
 * {
   overscroll-behavior-y: contain;
 }
@@ -50,10 +59,97 @@ body {
   display: none;
 }
 
-.unselectable {
-  user-select: none;
+/* 
+  Views
+*/
+.profile-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    ". profile ."
+    "tabs tabs tabs"
+    "tabs tabs tabs"
+    "tabs tabs tabs";
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "profile"
+      "tabs"
+      "tabs"
+      "tabs";
+
+  }
 }
 
+.explore-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    ". detector ."
+    ". detector ."
+    "selector selector selector"
+    "selector selector selector";
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "detector"
+    "detector"
+    "selector"
+    "selector";
+
+  }
+}
+
+.play-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    "leaderboard leaderboard matches"
+    "gallery gallery matches"
+    "gallery gallery matches"
+    "gallery gallery matches";
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "leaderboard leaderboard"
+    "matches matches"
+    "gallery gallery"
+    "gallery gallery"
+
+  }
+}
+
+.deck-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    "stats . ."
+    "plants plants plants"
+    "plants plants plants"
+    "creatures creatures creatures"
+    "creatures creatures creatures";
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "stats"
+    "plants"
+    "plants"
+    "creatures"
+    "creatures";
+  }
+}
+
+/* 
+  Components
+*/
 .dot {
   position: absolute;
   opacity: 0.27;
@@ -72,4 +168,8 @@ body {
   25% {
     opacity: 1;
   }
+}
+
+.unselectable {
+  user-select: none;
 }

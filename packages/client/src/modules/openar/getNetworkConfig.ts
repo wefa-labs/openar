@@ -16,7 +16,7 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   const params = new URLSearchParams(window.location.search);
 
   const chainId = Number(
-    params.get("chainId") || import.meta.env.VITE_VERCEL_CHAIN_ID || 4242
+    params.get("chainId") || import.meta.env.VITE_VERCEL_CHAIN_ID || 31337
   );
   const chainIndex = supportedChains.findIndex((c) => c.id === chainId);
   const chain = supportedChains[chainIndex];
@@ -28,7 +28,8 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   const worldAddress =
     params.get("worldAddress") ||
     world?.address ||
-    "0xE533006e827412C095066a8aFe76e7693c22aA9e";
+    import.meta.env.VITE_VERCEL_WORLD_ADDRESS ||
+    null;
   if (!worldAddress) {
     throw new Error(
       `No world address found for chain ${chainId}. Did you run \`mud deploy\`?`

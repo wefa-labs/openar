@@ -8,7 +8,7 @@ import { DeviceDetectProvider, isHandheld } from "./hooks/app/useDeviceDetect";
 
 import { Appbar } from "./components/Layout/AppBar";
 import { Header } from "./components/Layout/Header";
-import { NotificationProvider } from "./components/Layout/Notifications";
+// import { NotificationProvider } from "./components/Layout/Notifications";
 
 import Views from "./views";
 
@@ -17,14 +17,12 @@ function App() {
     <WagmiConfig config={config}>
       <RainbowKitProvider chains={chains}>
         <DeviceDetectProvider value={isHandheld ? "handheld" : "desktop"}>
-          <NotificationProvider>
-            <BrowserRouter>
-              <Header />
-              <Appbar />
-              <Views />
-              <ToastContainer />
-            </BrowserRouter>
-          </NotificationProvider>
+          <BrowserRouter>
+            <Header />
+            <Appbar />
+            <Views />
+            <ToastContainer />
+          </BrowserRouter>
         </DeviceDetectProvider>
       </RainbowKitProvider>
     </WagmiConfig>
