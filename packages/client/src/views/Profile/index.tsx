@@ -1,35 +1,38 @@
 import { useState } from "react";
 import { a, useTransition } from "@react-spring/web";
 
-import Hero from "./ProfileHero";
+// import Hero from "./ProfileHero";
 import { useProfile } from "../../hooks/views/useProfile";
 
-type Tab = "profile" | "settings" | "wallet";
+import { ProfileHarvest } from "./Harvest";
+import { ProfileSettings } from "./Settings";
 
-const tabs: Tab[] = ["profile", "settings", "wallet"];
+type Tab = "harvest" | "settings" | "wallet";
+
+const tabs: Tab[] = ["harvest", "settings"];
 
 export default function Profile() {
-  const {
-    address,
-    name,
-    avatar,
-    balance,
-    worlds,
-    games,
-    accountStatus,
-    // avatarStatus,
-    // nameStatus,
-    onCreateWorld,
-    handleWorldSubmit,
-    worldFormRegister,
-  } = useProfile();
+  // const {
+  //   address,
+  //   name,
+  //   avatar,
+  //   balance,
+  //   worlds,
+  //   games,
+  //   accountStatus,
+  //   // avatarStatus,
+  //   // nameStatus,
+  //   onCreateWorld,
+  //   handleWorldSubmit,
+  //   worldFormRegister,
+  // } = useProfile();
 
-  const [tab, setTab] = useState<Tab>("profile");
+  const [tab, setTab] = useState<Tab>("harvest");
 
   const transition = useTransition(tab, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
+    enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
+    leave: { opacity: 0, transform: "translate3d(0,0, -100%)" },
     config: {
       tension: 300,
       friction: 20,
@@ -38,29 +41,31 @@ export default function Profile() {
   });
 
   return (
-    <section className="flex flex-col gap-3 items-center py-12">
-      <div className="avatar placeholder">
-        <div className="bg-neutral-focus text-neutral-content rounded-full w-32">
-          <span className="text-4xl">KK</span>
+    <>
+      <div className=" flex flex-col basis-1/4 items-center gap-3">
+        <div className="avatar placeholder">
+          <div className="bg-neutral-focus text-neutral-content rounded-full w-32">
+            <span className="text-4xl">KK</span>
+          </div>
+        </div>
+        <div className="tabs tabs-boxed">
+          {tabs.map((name) => (
+            <button
+              key={name}
+              className={`tab capitalize ${name === tab ? "tab-active" : ""}`}
+              onClick={() => setTab(name)}
+              type="button"
+            >
+              {name}
+            </button>
+          ))}
         </div>
       </div>
-      <div className="tabs tabs-boxed">
-        {tabs.map((name) => (
-          <button
-            key={name}
-            className={`tab ${name === tab ? "tab-active" : ""}`}
-            onClick={() => setTab(name)}
-            type="button"
-          >
-            {name}
-          </button>
-        ))}
-      </div>
       {transition((style, tab) => (
-        <a.div style={style} className="flex-1">
-          {tab === "profile" && <div>Profile</div>}
-          {tab === "settings" && <div>Settings</div>}
-          {tab === "wallet" && <div>Wallet</div>}
+        <a.div style={style} className="basis-3/4 w-full overflow-hidden">
+          {tab === "harvest" && <ProfileHarvest />}
+          {/* {tab === "wallet" && <ProfileWallet />} */}
+          {tab === "settings" && <ProfileSettings />}
         </a.div>
       ))}
 
@@ -97,20 +102,6 @@ export default function Profile() {
             </form>
           </div>
         </div> */}
-      <ul>
-        {/* {worlds.map((world) => (
-            <li key={world.value.id}>{world.value.spaceCount}</li>
-          ))} */}
-      </ul>
-      {/* <Hero /> */}
-      <aside>
-        <h3>Games</h3>
-        <ul>
-          {/* {games.map((game) => (
-            <li key={game.value.id}>{game.value.turnCount}</li>
-          ))} */}
-        </ul>
-      </aside>
-    </section>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { useSeed } from "../../hooks/wefadex/useSeed";
+import { useSeed } from "../../hooks/wefa/useSeed";
 
 import { PlantDetector } from "./PlantDetector";
 import { ElementSelector } from "./ElementSelector";

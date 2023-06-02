@@ -27,6 +27,7 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none; /* IE and Edge */
   overflow-x: hidden;
+
   font-family: "Inter", sans-serif;
   background-image: linear-gradient(
     320deg,

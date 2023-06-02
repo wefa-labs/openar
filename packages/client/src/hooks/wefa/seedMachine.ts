@@ -7,7 +7,7 @@ interface SeedContext {
   image: File | null;
   imageVerified: boolean;
   element: WefaElement | null;
-  creature: Critter | null;
+  creature: Creature | null;
   error: string | null;
 }
 
@@ -223,7 +223,7 @@ export const seedMachine = createMachine(
         }
 
         try {
-          const { data } = await apiClient.patchForm<{ creature: Critter }>(
+          const { data } = await apiClient.patchForm<{ creature: Creature }>(
             "/creatures/seed",
             {
               image: context.image,
@@ -235,8 +235,8 @@ export const seedMachine = createMachine(
 
           context.creature = {
             id: `0x${uniqueId()}`,
-            name: "Test Critter",
-            description: "Test Critter Description",
+            name: "Test Creature",
+            description: "Test Creature Description",
             image: creatureImage[context.element ?? "earth"],
             care: {
               checkedAt: new Date().getMilliseconds(),

@@ -1,22 +1,37 @@
-import { useMachine } from "@xstate/react";
+import { data as creatureData } from "../../mocks/critters.json";
+import { data as plantData } from "../../mocks/plants.json";
 
-import { deckMachine } from "./deckMachine";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const useWefadex = () => {
-  const [state, send] = useMachine(deckMachine);
-  const [creatures] = useState<Critter[]>([]);
-  const [plants] = useState<Plant[]>([]);
+import { fetchPlants, fetchCreatures } from "../../modules/idb";
 
-  function mintCreature(id: string) {
-    if (!state.matches("idle")) throw new Error("Not idle");
-    send("MINT", { id });
+export const useWefadex = (spaceId: string) => {
+  const [creatures, setCreatures] = useState<Creature[]>(creatureData as any);
+  const [plants, setPlants] = useState<Plant[]>(plantData as any);
+
+  async function handleFetchPlants() {
+    const newPlants = await fetchPlants();
+
+    console.log("newPlants", newPlants);
+    setPlants(newPlants);
   }
 
+  async function handleFetchCreatures() {
+    const newCreatures = await fetchCreatures();
+
+    console.log("newCreatures", newCreatures);
+    setCreatures(newCreatures);
+  }
+
+  useEffect(() => {
+    // handleFetchPlants();
+    // handleFetchCreatures();
+  }, [spaceId]);
+
   return {
-    ...state.context,
-    mintCreature,
     plants,
     creatures,
+    handleFetchPlants,
+    handleFetchCreatures,
   };
 };

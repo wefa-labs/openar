@@ -1,4 +1,5 @@
 import { WagmiConfig } from "wagmi";
+import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
@@ -21,6 +22,7 @@ function App() {
               <Header />
               <Appbar />
               <Views />
+              <ToastContainer />
             </BrowserRouter>
           </NotificationProvider>
         </DeviceDetectProvider>

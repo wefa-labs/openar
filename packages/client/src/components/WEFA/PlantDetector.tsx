@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { RC as PlantIcon } from "../../assets/plant.svg";
-import useDeviceDetect from "../../hooks/device/useDeviceDetect";
+import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface PlantDetectorProps {
   onPlantDetection: (file: File) => void;
@@ -13,7 +13,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   detecting,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const deviceType = useDeviceDetect();
+  const { isDesktop } = useDeviceDetect();
 
   async function handleImage(file: File | null) {
     if (!file) {
@@ -89,9 +89,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   return (
     <label
       className={`relative grid aspect-square w-full cursor-pointer appearance-none place-items-center rounded-lg border-2 border-dashed border-green-500 transition-all focus:outline-none ${
-        deviceType === "desktop"
-          ? "hover:border-yellow-600 hover:text-blue-500"
-          : ""
+        isDesktop ? "hover:border-yellow-600 hover:text-blue-500" : ""
       }`}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
@@ -126,11 +124,10 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
           <PlantIcon className="scale-125 fill-green-600" />
           <p
             className={`text-center text-2xl tracking-wide ${
-              deviceType === "desktop" ? "hover:text-blue-500" : ""
+              isDesktop ? "hover:text-blue-500" : ""
             }`}
           >
-            {deviceType === "desktop" ? "Click or Paste" : "Tap to Add"} Plant
-            Image
+            {isDesktop ? "Click or Paste" : "Tap to Add"} Plant Image
           </p>
         </div>
       )}

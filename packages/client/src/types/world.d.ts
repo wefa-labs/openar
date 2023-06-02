@@ -52,7 +52,7 @@ enum ARStatus {
 declare interface Identity {
   name: string;
   description?: string;
-  createdAt?: number;
+  // createdAt?: number;
 }
 
 declare interface Asset {
@@ -65,7 +65,7 @@ declare interface Timestamps {
   updatedAt: number;
 }
 
-declare interface Critter extends Identity, Asset, Timestamps {
+declare interface Creature extends Identity, Asset, Timestamps {
   id: `0x${string}`; // Address
   trainer: `0x${string}`; // Address
   spaceId: string; // Bytes32 ID
@@ -76,7 +76,7 @@ declare interface Critter extends Identity, Asset, Timestamps {
 declare interface Plant extends Identity, Timestamps, Asset {
   id: `0x${string}`; // Address
   caretaker: `0x${string}`; // Address
-  space: `0x${string}`; // Address
+  spaceId: `0x${string}`; // Address
   plantId: number;
   health: Health;
   care: Care;

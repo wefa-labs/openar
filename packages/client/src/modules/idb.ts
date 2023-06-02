@@ -1,6 +1,17 @@
-import { IDBPDatabase, openDB } from "idb";
+import { DBSchema, IDBPDatabase, openDB } from "idb";
 
-export let db: IDBPDatabase<unknown> | undefined;
+interface WEFADB extends DBSchema {
+  plants: {
+    key: string;
+    value: Plant;
+  };
+  creatures: {
+    key: string;
+    value: Creature;
+  };
+}
+
+export let db: IDBPDatabase<WEFADB> | undefined;
 export let status: "idle" | "loading" | "error" | "success" = "idle";
 
 export async function initDB() {
@@ -15,9 +26,8 @@ export async function initDB() {
   status = "loading";
 
   try {
-    db = await openDB("wefa", 1, {
+    db = await openDB<WEFADB>("wefa", 1, {
       upgrade(db) {
-        db.createObjectStore("keyval");
         db.createObjectStore("plants", {
           keyPath: "id",
         });
@@ -44,4 +54,35 @@ export async function initDB() {
   }
 
   return db;
+}
+
+export async function fetchPlants() {
+  const db = await initDB();
+  const transaction = db?.transaction("plants", "readonly");
+  const store = transaction?.objectStore("plants");
+  const data = await store?.getAll();
+  // const index = store?.index("spaceId");
+  // const range = IDBKeyRange.only(spaceId);
+  // const cursor = index?.openCursor(range);
+
+  if (!data) {
+    console.log("no plants");
+    return [];
+  }
+
+  return data;
+}
+
+export async function fetchCreatures() {
+  const db = await initDB();
+  const transaction = db?.transaction("creatures", "readonly");
+  const store = transaction?.objectStore("creatures");
+  const data = await store?.getAll();
+
+  if (!data) {
+    console.log("no creatures");
+    return [];
+  }
+
+  return data;
 }

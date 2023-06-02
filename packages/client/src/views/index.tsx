@@ -25,7 +25,7 @@ export default function Views() {
 
   return transitions((style, location) => (
     <a.main
-      className={`overflow-y-contain flex h-[calc(100vh-4rem)] flex-col overflow-y-auto px-6 sm:px-8 ${
+      className={`overflow-y-contain flex h-[calc(100vh-4rem)] flex-col overflow-y-hidden px-6 sm:px-8 pt-12 ${
         isDesktop ? "" : ""
       }`}
       style={style}

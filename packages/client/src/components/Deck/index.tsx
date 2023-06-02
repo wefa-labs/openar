@@ -2,8 +2,8 @@ import React from "react";
 import { a } from "@react-spring/web";
 
 import { DeckCard } from "./Card";
-import { useDeck, height } from "./useDeck";
-import { DeckSheet, UserStats, DeckDialog } from "./Components";
+import { useDeck, height } from "../../hooks/views/useDeck";
+import { DeckSheet, UserStats } from "./Components";
 
 interface WefadexProps {}
 
@@ -18,10 +18,7 @@ export const Wefadex: React.FC<WefadexProps> = () => {
     openSheet,
     closeSheet,
     sheetData,
-    mintCreature,
   } = useDeck();
-
-  console.log("Creatures", creatures);
 
   const display = y.to((py) => (py < height ? "block" : "none"));
   const bgStyle = {
@@ -37,9 +34,6 @@ export const Wefadex: React.FC<WefadexProps> = () => {
         style={bgStyle}
       >
         <UserStats />
-        <label htmlFor="webauth-dialog" className="btn">
-          Register
-        </label>
         <h3 className=" text-2xl font-semibold">Plants</h3>
         <ul className="carousel-center carousel space-x-4">
           {plantTrail.map((props, index) => (
@@ -74,22 +68,11 @@ export const Wefadex: React.FC<WefadexProps> = () => {
                   },
                 });
               }}
-              actions={[
-                {
-                  name: "Evolve",
-                  onClick: () => {
-                    mintCreature(creatures[index].id);
-                  },
-                  tooltip: "Evolve your creature!",
-                },
-              ]}
+              actions={[]}
             />
           ))}
         </ul>
       </a.div>
-      <button className="btn" onClick={() => openSheet({ canceled: false })}>
-        Open
-      </button>
       <DeckSheet
         {...sheetData}
         {...bind()}
@@ -99,7 +82,6 @@ export const Wefadex: React.FC<WefadexProps> = () => {
           y,
         }}
       />
-      <DeckDialog />
     </section>
   );
 };

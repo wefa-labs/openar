@@ -5,7 +5,7 @@ import { db, initDB } from "../../modules/idb";
 
 interface WefadexContext {
   plants?: Plant[];
-  creatures?: Critter[];
+  creatures?: Creature[];
   error: string | null;
 }
 
@@ -161,14 +161,14 @@ export const deckMachine = createMachine(
       fetchCreatures: async (_context, _event) => {
         // await fetchSigner();
 
-        const creatures: Critter[] = (await readContract<
+        const creatures: Creature[] = (await readContract<
           typeof ABI,
           "getCreatures"
         >({
           abi: ABI,
           address: "0x",
           functionName: "getCreatures",
-        })) as Critter[];
+        })) as Creature[];
 
         // Save to DB
 

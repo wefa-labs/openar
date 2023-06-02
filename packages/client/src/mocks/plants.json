@@ -1,0 +1,93 @@
+{
+  "data": [
+    {
+      "id": "0x123",
+      "caretaker": "0x123",
+      "spaceId": "0x123",
+      "plantId": 2,
+      "name": "Basil Bass",
+      "description": "My first plant on the blockchain",
+      "image": "",
+      "model": "",
+      "elements": [1],
+      "health": {
+        "max": 100,
+        "current": 100,
+        "healtStatus": 0
+      },
+      "care": {
+        "checkedAt": 123456789,
+        "growthLevel": 0
+      },
+      "createdAt": 123456789,
+      "updatedAt": 123456789
+    },
+    {
+      "id": "0x124",
+      "caretaker": "0x123",
+      "spaceId": "0x123",
+      "plantId": 9,
+      "name": "Strawberry Snapper",
+      "description": "Starwberry growing for biology class",
+      "metadata": "",
+      "image": "",
+      "model": "",
+      "elements": [2],
+      "health": {
+        "max": 100,
+        "current": 100,
+        "healtStatus": 0
+      },
+      "care": {
+        "checkedAt": 123456789,
+        "growthLevel": 0
+      },
+      "createdAt": 123456789,
+      "updatedAt": 123456789
+    },
+    {
+      "id": "0x125",
+      "caretaker": "0x123",
+      "spaceId": "0x121",
+      "plantId": 6,
+      "name": "Zucchini Bikini",
+      "description": "!st try at Zuchinni in the garden",
+      "metadata": "",
+      "image": "",
+      "model": "",
+      "elements": [1],
+      "health": {
+        "max": 100,
+        "current": 100,
+        "healtStatus": 0
+      },
+      "care": {
+        "checkedAt": 123456789,
+        "growthLevel": 0
+      },
+      "createdAt": 123456789,
+      "updatedAt": 123456789
+    },
+    {
+      "id": "0x127",
+      "caretaker": "0x123",
+      "spaceId": "0x122",
+      "plantId": 15,
+      "name": "Sweet Ol Lily of Mine",
+      "description": "Lilies for the community garden",
+      "image": "",
+      "model": "",
+      "health": {
+        "max": 100,
+        "current": 100,
+        "healtStatus": 0
+      },
+      "care": {
+        "checkedAt": 123456789,
+        "growthLevel": 0
+      },
+      "createdAt": 123456789,
+      "updatedAt": 123456789
+    }
+  ]
+}

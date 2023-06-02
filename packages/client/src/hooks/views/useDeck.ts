@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useDrag } from "@use-gesture/react";
 import { useSpring, useTrail, config } from "@react-spring/web";
 
-import { useWefadex } from "../../hooks/wefa/useDeck";
+import { useWefadex } from "../wefa/useDeck";
 
-import { DeckSheetData } from "./Components";
+import { DeckSheetData } from "../../components/Deck/Components";
 
 export const height = window.innerHeight - 24;
 

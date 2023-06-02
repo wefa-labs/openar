@@ -5,7 +5,7 @@ import { RC as WaterIcon } from "../../assets/water.svg";
 import { RC as EarthIcon } from "../../assets/earth.svg";
 import { RC as FireIcon } from "../../assets/fire.svg";
 import { RC as AirIcon } from "../../assets/air.svg";
-import useDeviceDetect from "../../hooks/device/useDeviceDetect";
+import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface ElementSelectorProps {
   selectedElement: WefaElement | null;
@@ -65,7 +65,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   selectedElement,
   onElementSelected,
 }) => {
-  const deviceType = useDeviceDetect();
+  const { isDesktop } = useDeviceDetect();
   const elementTrail = useTrail(elements.length, {
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -79,7 +79,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   return (
     <div
       className={`flex h-full w-full basis-1/2 flex-col items-center gap-2 overflow-hidden pb-4 ${
-        deviceType === "desktop" ? "" : ""
+        isDesktop ? "" : ""
       }`}
     >
       <h2 className="flex w-full items-center justify-center gap-3 pt-2 font-semibold tracking-wide text-slate-800">
