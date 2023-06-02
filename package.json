@@ -11,11 +11,11 @@
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
     "mud:up": "pnpm recursive exec mud set-version -v canary && pnpm install",
     "initialize": "pnpm recursive run initialize",
-    "dev": "concurrently -n contracts,api,client -c cyan,green,magenta 'cd packages/contracts && pnpm run dev' 'cd packages/api && pnpm run dev' 'cd packages/client && pnpm run dev'",
+    "dev": "concurrently -n contracts,api,generator,client -c cyan,green,yellow,magenta 'cd packages/contracts && pnpm dev' 'cd packages/api && pnpm dev' 'pnpm dev:creature-generator' 'cd packages/client && pnpm dev'",
     "dev:api": "pnpm --filter 'api' run dev",
     "dev:client": "pnpm --filter 'client' run dev",
     "dev:contracts": "pnpm --filter 'contracts' dev",
-    "dev:creature-generator": "cd packages/creature-generator && python3 -m http.server 8080",
+    "dev:creature-generator": "cd packages/creature-generator && python3 main.py",
     "test": "pnpm recursive run test",
     "build": "pnpm recursive run build"
   },
