@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { a, useSpring, useTransition } from "@react-spring/web";
 
-// import Hero from "./ProfileHero";
 // import { useProfile } from "../../hooks/views/useProfile";
 
-import { ProfileHarvest } from "./Harvest";
+import { ProfileHarvest } from "./Harvest"; // Badges
 import { ProfileSettings } from "./Settings";
 
 type Tab = "harvest" | "settings" | "wallet";
 
 const tabs: Tab[] = ["harvest", "settings"];
 
-// TODO: Stylize Bleyle
-
+// TODO: Stylize Bleyle following desings in Figma
 export default function Profile() {
   const [tab, setTab] = useState<Tab>("harvest");
 
@@ -33,9 +31,9 @@ export default function Profile() {
   });
 
   return (
-    <>
+    <div className="profile-view h-full w-full overflow-hidden">
       <a.div
-        className="flex flex-col basis-1/4 items-center gap-3"
+        className="profile-avatar flex flex-col items-center gap-3"
         style={avatarSpring}
       >
         <div className="avatar placeholder">
@@ -57,12 +55,12 @@ export default function Profile() {
         </div>
       </a.div>
       {transition((style, tab) => (
-        <a.div style={style} className="basis-3/4 w-full overflow-hidden">
+        <a.div style={style} className="profile-tabs w-full">
           {tab === "harvest" && <ProfileHarvest />}
           {/* {tab === "wallet" && <ProfileWallet />} */}
           {tab === "settings" && <ProfileSettings />}
         </a.div>
       ))}
-    </>
+    </div>
   );
 }

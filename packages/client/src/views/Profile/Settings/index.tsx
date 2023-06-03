@@ -6,7 +6,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
   // TODO: add color mode toggle
 
   return (
-    <section className="flex flex-col gap-3 items-center py-12">
+    <div className="flex flex-col gap-3 items-center py-12">
       <div className="form-control w-full max-w-xs">
         <label className="label">
           <span className="label-text">Set Color Mode</span>
@@ -30,6 +30,6 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
           <input type="checkbox" className="toggle toggle-primary" checked />
         </label>
       </div>
-    </section>
+    </div>
   );
 };

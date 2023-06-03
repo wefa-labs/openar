@@ -4,7 +4,7 @@ import { useSpring, useTrail, config } from "@react-spring/web";
 
 import { useWefadex } from "../wefa/useDeck";
 
-import { DeckSheetData } from "../../components/Deck/Components";
+import { DeckSheetData } from "../../components/Deck/Sheet";
 
 export const height = window.innerHeight - 24;
 

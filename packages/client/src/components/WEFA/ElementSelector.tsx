@@ -78,7 +78,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
 
   return (
     <div
-      className={`flex h-full w-full basis-1/2 flex-col items-center gap-2 overflow-hidden pb-4 ${
+      className={`explore-selector flex h-full w-full basis-1/2 flex-col items-center gap-2 overflow-hidden pb-4 ${
         isDesktop ? "" : ""
       }`}
     >

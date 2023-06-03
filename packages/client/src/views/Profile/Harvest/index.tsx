@@ -16,7 +16,7 @@ const mockData: Badge[] = [{ id: "1axe4", description: "", name: "" }]; // TODO:
 
 export const ProfileHarvest: React.FC<ProfileHarvestProps> = () => {
   return (
-    <ul className="flex flex-col gap-3 w-full h-full">
+    <ul className="flex flex-col gap-3 w-full h-full overflow-scroll">
       {mockData.map((badge) => (
         <li
           key={badge.id}

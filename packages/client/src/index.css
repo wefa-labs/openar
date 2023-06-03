@@ -67,7 +67,7 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-areas: 
-    ". profile ."
+    ". avatar ."
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs";
@@ -75,12 +75,20 @@ body {
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
     grid-template-areas: 
-      "profile"
+      "avatar"
       "tabs"
       "tabs"
       "tabs";
 
   }
+}
+
+.profile-avatar {
+  grid-area: avatar;
+}
+
+.profile-tabs {
+  grid-area: tabs;
 }
 
 .explore-view {
@@ -104,6 +112,14 @@ body {
   }
 }
 
+.explore-detector {
+  grid-area: detector;
+}
+
+.explore-selector {
+  grid-area: selector;
+}
+
 .play-view {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -123,6 +139,18 @@ body {
     "gallery gallery"
 
   }
+}
+
+.play-leaderboard {
+  grid-area: leaderboard;
+}
+
+.play-matches {
+  grid-area: matches;
+}
+
+.play-gallery {
+  grid-area: gallery;
 }
 
 .deck-view {
@@ -145,6 +173,18 @@ body {
     "creatures"
     "creatures";
   }
+}
+
+.deck-stats {
+  grid-area: stats;
+}
+
+.deck-plants {
+  grid-area: plants;
+}
+
+.deck-creatures {
+  grid-area: creatures;
 }
 
 /* 
