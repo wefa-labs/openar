@@ -32,6 +32,9 @@ export default function Deck() {
         onClick={() => closeSheet()}
         style={bgStyle}
       >
+        <button className="btn btn-primary" onClick={() => openSheet({})}>
+          Start Battle
+        </button>
         <DeckStats />
         <div className="deck-plants w-full relative">
           <h3 className="text-2xl font-semibold  px-6 sm:px-12">Plants</h3>
