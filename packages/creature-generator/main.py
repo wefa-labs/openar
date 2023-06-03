@@ -2,13 +2,14 @@ import os
 import requests
 import json
 import base64
-# from dotenv import load_dotenv
+
 from flask import Flask, request, jsonify
 from io import BytesIO
 from PIL import Image
+from dotenv import dotenv_values
 from generator import generate_creature_route
 
-# load_dotenv()
+config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
 app = Flask(__name__)
 

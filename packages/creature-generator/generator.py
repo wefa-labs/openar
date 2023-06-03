@@ -1,8 +1,13 @@
+import os
 import requests
-from io import BytesIO
 import base64
-from PIL import Image
 import json
+
+from io import BytesIO
+from PIL import Image
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
 plants_dic = {
 }
@@ -57,6 +62,8 @@ creatures_dic = {
     }
 }
 
+GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL")
+
 #stable diffusion
 # this is subject to change so maybe use kwargs
 async def generate_creature_route(plant_info, creature_type, element_type, description, cached = True):
@@ -66,7 +73,7 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
 
     if cached == False:
 
-        url = 'http://127.0.0.1:7860/controlnet/txt2img' # This is the line to update with GPU provider
+        url = GENERATOR_GPU_URL + '/controlnet/txt2img' # This is the line to update with GPU provider
         with open(this_creature['template'] , "rb") as image_file:
             control_img = base64.b64encode(image_file.read())
 

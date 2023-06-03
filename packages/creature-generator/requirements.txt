@@ -2,4 +2,4 @@ flask
 Pillow
 requests
 gunicorn==20.1.0
-# dotenv
+python-dotenv

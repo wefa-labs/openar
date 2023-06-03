@@ -12,13 +12,11 @@ export const useTicTacToe = (
   } = useMUD();
   const identity = useRow(storeCache, {
     table: "Identity",
-    namespace: "tictactoe",
-    key: { id },
+    key: {},
   });
   const yourRole = useRow(storeCache, {
     table: "Role",
-    namespace: "tictactoe",
-    key: { user, gameId: id, matchId: id },
+    key: {},
   });
 
   console.log(
