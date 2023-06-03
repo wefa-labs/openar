@@ -45,7 +45,6 @@ body {
   );
 }
 
-#react-root,
 #react-root > div {
   /* display: flex; */
   /* flex-direction: column; */

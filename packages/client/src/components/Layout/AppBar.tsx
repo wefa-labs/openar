@@ -61,40 +61,38 @@ export const Appbar = () => {
     /* Added a Div  to center Nav bar */
   }
   return (
-    <div className="flex items-center justify-center mt-2  mx-auto ">
-      <a.nav
-        className={
-          isDesktop
-            ? "tabs w-full bg-white rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
-            : "btm-nav z-50 bg-white py-4 fixed z-10"
-        }
-        style={spring}
-      >
-        {tabs.map(({ path, Icon, title }) => (
-          <Link to={path} key={title}>
-            <button
-              className={`flex flex-col items-center ${
-                pathname === path ? "active tab-active" : ""
-              } ${isDesktop ? "tab" : ""}}`}
+    <a.nav
+      className={
+        isDesktop
+          ? "tabs w-full bg-base-100 rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
+          : "btm-nav z-50 bg-base-100 py-4 fixed z-10"
+      }
+      style={spring}
+    >
+      {tabs.map(({ path, Icon, title }) => (
+        <Link to={path} key={title}>
+          <button
+            className={`flex flex-col items-center ${
+              pathname === path ? "active tab-active" : ""
+            } ${isDesktop ? "tab" : ""}}`}
+          >
+            <Icon
+              width={32}
+              height={32}
+              className={`${
+                pathname === path ? "fill-indigo-400" : "fill-neutral"
+              }`}
+            />
+            <p
+              className={`text-sm tracking-wide ${
+                pathname === path ? "text-indigo-400" : "text-neutral"
+              }`}
             >
-              <Icon
-                width={32}
-                height={32}
-                className={`${
-                  pathname === path ? "fill-indigo-400" : "fill-slate-800"
-                }`}
-              />
-              <p
-                className={`text-sm tracking-wide ${
-                  pathname === path ? "text-indigo-400" : "text-slate-800"
-                }`}
-              >
-                {title}
-              </p>
-            </button>
-          </Link>
-        ))}
-      </a.nav>
-    </div>
+              {title}
+            </p>
+          </button>
+        </Link>
+      ))}
+    </a.nav>
   );
 };
