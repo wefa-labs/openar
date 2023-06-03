@@ -1,9 +1,9 @@
 import { a, config, useSpring } from "@react-spring/web";
 import { Link, useLocation } from "react-router-dom";
 
-import { RC as CardsIcon } from "../../assets/cards.svg";
-import { RC as WorldIcon } from "../../assets/world.svg";
-import { RC as ProfileIcon } from "../../assets/profile.svg";
+import { RC as CardsIcon } from "../../assets/icons/cards.svg";
+import { RC as WorldIcon } from "../../assets/icons/world.svg";
+import { RC as ProfileIcon } from "../../assets/icons/profile.svg";
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 const tabs: {

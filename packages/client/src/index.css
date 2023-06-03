@@ -10,14 +10,14 @@
 */
 :root {
   --text-color: #000;
-  --surface-color: #fff;
+  /* --surface-color: #fff; */
   --gradient-start: #e3f0f0;
   --gradient-end: #bcc8e3;
 }
 å
 [data-theme="dark"] {
   --text-color: #fff;
-  --surface-color: #292929;
+  /* --surface-color: #292929; */
   --gradient-start: #0e4445;
   --gradient-end: #13152e;
 }
@@ -38,11 +38,8 @@ body {
   overflow-x: hidden;
 
   font-family: "Inter", sans-serif;
-  background-image: linear-gradient(
-    320deg,
-    var(--gradient-start),
-    var(--gradient-end) 54%
-  );
+  background-color: var(--surface-color);
+
 }
 
 #react-root > div {
