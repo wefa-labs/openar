@@ -102,10 +102,10 @@
       "space": "0x134",
       "name": "Butterfly",
       "description": "Flying across the sky, the butterfly exudes a sense of peace and tranquility.",
-      "image": "/assets/creatures/air-butterfly.png",
+      "image": "/assets/creatures/water-butterfly.png",
       "model": "",
       "metadata": "",
-      "elements": ["air"],
+      "elements": ["water"],
       "createdAt": 1453325678,
       "updatedAt": 1453325678,
       "attributes": {

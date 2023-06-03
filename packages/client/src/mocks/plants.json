@@ -29,8 +29,8 @@
       "plantId": 9,
       "name": "Strawberry Snapper",
       "description": "Starwberry growing for biology class",
-      "metadata": "/assets/plants/strawberry.jpg",
-      "image": "",
+      "metadata": "",
+      "image": "/assets/plants/strawberries.webp",
       "model": "",
       "elements": [2],
       "health": {
