@@ -24,7 +24,7 @@ export interface DeckCardProps extends DeckCardData {
 
 export const DeckCard: React.FC<DeckCardProps> = ({
   name,
-  description,
+  // description,
   image,
   style,
   actions,
@@ -41,7 +41,7 @@ export const DeckCard: React.FC<DeckCardProps> = ({
       </figure>
       <div className="card-body">
         <h4 className="card-title">{name}</h4>
-        <p>{description}</p>
+        {/* <p>{description}</p> */}
         <div className="card-actions justify-end">
           {actions.map((action) => (
             <button

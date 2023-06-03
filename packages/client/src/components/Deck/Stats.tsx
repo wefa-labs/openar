@@ -3,7 +3,7 @@ import React from "react";
 // TODO: Stylize Bleyle following desings in Figma
 export const DeckStats: React.FC = () => {
   return (
-    <div className="deck-stats relative flex items-center gap-3 px-3 py-2 shadow-lg bg-base-100">
+    <div className="deck-stats relative flex items-center gap-3 shadow-lg bg-base-100">
       <div className="badge absolute right-3 top-2">LVL 33</div>
       <div className="placeholder avatar">
         <div className="w-24 rounded-xl">
@@ -13,7 +13,7 @@ export const DeckStats: React.FC = () => {
       <div className="flex flex-col gap-2">
         <p>Energy</p>
         <progress
-          className="progress progress-success w-56"
+          className="progress progress-success"
           value="20"
           max="100"
         ></progress>
