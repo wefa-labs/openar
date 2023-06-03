@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { RC as PlantIcon } from "../../assets/plant.svg";
+import { RC as PlantIcon } from "../../assets/icons/plant.svg";
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface PlantDetectorProps {

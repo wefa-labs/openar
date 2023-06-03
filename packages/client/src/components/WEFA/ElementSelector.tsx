@@ -1,10 +1,10 @@
 import React from "react";
 import { a, config, useTrail } from "@react-spring/web";
 
-import { RC as WaterIcon } from "../../assets/water.svg";
-import { RC as EarthIcon } from "../../assets/earth.svg";
-import { RC as FireIcon } from "../../assets/fire.svg";
-import { RC as AirIcon } from "../../assets/air.svg";
+import { RC as WaterIcon } from "../../assets/icons/water.svg";
+import { RC as EarthIcon } from "../../assets/icons/earth.svg";
+import { RC as FireIcon } from "../../assets/icons/fire.svg";
+import { RC as AirIcon } from "../../assets/icons/air.svg";
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface ElementSelectorProps {
