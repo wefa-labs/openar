@@ -26,16 +26,16 @@ export default function Deck() {
   };
 
   return (
-    <section className=" w-full h-full ">
+    <section className=" w-full h-full pt-16">
       <a.div
-        className="deck-view w-full h-full flex flex-col gap-6 px-6 sm:px-12 justify-center"
+        className="deck-view w-full h-full flex flex-col gap-6 justify-center"
         onClick={() => closeSheet()}
         style={bgStyle}
       >
         <DeckStats />
         <div className="deck-plants w-full relative">
-          <h3 className=" text-2xl font-semibold">Plants</h3>
-          <ul className="absolute carousel-center carousel space-x-6">
+          <h3 className="text-2xl font-semibold  px-6 sm:px-12">Plants</h3>
+          <ul className="absolute carousel-center carousel space-x-6  px-6 sm:px-12 w-full">
             {plantTrail.map((props, index) => (
               <DeckCard
                 {...plants[index]}
@@ -53,8 +53,8 @@ export default function Deck() {
           </ul>
         </div>
         <div className="deck-creatures w-full relative">
-          <h3 className="text-2xl font-semibold">Creatures</h3>
-          <ul className="absolute carousel-center carousel space-x-6">
+          <h3 className="text-2xl font-semibold px-6 sm:px-12">Creatures</h3>
+          <ul className="absolute carousel-center carousel space-x-6  px-6 sm:px-12 w-full">
             {creatureTrail.map((props, index) => (
               <DeckCard
                 {...creatures[index]}

@@ -31,12 +31,12 @@ export default function Profile() {
   });
 
   return (
-    <div className="profile-view h-full w-full overflow-hidden px-6 sm:px-12">
+    <div className="profile-view h-full w-full overflow-hidden pt-16 px-6 sm:px-12">
       <a.div
-        className="profile-avatar flex flex-col items-center gap-3"
+        className="profile-avatar flex flex-col items-center"
         style={avatarSpring}
       >
-        <div className="avatar placeholder">
+        <div className="avatar placeholder mb-6">
           <div className="bg-neutral-focus text-neutral-content rounded-full w-32">
             <span className="text-4xl">KK</span>
           </div>
