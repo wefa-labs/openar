@@ -12,7 +12,7 @@ export const useSeed = () => {
   const isSeeding = state.matches("seeding_creature");
   const isDetecting = state.matches("verifying_plant");
 
-  function verifyPlant(image: File) {
+  function verifyPlant(image: string | ArrayBuffer) {
     send({ type: "SELECT_PLANT", image });
   }
 

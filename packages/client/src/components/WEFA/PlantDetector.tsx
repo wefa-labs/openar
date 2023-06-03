@@ -4,7 +4,7 @@ import { RC as PlantIcon } from "../../assets/plant.svg";
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface PlantDetectorProps {
-  onPlantDetection: (file: File) => void;
+  onPlantDetection: (image: string | ArrayBuffer) => void;
   detecting: boolean;
 }
 
@@ -32,10 +32,10 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
           console.log("No image");
           return;
         }
+
+        onPlantDetection(image);
       };
       reader.readAsDataURL(file);
-
-      onPlantDetection(file);
     }
   }
 

@@ -170,10 +170,10 @@ export const seedMachine = createMachine(
       },
     },
     services: {
-      plantVerifier: async (context, event: { image?: File }, _meta) => {
+      plantVerifier: async (context, event: { image?: string }, _meta) => {
         console.log("Verifying Photo!", context, event);
 
-        let image: File | null = null;
+        let image: string | null = null;
 
         if (event.image) {
           console.log("Image provided!", event.image);
@@ -185,19 +185,19 @@ export const seedMachine = createMachine(
           return;
         }
 
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.append("image", image, image.name);
+        // formData.append("image", image, image.name);
 
-        const data = {
-          // Add other parameters here
-        };
-        formData.append("data", JSON.stringify(data));
+        // const data = {
+        //   // Add other parameters here
+        // };
+        // formData.append("data", JSON.stringify(data));
 
         try {
-          const { data } = await apiClient.postForm<PlantResponse>(
+          const { data } = await apiClient.post<PlantResponse>(
             "/plants/detect",
-            formData
+            { image }
           );
 
           console.log("Plant detected!", data);
