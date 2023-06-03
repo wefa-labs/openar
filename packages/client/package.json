@@ -63,6 +63,7 @@
     "@xstate/cli": "^0.4.2",
     "@vitejs/plugin-react-swc": "3.3.0",
     "autoprefixer": "10.4.14",
+    "cssnano": "6.0.1",
     "daisyui": "2.51.5",
     "dotenv": "16.0.3",
     "eslint-plugin-react": "7.31.11",
