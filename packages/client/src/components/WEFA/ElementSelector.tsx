@@ -61,6 +61,7 @@ const elementData: Record<WefaElement, WefaElementData> = {
   },
 };
 
+// TODO: Stylize Bleyle to make similar to other card components in other tabs
 export const ElementSelector: React.FC<ElementSelectorProps> = ({
   selectedElement,
   onElementSelected,

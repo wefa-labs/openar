@@ -12,7 +12,7 @@ export const Header: React.FC<HeaderProps> = () => {
   // const { address } = useAuthWeb3();
 
   return (
-    <header className="navbar bg-transparent w-full px-8">
+    <header className="navbar bg-transparent w-full px-8 fixed top-0 left-0">
       <div className="navbar-start">
         <a href="/" className="font-bold tracking-wider text-2xl">
           WEFA
