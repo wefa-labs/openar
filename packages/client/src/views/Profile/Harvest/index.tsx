@@ -10,18 +10,21 @@ interface Badge {
   element?: WefaElement; // Set the background color if set
 }
 
-const mockData: Badge[] = [{ id: "1axe4", description: "", name: "" }]; // TODO: replace with real data
+const mockData: Badge[] = [
+  { id: "1axe4", description: "", name: "" },
+  { id: "1axe4", description: "", name: "" },
+  { id: "1axe4", description: "", name: "" },
+  { id: "1axe4", description: "", name: "" },
+  { id: "1axe4", description: "", name: "" },
+]; // TODO: replace with real data
 
 // TODO: Stylize Bleyle using mockData
 
 export const ProfileHarvest: React.FC<ProfileHarvestProps> = () => {
   return (
-    <ul className="flex flex-col gap-3 w-full h-full overflow-scroll">
+    <ul className="flex flex-col gap-3 w-full h-full overflow-scroll pt-6 pb-20">
       {mockData.map((badge) => (
-        <li
-          key={badge.id}
-          className="flex flex-col gap-3 w-full h-full bg-base-100"
-        >
+        <li key={badge.id} className="flex flex-col gap-3 bg-base-100">
           <figure>
             <img
               src="/images/stock/photo-1635805737707-575885ab0820.jpg"

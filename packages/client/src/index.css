@@ -11,15 +11,15 @@
 :root {
   --text-color: #000;
   --surface-color: #fff;
-  --gradient-start: #774d71;
-  --gradient-end: #a1bafe;
+  --gradient-start: #e3f0f0;
+  --gradient-end: #bcc8e3;
 }
-
+å
 [data-theme="dark"] {
   --text-color: #fff;
   --surface-color: #292929;
-  --gradient-start: #501e55;
-  --gradient-end: #24205e;
+  --gradient-start: #0e4445;
+  --gradient-end: #13152e;
 }
 
 /* 
@@ -50,8 +50,8 @@ body {
   /* flex-direction: column; */
   width: 100%;
   height: 100%;
+  padding-top: 4rem;
   /* align-items: center; */
-  overflow: hidden;
 }
 
 ::-webkit-scrollbar {

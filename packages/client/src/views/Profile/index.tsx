@@ -31,7 +31,7 @@ export default function Profile() {
   });
 
   return (
-    <div className="profile-view h-full w-full overflow-hidden">
+    <div className="profile-view h-full w-full overflow-hidden px-6 sm:px-12">
       <a.div
         className="profile-avatar flex flex-col items-center gap-3"
         style={avatarSpring}
