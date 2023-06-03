@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { useWorlds } from "../openar/useWorlds";
+// import { useWorlds } from "../openar/useWorlds";
 
 export const useExplore = () => {
   const [selectedWorld, setSelectedWorld] = useState("");
-  const { worlds, onCreateWorld, handleWorldSubmit } = useWorlds();
+  // const { worlds, onCreateWorld, handleWorldSubmit } = useWorlds();
 
   // const worldList: Record<string, any> = {};
 
@@ -12,13 +12,13 @@ export const useExplore = () => {
   //   worldList[world.value] = {};
   // });
 
-  console.log("Explore Data", { worlds, onCreateWorld, handleWorldSubmit });
+  // console.log("Explore Data", { worlds, onCreateWorld, handleWorldSubmit });
 
   return {
-    worlds,
+    // worlds,
     selectedWorld,
     setSelectedWorld,
-    onCreateWorld,
-    handleWorldSubmit,
+    // onCreateWorld,
+    // handleWorldSubmit,
   };
 };

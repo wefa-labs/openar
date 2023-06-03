@@ -5,7 +5,14 @@ import { useEffect, useState } from "react";
 
 import { fetchPlants, fetchCreatures } from "../../modules/idb";
 
-export const useWefadex = (spaceId: string) => {
+interface WefadexProps {
+  plants: Plant[];
+  creatures: Creature[];
+  handleFetchPlants: () => Promise<void>;
+  handleFetchCreatures: () => Promise<void>;
+}
+
+export const useWefadex = (spaceId: string): WefadexProps => {
   const [creatures, setCreatures] = useState<Creature[]>(creatureData as any);
   const [plants, setPlants] = useState<Plant[]>(plantData as any);
 

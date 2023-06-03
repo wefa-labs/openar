@@ -1,8 +1,18 @@
 import { useMachine } from "@xstate/react";
 
-import { seedMachine } from "./seedMachine";
+import { SeedContext, seedMachine } from "./seedMachine";
 
-export const useSeed = () => {
+interface SeedProps extends SeedContext {
+  plantState: boolean;
+  isDetecting: boolean;
+  isSeeding: boolean;
+  verifyPlant: (image: string | ArrayBuffer) => void;
+  seedCreature: (element: WefaElement) => void;
+  retrySeeding: () => void;
+  reset: () => void;
+}
+
+export const useSeed = (): SeedProps => {
   const [state, send] = useMachine(seedMachine);
 
   const plantState =

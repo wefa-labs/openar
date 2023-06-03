@@ -1,7 +1,25 @@
+import { FetchBalanceResult } from "wagmi/dist/actions";
 import { useAccount, useBalance, useEnsAvatar, useEnsName } from "wagmi";
 
 import { useGames } from "../games/useGames";
-import { useWorlds } from "../openar/useWorlds";
+// import { useWorlds } from "../openar/useWorlds";
+
+type Status = "disconnected" | "connected" | "reconnecting" | "connecting";
+
+export interface ProfileProps {
+  balance?: FetchBalanceResult;
+  address?: string;
+  accountStatus?: Status;
+  name?: string;
+  nameStatus?: Status;
+  avatar?: string;
+  avatarStatus?: Status;
+  // worlds: any[];
+  // worldFormRegister: any;
+  // handleWorldSubmit: any;
+  // onCreateWorld: any;
+  games: any[];
+}
 
 export const useProfile = () => {
   const { data: balance } = useBalance();
@@ -9,14 +27,12 @@ export const useProfile = () => {
   const { data: name, status: nameStatus } = useEnsName();
   const { data: avatar, status: avatarStatus } = useEnsAvatar();
 
-  const { tictactoeGames, checkerGames } = useGames();
-  const { worlds, onCreateWorld, handleWorldSubmit, worldFormRegister } =
-    useWorlds();
+  const { tictactoeGames } = useGames();
+  // const { worlds, onCreateWorld, handleWorldSubmit, worldFormRegister } = useWorlds();
 
   console.log("Profile Data", {
-    worlds,
+    // worlds,
     tictactoeGames,
-    checkerGames,
     balance,
     name,
     avatar,
@@ -30,10 +46,10 @@ export const useProfile = () => {
     nameStatus,
     avatar,
     avatarStatus,
-    worlds,
-    worldFormRegister,
-    handleWorldSubmit,
-    onCreateWorld,
-    games: [...tictactoeGames, ...checkerGames],
+    // worlds,
+    // worldFormRegister,
+    // handleWorldSubmit,
+    // onCreateWorld,
+    games: [...tictactoeGames],
   };
 };

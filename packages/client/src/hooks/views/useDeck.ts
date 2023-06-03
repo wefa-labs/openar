@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDrag } from "@use-gesture/react";
-import { useSpring, useTrail, config } from "@react-spring/web";
+import { useSpring, useTrail, config, SpringValue } from "@react-spring/web";
 
 import { useWefadex } from "../wefa/useDeck";
 
@@ -8,7 +8,31 @@ import { DeckSheetData } from "../../components/Deck/Sheet";
 
 export const height = window.innerHeight - 24;
 
-export const useDeck = () => {
+export interface DeckProps {
+  y: SpringValue<number>;
+  plants: Plant[];
+  creatures: Creature[];
+  plantTrail: {
+    opacity: SpringValue<number>;
+    transform: SpringValue<string>;
+  }[];
+  creatureTrail: {
+    opacity: SpringValue<number>;
+    transform: SpringValue<string>;
+  }[];
+  openSheet: ({
+    canceled,
+    data,
+  }: {
+    canceled?: boolean;
+    data?: DeckSheetData;
+  }) => void;
+  closeSheet: (velocity?: number) => void;
+  sheetData: DeckSheetData;
+  bind: any;
+}
+
+export const useDeck = (): DeckProps => {
   const [sheetData, setSheetData] = useState<DeckSheetData>({
     name: "",
     description: "å",
@@ -17,7 +41,7 @@ export const useDeck = () => {
     actions: [],
   });
 
-  const { plants, creatures, mintCreature } = useWefadex();
+  const { plants, creatures } = useWefadex("");
 
   const [{ y }, api] = useSpring(() => ({ y: height }));
   const plantTrail = useTrail(plants?.length ?? 0, {
@@ -92,10 +116,8 @@ export const useDeck = () => {
 
   return {
     y,
-    name,
     plants,
     creatures,
-    mintCreature,
     plantTrail,
     creatureTrail,
     openSheet,

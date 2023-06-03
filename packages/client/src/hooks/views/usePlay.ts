@@ -2,10 +2,25 @@ import { useState } from "react";
 
 import { useMUD } from "../useMud";
 import { useGames } from "../games/useGames";
+import { TicTacToeRole } from "../../modules/openar/createSystemCalls";
 
 type ViewState = "games" | "tic-tac-toe" | "counter";
 
-export const usePlay = () => {
+export interface PlayProps {
+  view: ViewState;
+  checkerGames: any[];
+  tictactoeGames: any[];
+  setView: React.Dispatch<React.SetStateAction<ViewState>>;
+  createTicTacToeMatch: (
+    role: TicTacToeRole,
+    name: string,
+    worldId: string,
+    spaceId: string
+  ) => Promise<void>;
+  joinTicTacToeMatch: (gameId: string) => Promise<void>;
+}
+
+export const usePlay = (): PlayProps => {
   const [view, setView] = useState<ViewState>("counter");
 
   const {

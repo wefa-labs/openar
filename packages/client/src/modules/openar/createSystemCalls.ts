@@ -12,7 +12,7 @@ export type SystemCalls = ReturnType<typeof createSystemCalls>;
 //   Large = 2,
 // }
 
-enum TicTacToeRole {
+export enum TicTacToeRole {
   O = 0,
   X = 1,
 }

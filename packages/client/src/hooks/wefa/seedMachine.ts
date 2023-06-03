@@ -3,7 +3,7 @@ import { apiClient } from "../../modules/axios";
 import { db, initDB } from "../../modules/idb";
 import { uniqueId } from "xstate/lib/utils";
 
-interface SeedContext {
+export interface SeedContext {
   image: File | null;
   imageVerified: boolean;
   element: WefaElement | null;
