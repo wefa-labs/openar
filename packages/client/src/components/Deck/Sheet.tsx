@@ -17,6 +17,7 @@ export interface DeckSheetProps extends DeckSheetData, ReactDOMAttributes {
   };
 }
 
+// TODO: Fix sheet not activating, Bleyle can you incorporate? https://github.com/stipsan/react-spring-bottom-sheet
 // TODO: Stylize Bleyle following desings in Figma
 export const DeckSheet: React.FC<DeckSheetProps> = ({
   style,

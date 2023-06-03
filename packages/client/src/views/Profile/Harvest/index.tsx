@@ -1,4 +1,3 @@
-import { flower } from "../../../mocks/plantGlossary.json";
 interface ProfileHarvestProps {}
 
 interface Badge {
