@@ -5,13 +5,16 @@ import { a, useSpring, useTransition } from "@react-spring/web";
 
 import { ProfileHarvest } from "./Harvest"; // Badges
 import { ProfileSettings } from "./Settings";
+import { ProfileDataProps } from "../../hooks/views/useProfile";
 
 type Tab = "harvest" | "settings" | "wallet";
 
 const tabs: Tab[] = ["harvest", "settings"];
 
+interface ProfileProps extends ProfileDataProps {}
+
 // TODO: Stylize Bleyle following desings in Figma
-export default function Profile() {
+export const Profile: React.FC<ProfileProps> = () => {
   const [tab, setTab] = useState<Tab>("harvest");
 
   const avatarSpring = useSpring({
@@ -63,4 +66,6 @@ export default function Profile() {
       ))}
     </div>
   );
-}
+};
+
+export default Profile;

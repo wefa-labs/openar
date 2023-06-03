@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: EEXIST: file already exists, mkdir '/Users/afo/Code/wefa/autonomous-worlds-hackathon/packages/client/node_modules/@xstate/cli/node_modules/@xstate'
+  Error: EEXIST: file already exists, mkdir '/Users/afo/Code/wefa/openar/packages/client/node_modules/@xstate/cli/node_modules/@xstate'
 
 npm manifest: 
   {

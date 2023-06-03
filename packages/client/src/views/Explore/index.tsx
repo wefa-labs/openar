@@ -1,14 +1,16 @@
 // import { Canvas } from "@react-three/fiber";
 // import { ARButton, XR } from "@react-three/xr";
 
-import { useSeed } from "../../hooks/wefa/useSeed";
+import { SeedDataProps, useSeed } from "../../hooks/wefa/useSeed";
 
 import { PlantDetector } from "../../components/WEFA/PlantDetector";
 import { ElementSelector } from "../../components/WEFA/ElementSelector";
 import { CreatureGeneration } from "../../components/WEFA/CreatureGeneration";
 
+interface ExploreProps extends SeedDataProps {}
+
 // TODO: Add Explore Canvas from Petra
-export default function Explore() {
+const Explore: React.FC<ExploreProps> = () => {
   const {
     isDetecting,
     isSeeding,
@@ -46,4 +48,6 @@ export default function Explore() {
       />
     </div>
   );
-}
+};
+
+export default Explore;

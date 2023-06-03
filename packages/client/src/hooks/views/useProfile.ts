@@ -4,15 +4,23 @@ import { useAccount, useBalance, useEnsAvatar, useEnsName } from "wagmi";
 import { useGames } from "../games/useGames";
 // import { useWorlds } from "../openar/useWorlds";
 
-type Status = "disconnected" | "connected" | "reconnecting" | "connecting";
+type Status =
+  | "disconnected"
+  | "connected"
+  | "reconnecting"
+  | "connecting"
+  | "error"
+  | "idle"
+  | "loading"
+  | "success";
 
-export interface ProfileProps {
+export interface ProfileDataProps {
   balance?: FetchBalanceResult;
   address?: string;
   accountStatus?: Status;
-  name?: string;
+  name?: string | null;
   nameStatus?: Status;
-  avatar?: string;
+  avatar?: string | null;
   avatarStatus?: Status;
   // worlds: any[];
   // worldFormRegister: any;
@@ -21,7 +29,7 @@ export interface ProfileProps {
   games: any[];
 }
 
-export const useProfile = () => {
+export const useProfile = (): ProfileDataProps => {
   const { data: balance } = useBalance();
   const { address, status: accountStatus } = useAccount();
   const { data: name, status: nameStatus } = useEnsName();

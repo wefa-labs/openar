@@ -62,7 +62,7 @@ creatures_dic = {
     }
 }
 
-GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL")
+GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "http://127.0.0.1:7860")
 
 #stable diffusion
 # this is subject to change so maybe use kwargs

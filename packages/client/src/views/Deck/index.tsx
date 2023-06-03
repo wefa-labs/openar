@@ -1,12 +1,14 @@
 import { a } from "@react-spring/web";
 
-import { height, useDeck } from "../../hooks/views/useDeck";
+import { DeckDataProps, height, useDeck } from "../../hooks/views/useDeck";
 
 import { DeckCard } from "../../components/Deck/Card";
 import { DeckSheet } from "../../components/Deck/Sheet";
 import { DeckStats } from "../../components/Deck/Stats";
 
-export default function Deck() {
+interface DeckProps extends DeckDataProps {}
+
+const Deck: React.FC<DeckProps> = () => {
   const {
     y,
     bind,
@@ -90,4 +92,6 @@ export default function Deck() {
       />
     </section>
   );
-}
+};
+
+export default Deck;

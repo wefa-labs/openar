@@ -1,10 +1,10 @@
 {
-  "name": "autonomous-worlds-hackathon",
+  "name": "openar",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/wefa-tech/autonomous-worlds-hackathon"
+    "url": "https://github.com/wefa-tech/openar"
   },
   "scripts": {
     "prepare": "(forge --version || pnpm foundry:up)",

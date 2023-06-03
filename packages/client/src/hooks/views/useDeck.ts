@@ -8,7 +8,7 @@ import { DeckSheetData } from "../../components/Deck/Sheet";
 
 export const height = window.innerHeight - 24;
 
-export interface DeckProps {
+export interface DeckDataProps {
   y: SpringValue<number>;
   plants: Plant[];
   creatures: Creature[];
@@ -32,7 +32,7 @@ export interface DeckProps {
   bind: any;
 }
 
-export const useDeck = (): DeckProps => {
+export const useDeck = (): DeckDataProps => {
   const [sheetData, setSheetData] = useState<DeckSheetData>({
     name: "",
     description: "å",

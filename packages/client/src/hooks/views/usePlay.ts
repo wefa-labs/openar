@@ -6,7 +6,7 @@ import { TicTacToeRole } from "../../modules/openar/createSystemCalls";
 
 type ViewState = "games" | "tic-tac-toe" | "counter";
 
-export interface PlayProps {
+export interface PlayDataProps {
   view: ViewState;
   checkerGames: any[];
   tictactoeGames: any[];
@@ -20,7 +20,7 @@ export interface PlayProps {
   joinTicTacToeMatch: (gameId: string) => Promise<void>;
 }
 
-export const usePlay = (): PlayProps => {
+export const usePlay = (): PlayDataProps => {
   const [view, setView] = useState<ViewState>("counter");
 
   const {

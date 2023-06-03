@@ -2,7 +2,7 @@ import { useMachine } from "@xstate/react";
 
 import { SeedContext, seedMachine } from "./seedMachine";
 
-interface SeedProps extends SeedContext {
+export interface SeedDataProps extends SeedContext {
   plantState: boolean;
   isDetecting: boolean;
   isSeeding: boolean;
@@ -12,7 +12,7 @@ interface SeedProps extends SeedContext {
   reset: () => void;
 }
 
-export const useSeed = (): SeedProps => {
+export const useSeed = (): SeedDataProps => {
   const [state, send] = useMachine(seedMachine);
 
   const plantState =
