@@ -1,4 +1,4 @@
-import { data as creatureData } from "../../mocks/critters.json";
+import { data as creatureData } from "../../mocks/creatures.json";
 import { data as plantData } from "../../mocks/plants.json";
 
 import { useEffect, useState } from "react";

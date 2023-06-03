@@ -21,8 +21,6 @@ export default defineConfig({
       includeAssets: [
         "assets/logo-64.png",
         "assets/logo-310.png",
-        "assets/logo-310.jpg",
-        "masked-icon.svg",
         "assets/cards.png",
         "assets/world.png",
         "assets/profile.png",
@@ -61,9 +59,9 @@ export default defineConfig({
         background_color: "#f0fdfa",
         shortcuts: [
           {
-            name: "Play",
+            name: "Deck",
             description: "Open Plant and Creature Wefadex",
-            url: "/play",
+            url: "/deck",
             icons: [
               {
                 src: "assets/cards.png",

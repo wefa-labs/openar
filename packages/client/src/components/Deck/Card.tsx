@@ -36,7 +36,7 @@ export const DeckCard: React.FC<DeckCardProps> = ({
       onClick={onClick}
       className="card-compact carousel-item card bg-base-100 shadow-xl"
     >
-      <figure>
+      <figure className="w-48">
         <img src={image} alt={name} />
       </figure>
       <div className="card-body">

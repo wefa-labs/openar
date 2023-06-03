@@ -7,7 +7,7 @@
       "plantId": 2,
       "name": "Basil Bass",
       "description": "My first plant on the blockchain",
-      "image": "",
+      "image": "/assets/plants/basil.jpg",
       "model": "",
       "elements": [1],
       "health": {
@@ -29,7 +29,7 @@
       "plantId": 9,
       "name": "Strawberry Snapper",
       "description": "Starwberry growing for biology class",
-      "metadata": "",
+      "metadata": "/assets/plants/strawberry.jpg",
       "image": "",
       "model": "",
       "elements": [2],
@@ -53,7 +53,7 @@
       "name": "Zucchini Bikini",
       "description": "!st try at Zuchinni in the garden",
       "metadata": "",
-      "image": "",
+      "image": "/assets/plants/italia-zuchini.webp",
       "model": "",
       "elements": [1],
       "health": {
@@ -75,7 +75,7 @@
       "plantId": 15,
       "name": "Sweet Ol Lily of Mine",
       "description": "Lilies for the community garden",
-      "image": "",
+      "image": "/assets/plants/daylily.jpg",
       "model": "",
       "health": {
         "max": 100,
