@@ -8,8 +8,8 @@ import { Contract, Signer, utils } from "ethers";
 import { setupMUDV2Network } from "@latticexyz/std-client";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-import openarStoreConfig from "openar/mud.config";
-import { IWorld__factory as OpenArWorld } from "openar/types/ethers-contracts/factories/IWorld__factory";
+import openarStoreConfig from "contracts/mud.config";
+import { IWorld__factory as OpenArWorld } from "contracts/types/ethers-contracts/factories/IWorld__factory";
 
 import { world } from "./world";
 import { getNetworkConfig } from "./getNetworkConfig";
