@@ -64,7 +64,7 @@ export const Appbar = () => {
     <a.nav
       className={
         isDesktop
-          ? "tabs w-full bg-base-100 rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
+          ? "tabs w-full bg-base-100 rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg mx-auto"
           : "btm-nav z-50 bg-base-100 py-4 fixed z-10"
       }
       style={spring}
