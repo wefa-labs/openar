@@ -12,11 +12,16 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-spring-bottom-sheet/dist/style.css";
 
 Sentry.init({
-  dsn: "https://examplePublicKey@o0.ingest.sentry.io/0",
+  dsn: "https://fd38e1523baa4f458456c6b4dc7658d5@o1400298.ingest.sentry.io/6729137",
   integrations: [
     new Sentry.BrowserTracing({
       // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
-      tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+      tracePropagationTargets: [
+        "localhost",
+        /^https:\/\/wefa\.app\/api/,
+        "https://wefa.app/",
+        "https://dev.wefa.app",
+      ],
     }),
     new Sentry.Replay(),
   ],

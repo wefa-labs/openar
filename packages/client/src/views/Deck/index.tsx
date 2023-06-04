@@ -1,3 +1,4 @@
+import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 import { DeckDataProps, useDeck } from "../../hooks/views/useDeck";
 
 import { DeckCard } from "../../components/Deck/Card";
@@ -14,19 +15,22 @@ const Deck: React.FC<DeckProps> = () => {
     viewerOpen,
     creatures,
     openSheet,
-    // closeSheet,
+    closeSheet,
     sheetData,
   } = useDeck();
 
+  const { isDesktop } = useDeviceDetect();
+
+  const listStyles = isDesktop
+    ? "grid grid-template-columns-[repeat(auto-fit,minmax(320px,1fr))] px-6 sm:px-12 overflow-visible"
+    : "carousel-center carousel space-x-6 px-6 sm:px-12 w-full";
+
   return (
     <section className="deck-view w-full h-full flex flex-col gap-6 justify-center pt-16">
-      {/* <button className="btn btn-primary" onClick={() => openSheet({})}>
-          Start Battle
-        </button> */}
       <DeckStats />
-      <div className="deck-plants w-full relative">
+      <div className="deck-plants w-full flex flex-col">
         <h3 className="text-2xl font-semibold  px-6 sm:px-12">Plants</h3>
-        <ul className="absolute carousel-center carousel space-x-6  px-6 sm:px-12 w-full">
+        <ul className={`${listStyles} flex-1`}>
           {plantTrail.map((props, index) => (
             <DeckCard
               {...plants[index]}
@@ -38,14 +42,15 @@ const Deck: React.FC<DeckProps> = () => {
                   data: { ...plants[index], type: "plant", actions: [] },
                 })
               }
+              isDesktop={isDesktop}
               actions={[]}
             />
           ))}
         </ul>
       </div>
-      <div className="deck-creatures w-full relative">
+      <div className="deck-creatures w-full flex flex-col">
         <h3 className="text-2xl font-semibold px-6 sm:px-12">Creatures</h3>
-        <ul className="absolute carousel-center carousel space-x-6  px-6 sm:px-12 w-full">
+        <ul className={`${listStyles} flex-1`}>
           {creatureTrail.map((props, index) => (
             <DeckCard
               {...creatures[index]}
@@ -61,12 +66,13 @@ const Deck: React.FC<DeckProps> = () => {
                   },
                 });
               }}
+              isDesktop={isDesktop}
               actions={[]}
             />
           ))}
         </ul>
       </div>
-      <DeckViewer {...sheetData} open={viewerOpen} />
+      <DeckViewer {...sheetData} open={viewerOpen} onDismiss={closeSheet} />
     </section>
   );
 };

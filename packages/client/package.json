@@ -53,6 +53,7 @@
     "xstate": "4.37.2"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "2.2.0",
     "@simplewebauthn/typescript-types": "7.0.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.4.0",

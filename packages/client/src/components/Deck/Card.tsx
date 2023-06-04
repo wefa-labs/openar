@@ -20,6 +20,7 @@ export interface DeckCardProps extends DeckCardData {
     transform: SpringValue<string>;
   };
   onClick?: React.MouseEventHandler<HTMLLIElement>;
+  isDesktop: boolean;
 }
 
 export const DeckCard: React.FC<DeckCardProps> = ({
@@ -31,29 +32,30 @@ export const DeckCard: React.FC<DeckCardProps> = ({
   onClick,
 }) => {
   return (
-    <a.li
-      style={style}
-      onClick={onClick}
-      className="card-compact carousel-item card bg-base-100 shadow-xl"
-    >
-      <figure className="w-48 aspect-square object-cover overflow-hidden">
-        <img src={image} alt={name} />
-      </figure>
-      <div className="card-body">
-        <h4 className="card-title">{name}</h4>
-        {/* <p>{description}</p> */}
-        <div className="card-actions justify-end">
-          {actions.map((action) => (
-            <button
-              key={action.name}
-              className="btn-primary btn"
-              onClick={action.onClick}
-            >
-              {action.name}
-            </button>
-          ))}
+    <a.li style={style} onClick={onClick} className="carousel-item">
+      <label
+        htmlFor="deck-viewer-dialog"
+        className="card-compact card bg-base-100 shadow-xl cursor-pointer"
+      >
+        <figure className="w-48 aspect-square object-cover overflow-hidden">
+          <img src={image} alt={name} />
+        </figure>
+        <div className="card-body">
+          <h4 className="card-title">{name}</h4>
+          {/* <p>{description}</p> */}
+          <div className="card-actions justify-end">
+            {actions.map((action) => (
+              <button
+                key={action.name}
+                className="btn-primary btn"
+                onClick={action.onClick}
+              >
+                {action.name}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      </label>
     </a.li>
   );
 };

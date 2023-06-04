@@ -1,5 +1,28 @@
 declare type WefaElement = "water" | "earth" | "fire" | "air";
 
+declare type BadgeType =
+  | "1st-plant"
+  | "1st-flower"
+  | "1st-fruit"
+  | "1st-herb"
+  | "1st-vegetable"
+  | "all-plant-types"
+  | "1st-creature"
+  | "all-elements"
+  | "1st-water-creature"
+  | "1st-earth-creature"
+  | "1st-fire-creature"
+  | "1st-air-creature"
+  | "early-adopter";
+
+declare interface WefaBadge {
+  id: BadgeType;
+  element?: WefaElement;
+  name: string;
+  description: string;
+  Icon: React.ReactNode;
+}
+
 enum PlantType {
   FLOWER = "flower",
   FRUIT = "fruit",

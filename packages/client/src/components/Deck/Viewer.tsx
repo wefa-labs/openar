@@ -11,6 +11,7 @@ export interface DeckViewerData extends DeckCardData {
 
 export interface DeckViewerProps extends DeckViewerData {
   open: boolean;
+  onDismiss: () => void;
 }
 
 // TODO: Stylize Bleyle following desings in Figma
@@ -21,6 +22,7 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
   type,
   actions,
   open,
+  onDismiss,
 }) => {
   const { isDesktop } = useDeviceDetect();
 
@@ -60,6 +62,8 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
       // className="fixed bottom-0 left-0 right-0 z-10 mb-16 flex h-screen touch-pan-y flex-col gap-4 rounded-lg p-4 "
       // style={style}
       open={open}
+      onDismiss={onDismiss}
+      snapPoints={({ minHeight }) => minHeight}
     >
       <Content />
     </BottomSheet>
