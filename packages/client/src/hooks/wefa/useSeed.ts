@@ -29,7 +29,9 @@ export const useSeed = (): SeedDataProps => {
   function seedCreature(element: WefaElement) {
     if (state.matches("creature_seeded")) {
       send({ type: "REGENERATE", element });
+      return;
     }
+
     send({ type: "SELECT_ELEMENT", element });
   }
 

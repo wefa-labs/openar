@@ -1,12 +1,14 @@
-import { createMachine } from "xstate";
-import { apiClient } from "../../modules/axios";
-import { db, initDB } from "../../modules/idb";
 import { uniqueId } from "xstate/lib/utils";
+import { createMachine, assign } from "xstate";
+
+import { apiClient } from "../../modules/axios";
+import { createCreature, db, initDB } from "../../modules/idb";
 
 export interface SeedContext {
-  image: File | null;
+  image: string | null;
   imageVerified: boolean;
   element: WefaElement | null;
+  plant: PlantDetails | null;
   creature: Creature | null;
   error: string | null;
 }
@@ -21,10 +23,10 @@ enum GrowthLevel {
 }
 
 const creatureImage: Record<WefaElement, string> = {
-  water: "assets/water_butterfly.png",
-  fire: "assets/fire_butterfly.png",
-  earth: "assets/earth_butterfly.png",
-  air: "assets/air_butterfly.png",
+  water: "assets/water-butterfly.png",
+  fire: "assets/fire-butterfly.png",
+  earth: "assets/earth-butterfly.png",
+  air: "assets/air-butterfly.png",
 };
 
 export const seedMachine = createMachine(
@@ -128,7 +130,6 @@ export const seedMachine = createMachine(
     },
     exit: (context, event) => {
       console.log("Seed machine exited.", context, event);
-      // TODO: Save state to indexedDB
     },
   },
   {
@@ -149,31 +150,64 @@ export const seedMachine = createMachine(
       },
     },
     actions: {
-      verified: (context, event) => {
-        console.log("Seeded!", context, event);
+      verified: assign((context, event) => {
+        context.imageVerified = true;
+
+        // TODO: Add plant to local DB for later use
+        // TODO: Save plant details to context
+        // TODO: Move state updates to actions
+        console.log("Verified Image", context, event);
+        // Trigger some UIshowing the detected plant info
+
+        return context;
+      }),
+      seeded: assign((context, event, data) => {
+        // TODO: Move state updates to actions
+        const creature: Creature = {
+          id: `0x${uniqueId()}`,
+          name: "Test Creature",
+          description: "Test Creature Description",
+          image: creatureImage[context.element ?? "earth"],
+          care: {
+            checkedAt: new Date().getMilliseconds(),
+            growthLevel: GrowthLevel.SEED,
+          },
+          element: "earth",
+          spaceId: "0x",
+          model: "",
+          trainer: "0x",
+          createdAt: new Date().getMilliseconds(),
+          updatedAt: new Date().getMilliseconds(),
+        };
+
+        context.creature = creature;
+        createCreature(creature);
+
+        console.log("Seeded Creature", context, event, data);
         // Trigger some UI indication that creature has been seeded.
-      },
-      seeded: (context, event) => {
-        console.log("Seeded!", context, event);
-        // Trigger some UI indication that creature has been seeded.
-      },
-      reset: (context, _event) => {
+
+        return context;
+      }),
+      reset: assign((context, _event) => {
         context.image = null;
         context.element = null;
+        context.plant = null;
         context.creature = null;
         context.imageVerified = false;
         context.error = null;
-      },
-      error: (context, event) => {
+
+        return context;
+      }),
+      error: assign((context, event) => {
         context.error = "Something went wrong!";
         console.log("Error!", context, event);
-      },
+
+        return context;
+      }),
     },
     services: {
       plantVerifier: async (context, event: { image?: string }, _meta) => {
-        console.log("Verifying Photo!", context, event);
-
-        let image: string | null = null;
+        let image: string | null = context.image;
 
         if (event.image) {
           console.log("Image provided!", event.image);
@@ -181,10 +215,10 @@ export const seedMachine = createMachine(
         }
 
         if (!image) {
-          console.log("No image provided, using context image.", context.image);
-          return;
+          throw new Error("No image provided!");
         }
 
+        // TODO: Add form image upload
         // const formData = new FormData();
 
         // formData.append("image", image, image.name);
@@ -202,52 +236,33 @@ export const seedMachine = createMachine(
 
           console.log("Plant detected!", data);
 
-          context.imageVerified = true;
+          return { data, image };
         } catch (error) {
           console.log("Photo verification failed!", error);
           throw error;
         }
       },
       creatureGenerator: async (context, event: { element?: WefaElement }) => {
-        console.log("Generating Creature!", context, event);
+        let element: WefaElement | null = context.element;
 
         if (event.element) {
-          console.log("Element provided!", event.element);
-          context.element = event.element;
+          element = event.element;
+        }
+
+        if (!element) {
+          throw new Error("No element provided!");
         }
 
         try {
-          const { data } = await apiClient.patchForm<{ creature: Creature }>(
+          const { data } = await apiClient.post<{ creature: Creature }>(
             "/creatures/seed",
             {
               image: context.image,
-              element: context.element,
+              element,
             }
           );
 
-          console.log("Creature seeded!", data);
-
-          context.creature = {
-            id: `0x${uniqueId()}`,
-            name: "Test Creature",
-            description: "Test Creature Description",
-            image: creatureImage[context.element ?? "earth"],
-            care: {
-              checkedAt: new Date().getMilliseconds(),
-              growthLevel: GrowthLevel.SEED,
-            },
-            element: "earth",
-            spaceId: "0x",
-            model: "",
-            trainer: "0x",
-            createdAt: new Date().getMilliseconds(),
-            updatedAt: new Date().getMilliseconds(),
-          };
-
-          await db?.put("creatures", context.creature);
-
-          // context.creature = data.creature;
-          console.log("Creature generated!", context.creature);
+          return { element, data };
         } catch (error) {
           console.log("Creature generation failed!", error);
           throw error;

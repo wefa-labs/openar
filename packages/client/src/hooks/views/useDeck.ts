@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { useDrag } from "@use-gesture/react";
-import { useSpring, useTrail, config, SpringValue } from "@react-spring/web";
+import { useTrail, config, SpringValue } from "@react-spring/web";
 
 import { useWefadex } from "../wefa/useDeck";
 
-import { DeckSheetData } from "../../components/Deck/Sheet";
+import { DeckViewerData } from "../../components/Deck/Viewer";
 
 export const height = window.innerHeight - 24;
 
 export interface DeckDataProps {
-  y: SpringValue<number>;
   plants: Plant[];
   creatures: Creature[];
   plantTrail: {
@@ -25,15 +23,16 @@ export interface DeckDataProps {
     data,
   }: {
     canceled?: boolean;
-    data?: DeckSheetData;
+    data?: DeckViewerData;
   }) => void;
   closeSheet: (velocity?: number) => void;
-  sheetData: DeckSheetData;
-  bind: any;
+  sheetData: DeckViewerData;
+  viewerOpen: boolean;
 }
 
 export const useDeck = (): DeckDataProps => {
-  const [sheetData, setSheetData] = useState<DeckSheetData>({
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [sheetData, setSheetData] = useState<DeckViewerData>({
     name: "",
     description: "å",
     image: "",
@@ -43,7 +42,6 @@ export const useDeck = (): DeckDataProps => {
 
   const { plants, creatures } = useWefadex("");
 
-  const [{ y }, api] = useSpring(() => ({ y: height }));
   const plantTrail = useTrail(plants?.length ?? 0, {
     from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
@@ -63,66 +61,23 @@ export const useDeck = (): DeckDataProps => {
     },
   });
 
-  function openSheet({
-    canceled,
-    data,
-  }: {
-    canceled?: boolean;
-    data?: DeckSheetData;
-  }) {
+  function openSheet({ data }: { data?: DeckViewerData }) {
     data && setSheetData(data);
-    api.start({
-      y: 0,
-      immediate: false,
-      config: canceled ? config.wobbly : config.stiff,
-    });
+    setViewerOpen(true);
   }
 
-  function closeSheet(velocity = 0) {
-    api.start({
-      y: height,
-      immediate: false,
-      config: { ...config.stiff, velocity },
-    });
+  function closeSheet() {
+    setViewerOpen(false);
   }
-
-  const bind = useDrag(
-    ({
-      last,
-      velocity: [, vy],
-      direction: [, dy],
-      movement: [, my],
-      cancel,
-      canceled,
-    }) => {
-      if (my < -70) cancel();
-
-      if (last) {
-        my > height * 0.5 || (vy > 0.5 && dy > 0)
-          ? closeSheet(vy)
-          : openSheet({ canceled });
-      }
-      // when the user keeps dragging, we just move the sheet according to
-      // the cursor position
-      else api.start({ y: my, immediate: true });
-    },
-    {
-      from: () => [0, y.get()],
-      filterTaps: true,
-      bounds: { top: 0 },
-      rubberband: true,
-    }
-  );
 
   return {
-    y,
     plants,
     creatures,
     plantTrail,
     creatureTrail,
+    viewerOpen,
     openSheet,
     closeSheet,
     sheetData,
-    bind,
   };
 };

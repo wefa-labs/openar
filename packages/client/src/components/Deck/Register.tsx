@@ -3,9 +3,9 @@ import { createPortal } from "react-dom";
 
 import { useDevice } from "../../hooks/auth/useDevice";
 
-interface DeckDialogProps {}
+interface DeckRegisterProps {}
 
-export const DeckDialog: React.FC<DeckDialogProps> = () => {
+export const DeckRegister: React.FC<DeckRegisterProps> = () => {
   const {
     name,
     authenticated,

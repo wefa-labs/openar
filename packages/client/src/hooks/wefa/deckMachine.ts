@@ -93,7 +93,7 @@ export const deckMachine = createMachine(
           src: "mint",
           onDone: {
             target: "idle",
-            actions: ["fetchCreatures"],
+            actions: ["readCreatures"],
           },
           onError: {
             target: "idle",
@@ -158,7 +158,7 @@ export const deckMachine = createMachine(
       },
     },
     actions: {
-      fetchCreatures: async (_context, _event) => {
+      readCreatures: async (_context, _event) => {
         // await fetchSigner();
 
         const creatures: Creature[] = (await readContract<

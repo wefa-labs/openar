@@ -22,7 +22,7 @@ export interface Typegen0 {
   };
   eventsCausingActions: {
     error: "error.platform.mint";
-    fetchCreatures: "done.invoke.mint";
+    readCreatures: "done.invoke.mint";
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {

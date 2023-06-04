@@ -24,6 +24,15 @@ enum PlantZone {
   THIRTEEN,
 }
 
+declare interface PlantDetails {
+  id: string;
+  name: string;
+  scientificName: string;
+  description: string;
+  zone?: PlantZone;
+  type?: PlantType;
+}
+
 enum GrowthLevel {
   SEED,
   BUDDING,
@@ -57,7 +66,7 @@ declare interface Identity {
 
 declare interface Asset {
   image: string; // CID
-  model: string; // CID
+  model?: string; // CID
 }
 
 declare interface Timestamps {

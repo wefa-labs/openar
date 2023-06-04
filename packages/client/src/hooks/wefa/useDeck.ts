@@ -3,7 +3,7 @@ import { data as plantData } from "../../mocks/plants.json";
 
 import { useEffect, useState } from "react";
 
-import { fetchPlants, fetchCreatures } from "../../modules/idb";
+import { readPlants, readCreatures } from "../../modules/idb";
 
 interface WefadexProps {
   plants: Plant[];
@@ -17,14 +17,14 @@ export const useWefadex = (spaceId: string): WefadexProps => {
   const [plants, setPlants] = useState<Plant[]>(plantData as any);
 
   async function handleFetchPlants() {
-    const newPlants = await fetchPlants();
+    const newPlants = await readPlants();
 
     console.log("newPlants", newPlants);
     setPlants(newPlants);
   }
 
   async function handleFetchCreatures() {
-    const newCreatures = await fetchCreatures();
+    const newCreatures = await readCreatures();
 
     console.log("newCreatures", newCreatures);
     setCreatures(newCreatures);

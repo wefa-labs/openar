@@ -56,7 +56,21 @@ export async function initDB() {
   return db;
 }
 
-export async function fetchPlants() {
+export async function createPlant(plant: Plant) {
+  const db = await initDB();
+  const transaction = db?.transaction("plants", "readwrite");
+  const store = transaction?.objectStore("plants");
+  await store?.put(plant);
+}
+
+export async function createCreature(creature: Creature) {
+  const db = await initDB();
+  const transaction = db?.transaction("creatures", "readwrite");
+  const store = transaction?.objectStore("creatures");
+  await store?.put(creature);
+}
+
+export async function readPlants() {
   const db = await initDB();
   const transaction = db?.transaction("plants", "readonly");
   const store = transaction?.objectStore("plants");
@@ -73,7 +87,7 @@ export async function fetchPlants() {
   return data;
 }
 
-export async function fetchCreatures() {
+export async function readCreatures() {
   const db = await initDB();
   const transaction = db?.transaction("creatures", "readonly");
   const store = transaction?.objectStore("creatures");
@@ -85,4 +99,32 @@ export async function fetchCreatures() {
   }
 
   return data;
+}
+
+export async function updatePlant(plant: Plant) {
+  const db = await initDB();
+  const transaction = db?.transaction("plants", "readwrite");
+  const store = transaction?.objectStore("plants");
+  await store?.put(plant);
+}
+
+export async function updateCreature(creature: Creature) {
+  const db = await initDB();
+  const transaction = db?.transaction("creatures", "readwrite");
+  const store = transaction?.objectStore("creatures");
+  await store?.put(creature);
+}
+
+export async function deletePlant(id: string) {
+  const db = await initDB();
+  const transaction = db?.transaction("plants", "readwrite");
+  const store = transaction?.objectStore("plants");
+  await store?.delete(id);
+}
+
+export async function deleteCreature(id: string) {
+  const db = await initDB();
+  const transaction = db?.transaction("creatures", "readwrite");
+  const store = transaction?.objectStore("creatures");
+  await store?.delete(id);
 }

@@ -2,15 +2,20 @@ import React, { useState } from "react";
 
 import { RC as PlantIcon } from "../../assets/icons/plant.svg";
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { PlantInfo } from "./PlantInfo";
 
 interface PlantDetectorProps {
   onPlantDetection: (image: string | ArrayBuffer) => void;
   detecting: boolean;
+  detected?: boolean;
+  plantDetails?: PlantDetails;
 }
 
 export const PlantDetector: React.FC<PlantDetectorProps> = ({
   onPlantDetection,
   detecting,
+  detected,
+  plantDetails,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const { isDesktop } = useDeviceDetect();
@@ -39,9 +44,9 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
     }
   }
 
-  function handleRemove() {
-    setPreview(null);
-  }
+  // function handleRemove() {
+  //   setPreview(null);
+  // }
 
   function handleDragOver(e: React.DragEvent<HTMLLabelElement>) {
     e.stopPropagation();
@@ -112,12 +117,13 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
             alt="Selected Plant Photo"
             className="w-full rounded-lg object-cover"
           />
-          <button
+          {detected && plantDetails && <PlantInfo {...plantDetails} />}
+          {/* <button
             className="badge absolute right-2 top-2 z-20 bg-red-500 px-4 py-3 text-xl text-white"
             onClick={handleRemove}
           >
             &times;
-          </button>
+          </button> */}
         </>
       ) : (
         <div className="flex flex-col items-center justify-center gap-1">

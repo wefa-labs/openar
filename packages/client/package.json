@@ -31,7 +31,7 @@
     "@types/lodash": "4.14.194",
     "@use-gesture/react": "10.2.26",
     "@wagmi/chains": "^0.2.22",
-    "@xstate/react": "^3.2.1",
+    "@xstate/react": "^3.2.2",
     "axios": "1.3.6",
     "buffer": "^6.0.3",
     "ethers": "^5.7.2",
@@ -44,11 +44,12 @@
     "react-hook-form": "7.43.9",
     "react-pull-to-refresh": "2.0.1",
     "react-router-dom": "^6.11.0",
+    "react-spring-bottom-sheet": "3.4.1",
     "react-toastify": "9.1.3",
     "siwe": "1.1.6",
     "viem": "~0.3.19",
     "wagmi": "^1.0.5",
-    "xstate": "4.37.0"
+    "xstate": "4.37.2"
   },
   "devDependencies": {
     "@simplewebauthn/typescript-types": "7.0.0",
