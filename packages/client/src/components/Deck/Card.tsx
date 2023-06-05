@@ -11,6 +11,7 @@ export interface DeckCardData {
   name: string;
   description?: string | null;
   image: string;
+  element?: WefaElement;
   actions: Action[];
 }
 
@@ -28,22 +29,28 @@ export const DeckCard: React.FC<DeckCardProps> = ({
   // description,
   image,
   style,
-  actions,
+  // actions,
   onClick,
 }) => {
   return (
-    <a.li style={style} onClick={onClick} className="carousel-item">
+    <a.li style={style} onClick={onClick} className="">
       <label
         htmlFor="deck-viewer-dialog"
-        className="card-compact card bg-base-100 shadow-xl cursor-pointer"
+        className="unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-lg"
       >
-        <figure className="w-24 aspect-square object-cover overflow-hidden">
-          <img src={image} alt={name} />
-        </figure>
-        <div className="card-body">
-          <h4 className="card-title">{name}</h4>
-          {/* <p>{description}</p> */}
+        <div className="pl-4 flex flex-col gap-3">
+          <h4 className="font-bold text-xl line-clamp-1">{name}</h4>
+          <div>
+            <span className="badge">Water</span>
+          </div>
         </div>
+        <figure className="h-28 w-28 object-cover md:h-full md:w-48 aspect-square object-cover rounded-xl">
+          <img
+            src={image}
+            alt={name}
+            className="object-cover md:h-full md:w-48 aspect-square object-cover rounded-xl"
+          />
+        </figure>
       </label>
     </a.li>
   );

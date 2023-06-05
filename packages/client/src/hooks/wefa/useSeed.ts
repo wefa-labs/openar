@@ -3,7 +3,8 @@ import { useMachine } from "@xstate/react";
 import { SeedContext, seedMachine } from "./seedMachine";
 
 export interface SeedDataProps extends SeedContext {
-  plantState: boolean;
+  plantingState: boolean;
+  elementState: boolean;
   isDetecting: boolean;
   isSeeding: boolean;
   verifyPlant: (image: string | ArrayBuffer) => void;
@@ -15,10 +16,14 @@ export interface SeedDataProps extends SeedContext {
 export const useSeed = (): SeedDataProps => {
   const [state, send] = useMachine(seedMachine);
 
-  const plantState =
+  const plantingState =
     state.matches("idle") ||
     state.matches("plant_verified") ||
     state.matches("verifying_plant");
+  const elementState =
+    state.matches("plant_verified") ||
+    state.matches("seeding_creature") ||
+    state.matches("creature_seeded");
   const isSeeding = state.matches("seeding_creature");
   const isDetecting = state.matches("verifying_plant");
 
@@ -44,7 +49,8 @@ export const useSeed = (): SeedDataProps => {
   }
 
   return {
-    plantState,
+    plantingState,
+    elementState,
     isDetecting,
     isSeeding,
     verifyPlant,

@@ -14,12 +14,12 @@ export const DeckStats: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-xl font-bold">Deck Name</p>
+        <p className="text-xl font-bold">Wefadex</p>
         <div className="flex items-center gap-2">
           <p>Energy</p>
           <progress
             className="progress progress-success w-40"
-            value="30"
+            value="72"
             max="100"
           ></progress>
         </div>

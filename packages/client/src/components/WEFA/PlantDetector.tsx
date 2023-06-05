@@ -15,7 +15,14 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   onPlantDetection,
   detecting,
   detected,
-  plantDetails,
+  plantDetails = {
+    id: "1",
+    name: "Strawberry",
+    scientificName: "Fragaria × ananassa",
+    description: "A hybrid species of the genus Fragaria",
+    zone: 0 as PlantZone,
+    type: "fruit" as PlantType,
+  },
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const { isDesktop } = useDeviceDetect();
@@ -117,7 +124,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
             alt="Selected Plant Photo"
             className="w-full rounded-lg object-cover"
           />
-          {detected && plantDetails && <PlantInfo {...plantDetails} />}
+          {!detected && plantDetails && <PlantInfo {...plantDetails} />}
           {/* <button
             className="badge absolute right-2 top-2 z-20 bg-red-500 px-4 py-3 text-xl text-white"
             onClick={handleRemove}

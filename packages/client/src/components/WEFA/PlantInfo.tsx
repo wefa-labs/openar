@@ -1,5 +1,5 @@
 import React from "react";
-import { a, useSpring } from "@react-spring/web";
+import { a, config, useSpring } from "@react-spring/web";
 
 import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
@@ -8,27 +8,35 @@ interface PlantInfoProps extends PlantDetails {}
 export const PlantInfo: React.FC<PlantInfoProps> = ({
   name,
   description,
-  type,
-  zone,
+  // type,
+  // zone,
 }) => {
   const { isDesktop } = useDeviceDetect();
 
   const spring = useSpring({
-    from: { opacity: 0, transform: "translateY(100%)" },
-    to: { opacity: 1, transform: "translateY(0)" },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: {
+      ...config.default,
+      clamp: true,
+    },
   });
 
   return (
     <a.div
-      className={`absolute bottom-0 left-0 transition-all ${
+      className={`bg-base-100 p-2 shadow-xl rounded-xl absolute bottom-2 left-2 w-5/6 flex flex-col transition-all ${
         isDesktop ? "" : ""
       }`}
       style={spring}
     >
-      {name}
-      {description}
-      {type}
-      {zone}
+      <h4 className="line-clamp-1 text-base">
+        <span className="font-semibold">{name}</span> Detected
+      </h4>
+      <p className="line-clamp-1 text-sm font-light">{description}</p>
+      {/* <div className="flex gap-3">
+        <span className="badge badge-primary">{type}</span>
+        <span className="badge badge-secondary">{zone}</span>
+      </div> */}
     </a.div>
   );
 };

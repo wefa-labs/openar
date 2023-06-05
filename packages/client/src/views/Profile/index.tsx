@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { a, useSpring, useTransition } from "@react-spring/web";
 
-// import { useProfile } from "../../hooks/views/useProfile";
-
 import { ProfileHarvest } from "./Harvest"; // Badges
 import { ProfileSettings } from "./Settings";
 import { ProfileDataProps } from "../../hooks/views/useProfile";
@@ -14,7 +12,6 @@ const tabs: Tab[] = ["harvest", "settings"];
 
 interface ProfileProps extends ProfileDataProps {}
 
-// TODO: Stylize Bleyle following desings in Figma
 export const Profile: React.FC<ProfileProps> = () => {
   const [tab, setTab] = useState<Tab>("harvest");
 

@@ -14,7 +14,8 @@ const Explore: React.FC<ExploreProps> = () => {
   const {
     isDetecting,
     isSeeding,
-    plantState,
+    plantingState,
+    elementState,
     creature,
     element,
     error,
@@ -25,9 +26,9 @@ const Explore: React.FC<ExploreProps> = () => {
   } = useSeed();
 
   return (
-    <div className="explore-view h-full w-full overflow-hidden">
-      <div className="explore-detector flex h-full w-full basis-1/2 flex-col items-center justify-end gap-2 overflow-hidden pt-6">
-        {plantState ? (
+    <section className="explore-view w-screen flex flex-col px-6 pt-6">
+      <div className="explore-detector flex flex-col items-center justify-end gap-2 overflow-hidden">
+        {plantingState ? (
           <PlantDetector
             detecting={isDetecting}
             onPlantDetection={verifyPlant}
@@ -43,10 +44,11 @@ const Explore: React.FC<ExploreProps> = () => {
         )}
       </div>
       <ElementSelector
+        active={elementState}
         onElementSelected={seedCreature}
         selectedElement={element ?? null}
       />
-    </div>
+    </section>
   );
 };
 

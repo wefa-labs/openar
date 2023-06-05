@@ -19,21 +19,29 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
   name,
   description,
   image,
+
   type,
-  actions,
+  // actions,
+  element,
   open,
   onDismiss,
 }) => {
   const { isDesktop } = useDeviceDetect();
 
   const Content = () => (
-    <>
-      <div>{image}</div>
-      <h2>{name}</h2>
-      <p>{description}</p>
-      <div>{type}</div>
-      <div>{actions.length}</div>
-    </>
+    <div className="px-4 flex flex-col gap-3 pb-12">
+      <img
+        src={image}
+        alt={name}
+        className="w-full aspect-square object-cover"
+      />
+      <h2 className="font-bold text-2xl">{name}</h2>
+      <p className="font-light">{description}</p>
+      <div>
+        <div className="badge badge-lg capitalize">{type}</div>
+        {}
+      </div>
+    </div>
   );
 
   if (isDesktop) {
@@ -61,7 +69,7 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
     <BottomSheet
       // className="fixed bottom-0 left-0 right-0 z-10 mb-16 flex h-screen touch-pan-y flex-col gap-4 rounded-lg p-4 "
       // style={style}
-      className="z-20 fixed bottom=0"
+      className="z-20 fixed min-h-5/6"
       open={open}
       onDismiss={onDismiss}
       snapPoints={({ minHeight }) => minHeight}

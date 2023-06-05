@@ -2,23 +2,20 @@ import { useTheme } from "../../../hooks/app/useTheme";
 
 interface ProfileSettingsProps {}
 
-// TODO: Stylize Bleyle
-
 export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
-  // TODO: add color mode toggle
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="flex flex-col gap-3 items-center py-12 px-4">
+    <div className="flex flex-col gap-3 items-center pt-6">
       <div className="form-control w-full">
-        <label className="cursor-pointer label">
+        <label className="shadow-lg bg-base-100 px-3 py-6 rounded-xl cursor-pointer label">
           <span className="label-text text-xl font-semibold">
             Enable Dark Mode
           </span>
           <input
             type="checkbox"
             className="toggle toggle-primary toggle-lg"
-            onClick={toggleTheme}
+            onChange={toggleTheme}
             checked={theme === "dark"}
           />
         </label>
