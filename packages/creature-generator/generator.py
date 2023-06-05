@@ -40,21 +40,21 @@ creatures_dic = {
         'template':'butterfly.jpg',
         'id':0
     },
-    'firefly':
-    {
-        'template':'firefly.png',
-        'id':1
-    },
+    # 'firefly':
+    # {
+    #     'template':'firefly.png',
+    #     'id':1
+    # },
     'dragonfly':
     {
         'template':'dragonfly.png',
         'id':2
     }, 
-    'worm':
-    {
-        'template':'worm.png',
-        'id':3
-    },
+    # 'worm':
+    # {
+    #     'template':'worm.png',
+    #     'id':3
+    # },
     'ant':
     {
         'template':'ant.jpg',
@@ -73,10 +73,11 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
 
     if cached == False:
 
-        url = GENERATOR_GPU_URL + '/controlnet/txt2img' # This is the line to update with GPU provider
+        url = GENERATOR_GPU_URL + '/controlnet/txt2img' # TODO: New url for stable diffusion grae
         with open(this_creature['template'] , "rb") as image_file:
             control_img = base64.b64encode(image_file.read())
 
+        # TODO: Update the prompt grae
         dics = {
             # 512 by 512 is cheaper but not sd2
             #This is probably the most editable line (needs some work)
