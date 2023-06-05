@@ -23,7 +23,7 @@ export const useRefresh = () => {
 
     let pullLength = startPoint < screenY ? Math.abs(screenY - startPoint) : 0;
     setPullChange(pullLength);
-    console.log({ screenY, startPoint, pullLength, pullChange });
+    // console.log({ screenY, startPoint, pullLength, pullChange });
   };
 
   const endPull = (_e: TouchEvent) => {

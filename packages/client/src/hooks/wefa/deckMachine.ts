@@ -172,7 +172,7 @@ export const deckMachine = createMachine(
 
         // Save to DB
 
-        console.log("Creatures", creatures);
+        // console.log("Creatures", creatures);
 
         // Fire action to update state
       },

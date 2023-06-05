@@ -23,15 +23,17 @@ const Deck: React.FC<DeckProps> = () => {
 
   const listStyles = isDesktop
     ? "grid grid-template-columns-[repeat(auto-fit,minmax(320px,1fr))] px-6 sm:px-12 overflow-visible"
-    : "carousel-center carousel space-x-6 px-6 sm:px-12 w-full";
+    : " carousel space-x-6  ";
 
   return (
-    <section className="deck-view w-full h-full flex flex-col gap-6 justify-center pt-16">
-      <DeckStats />
-      <div className="deck-plants w-full flex flex-col">
+    <section className="deck-view w-full h-full flex flex-col gap-6 justify-center pt-6 overflow-hidden max-h-full">
+      <div className="deck-stats px-6 sm:px-12 grid place-items-center">
+        <DeckStats />
+      </div>
+      <div className="deck-plants flex flex-col gap-3 py-3">
         <h3 className="text-2xl font-semibold  px-6 sm:px-12">Plants</h3>
         <ul className={`${listStyles} flex-1`}>
-          {plantTrail.map((props, index) => (
+          {/* {plantTrail.map((props, index) => (
             <DeckCard
               {...plants[index]}
               key={plants[index].id}
@@ -45,13 +47,13 @@ const Deck: React.FC<DeckProps> = () => {
               isDesktop={isDesktop}
               actions={[]}
             />
-          ))}
+          ))} */}
         </ul>
       </div>
-      <div className="deck-creatures w-full flex flex-col">
+      <div className="deck-creatures flex flex-col py-3">
         <h3 className="text-2xl font-semibold px-6 sm:px-12">Creatures</h3>
         <ul className={`${listStyles} flex-1`}>
-          {creatureTrail.map((props, index) => (
+          {/* {creatureTrail.map((props, index) => (
             <DeckCard
               {...creatures[index]}
               key={creatures[index].id}
@@ -69,7 +71,7 @@ const Deck: React.FC<DeckProps> = () => {
               isDesktop={isDesktop}
               actions={[]}
             />
-          ))}
+          ))} */}
         </ul>
       </div>
       <DeckViewer {...sheetData} open={viewerOpen} onDismiss={closeSheet} />

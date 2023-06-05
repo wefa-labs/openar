@@ -6,6 +6,7 @@ import { a, useSpring, useTransition } from "@react-spring/web";
 import { ProfileHarvest } from "./Harvest"; // Badges
 import { ProfileSettings } from "./Settings";
 import { ProfileDataProps } from "../../hooks/views/useProfile";
+import { avatar, badges } from "../../constants";
 
 type Tab = "harvest" | "settings" | "wallet";
 
@@ -34,16 +35,17 @@ export const Profile: React.FC<ProfileProps> = () => {
   });
 
   return (
-    <div className="profile-view h-full w-full overflow-hidden pt-16 px-6 sm:px-12">
+    <section className="profile-view h-full w-full overflow-hidden pt-6 px-6 sm:px-12">
       <a.div
         className="profile-avatar flex flex-col items-center"
         style={avatarSpring}
       >
-        <div className="avatar placeholder mb-6">
-          <div className="bg-neutral-focus text-neutral-content rounded-full w-32">
-            <span className="text-4xl">KK</span>
+        <div className="avatar">
+          <div className=" text-neutral-content rounded-full w-32">
+            <img src={avatar} alt="profile avatar" />
           </div>
         </div>
+        <h2 className="text-2xl font-semibold mb-6">Username</h2>
         <div className="tabs tabs-boxed">
           {tabs.map((name) => (
             <button
@@ -59,12 +61,14 @@ export const Profile: React.FC<ProfileProps> = () => {
       </a.div>
       {transition((style, tab) => (
         <a.div style={style} className="profile-tabs w-full">
-          {tab === "harvest" && <ProfileHarvest />}
+          {tab === "harvest" && (
+            <ProfileHarvest badges={Object.values(badges)} />
+          )}
           {/* {tab === "wallet" && <ProfileWallet />} */}
           {tab === "settings" && <ProfileSettings />}
         </a.div>
       ))}
-    </div>
+    </section>
   );
 };
 

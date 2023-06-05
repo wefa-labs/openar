@@ -28,7 +28,7 @@ export const usePlay = (): PlayDataProps => {
   } = useMUD();
   const { checkerGames, tictactoeGames } = useGames();
 
-  console.log("Play Data", { checkerGames, tictactoeGames });
+  // console.log("Play Data", { checkerGames, tictactoeGames });
 
   // function handleGameSelection(game: "tic-tac-toe" | "checkers") {
   //   if (game === "checkers") {

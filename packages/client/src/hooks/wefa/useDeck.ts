@@ -19,14 +19,14 @@ export const useWefadex = (spaceId: string): WefadexProps => {
   async function handleFetchPlants() {
     const newPlants = await readPlants();
 
-    console.log("newPlants", newPlants);
+    // console.log("newPlants", newPlants);
     setPlants(newPlants);
   }
 
   async function handleFetchCreatures() {
     const newCreatures = await readCreatures();
 
-    console.log("newCreatures", newCreatures);
+    // console.log("newCreatures", newCreatures);
     setCreatures(newCreatures);
   }
 

@@ -21,6 +21,14 @@ import FirstFireCreatureBadge from "./assets/badges/fire-100.png";
 import FirstAirCreatureBadge from "./assets/badges/air-100.png";
 import AllElementsBadge from "./assets/badges/all-elements-100.png";
 
+import BeeAvatar from "./assets/avatars/bee-100.png";
+import BeetleAvatar from "./assets/avatars/beetle-100.png";
+import ButterflyAvatar from "./assets/avatars/butterfly-100.png";
+import DragonflyAvatar from "./assets/avatars/dragonfly-100.png";
+import GrasshopperAvatar from "./assets/avatars/grasshopper-100.png";
+import LadybugAvatar from "./assets/avatars/ladybug-100.png";
+import RhinoBeetleAvatar from "./assets/avatars/rhinoceros-beetle-100.png";
+
 export const elements: WefaElement[] = ["water", "earth", "air", "fire"];
 
 interface WefaElementData {
@@ -154,6 +162,36 @@ export const badges: Record<BadgeType, WefaBadge> = {
     Icon: EarlyAdopterBadge,
   },
 };
+
+function pickRandom<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function generateRandomAvatar(): string {
+  // Check local storage for avatar
+  const avatar = localStorage.getItem("avatar");
+  if (avatar) {
+    return avatar;
+  }
+
+  const avatars = [
+    BeeAvatar,
+    BeetleAvatar,
+    ButterflyAvatar,
+    DragonflyAvatar,
+    GrasshopperAvatar,
+    LadybugAvatar,
+    RhinoBeetleAvatar,
+  ];
+
+  const randomAvatar = pickRandom(avatars);
+
+  localStorage.setItem("avatar", randomAvatar);
+
+  return randomAvatar;
+}
+
+export const avatar = generateRandomAvatar();
 
 export {
   WaterIcon,

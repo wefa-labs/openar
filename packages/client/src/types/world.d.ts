@@ -20,7 +20,8 @@ declare interface WefaBadge {
   element?: WefaElement;
   name: string;
   description: string;
-  Icon: React.ReactNode;
+  color?: string;
+  Icon: string;
 }
 
 enum PlantType {

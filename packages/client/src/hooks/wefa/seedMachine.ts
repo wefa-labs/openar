@@ -210,7 +210,6 @@ export const seedMachine = createMachine(
         let image: string | null = context.image;
 
         if (event.image) {
-          console.log("Image provided!", event.image);
           image = event.image;
         }
 

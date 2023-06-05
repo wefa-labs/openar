@@ -19,12 +19,12 @@ export const useTicTacToe = (
     key: {},
   });
 
-  console.log(
-    "TicTacToe Game Data",
-    identity,
-    yourRole,
-    claimTicTacToePosition
-  );
+  // console.log(
+  //   "TicTacToe Game Data",
+  //   identity,
+  //   yourRole,
+  //   claimTicTacToePosition
+  // );
 
   return {
     identity,

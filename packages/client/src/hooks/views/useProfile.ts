@@ -38,13 +38,13 @@ export const useProfile = (): ProfileDataProps => {
   const { tictactoeGames } = useGames();
   // const { worlds, onCreateWorld, handleWorldSubmit, worldFormRegister } = useWorlds();
 
-  console.log("Profile Data", {
-    // worlds,
-    tictactoeGames,
-    balance,
-    name,
-    avatar,
-  });
+  // console.log("Profile Data", {
+  //   // worlds,
+  //   tictactoeGames,
+  //   balance,
+  //   name,
+  //   avatar,
+  // });
 
   return {
     balance,
