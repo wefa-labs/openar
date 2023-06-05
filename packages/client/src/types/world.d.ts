@@ -17,9 +17,9 @@ declare type BadgeType =
 
 declare interface WefaBadge {
   id: BadgeType;
-  element?: WefaElement;
   name: string;
   description: string;
+  element?: WefaElement;
   color?: string;
   Icon: string;
 }
@@ -64,12 +64,6 @@ enum GrowthLevel {
   RIPENING,
 }
 
-enum HealthStatus {
-  HEALTHY,
-  SICK,
-  DEAD,
-}
-
 enum Size {
   MINI,
   SMALL,
@@ -88,6 +82,11 @@ declare interface Identity {
   // createdAt?: number;
 }
 
+declare interface LocalProps {
+  localId: string;
+  isUploaded: boolean;
+}
+
 declare interface Asset {
   image: string; // CID
   model?: string; // CID
@@ -98,7 +97,7 @@ declare interface Timestamps {
   updatedAt: number;
 }
 
-declare interface Creature extends Identity, Asset, Timestamps {
+declare interface Creature extends Identity, Asset, Timestamps, LocalProps {
   id: `0x${string}`; // Address
   trainer: `0x${string}`; // Address
   spaceId: string; // Bytes32 ID
@@ -106,13 +105,14 @@ declare interface Creature extends Identity, Asset, Timestamps {
   element: WefaElement;
 }
 
-declare interface Plant extends Identity, Timestamps, Asset {
-  id: `0x${string}`; // Address
-  caretaker: `0x${string}`; // Address
-  spaceId: `0x${string}`; // Address
+declare interface Plant extends Identity, Timestamps, Asset, LocalProps {
+  id?: string; // Address may
+  localId: string;
   plantId: number;
-  health: Health;
+  caretakerAddress: `0x${string}` | "local"; // Address
   care: Care;
+  // spaceAddress: `0x${string}`; // Address
+  // health: Health;
 }
 
 declare interface TicTacToe {

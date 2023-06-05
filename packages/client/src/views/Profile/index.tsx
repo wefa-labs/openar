@@ -4,15 +4,17 @@ import { a, useSpring, useTransition } from "@react-spring/web";
 import { ProfileHarvest } from "./Harvest"; // Badges
 import { ProfileSettings } from "./Settings";
 import { ProfileDataProps } from "../../hooks/views/useProfile";
-import { avatar, badges } from "../../constants";
+import { avatar } from "../../constants";
 
 type Tab = "harvest" | "settings" | "wallet";
 
 const tabs: Tab[] = ["harvest", "settings"];
 
-interface ProfileProps extends ProfileDataProps {}
+interface ProfileProps extends ProfileDataProps {
+  badges: WefaBadge[];
+}
 
-export const Profile: React.FC<ProfileProps> = () => {
+export const Profile: React.FC<ProfileProps> = ({ badges }) => {
   const [tab, setTab] = useState<Tab>("harvest");
 
   const avatarSpring = useSpring({
@@ -58,9 +60,7 @@ export const Profile: React.FC<ProfileProps> = () => {
       </a.div>
       {transition((style, tab) => (
         <a.div style={style} className="profile-tabs w-full">
-          {tab === "harvest" && (
-            <ProfileHarvest badges={Object.values(badges)} />
-          )}
+          {tab === "harvest" && <ProfileHarvest badges={badges} />}
           {/* {tab === "wallet" && <ProfileWallet />} */}
           {tab === "settings" && <ProfileSettings />}
         </a.div>

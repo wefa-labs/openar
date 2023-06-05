@@ -1,8 +1,8 @@
-import { uniqueId } from "xstate/lib/utils";
 import { createMachine, assign } from "xstate";
 
 import { apiClient } from "../../modules/axios";
-import { createCreature, db, initDB } from "../../modules/idb";
+import { createPlant, createCreature, db, initDB } from "../../modules/idb";
+import { nanoid } from "nanoid";
 
 export interface SeedContext {
   image: string | null;
@@ -164,7 +164,7 @@ export const seedMachine = createMachine(
       seeded: assign((context, event, data) => {
         // TODO: Move state updates to actions
         const creature: Creature = {
-          id: `0x${uniqueId()}`,
+          id: `0x${nanoid()}`,
           name: "Test Creature",
           description: "Test Creature Description",
           image: creatureImage[context.element ?? "earth"],
@@ -172,6 +172,8 @@ export const seedMachine = createMachine(
             checkedAt: new Date().getMilliseconds(),
             growthLevel: GrowthLevel.SEED,
           },
+          isUploaded: false,
+          localId: nanoid(),
           element: "earth",
           spaceId: "0x",
           model: "",
@@ -182,6 +184,30 @@ export const seedMachine = createMachine(
 
         context.creature = creature;
         createCreature(creature);
+        context.plant &&
+          context.image &&
+          createPlant({
+            id: `0x${nanoid()}`,
+            caretakerAddress: "0x",
+            // spaceAddress: "0x",
+            name: context.plant.name,
+            description: context.plant.description,
+            image: context.image,
+            isUploaded: false,
+            plantId: 0,
+            createdAt: new Date().getMilliseconds(),
+            updatedAt: new Date().getMilliseconds(),
+            care: {
+              health: 100,
+              growthLevel: 0 as GrowthLevel,
+            },
+            localId: nanoid(),
+            // health: {
+            //   current: 100,
+            //   max: 100,
+            //   healthStatus: 2 as GrowthLevel,
+            // },
+          });
 
         console.log("Seeded Creature", context, event, data);
         // Trigger some UI indication that creature has been seeded.

@@ -10,6 +10,7 @@ import Deck from "./Deck";
 // import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
+import { useWefadex } from "../hooks/wefa/useDeck";
 
 export default function Views() {
   const location = useLocation();
@@ -26,8 +27,10 @@ export default function Views() {
     },
   });
 
-  const deck = useDeck();
+  const { badges, plants, creatures } = useWefadex("");
   const seed = useSeed();
+
+  const deck = useDeck({ plants, creatures });
   const profile = useProfile();
 
   return transitions((style, location) => (
@@ -41,7 +44,10 @@ export default function Views() {
         <Route path="/deck" element={<Deck {...deck} />} />
         {/* <Route path="/play" element={<Play />} /> */}
         <Route path="/explore" element={<Explore {...seed} />} />
-        <Route path="/profile" element={<Profile {...profile} />} />
+        <Route
+          path="/profile"
+          element={<Profile {...profile} badges={badges} />}
+        />
         <Route path="*" element={<Navigate to="/explore" />} />
       </Routes>
     </a.main>

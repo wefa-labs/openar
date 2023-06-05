@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useTrail, config, SpringValue } from "@react-spring/web";
 
-import { useWefadex } from "../wefa/useDeck";
-
 import { DeckViewerData } from "../../components/Deck/Viewer";
 
 export const height = window.innerHeight - 24;
@@ -30,7 +28,13 @@ export interface DeckDataProps {
   viewerOpen: boolean;
 }
 
-export const useDeck = (): DeckDataProps => {
+export const useDeck = ({
+  plants,
+  creatures,
+}: {
+  plants: Plant[];
+  creatures: Creature[];
+}): DeckDataProps => {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [sheetData, setSheetData] = useState<DeckViewerData>({
     name: "",
@@ -39,8 +43,6 @@ export const useDeck = (): DeckDataProps => {
     type: "creature",
     actions: [],
   });
-
-  const { plants, creatures } = useWefadex("");
 
   const plantTrail = useTrail(plants?.length ?? 0, {
     from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
