@@ -29,8 +29,8 @@ export interface DeckDataProps {
 }
 
 export const useDeck = ({
-  plants,
-  creatures,
+  plants = [],
+  creatures = [],
 }: {
   plants: Plant[];
   creatures: Creature[];

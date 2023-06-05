@@ -23,7 +23,7 @@ function App() {
               <Header />
               <Appbar />
               <Views />
-              <ToastContainer />
+              <ToastContainer className="bottom-16" />
             </BrowserRouter>
           </DeviceDetectProvider>
         </RainbowKitProvider>

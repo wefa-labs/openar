@@ -1,8 +1,9 @@
+import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
 import { createMachine, assign } from "xstate";
 
 import { apiClient } from "../../modules/axios";
 import { createPlant, createCreature, db, initDB } from "../../modules/idb";
-import { nanoid } from "nanoid";
 
 export interface SeedContext {
   image: string | null;
@@ -157,7 +158,8 @@ export const seedMachine = createMachine(
         // TODO: Save plant details to context
         // TODO: Move state updates to actions
         console.log("Verified Image", context, event);
-        // Trigger some UIshowing the detected plant info
+
+        toast.success("Plant verified!");
 
         return context;
       }),
@@ -209,7 +211,37 @@ export const seedMachine = createMachine(
             // },
           });
 
-        console.log("Seeded Creature", context, event, data);
+        Promise.all([
+          createCreature(creature),
+          context.plant &&
+            context.image &&
+            createPlant({
+              id: `0x${nanoid()}`,
+              caretakerAddress: "0x",
+              // spaceAddress: "0x",
+              name: context.plant.name,
+              description: context.plant.description,
+              image: context.image,
+              isUploaded: false,
+              plantId: 0,
+              createdAt: new Date().getMilliseconds(),
+              updatedAt: new Date().getMilliseconds(),
+              care: {
+                health: 100,
+                growthLevel: 0 as GrowthLevel,
+              },
+              localId: nanoid(),
+              // health: {
+              //   current: 100,
+              //   max: 100,
+              //   healthStatus: 2 as GrowthLevel,
+              // },
+            }),
+        ]).then((res) => {
+          console.log("Seeded Creature", { res, context, event, data });
+          toast.success("Creature seeded!");
+        });
+
         // Trigger some UI indication that creature has been seeded.
 
         return context;
@@ -227,6 +259,8 @@ export const seedMachine = createMachine(
       error: assign((context, event) => {
         context.error = "Something went wrong!";
         console.log("Error!", context, event);
+
+        toast.error("Something went wrong!");
 
         return context;
       }),

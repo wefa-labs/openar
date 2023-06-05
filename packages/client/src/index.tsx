@@ -2,10 +2,13 @@ import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 // import { mount as mountDevTools } from "@latticexyz/dev-tools";
 
-import App from "./App";
-import { MUDProvider } from "./hooks/useMud";
 import { setup } from "./modules/openar/setup";
+
+import { MUDProvider } from "./hooks/useMud";
+import { isHandheld } from "./hooks/app/useDeviceDetect";
+
 import { ComingSoon } from "./components/Layout/ComingSoon";
+import App from "./App";
 
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,7 +44,7 @@ const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");
 const root = ReactDOM.createRoot(rootElement);
 
-if (import.meta.env.PROD) {
+if (import.meta.env.PROD || !isHandheld) {
   root.render(<ComingSoon />);
 } else {
   setup().then((result) => {

@@ -8,7 +8,7 @@ dotenv.config();
 
 import { router } from "./router";
 import { server } from "./server";
-import { redis } from "./modules/redis";
+// import { redis } from "./modules/redis";
 // import path from "path";
 
 const IS_GOOGLE_CLOUD_RUN = process.env.K_SERVICE !== undefined;
@@ -29,10 +29,10 @@ server.register(session, {
     maxAge: 86400000, // 1 day
     httpOnly: true,
   },
-  store: new RedisStore({
-    client: redis,
-    prefix: "wefa:",
-  }) as SessionStore,
+  // store: new RedisStore({
+  //   client: redis,
+  //   prefix: "wefa:",
+  // }) as SessionStore,
 });
 server.register(require("@fastify/multipart"));
 
