@@ -73,7 +73,7 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
 
     if cached == False:
 
-        url = GENERATOR_GPU_URL + '/controlnet/txt2img' # TODO: New url for stable diffusion grae
+        url = GENERATOR_GPU_URL + '/sdapi/v1/txt2img' 
         with open(this_creature['template'] , "rb") as image_file:
             control_img = base64.b64encode(image_file.read())
 
@@ -82,8 +82,9 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
             # 512 by 512 is cheaper but not sd2
             #This is probably the most editable line (needs some work)
             # Some of these prompts are going to cause copyright issues if not filtered
-            'prompt': description + ' ' + this_element['prompt'] + ' pokemon, digimon',
-            'negative_prompt': 'plant '+this_element['negativePrompt'],
+            'prompt': 'an anime (anthropomorphic) (((cute))) ' + creature_type + ',' + description + ' ' + this_element['prompt'] + ' ',
+            # anime models tend to like creating people
+            'negative_prompt': '((girl)) ((person)) plant '+this_element['negativePrompt'],
             "seed": -1,
             "subseed": -1,
             "subseed_strength": 0,
@@ -96,11 +97,29 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
             "restore_faces": True,
             "eta": 0,
             "sampler_index": "Euler a",
-            "controlnet_input_image": [control_img],
-            "controlnet_module": 'seg_ofcoco',
-            "controlnet_model": 'control_sd15_seg [fef5e48e]',
-            "controlnet_weight": 2,
-            "controlnet_guidance": 1.0,
+            "alwayson_scripts": {
+            	"controlnet":{
+            	    "args":[{
+            	    "input_image": control_img,
+            	    "module": 'depth_midas',
+            	    #"module": 'seg_ofcoco',
+            	    "model": 'control_sd15_seg [fef5e48e]',
+            	    "weight": 2,
+            	    "guidance": 1,
+      	    	    "mask": "",
+      	    	    "resize_mode": "Crop and Resize",
+      	    	    "lowvram": False,
+      	    	    #"processor_res": 64,
+      	    	    #"threshold_a": 64,
+      	    	    #"threshold_b": 64,
+      	    	    "guidance_start": 0,
+      	    	    "guidance_end": 1,
+      	    	    	#"guessmode": True,
+      	    	    	#"pixel_perfect": False
+      	    	    	}]
+            	}
+            }
+
         }
         #the json above should be captured somewhere
         x = requests.post(url, json = dics)
