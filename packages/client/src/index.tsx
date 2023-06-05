@@ -2,10 +2,10 @@ import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 // import { mount as mountDevTools } from "@latticexyz/dev-tools";
 
-import { setup } from "./modules/openar/setup";
+// import { setup } from "./modules/openar/setup";
 
-import { MUDProvider } from "./hooks/useMud";
-import { isHandheld } from "./hooks/app/useDeviceDetect";
+// import { MUDProvider } from "./hooks/useMud";
+import { isHandheld } from "./hooks/app/useApp";
 
 import { ComingSoon } from "./components/Layout/ComingSoon";
 import App from "./App";
@@ -47,12 +47,12 @@ const root = ReactDOM.createRoot(rootElement);
 if (import.meta.env.PROD || !isHandheld) {
   root.render(<ComingSoon />);
 } else {
-  setup().then((result) => {
-    root.render(
-      <MUDProvider value={result}>
-        <App />
-      </MUDProvider>
-    );
-    // mountDevTools();
-  });
+  // setup().then((result) => {
+  root.render(
+    // <MUDProvider value={result}>
+    <App />
+    // </MUDProvider>
+  );
+  // mountDevTools();
+  // });
 }

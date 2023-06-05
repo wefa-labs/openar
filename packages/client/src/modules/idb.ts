@@ -30,7 +30,7 @@ export async function initDB() {
   status = "loading";
 
   try {
-    db = await openDB<WEFADB>("wefa", 1, {
+    db = await openDB<WEFADB>("wefa", 2, {
       upgrade(db) {
         db.createObjectStore("plants", {
           keyPath: "id",

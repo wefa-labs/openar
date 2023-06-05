@@ -1,7 +1,7 @@
 import React from "react";
 import { a, config, useSpring } from "@react-spring/web";
 
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { useApp } from "../../hooks/app/useApp";
 
 interface PlantInfoProps extends PlantDetails {}
 
@@ -11,7 +11,7 @@ export const PlantInfo: React.FC<PlantInfoProps> = ({
   // type,
   // zone,
 }) => {
-  const { isDesktop } = useDeviceDetect();
+  const { isDesktop } = useApp();
 
   const spring = useSpring({
     from: { opacity: 0 },

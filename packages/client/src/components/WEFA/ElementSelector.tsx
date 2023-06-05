@@ -1,7 +1,7 @@
 import React from "react";
 import { a, config, useSpring, useTrail } from "@react-spring/web";
 
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { useApp } from "../../hooks/app/useApp";
 import { elementData, elements } from "../../constants";
 
 interface ElementSelectorProps {
@@ -16,7 +16,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   selectedElement,
   onElementSelected,
 }) => {
-  const { isDesktop } = useDeviceDetect();
+  const { isDesktop } = useApp();
   const elementTrail = useTrail(elements.length, {
     from: { opacity: 0 },
     to: { opacity: 1 },

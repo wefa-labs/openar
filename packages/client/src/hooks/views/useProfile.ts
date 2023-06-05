@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { FetchBalanceResult } from "wagmi/dist/actions";
+import { SpringValue, useSpring } from "@react-spring/web";
 import { useAccount, useBalance, useEnsAvatar, useEnsName } from "wagmi";
 
-import { useGames } from "../games/useGames";
+import { useWefa } from "../wefa/useWefa";
+// import { useGames } from "../games/useGames";
 // import { useWorlds } from "../openar/useWorlds";
 
 type Status =
@@ -14,7 +17,10 @@ type Status =
   | "loading"
   | "success";
 
+type ProfileTab = "harvest" | "settings" | "wallet";
+
 export interface ProfileDataProps {
+  badges: WefaBadge[];
   balance?: FetchBalanceResult;
   address?: string;
   accountStatus?: Status;
@@ -26,16 +32,31 @@ export interface ProfileDataProps {
   // worldFormRegister: any;
   // handleWorldSubmit: any;
   // onCreateWorld: any;
-  games: any[];
+  // games: any[];
+  tab: ProfileTab;
+  changeTab: (tab: ProfileTab) => void;
+  avatarSpring: {
+    opacity: SpringValue<number>;
+    transform: SpringValue<string>;
+  };
 }
 
 export const useProfile = (): ProfileDataProps => {
+  const [tab, setTab] = useState<ProfileTab>("harvest");
+
   const { data: balance } = useBalance();
   const { address, status: accountStatus } = useAccount();
   const { data: name, status: nameStatus } = useEnsName();
   const { data: avatar, status: avatarStatus } = useEnsAvatar();
 
-  const { tictactoeGames } = useGames();
+  // const { tictactoeGames } = useGames();
+  const { badges } = useWefa();
+
+  const avatarSpring = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, -100%, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
+  });
+
   // const { worlds, onCreateWorld, handleWorldSubmit, worldFormRegister } = useWorlds();
 
   // console.log("Profile Data", {
@@ -46,7 +67,12 @@ export const useProfile = (): ProfileDataProps => {
   //   avatar,
   // });
 
+  function changeTab(tab: ProfileTab) {
+    setTab(tab);
+  }
+
   return {
+    badges,
     balance,
     address,
     accountStatus,
@@ -58,6 +84,9 @@ export const useProfile = (): ProfileDataProps => {
     // worldFormRegister,
     // handleWorldSubmit,
     // onCreateWorld,
-    games: [...tictactoeGames],
+    // games: [...tictactoeGames],
+    tab,
+    changeTab,
+    avatarSpring,
   };
 };

@@ -5,7 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
 import { config, chains } from "./modules/wagmi";
-import { DeviceDetectProvider, isHandheld } from "./hooks/app/useDeviceDetect";
+
+import { AppProvider } from "./hooks/app/useApp";
+import { WefaProvider } from "./hooks/wefa/useWefa";
+import { SeedProvider } from "./hooks/wefa/useSeed";
 
 import { Appbar } from "./components/Layout/AppBar";
 import { Header } from "./components/Layout/Header";
@@ -18,14 +21,18 @@ function App() {
     <ErrorBoundary fallback={<p>An error has occurred</p>}>
       <WagmiConfig config={config}>
         <RainbowKitProvider chains={chains}>
-          <DeviceDetectProvider value={isHandheld ? "handheld" : "desktop"}>
+          <AppProvider>
             <BrowserRouter>
-              <Header />
-              <Appbar />
-              <Views />
-              <ToastContainer className="bottom-16" />
+              <WefaProvider>
+                <SeedProvider>
+                  <Header />
+                  <Appbar />
+                  <Views />
+                  <ToastContainer className="bottom-16" />
+                </SeedProvider>
+              </WefaProvider>
             </BrowserRouter>
-          </DeviceDetectProvider>
+          </AppProvider>
         </RainbowKitProvider>
       </WagmiConfig>
     </ErrorBoundary>

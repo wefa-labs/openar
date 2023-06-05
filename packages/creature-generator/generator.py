@@ -62,7 +62,7 @@ creatures_dic = {
     }
 }
 
-GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "http://75.191.38.75:40782/")
+GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "https://bfcd8689b8639adee7.gradio.live")
 
 #stable diffusion
 # this is subject to change so maybe use kwargs
@@ -73,7 +73,7 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
 
     if cached == False:
 
-        url = GENERATOR_GPU_URL + 'sdapi/v1/txt2img' 
+        url = GENERATOR_GPU_URL + '/sdapi/v1/txt2img' 
         with open(this_creature['template'] , "rb") as image_file:
             control_img = base64.b64encode(image_file.read())
 

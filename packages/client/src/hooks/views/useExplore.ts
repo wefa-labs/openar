@@ -1,9 +1,21 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
+import { SeedDataProps, useSeed } from "../wefa/useSeed";
 
 // import { useWorlds } from "../openar/useWorlds";
 
-export const useExplore = () => {
+export interface ExploreDataProps extends SeedDataProps {
+  // worlds: any[];
+  selectedWorld: string;
+  setSelectedWorld: React.Dispatch<React.SetStateAction<string>>;
+  // onCreateWorld: any;
+  // handleWorldSubmit: any
+}
+
+export const useExplore = (): ExploreDataProps => {
   const [selectedWorld, setSelectedWorld] = useState("");
+  const seed = useSeed();
+
   // const { worlds, onCreateWorld, handleWorldSubmit } = useWorlds();
 
   // const worldList: Record<string, any> = {};
@@ -20,5 +32,6 @@ export const useExplore = () => {
     setSelectedWorld,
     // onCreateWorld,
     // handleWorldSubmit,
+    ...seed,
   };
 };

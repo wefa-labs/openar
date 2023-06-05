@@ -1,14 +1,12 @@
 import React from "react";
 
-import { useTheme } from "../../hooks/app/useTheme";
+import { useApp } from "../../hooks/app/useApp";
 // import { useAuthWeb3 } from "../../hooks/auth/useWeb3";
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { isDesktop } = useDeviceDetect();
+  const { theme, toggleTheme, isDesktop } = useApp();
   // const { address } = useAuthWeb3();
 
   if (!isDesktop) {

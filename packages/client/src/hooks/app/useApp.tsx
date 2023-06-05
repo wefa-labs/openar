@@ -1,6 +1,67 @@
-import React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-type DeviceType = "desktop" | "handheld" | "handsfree";
+export type Theme = "light" | "dark";
+export type DeviceType = "desktop" | "handheld" | "handsfree";
+
+export interface AppDataProps {
+  theme: Theme;
+  toggleTheme: () => void;
+  isDesktop: boolean;
+  isHandheld: boolean;
+  // isHandsfree: boolean;
+}
+
+export const isHandheld = detectHandheld();
+
+const AppContext = createContext<AppDataProps | null>(null);
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const AppProvider = ({ children }: Props) => {
+  const device: DeviceType = isHandheld ? "handheld" : "desktop";
+
+  const currentValue = useContext(AppContext);
+
+  if (currentValue) throw new Error("AppProvider can only be used once");
+
+  const [theme, setTheme] = useState<Theme>(
+    (localStorage.getItem("theme") as Theme) ?? "light"
+  );
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (html) {
+      html.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    }
+  }, [theme]);
+
+  return (
+    <AppContext.Provider
+      value={{
+        theme,
+        toggleTheme,
+        isDesktop: device === "desktop",
+        isHandheld: device === "handheld",
+        // isHandsfree: device === "handsfree",
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useApp = () => {
+  const value = useContext(AppContext);
+  if (!value) throw new Error("Must be used within a AppProvider");
+  return value;
+};
 
 export function detectHandheld() {
   let check = false;
@@ -17,25 +78,4 @@ export function detectHandheld() {
     // @ts-ignore
   })(navigator.userAgent || navigator.vendor || window.opera);
   return check;
-}
-
-export const isHandheld = detectHandheld();
-
-const DeviceDetectContext = React.createContext<DeviceType>(
-  isHandheld ? "handheld" : "desktop"
-);
-
-export const DeviceDetectProvider = DeviceDetectContext.Provider;
-
-export default function useDeviceDetect() {
-  const context = React.useContext(DeviceDetectContext);
-  if (context === undefined) {
-    throw new Error("useDeviceDetect must be used within a DeviceProvider");
-  }
-
-  return {
-    isDesktop: context === "desktop",
-    isHandheld: context === "handheld",
-    isHandsfree: context === "handsfree",
-  };
 }

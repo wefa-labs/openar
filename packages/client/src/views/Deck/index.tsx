@@ -1,53 +1,46 @@
 import { useState } from "react";
-import { a, useSpring, useTransition } from "@react-spring/web";
+import { a, useTransition } from "@react-spring/web";
 
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
-import { DeckDataProps, useDeck } from "../../hooks/views/useDeck";
+import { useApp } from "../../hooks/app/useApp";
+import { DeckDataProps, DeckTab } from "../../hooks/views/useDeck";
 
 import { DeckStats } from "../../components/Deck/Stats";
-import { DeckViewer } from "../../components/Deck/Viewer";
+import { DeckViewer, DeckViewerData } from "../../components/Deck/Viewer";
 import { DeckItems } from "../../components/Deck/Items";
 
-type Tab = "plants" | "creatures";
-
-const tabs: Tab[] = ["plants", "creatures"];
+const tabs: DeckTab[] = ["plants", "creatures"];
 
 interface DeckProps extends DeckDataProps {}
 
-const Deck: React.FC<DeckProps> = () => {
-  const {
-    plantTrail,
-    creatureTrail,
-    plants,
-    viewerOpen,
-    creatures,
-    openSheet,
-    closeSheet,
-    sheetData,
-  } = useDeck();
-  const [tab, setTab] = useState<Tab>("plants");
+const Deck: React.FC<DeckProps> = ({
+  tab,
+  changeTab,
+  plants,
+  creatures,
+  plantTrail,
+  creatureTrail,
+  statsSpring,
+  tabsSpring,
+}) => {
+  const { isDesktop } = useApp();
 
-  const { isDesktop } = useDeviceDetect();
-
-  const statsSpring = useSpring({
-    from: { opacity: 0, transform: "translate3d(0, -100%, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
-    config: {
-      tension: 270,
-      friction: 12,
-      clamp: true,
-    },
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [sheetData, setSheetData] = useState<DeckViewerData>({
+    name: "",
+    description: "",
+    image: "",
+    type: "creature",
+    actions: [],
   });
 
-  const tabsSpring = useSpring({
-    from: { opacity: 0, transform: "translate3d(0, 100%, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
-    config: {
-      tension: 230,
-      friction: 16,
-      clamp: true,
-    },
-  });
+  function openSheet({ data }: { data?: DeckViewerData }) {
+    data && setSheetData(data);
+    setViewerOpen(true);
+  }
+
+  function closeSheet() {
+    setViewerOpen(false);
+  }
 
   const transition = useTransition(tab, {
     from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
@@ -79,7 +72,7 @@ const Deck: React.FC<DeckProps> = () => {
               className={`tab capitalize w-20 ${
                 name === tab ? "tab-active" : ""
               }`}
-              onClick={() => setTab(name)}
+              onClick={() => changeTab(name)}
               type="button"
             >
               {name}

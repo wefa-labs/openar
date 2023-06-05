@@ -1,20 +1,19 @@
 import { a, useTransition } from "@react-spring/web";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
+import { useApp } from "../hooks/app/useApp";
 import { useDeck } from "../hooks/views/useDeck";
-import { useSeed } from "../hooks/wefa/useSeed";
+import { useExplore } from "../hooks/views/useExplore";
 import { useProfile } from "../hooks/views/useProfile";
-import useDeviceDetect from "../hooks/app/useDeviceDetect";
 
 import Deck from "./Deck";
 // import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
-import { useWefadex } from "../hooks/wefa/useDeck";
 
 export default function Views() {
   const location = useLocation();
-  const { isDesktop } = useDeviceDetect();
+  const { isDesktop } = useApp();
 
   const transitions = useTransition(location, {
     from: { opacity: 0 },
@@ -27,10 +26,8 @@ export default function Views() {
     },
   });
 
-  const { badges, plants, creatures } = useWefadex("");
-  const seed = useSeed();
-
-  const deck = useDeck({ plants, creatures });
+  const deck = useDeck();
+  const explore = useExplore();
   const profile = useProfile();
 
   return transitions((style, location) => (
@@ -43,11 +40,8 @@ export default function Views() {
       <Routes location={location}>
         <Route path="/deck" element={<Deck {...deck} />} />
         {/* <Route path="/play" element={<Play />} /> */}
-        <Route path="/explore" element={<Explore {...seed} />} />
-        <Route
-          path="/profile"
-          element={<Profile {...profile} badges={badges} />}
-        />
+        <Route path="/explore" element={<Explore {...explore} />} />
+        <Route path="/profile" element={<Profile {...profile} />} />
         <Route path="*" element={<Navigate to="/explore" />} />
       </Routes>
     </a.main>

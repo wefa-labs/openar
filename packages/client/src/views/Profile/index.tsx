@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { a, useSpring, useTransition } from "@react-spring/web";
+import { a, useTransition } from "@react-spring/web";
 
 import { ProfileHarvest } from "./Harvest"; // Badges
 import { ProfileSettings } from "./Settings";
@@ -10,18 +9,14 @@ type Tab = "harvest" | "settings" | "wallet";
 
 const tabs: Tab[] = ["harvest", "settings"];
 
-interface ProfileProps extends ProfileDataProps {
-  badges: WefaBadge[];
-}
+interface ProfileProps extends ProfileDataProps {}
 
-export const Profile: React.FC<ProfileProps> = ({ badges }) => {
-  const [tab, setTab] = useState<Tab>("harvest");
-
-  const avatarSpring = useSpring({
-    from: { opacity: 0, transform: "translate3d(0, -100%, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
-  });
-
+export const Profile: React.FC<ProfileProps> = ({
+  badges,
+  tab,
+  changeTab,
+  avatarSpring,
+}) => {
   const transition = useTransition(tab, {
     from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
     enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
@@ -50,7 +45,7 @@ export const Profile: React.FC<ProfileProps> = ({ badges }) => {
             <button
               key={name}
               className={`tab capitalize ${name === tab ? "tab-active" : ""}`}
-              onClick={() => setTab(name)}
+              onClick={() => changeTab(name)}
               type="button"
             >
               {name}

@@ -1,9 +1,9 @@
-import { useTheme } from "../../../hooks/app/useTheme";
+import { useApp } from "../../../hooks/app/useApp";
 
 interface ProfileSettingsProps {}
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useApp();
 
   return (
     <div className="flex flex-col gap-3 items-center pt-6">

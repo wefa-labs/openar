@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { BottomSheet } from "react-spring-bottom-sheet";
 
 import { DeckCardData } from "./Card";
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { useApp } from "../../hooks/app/useApp";
 
 export interface DeckViewerData extends DeckCardData {
   type: "creature" | "plant";
@@ -26,14 +26,14 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
   open,
   onDismiss,
 }) => {
-  const { isDesktop } = useDeviceDetect();
+  const { isDesktop } = useApp();
 
   const Content = () => (
     <div className="px-4 flex flex-col gap-3 pb-12">
       <img
         src={image}
         alt={name}
-        className="w-full aspect-square object-cover"
+        className="w-full aspect-square object-cover rounded-xl"
       />
       <h2 className="font-bold text-2xl">{name}</h2>
       <p className="font-light">{description}</p>

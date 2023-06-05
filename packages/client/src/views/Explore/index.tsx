@@ -1,30 +1,25 @@
-// import { Canvas } from "@react-three/fiber";
-// import { ARButton, XR } from "@react-three/xr";
-
-import { SeedDataProps, useSeed } from "../../hooks/wefa/useSeed";
+import { ExploreDataProps } from "../../hooks/views/useExplore";
 
 import { PlantDetector } from "../../components/WEFA/PlantDetector";
 import { ElementSelector } from "../../components/WEFA/ElementSelector";
 import { CreatureGeneration } from "../../components/WEFA/CreatureGeneration";
 
-interface ExploreProps extends SeedDataProps {}
+interface ExploreProps extends ExploreDataProps {}
 
 // TODO: Add Explore Canvas from Petra
-const Explore: React.FC<ExploreProps> = () => {
-  const {
-    isDetecting,
-    isSeeding,
-    plantingState,
-    elementState,
-    creature,
-    element,
-    error,
-    verifyPlant,
-    seedCreature,
-    retrySeeding,
-    reset,
-  } = useSeed();
-
+const Explore: React.FC<ExploreProps> = ({
+  creature,
+  error,
+  element,
+  plantingState,
+  elementState,
+  isDetecting,
+  isSeeding,
+  verifyPlant,
+  seedCreature,
+  retrySeeding,
+  reset,
+}) => {
   return (
     <section className="explore-view flex flex-col px-6 pt-6">
       <div className="explore-detector flex flex-col items-center justify-end gap-2 overflow-hidden">

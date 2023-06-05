@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { RC as PlantIcon } from "../../assets/icons/plant.svg";
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { useApp } from "../../hooks/app/useApp";
 import { PlantInfo } from "./PlantInfo";
 
 interface PlantDetectorProps {
@@ -25,7 +25,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   },
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const { isDesktop } = useDeviceDetect();
+  const { isDesktop } = useApp();
 
   async function handleImage(file: File | null) {
     if (!file) {

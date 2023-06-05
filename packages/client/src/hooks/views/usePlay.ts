@@ -1,32 +1,32 @@
 import { useState } from "react";
 
-import { useMUD } from "../useMud";
-import { useGames } from "../games/useGames";
-import { TicTacToeRole } from "../../modules/openar/createSystemCalls";
+// import { useMUD } from "../useMud";
+// import { useGames } from "../games/useGames";
+// import { TicTacToeRole } from "../../modules/openar/createSystemCalls";
 
 type ViewState = "games" | "tic-tac-toe" | "counter";
 
 export interface PlayDataProps {
   view: ViewState;
-  checkerGames: any[];
-  tictactoeGames: any[];
+  // checkerGames: any[];
+  // tictactoeGames: any[];
   setView: React.Dispatch<React.SetStateAction<ViewState>>;
-  createTicTacToeMatch: (
-    role: TicTacToeRole,
-    name: string,
-    worldId: string,
-    spaceId: string
-  ) => Promise<void>;
-  joinTicTacToeMatch: (gameId: string) => Promise<void>;
+  // createTicTacToeMatch: (
+  //   role: TicTacToeRole,
+  //   name: string,
+  //   worldId: string,
+  //   spaceId: string
+  // ) => Promise<void>;
+  // joinTicTacToeMatch: (gameId: string) => Promise<void>;
 }
 
 export const usePlay = (): PlayDataProps => {
   const [view, setView] = useState<ViewState>("counter");
 
-  const {
-    systemCalls: { createTicTacToeMatch, joinTicTacToeMatch },
-  } = useMUD();
-  const { checkerGames, tictactoeGames } = useGames();
+  // const {
+  //   systemCalls: { createTicTacToeMatch, joinTicTacToeMatch },
+  // } = useMUD();
+  // const { checkerGames, tictactoeGames } = useGames();
 
   // console.log("Play Data", { checkerGames, tictactoeGames });
 
@@ -40,10 +40,10 @@ export const usePlay = (): PlayDataProps => {
 
   return {
     view,
-    checkerGames,
-    tictactoeGames,
+    // checkerGames,
+    // tictactoeGames,
     setView,
-    createTicTacToeMatch,
-    joinTicTacToeMatch,
+    // createTicTacToeMatch,
+    // joinTicTacToeMatch,
   };
 };

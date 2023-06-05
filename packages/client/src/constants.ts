@@ -78,6 +78,13 @@ export const elementData: Record<WefaElement, WefaElementData> = {
   },
 };
 
+export const elementColors: Record<WefaElement, string> = {
+  water: "#3b82f6",
+  earth: "#047857",
+  fire: "#dc2626",
+  air: "#eab308",
+};
+
 export const badges: Record<BadgeType, WefaBadge> = {
   "1st-plant": {
     id: "1st-plant",

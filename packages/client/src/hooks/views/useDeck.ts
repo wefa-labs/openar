@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { useTrail, config, SpringValue } from "@react-spring/web";
+import { useTrail, config, SpringValue, useSpring } from "@react-spring/web";
 
-import { DeckViewerData } from "../../components/Deck/Viewer";
+import { useWefa } from "../wefa/useWefa";
 
 export const height = window.innerHeight - 24;
 
 export interface DeckDataProps {
+  badges: WefaBadge[];
   plants: Plant[];
+  statsSpring: {
+    opacity: SpringValue<number>;
+    transform: SpringValue<string>;
+  };
+  tabsSpring: {
+    transform: SpringValue<string>;
+  };
   creatures: Creature[];
   plantTrail: {
     opacity: SpringValue<number>;
@@ -16,32 +24,33 @@ export interface DeckDataProps {
     opacity: SpringValue<number>;
     transform: SpringValue<string>;
   }[];
-  openSheet: ({
-    canceled,
-    data,
-  }: {
-    canceled?: boolean;
-    data?: DeckViewerData;
-  }) => void;
-  closeSheet: (velocity?: number) => void;
-  sheetData: DeckViewerData;
-  viewerOpen: boolean;
+  tab: DeckTab;
+  changeTab: (tab: DeckTab) => void;
 }
 
-export const useDeck = ({
-  plants = [],
-  creatures = [],
-}: {
-  plants: Plant[];
-  creatures: Creature[];
-}): DeckDataProps => {
-  const [viewerOpen, setViewerOpen] = useState(false);
-  const [sheetData, setSheetData] = useState<DeckViewerData>({
-    name: "",
-    description: "å",
-    image: "",
-    type: "creature",
-    actions: [],
+export type DeckTab = "plants" | "creatures";
+
+export const useDeck = (): DeckDataProps => {
+  const [tab, setTab] = useState<DeckTab>("plants");
+
+  const { badges, plants, creatures } = useWefa();
+
+  const statsSpring = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, -100%, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
+    config: {
+      tension: 270,
+      friction: 12,
+      clamp: true,
+    },
+  });
+
+  const tabsSpring = useSpring({
+    from: { transform: "translate3d(0, 100%, 0)" },
+    to: { transform: "translate3d(0, 0%, 0)" },
+    config: {
+      ...config.slow,
+    },
   });
 
   const plantTrail = useTrail(plants?.length ?? 0, {
@@ -63,23 +72,19 @@ export const useDeck = ({
     },
   });
 
-  function openSheet({ data }: { data?: DeckViewerData }) {
-    data && setSheetData(data);
-    setViewerOpen(true);
-  }
-
-  function closeSheet() {
-    setViewerOpen(false);
+  function changeTab(tab: DeckTab) {
+    setTab(tab);
   }
 
   return {
+    badges,
     plants,
     creatures,
+    statsSpring,
+    tabsSpring,
     plantTrail,
     creatureTrail,
-    viewerOpen,
-    openSheet,
-    closeSheet,
-    sheetData,
+    tab,
+    changeTab,
   };
 };

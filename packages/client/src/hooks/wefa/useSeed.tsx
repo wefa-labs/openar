@@ -1,8 +1,9 @@
 import { useMachine } from "@xstate/react";
+import { createContext, useContext } from "react";
 
-import { SeedContext, seedMachine } from "./seedMachine";
+import { SeedContext as SeedMachineContext, seedMachine } from "./seedMachine";
 
-export interface SeedDataProps extends SeedContext {
+export interface SeedDataProps extends SeedMachineContext {
   plantingState: boolean;
   elementState: boolean;
   isDetecting: boolean;
@@ -13,7 +14,16 @@ export interface SeedDataProps extends SeedContext {
   reset: () => void;
 }
 
-export const useSeed = (): SeedDataProps => {
+const SeedContext = createContext<SeedDataProps | null>(null);
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const SeedProvider = ({ children }: Props) => {
+  const currentValue = useContext(SeedContext);
+
+  if (currentValue) throw new Error("SeedProvider can only be used once");
   const [state, send] = useMachine(seedMachine);
 
   const plantingState =
@@ -48,15 +58,27 @@ export const useSeed = (): SeedDataProps => {
     send({ type: "RESET" });
   }
 
-  return {
-    plantingState,
-    elementState,
-    isDetecting,
-    isSeeding,
-    verifyPlant,
-    seedCreature,
-    retrySeeding,
-    reset,
-    ...state.context,
-  };
+  return (
+    <SeedContext.Provider
+      value={{
+        plantingState,
+        elementState,
+        isDetecting,
+        isSeeding,
+        verifyPlant,
+        seedCreature,
+        retrySeeding,
+        reset,
+        ...state.context,
+      }}
+    >
+      {children}
+    </SeedContext.Provider>
+  );
+};
+
+export const useSeed = () => {
+  const value = useContext(SeedContext);
+  if (!value) throw new Error("Must be used within a SeedProvider");
+  return value;
 };
