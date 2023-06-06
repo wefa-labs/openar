@@ -14,7 +14,8 @@
   --gradient-start: #e3f0f0;
   --gradient-end: #bcc8e3;
 }
-å [data-theme="dark"] {
+
+[data-theme="dark"] {
   --text-color: #fff;
   --surface-color: #292929;
   --gradient-start: #0e4445;
@@ -31,18 +32,15 @@ html {
           box-sizing: border-box;
 }
 
-  *,
-  *::before,
-  *::after {
-      -webkit-box-sizing: inherit;
-         -moz-box-sizing: inherit;
-              box-sizing: inherit;
-  }
-  
-* {
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
   overscroll-behavior-y: contain;
 }
-
+  
 body {
   color: rgb(var(--foreground-rgb));
   max-width: 100vw;
@@ -52,7 +50,6 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none; /* IE and Edge */
   overflow: hidden;
-
   font-family: "Inter", sans-serif;
   background-color: var(--surface-color);
 }
@@ -74,6 +71,18 @@ body {
   /* align-items: center; */
 }
 
+section {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding-top: 1.5rem;
+  max-width: 100vw;
+  display: flex;
+  /* flex-direction: column; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -91,24 +100,6 @@ body {
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs";
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "avatar"
-      "tabs"
-      "tabs"
-      "tabs"
-      "tabs";
-  }
-}
-
-.profile-avatar {
-  grid-area: avatar;
-}
-
-.profile-tabs {
-  grid-area: tabs;
 }
 
 .explore-view {
@@ -120,23 +111,6 @@ body {
     ". detector ."
     "selector selector selector"
     "selector selector selector";
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "detector"
-      "detector"
-      "selector"
-      "selector";
-  }
-}
-
-.explore-detector {
-  grid-area: detector;
-}
-
-.explore-selector {
-  grid-area: selector;
 }
 
 .play-view {
@@ -148,27 +122,6 @@ body {
     "gallery gallery matches"
     "gallery gallery matches"
     "gallery gallery matches";
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "leaderboard leaderboard"
-      "matches matches"
-      "gallery gallery"
-      "gallery gallery";
-  }
-}
-
-.play-leaderboard {
-  grid-area: leaderboard;
-}
-
-.play-matches {
-  grid-area: matches;
-}
-
-.play-gallery {
-  grid-area: gallery;
 }
 
 .deck-view {
@@ -181,16 +134,77 @@ body {
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs";
+}
 
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
+@media (max-width: 640px) {
+  .profile-view {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-areas:
-      "stats"
-      "tabs"
-      "tabs"
-      "tabs"
-      "tabs";
+      "avatar avatar"
+      "tabs tabs"
+      "tabs tabs"
+      "tabs tabs";
   }
+
+  .explore-view {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      "detector detector"
+      "detector detector"
+      "selector selector"
+      "selector selector";
+  }
+
+  .play-view {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      "leaderboard matches"
+      "gallery matches"
+      "gallery matches"
+      "gallery matches";
+  }
+
+  .deck-view {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      "stats stats"
+      "tabs tabs"
+      "tabs tabs"
+      "tabs tabs"
+      "tabs tabs";
+  }
+}
+
+.profile-avatar {
+  grid-area: avatar;
+}
+
+.profile-tabs {
+  grid-area: tabs;
+}
+
+.explore-detector {
+  grid-area: detector;
+}
+
+.explore-selector {
+  grid-area: selector;
+}
+
+.play-leaderboard {
+  grid-area: leaderboard;
+}
+
+.play-matches {
+  grid-area: matches;
+}
+
+.play-gallery {
+  grid-area: gallery;
 }
 
 .deck-stats {

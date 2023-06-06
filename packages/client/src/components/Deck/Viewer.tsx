@@ -29,7 +29,7 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
   const { isDesktop } = useApp();
 
   const Content = () => (
-    <div className="px-4 flex flex-col gap-3 pb-12">
+    <div className="px-4 flex flex-col gap-3 pb-12 w-full bg-base-100">
       <img
         src={image}
         alt={name}
@@ -69,9 +69,10 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
     <BottomSheet
       // className="fixed bottom-0 left-0 right-0 z-10 mb-16 flex h-screen touch-pan-y flex-col gap-4 rounded-lg p-4 "
       // style={style}
-      className="z-20 fixed min-h-5/6"
+      className="z-20 fixed min-h-5/6 bg-base-100"
       open={open}
       onDismiss={onDismiss}
+      // style={}
       snapPoints={({ minHeight }) => minHeight}
     >
       <Content />

@@ -20,6 +20,7 @@ export const PlantInfo: React.FC<PlantInfoProps> = ({
       ...config.default,
       clamp: true,
     },
+    delay: 420,
   });
 
   return (

@@ -151,13 +151,13 @@ export const seedMachine = createMachine(
       },
     },
     actions: {
-      verified: assign((context, event) => {
+      verified: assign((context, event, data) => {
         context.imageVerified = true;
 
         // TODO: Add plant to local DB for later use
         // TODO: Save plant details to context
         // TODO: Move state updates to actions
-        console.log("Verified Image", context, event);
+        console.log("Verified Image", context, event, data);
 
         toast.success("Plant verified!");
 
@@ -288,14 +288,12 @@ export const seedMachine = createMachine(
         // formData.append("data", JSON.stringify(data));
 
         try {
-          const { data } = await apiClient.post<PlantResponse>(
+          const { data } = await apiClient.post<{ plant: PlantResponse }>(
             "/plants/detect",
             { image }
           );
 
-          console.log("Plant detected!", data);
-
-          return { data, image };
+          return { details: data.plant.suggestions[0].plant_details };
         } catch (error) {
           console.log("Photo verification failed!", error);
           throw error;

@@ -215,14 +215,34 @@ declare interface PlantHealth {
     plant_name: string;
     plant_details: {
       language: string;
+      common_names: string[];
       scientific_name: string;
       structured_name: {
         genus: string;
         species: string;
       };
+      taxonomy: {
+        kingdom: string;
+        order: string;
+        family: string;
+        genus: string;
+        class: string;
+      };
+      watering: {
+        min: number;
+        max: number;
+      };
+      edible_parts: string[];
+      wiki_image: {
+        value: string;
+        citation: string;
+        license_name: string;
+        license_url: string;
+      };
     };
     probability: number;
     confirmed: boolean;
+    common_names;
   }[];
   modifiers: string[];
   secret: string;

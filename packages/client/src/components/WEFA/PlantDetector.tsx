@@ -15,14 +15,15 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   onPlantDetection,
   detecting,
   detected,
-  plantDetails = {
-    id: "1",
-    name: "Strawberry",
-    scientificName: "Fragaria × ananassa",
-    description: "A hybrid species of the genus Fragaria",
-    zone: 0 as PlantZone,
-    type: "fruit" as PlantType,
-  },
+  plantDetails,
+  //  = {
+  //   id: "1",
+  //   name: "Strawberry",
+  //   scientificName: "Fragaria × ananassa",
+  //   description: "A hybrid species of the genus Fragaria",
+  //   zone: 0 as PlantZone,
+  //   type: "fruit" as PlantType,
+  // },
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const { isDesktop } = useApp();

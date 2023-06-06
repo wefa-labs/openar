@@ -13,8 +13,6 @@ import Profile from "./Profile";
 
 export default function Views() {
   const location = useLocation();
-  const { isDesktop } = useApp();
-
   const transitions = useTransition(location, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -26,6 +24,7 @@ export default function Views() {
     },
   });
 
+  const { isDesktop } = useApp();
   const deck = useDeck();
   const explore = useExplore();
   const profile = useProfile();

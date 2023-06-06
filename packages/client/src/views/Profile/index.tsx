@@ -29,7 +29,7 @@ export const Profile: React.FC<ProfileProps> = ({
   });
 
   return (
-    <section className="profile-view h-full w-full overflow-hidden pt-6 px-6 sm:px-12">
+    <section className="profile-view px-6 sm:px-12">
       <a.div
         className="profile-avatar flex flex-col items-center"
         style={avatarSpring}

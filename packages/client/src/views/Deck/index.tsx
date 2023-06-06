@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { a, useTransition } from "@react-spring/web";
+import { a, config, useTransition } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 import { DeckDataProps, DeckTab } from "../../hooks/views/useDeck";
@@ -47,22 +47,18 @@ const Deck: React.FC<DeckProps> = ({
     enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
     leave: { opacity: 0, transform: "translate3d(0,0, -100%)" },
     config: {
-      tension: 300,
-      friction: 20,
+      ...config.gentle,
       clamp: true,
     },
   });
 
   return (
-    <section className="deck-view flex flex-col justify-center pt-6">
-      <a.div
-        className="deck-stats px-6 sm:px-12 grid place-items-center"
-        style={statsSpring}
-      >
+    <section className="deck-view flex-col justify-center">
+      <a.div className="deck-stats sm:px-12 px-6 w-full" style={statsSpring}>
         <DeckStats />
       </a.div>
       <a.div
-        className="deck-tabs flex flex-col rounded-t-3xl px-6 pt-3 bg-primary shadow-xl"
+        className="deck-tabs flex flex-col rounded-t-3xl w-full px-6 pt-3 bg-primary shadow-xl"
         style={tabsSpring}
       >
         <div className="tabs tabs-boxed w-fit">
