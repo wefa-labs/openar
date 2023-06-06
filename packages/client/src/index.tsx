@@ -43,15 +43,15 @@ const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");
 const root = ReactDOM.createRoot(rootElement);
 
-if (import.meta.env.PROD) {
-  root.render(<ComingSoon />);
-} else {
-  // setup().then((result) => {
-  root.render(
-    // <MUDProvider value={result}>
-    <App />
-    // </MUDProvider>
-  );
-  // mountDevTools();
-  // });
-}
+// if (import.meta.env.PROD) {
+//   root.render(<ComingSoon />);
+// } else {
+// setup().then((result) => {
+root.render(
+  // <MUDProvider value={result}>
+  <App />
+  // </MUDProvider>
+);
+// mountDevTools();
+// });
+// }
