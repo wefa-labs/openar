@@ -3,11 +3,14 @@ import { a, config, useSpring } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 
-interface PlantInfoProps extends PlantDetails {}
+interface PlantInfoProps extends PlantResponseDetails {}
 
 export const PlantInfo: React.FC<PlantInfoProps> = ({
-  name,
-  description,
+  common_names,
+  scientific_name,
+  // edible_parts,
+  // id,
+  // description,
   // type,
   // zone,
 }) => {
@@ -31,9 +34,9 @@ export const PlantInfo: React.FC<PlantInfoProps> = ({
       style={spring}
     >
       <h4 className="line-clamp-1 text-base">
-        <span className="font-semibold">{name}</span> Detected
+        <span className="font-semibold">{common_names[0]}</span> Detected
       </h4>
-      <p className="line-clamp-1 text-sm font-light">{description}</p>
+      <p className="line-clamp-1 text-sm font-light">{scientific_name}</p>
       {/* <div className="flex gap-3">
         <span className="badge badge-primary">{type}</span>
         <span className="badge badge-secondary">{zone}</span>

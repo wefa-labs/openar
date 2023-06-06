@@ -18,6 +18,7 @@ const Explore: React.FC<ExploreProps> = ({
   verifyPlant,
   seedCreature,
   retrySeeding,
+  plant,
   reset,
 }) => {
   return (
@@ -27,6 +28,7 @@ const Explore: React.FC<ExploreProps> = ({
           <PlantDetector
             detecting={isDetecting}
             onPlantDetection={verifyPlant}
+            plantDetails={plant}
           />
         ) : (
           <CreatureGeneration

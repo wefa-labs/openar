@@ -157,6 +157,34 @@ declare interface ARWorld {
   createdAt: number;
 }
 
+declare interface PlantResponseDetails {
+  id: number;
+  common_names: string[];
+  scientific_name: string;
+  structured_name: {
+    genus: string;
+    species: string;
+  };
+  taxonomy: {
+    kingdom: string;
+    order: string;
+    family: string;
+    genus: string;
+    class: string;
+  };
+  watering: {
+    min: number;
+    max: number;
+  };
+  edible_parts: string[];
+  wiki_image: {
+    value: string;
+    citation: string;
+    license_name: string;
+    license_url: string;
+  };
+}
+
 declare interface PlantResponse {
   id: number;
   custom_id?: null | string;
@@ -175,14 +203,7 @@ declare interface PlantResponse {
   suggestions: {
     id: number;
     plant_name: string;
-    plant_details: {
-      language: "en";
-      scientific_name: string;
-      structured_name: {
-        genus: string;
-        species: string;
-      };
-    };
+    plant_details: PlantResponseDetails;
     probability: number;
     confirmed: boolean;
   }[];

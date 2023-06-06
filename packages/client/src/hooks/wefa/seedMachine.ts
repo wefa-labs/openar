@@ -9,7 +9,7 @@ export interface SeedContext {
   image: string | null;
   imageVerified: boolean;
   element: WefaElement | null;
-  plant: PlantDetails | null;
+  plant: PlantResponseDetails | null;
   creature: Creature | null;
   error: string | null;
 }
@@ -43,6 +43,11 @@ export const seedMachine = createMachine(
     tags: ["seed", "game", "nature", "critters", "creatures"],
     initial: "idle",
     schema: {
+      services: {} as {
+        plantVerifier: {
+          data: PlantResponseDetails | undefined;
+        };
+      },
       context: {
         image: null,
         element: null,
@@ -151,13 +156,17 @@ export const seedMachine = createMachine(
       },
     },
     actions: {
-      verified: assign((context, event, data) => {
+      verified: assign((context, event) => {
         context.imageVerified = true;
 
+        const plantDetails = event.data;
+
+        console.log("Verified Image", event);
+        if (plantDetails) {
+          context.plant = plantDetails;
+        }
+
         // TODO: Add plant to local DB for later use
-        // TODO: Save plant details to context
-        // TODO: Move state updates to actions
-        console.log("Verified Image", context, event, data);
 
         toast.success("Plant verified!");
 
@@ -185,31 +194,6 @@ export const seedMachine = createMachine(
         };
 
         context.creature = creature;
-        createCreature(creature);
-        context.plant &&
-          context.image &&
-          createPlant({
-            id: `0x${nanoid()}`,
-            caretakerAddress: "0x",
-            // spaceAddress: "0x",
-            name: context.plant.name,
-            description: context.plant.description,
-            image: context.image,
-            isUploaded: false,
-            plantId: 0,
-            createdAt: new Date().getMilliseconds(),
-            updatedAt: new Date().getMilliseconds(),
-            care: {
-              health: 100,
-              growthLevel: 0 as GrowthLevel,
-            },
-            localId: nanoid(),
-            // health: {
-            //   current: 100,
-            //   max: 100,
-            //   healthStatus: 2 as GrowthLevel,
-            // },
-          });
 
         Promise.all([
           createCreature(creature),
@@ -219,8 +203,8 @@ export const seedMachine = createMachine(
               id: `0x${nanoid()}`,
               caretakerAddress: "0x",
               // spaceAddress: "0x",
-              name: context.plant.name,
-              description: context.plant.description,
+              name: context.plant.common_names[0],
+              description: "",
               image: context.image,
               isUploaded: false,
               plantId: 0,
@@ -293,7 +277,7 @@ export const seedMachine = createMachine(
             { image }
           );
 
-          return { details: data.plant.suggestions[0].plant_details };
+          return { ...data.plant.suggestions[0].plant_details };
         } catch (error) {
           console.log("Photo verification failed!", error);
           throw error;
