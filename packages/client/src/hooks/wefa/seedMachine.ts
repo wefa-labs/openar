@@ -4,7 +4,7 @@ import { createMachine, assign } from "xstate";
 
 import { pickRandom } from "../../constants";
 
-// import { apiClient } from "../../modules/axios";
+import { apiClient } from "../../modules/axios";
 import { createPlant, createCreature, db, initDB } from "../../modules/idb";
 
 import { data as mockCreatures } from "../../mocks/creatures.json";
@@ -329,13 +329,15 @@ export const seedMachine = createMachine(
         }
 
         try {
-          // const { data } = await apiClient.post<{ img: string }>(
-          //   "/creatures/seed",
-          //   {
-          //     plant: context.plant.scientific_name,
-          //     element,
-          //   }
-          // );
+          const { data } = await apiClient.post<{ img: string }>(
+            "/creatures/seed",
+            {
+              plant: context.plant.scientific_name,
+              element,
+            }
+          );
+
+          console.log("Creature generated!", data);
 
           return { element, img: pickRandom(mockCreatures).image };
         } catch (error) {

@@ -1,11 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import { badges as badgeList } from "../../constants";
+
 import {
   createBadge,
   readPlants,
   readCreatures,
   readBadges,
 } from "../../modules/idb";
+import { toast } from "react-toastify";
 
 interface WefadexProps {
   badges: WefaBadge[];
@@ -54,40 +57,59 @@ export const WefaProvider = ({ children }: Props) => {
   }
 
   async function handleBadgeCheck() {
+    const newBadges: WefaBadge[] = [];
+
     // Check if user has earned a badge by querying local DB for all plants and creatures
-    // If a user has already earned a badge, don't award it again
-    // async function checkBadges() {
-    //   const earnedBadges: Record<BadgeType, WefaBadge> = {};
-    //   const localBadges = await readBadges();
-    //   if (localBadges) {
-    //     localBadges.forEach((badge) => {
-    //       earnedBadges[badge.id] = badge;
-    //     });
-    //   }
-    //   const plants = await readPlants();
-    //   const creatures = await readCreatures();
-    //   const plantBadges = plants.reduce<Record<PlantBadgeType, boolean>>(
-    //     (badges, plant) => {
-    //       return {
-    //         ...badges,
-    //       };
-    //     },
-    //     {
-    //       "1st-plant": false,
-    //       "1st-flower": false,
-    //       "1st-fruit": false,
-    //       "1st-herb": false,
-    //       "1st-vegetable": false,
-    //       "all-plant-types": false,
-    //     }
-    //   );
-    // }
+    const dbPlants = await readPlants();
+    const dbCreatures = await readCreatures();
+    const dbBadges = await readBadges();
+
+    const earnedBadgesList = dbBadges.reduce<Record<BadgeType, WefaBadge>>(
+      (acc, badge) => {
+        acc[badge.id] = badge;
+        return acc;
+      },
+      {} as Record<BadgeType, WefaBadge>
+    );
+
+    // 1st badge "early-adopter" should be awarded automatically.
+    if (!earnedBadgesList["early-adopter"]) {
+      const newBadge = badgeList["early-adopter"];
+
+      newBadges.push(newBadge);
+    }
+
+    // If a user has not earned a badge, award 1st plant and creature badge
+    if (dbPlants.length === 1 && !earnedBadgesList["1st-plant"]) {
+      const newBadge = badgeList["1st-plant"];
+
+      newBadges.push(newBadge);
+    }
+
+    if (dbCreatures.length === 1 && !earnedBadgesList["1st-creature"]) {
+      const newBadge = badgeList["1st-creature"];
+
+      newBadges.push(newBadge);
+    }
+
+    newBadges.forEach(async (badge) => {
+      await createBadge(badge);
+
+      toast.success("You've earned a new badge! Check your profile.");
+    });
+
+    const updatedBadges = await readBadges();
+
+    setBadges(updatedBadges);
+
+    handleFetchPlants();
+    handleFetchCreatures();
   }
 
   useEffect(() => {
-    // handleFetchBadges();
-    // handleFetchPlants();
-    // handleFetchCreatures();
+    handleFetchBadges();
+    handleFetchPlants();
+    handleFetchCreatures();
   }, []);
 
   return (
