@@ -36,7 +36,7 @@ export const DeckCard: React.FC<DeckCardProps> = ({
     <a.li style={style} onClick={onClick} className="">
       <label
         htmlFor="deck-viewer-dialog"
-        className="unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-lg"
+        className="unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-xl"
       >
         <div className="pl-4 flex flex-col gap-3">
           <h4 className="font-bold text-xl line-clamp-1">{name}</h4>

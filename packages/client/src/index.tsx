@@ -5,7 +5,6 @@ import * as Sentry from "@sentry/react";
 // import { setup } from "./modules/openar/setup";
 
 // import { MUDProvider } from "./hooks/useMud";
-import { isHandheld } from "./hooks/app/useApp";
 
 import { ComingSoon } from "./components/Layout/ComingSoon";
 import App from "./App";
@@ -44,7 +43,7 @@ const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");
 const root = ReactDOM.createRoot(rootElement);
 
-if (import.meta.env.PROD || !isHandheld) {
+if (import.meta.env.PROD) {
   root.render(<ComingSoon />);
 } else {
   // setup().then((result) => {
