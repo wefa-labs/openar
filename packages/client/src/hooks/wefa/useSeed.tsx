@@ -1,7 +1,8 @@
 import { useMachine } from "@xstate/react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 import { SeedContext as SeedMachineContext, seedMachine } from "./seedMachine";
+import { useWefa } from "./useWefa";
 
 export interface SeedDataProps extends SeedMachineContext {
   plantingState: boolean;
@@ -24,6 +25,7 @@ export const SeedProvider = ({ children }: Props) => {
   const currentValue = useContext(SeedContext);
 
   if (currentValue) throw new Error("SeedProvider can only be used once");
+  const { handleBadgeCheck } = useWefa();
   const [state, send] = useMachine(seedMachine);
 
   const plantingState =
@@ -57,6 +59,12 @@ export const SeedProvider = ({ children }: Props) => {
   function reset() {
     send({ type: "RESET" });
   }
+
+  useEffect(() => {
+    if (state.matches("plant_verified")) {
+      handleBadgeCheck();
+    }
+  }, [state.value]);
 
   return (
     <SeedContext.Provider

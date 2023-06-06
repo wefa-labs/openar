@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { RC as PlantIcon } from "../../assets/icons/plant.svg";
 import { useApp } from "../../hooks/app/useApp";
+
+// import { Loader } from "../Loader";
 import { PlantInfo } from "./PlantInfo";
 
 interface PlantDetectorProps {
@@ -16,14 +18,6 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   detecting,
   detected,
   plantDetails,
-  //  = {
-  //   id: "1",
-  //   name: "Strawberry",
-  //   scientificName: "Fragaria × ananassa",
-  //   description: "A hybrid species of the genus Fragaria",
-  //   zone: 0 as PlantZone,
-  //   type: "fruit" as PlantType,
-  // },
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const { isDesktop } = useApp();
@@ -74,22 +68,6 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
       handleImage(files[0]);
     }
   }
-
-  // function handlePaste(e: React.ClipboardEvent<HTMLLabelElement>) {
-  //   e.preventDefault();
-
-  //   console.log("Item Pasted", e);
-
-  //   const items = e.clipboardData.items;
-
-  //   for (let i = 0; i < items.length; i++) {
-  //     if (items[i].type.indexOf("image") !== -1) {
-  //       const file = items[i].getAsFile();
-  //       handleImage(file);
-  //       break;
-  //     }
-  //   }
-  // }
 
   function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];

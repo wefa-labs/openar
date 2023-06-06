@@ -62,11 +62,11 @@ creatures_dic = {
     }
 }
 
-GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "https://bfcd8689b8639adee7.gradio.live")
+GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "http://75.191.38.75:40789")
 
 #stable diffusion
 # this is subject to change so maybe use kwargs
-async def generate_creature_route(plant_info, creature_type, element_type, description, cached = True):
+async def generate_creature_route(creature_type, element_type, description, cached = True):
 
     this_creature = creatures_dic[creature_type]
     this_element = element_dic[element_type]
@@ -99,7 +99,7 @@ async def generate_creature_route(plant_info, creature_type, element_type, descr
             "alwayson_scripts": {
             	"controlnet":{
             	    "args":[{
-            	    "input_image": control_img,
+            	    # "control_image": control_img,
             	    "module": 'seg_ofcoco',
             	    "model": 'control_sd15_seg [fef5e48e]',
             	    "weight": 2,

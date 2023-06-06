@@ -1,18 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { data as creatureData } from "../../mocks/creatures.json";
-import { data as plantData } from "../../mocks/plants.json";
-
-import { readPlants, readCreatures, readBadges } from "../../modules/idb";
-import { badges as wefaBadges } from "../../constants";
+import {
+  createBadge,
+  readPlants,
+  readCreatures,
+  readBadges,
+} from "../../modules/idb";
 
 interface WefadexProps {
   badges: WefaBadge[];
   plants: Plant[];
   creatures: Creature[];
+  handleBadgeCheck: () => Promise<void>;
+  handleFetchBadges: () => Promise<void>;
   handleFetchPlants: () => Promise<void>;
   handleFetchCreatures: () => Promise<void>;
-  handleFetchBadges: () => Promise<void>;
 }
 
 const WefaContext = createContext<WefadexProps | null>(null);
@@ -26,9 +28,9 @@ export const WefaProvider = ({ children }: Props) => {
 
   if (currentValue) throw new Error("WefaProvider can only be used once");
 
-  const [creatures, setCreatures] = useState<Creature[]>(creatureData as any);
-  const [plants, setPlants] = useState<Plant[]>(plantData as any);
-  const [badges, setBadges] = useState<WefaBadge[]>(Object.values(wefaBadges));
+  const [creatures, setCreatures] = useState<Creature[]>([]);
+  const [plants, setPlants] = useState<Plant[]>([]);
+  const [badges, setBadges] = useState<WefaBadge[]>([]);
 
   async function handleFetchPlants() {
     const newPlants = await readPlants();
@@ -51,6 +53,37 @@ export const WefaProvider = ({ children }: Props) => {
     setBadges(newBadges);
   }
 
+  async function handleBadgeCheck() {
+    // Check if user has earned a badge by querying local DB for all plants and creatures
+    // If a user has already earned a badge, don't award it again
+    // async function checkBadges() {
+    //   const earnedBadges: Record<BadgeType, WefaBadge> = {};
+    //   const localBadges = await readBadges();
+    //   if (localBadges) {
+    //     localBadges.forEach((badge) => {
+    //       earnedBadges[badge.id] = badge;
+    //     });
+    //   }
+    //   const plants = await readPlants();
+    //   const creatures = await readCreatures();
+    //   const plantBadges = plants.reduce<Record<PlantBadgeType, boolean>>(
+    //     (badges, plant) => {
+    //       return {
+    //         ...badges,
+    //       };
+    //     },
+    //     {
+    //       "1st-plant": false,
+    //       "1st-flower": false,
+    //       "1st-fruit": false,
+    //       "1st-herb": false,
+    //       "1st-vegetable": false,
+    //       "all-plant-types": false,
+    //     }
+    //   );
+    // }
+  }
+
   useEffect(() => {
     // handleFetchBadges();
     // handleFetchPlants();
@@ -63,6 +96,7 @@ export const WefaProvider = ({ children }: Props) => {
         badges,
         plants,
         creatures,
+        handleBadgeCheck,
         handleFetchBadges,
         handleFetchPlants,
         handleFetchCreatures,

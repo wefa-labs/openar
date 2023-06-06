@@ -32,7 +32,7 @@ export default async function creaturesController(fastify: FastifyInstance) {
       const creature = await generateCreature(body.plant, body.element);
       // Return 2D image and 3D model to client
 
-      reply.send({ creature });
+      reply.send({ ...creature });
     } catch (error) {
       console.log(error);
 

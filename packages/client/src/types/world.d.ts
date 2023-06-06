@@ -1,19 +1,22 @@
 declare type WefaElement = "water" | "earth" | "fire" | "air";
 
-declare type BadgeType =
+declare type PlantBadgeType =
   | "1st-plant"
   | "1st-flower"
   | "1st-fruit"
   | "1st-herb"
   | "1st-vegetable"
-  | "all-plant-types"
+  | "all-plant-types";
+
+declare type CreatureBadgeType =
   | "1st-creature"
   | "all-elements"
   | "1st-water-creature"
   | "1st-earth-creature"
   | "1st-fire-creature"
-  | "1st-air-creature"
-  | "early-adopter";
+  | "1st-air-creature";
+
+declare type BadgeType = PlantBadgeType | CreatureBadgeType | "early-adopter";
 
 declare interface WefaBadge {
   id: BadgeType;
@@ -165,19 +168,19 @@ declare interface PlantResponseDetails {
     genus: string;
     species: string;
   };
-  taxonomy: {
+  taxonomy?: {
     kingdom: string;
     order: string;
     family: string;
     genus: string;
     class: string;
   };
-  watering: {
+  watering?: {
     min: number;
     max: number;
   };
   edible_parts: string[];
-  wiki_image: {
+  wiki_image?: {
     value: string;
     citation: string;
     license_name: string;

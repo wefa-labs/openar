@@ -85,6 +85,13 @@ export const elementColors: Record<WefaElement, string> = {
   air: "#eab308",
 };
 
+export const plantColors: Record<PlantType, string> = {
+  flower: "#fbbf24",
+  fruit: "#f59e0b",
+  herb: "#f472b6",
+  vegetable: "#10b981",
+};
+
 export const badges: Record<BadgeType, WefaBadge> = {
   "1st-plant": {
     id: "1st-plant",
@@ -170,7 +177,7 @@ export const badges: Record<BadgeType, WefaBadge> = {
   },
 };
 
-function pickRandom<T>(arr: T[]): T {
+export function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
