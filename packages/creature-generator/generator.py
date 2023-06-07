@@ -62,7 +62,7 @@ creatures_dic = {
     }
 }
 
-GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "http://75.191.38.75:40789")
+GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "")
 ENCODING = 'utf-8'
 
 #stable diffusion
