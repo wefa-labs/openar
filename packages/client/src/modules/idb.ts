@@ -20,17 +20,17 @@ export let status: "idle" | "loading" | "error" | "success" = "idle";
 
 export async function initDB() {
   if (db) return db;
-  if (status === "loading") return;
+  // if (status === "loading") return;
   if (typeof window === "undefined" && !("indexedDB" in window)) {
     console.log("This browser doesn't support IndexedDB.");
     status = "error";
     return;
   }
 
-  status = "loading";
+  // status = "loading";
 
   try {
-    db = await openDB<WEFADB>("wefa", 2, {
+    db = await openDB<WEFADB>("wefa", 1, {
       upgrade(db) {
         db.createObjectStore("plants", {
           keyPath: "id",

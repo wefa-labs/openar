@@ -16,7 +16,7 @@
   "main": "dist/index.js",
   "scripts": {
     "docker:build": "docker build -t wefa-creature-generator .",
-    "docker:run": "docker run -p 8081:8081 wefa-creature-generator",
+    "docker:run": "docker run -e PORT:$PORT wefa-creature-generator",
     "docker:build:gpu": "docker build -t wefa-creature-generator-gpu -f Dockerfile.gpu .",
     "docker:run:gpu": "docker run -p 8081:8081 wefa-creature-generator-gpu"
   }

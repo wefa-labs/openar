@@ -99,7 +99,7 @@ async def generate_creature_route(creature_type, element_type, description, cach
             "alwayson_scripts": {
             	"controlnet":{
             	    "args":[{
-            	    # "control_image": control_img,
+            	    "input_image": control_img,
             	    "module": 'seg_ofcoco',
             	    "model": 'control_sd15_seg [fef5e48e]',
             	    "weight": 2,

@@ -29,9 +29,9 @@ export const Profile: React.FC<ProfileProps> = ({
   });
 
   return (
-    <section className="profile-view px-6 sm:px-12">
+    <section className="profile-view px-6 sm:px-12 flex flex-col max-w-screen-sm w-full mx-auto">
       <a.div
-        className="profile-avatar flex flex-col items-center"
+        className="profile-avatar flex flex-col items-center w-full"
         style={avatarSpring}
       >
         <div className="avatar">
@@ -40,7 +40,7 @@ export const Profile: React.FC<ProfileProps> = ({
           </div>
         </div>
         <h2 className="text-2xl font-semibold mb-6">Username</h2>
-        <div className="tabs tabs-boxed">
+        <div className="tabs tabs-boxed w-fit">
           {tabs.map((name) => (
             <button
               key={name}

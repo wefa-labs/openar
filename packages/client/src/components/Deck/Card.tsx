@@ -21,6 +21,7 @@ export interface DeckCardProps extends DeckCardData {
     transform: SpringValue<string>;
   };
   onClick?: React.MouseEventHandler<HTMLLIElement>;
+  paddingTop?: boolean;
   isDesktop: boolean;
 }
 
@@ -30,13 +31,17 @@ export const DeckCard: React.FC<DeckCardProps> = ({
   image,
   style,
   // actions,
+  isDesktop,
+  paddingTop,
   onClick,
 }) => {
   return (
     <a.li style={style} onClick={onClick} className="">
       <label
         htmlFor="deck-viewer-dialog"
-        className="unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-xl"
+        className={`${
+          isDesktop ? "" : `${paddingTop ? "mt-16" : ""}`
+        } unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-xl`}
       >
         <div className="pl-4 flex flex-col gap-3">
           <h4 className="font-bold text-xl line-clamp-1">{name}</h4>

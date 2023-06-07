@@ -12,20 +12,11 @@ export async function generateCreature(plant: string, element: WefaElement) {
         method: "POST",
         body: JSON.stringify({
           description: plant,
-          creature_type: "ant",
+          creature_type: "butterfly",
           element_type: element.toLowerCase(),
         }),
       })
     ).json();
-
-    // const data: { status: string } = await (
-    //   await fetch(`${generatorUrl}/status`, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     method: "GET",
-    //   })
-    // ).json();
 
     console.log("Generator Data", data);
 

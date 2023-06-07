@@ -38,14 +38,12 @@ export const WefaProvider = ({ children }: Props) => {
   async function handleFetchPlants() {
     const newPlants = await readPlants();
 
-    // console.log("newPlants", newPlants);
     setPlants(newPlants);
   }
 
   async function handleFetchCreatures() {
     const newCreatures = await readCreatures();
 
-    // console.log("newCreatures", newCreatures);
     setCreatures(newCreatures);
   }
 

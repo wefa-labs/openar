@@ -28,13 +28,6 @@ enum GrowthLevel {
   RIPENING,
 }
 
-const creatureImage: Record<WefaElement, string> = {
-  water: "assets/water-butterfly.png",
-  fire: "assets/fire-butterfly.png",
-  earth: "assets/earth-butterfly.png",
-  air: "assets/air-butterfly.png",
-};
-
 export const seedMachine = createMachine(
   {
     id: "seed",
@@ -50,7 +43,10 @@ export const seedMachine = createMachine(
     schema: {
       services: {} as {
         plantVerifier: {
-          data: PlantResponseDetails | undefined;
+          data: {
+            details: PlantResponseDetails | undefined;
+            img: string;
+          };
         };
         creatureGenerator: {
           data: {
@@ -160,6 +156,8 @@ export const seedMachine = createMachine(
         return !!event.image;
       },
       isSeedingValid: (context, event: { element: WefaElement }) => {
+        console.log("element", context, event);
+
         return !!context.image && (!!event.element || !!context.element);
       },
       isSeedingRetryValid: (context) => {
@@ -169,38 +167,35 @@ export const seedMachine = createMachine(
     actions: {
       verified: assign((context, event) => {
         context.imageVerified = true;
+        context.image = event.data.img;
 
-        const plantDetails = event.data;
+        const plantDetails = event.data.details;
 
         console.log("Verified Image", event);
         if (plantDetails) {
           context.plant = plantDetails;
         }
 
-        // TODO: Add plant to local DB for later use
-
         toast.success("Plant verified!");
 
         return context;
       }),
-      seeded: assign((context, event, data) => {
+      seeded: assign((context, event) => {
+        const mockCreature = pickRandom(mockCreatures);
         const creature: Creature = {
           id: `0x${nanoid()}`,
-          name: "Test Creature",
-          description: "Test Creature Description",
-          image: creatureImage[context.element ?? "earth"],
-          care: {
-            checkedAt: new Date().getMilliseconds(),
-            growthLevel: GrowthLevel.SEED,
-          },
-          isUploaded: false,
           localId: nanoid(),
-          element: "earth",
-          spaceId: "0x",
-          model: "",
-          trainer: "0x",
+          name: mockCreature.name,
+          description: mockCreature.description,
+          image: mockCreature.image,
           createdAt: new Date().getMilliseconds(),
           updatedAt: new Date().getMilliseconds(),
+          spaceId: "",
+          trainer: "0x",
+          model: "",
+          element: event.data.element,
+          isUploaded: false,
+          care: {},
         };
 
         context.creature = creature;
@@ -232,7 +227,7 @@ export const seedMachine = createMachine(
               // },
             }),
         ]).then((res) => {
-          console.log("Seeded Creature", { res, context, event, data });
+          console.log("Seeded Creature", { res, context, event });
           toast.success("Creature seeded!");
         });
 
@@ -311,7 +306,7 @@ export const seedMachine = createMachine(
             },
           };
 
-          return details;
+          return { details, img: plant.image };
         } catch (error) {
           console.log("Photo verification failed!", error);
           throw error;

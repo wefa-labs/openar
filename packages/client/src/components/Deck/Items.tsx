@@ -23,14 +23,19 @@ export const DeckItems: React.FC<DeckItemsProps> = ({
 }) => {
   return (
     <ul
-      className="flex flex-col overflow-scroll h-full gap-3 pt-6 pb-20"
+      className={
+        isDesktop
+          ? "grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-auto gap-6 pb-32 pt-6 h-full"
+          : "flex flex-col overflow-scroll h-full gap-3 pb-20"
+      }
       // className={`grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-scroll h-full`}
     >
       {trail.map((props, index) => (
         <DeckCard
           {...items[index]}
           key={items[index].id}
-          style={props}
+          style={{ ...props }}
+          paddingTop={index === 0}
           onClick={() =>
             openSheet({
               data: {
