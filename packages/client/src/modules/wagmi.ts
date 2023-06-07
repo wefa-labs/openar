@@ -15,7 +15,7 @@ const { chains, publicClient } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "OpenAR",
+  appName: "WEFA",
   chains,
 });
 

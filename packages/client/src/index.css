@@ -17,7 +17,7 @@
 
 [data-theme="dark"] {
   --text-color: #fff;
-  --surface-color: #292929;
+  --surface-color: #262626;
   --gradient-start: #0e4445;
   --gradient-end: #13152e;
 }
@@ -28,8 +28,8 @@
 
 html {
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
@@ -40,7 +40,7 @@ html {
   box-sizing: inherit;
   overscroll-behavior-y: contain;
 }
-  
+
 body {
   color: rgb(var(--foreground-rgb));
   max-width: 100vw;
