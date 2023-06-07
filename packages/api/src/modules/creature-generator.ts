@@ -23,5 +23,7 @@ export async function generateCreature(plant: string, element: WefaElement) {
     return data;
   } catch (error) {
     console.error("Error generating creature", error);
+
+    throw error;
   }
 }
