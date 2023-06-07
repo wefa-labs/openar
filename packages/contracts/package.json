@@ -9,7 +9,7 @@
     "test": "tsc --noEmit && mud test",
     "build": "forge clean && forge build",
     "deploy:local": "dotenv && pnpm run initialize && mud deploy",
-    "deploy:testnet": "pnpm run initialize && mud deploy --profile=lattice-testnet --worldAddress=0x6a43eD76C20e26fFbf37c8453A2D9203b0b626D3",
+    "deploy:testnet": "pnpm run initialize && mud deploy --profile=lattice-testnet",
     "tablegen": "mud tablegen",
     "tsgen": "mud tsgen --configPath mud.config.ts --out ../client/src/modules/openar",
     "worldgen": "mud worldgen",
