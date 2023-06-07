@@ -42,30 +42,31 @@ export default mudConfig({
       },
     },
     Match: {
-      keySchema: { gameId: "bytes32", matchId: "bytes32" },
+      keySchema: { gameId: "bytes32", matchNumber: "uint8" },
       schema: {
         turnCount: "uint8",
-        id: "bytes32",
-        spacePosition: "uint8", // TODO: Integrate for 9 space tic tac toe, hardcoded to 0 for now.
         currentPlayer: "address",
         winner: "address",
         players: "address[]",
+        board: "uint8[]",
       },
     },
     Game: {
       keySchema: { gameId: "bytes32" },
       schema: {
         matchesPlayed: "uint8",
-        spaceY: "uint32",
+        worldId: "bytes32",
         spaceId: "bytes32",
         winner: "address",
         players: "address[]",
       },
     },
     Cell: {
-      keySchema: { worldId: "bytes32", spaceId: "bytes32", x: "uint32", y: "uint32", z: "uint32" },
+      keySchema: { worldId: "bytes32", spaceId: "bytes32", position: "uint8" },
       schema: {
-        values: "bytes32",
+        // x: "uint32",
+        // y: "uint32",
+        value: "bytes32",
       },
     },
     Space: {

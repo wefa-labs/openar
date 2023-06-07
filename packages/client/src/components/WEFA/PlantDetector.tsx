@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 
-import { RC as PlantIcon } from "../../assets/plant.svg";
-import useDeviceDetect from "../../hooks/device/useDeviceDetect";
+import { RC as PlantIcon } from "../../assets/icons/plant.svg";
+import { useApp } from "../../hooks/app/useApp";
+
+// import { Loader } from "../Loader";
+import { PlantInfo } from "./PlantInfo";
 
 interface PlantDetectorProps {
-  onPlantDetection: (file: File) => void;
+  onPlantDetection: (image: string | ArrayBuffer) => void;
   detecting: boolean;
+  detected?: boolean;
+  plantDetails?: PlantResponseDetails | null;
 }
 
 export const PlantDetector: React.FC<PlantDetectorProps> = ({
   onPlantDetection,
   detecting,
+  detected,
+  plantDetails,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
-  const deviceType = useDeviceDetect();
+  const { isDesktop } = useApp();
 
   async function handleImage(file: File | null) {
     if (!file) {
@@ -32,16 +39,16 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
           console.log("No image");
           return;
         }
+
+        onPlantDetection(image);
       };
       reader.readAsDataURL(file);
-
-      onPlantDetection(file);
     }
   }
 
-  function handleRemove() {
-    setPreview(null);
-  }
+  // function handleRemove() {
+  //   setPreview(null);
+  // }
 
   function handleDragOver(e: React.DragEvent<HTMLLabelElement>) {
     e.stopPropagation();
@@ -62,22 +69,6 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
     }
   }
 
-  // function handlePaste(e: React.ClipboardEvent<HTMLLabelElement>) {
-  //   e.preventDefault();
-
-  //   console.log("Item Pasted", e);
-
-  //   const items = e.clipboardData.items;
-
-  //   for (let i = 0; i < items.length; i++) {
-  //     if (items[i].type.indexOf("image") !== -1) {
-  //       const file = items[i].getAsFile();
-  //       handleImage(file);
-  //       break;
-  //     }
-  //   }
-  // }
-
   function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
@@ -89,9 +80,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   return (
     <label
       className={`relative grid aspect-square w-full cursor-pointer appearance-none place-items-center rounded-lg border-2 border-dashed border-green-500 transition-all focus:outline-none ${
-        deviceType === "desktop"
-          ? "hover:border-yellow-600 hover:text-blue-500"
-          : ""
+        isDesktop ? "hover:border-yellow-600 hover:text-blue-500" : ""
       }`}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
@@ -114,23 +103,23 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
             alt="Selected Plant Photo"
             className="w-full rounded-lg object-cover"
           />
-          <button
+          {!detected && plantDetails && <PlantInfo {...plantDetails} />}
+          {/* <button
             className="badge absolute right-2 top-2 z-20 bg-red-500 px-4 py-3 text-xl text-white"
             onClick={handleRemove}
           >
             &times;
-          </button>
+          </button> */}
         </>
       ) : (
         <div className="flex flex-col items-center justify-center gap-1">
           <PlantIcon className="scale-125 fill-green-600" />
           <p
             className={`text-center text-2xl tracking-wide ${
-              deviceType === "desktop" ? "hover:text-blue-500" : ""
+              isDesktop ? "hover:text-blue-500" : ""
             }`}
           >
-            {deviceType === "desktop" ? "Click or Paste" : "Tap to Add"} Plant
-            Image
+            {isDesktop ? "Click or Paste" : "Tap to Add"} Plant Image
           </p>
         </div>
       )}

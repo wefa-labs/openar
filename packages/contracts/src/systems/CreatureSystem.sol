@@ -2,22 +2,33 @@
 pragma solidity >=0.8.0;
 
 import {System} from "@latticexyz/world/src/System.sol";
+import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
 import {GrowthLevelEnum} from "../codegen/Types.sol";
-import {Identity, IdentityData, Asset, AssetData, Care, CareData, Element, Owner} from "../codegen/Tables.sol";
+import { IWorld } from "../codegen/world/IWorld.sol";
+import {Identity, IdentityData, Asset, AssetData, Care, CareData, Cell, Element, Owner} from "../codegen/Tables.sol";
 
 contract CreatureSystem is System {
-    function redeem(string memory image, string memory meta, int32 longitude, int32 latitude, address spaceAddrs)
+    function seedCreature(
+        string memory image,
+        string memory name,
+        bytes32 worldId,
+        bytes32 spaceId,
+        uint8 cellPosition)
         public
         returns (address)
     {
         address user = _msgSender();
 
-        // bool isMember = ISpace(spaceAddrs).isMember(userAddrs);
-        // require(isMember, "not member of space");
+        require(Owner.get(spaceId) == user, "not owner of space");
 
-        // Check that proof is valid - Proof Verifies Zone, Plant, Image, Location, Health, Growth and Effect
-        // require(verifyProof(plantId, spaceAddrs, longitude, latitude, commitment, proofData), "Invalid Proof");
+        bytes32 cell = Cell.get(worldId, spaceId, cellPosition);
+
+        require(cell == bytes32(0), "cell not empty");
+
+        bytes32 creatureId = getUniqueEntity();
+
+        IWorld(_world()).setCell(worldId, spaceId, cellPosition, creatureId);
 
         // Mint Creature TokenID - address will be entity id for creature
         // uint256 tokenId = mintCreature(msg.sender, meta);
@@ -33,29 +44,5 @@ contract CreatureSystem is System {
         // Owner.set(player, msg.sender);
 
         return user;
-    }
-
-    function nurture(bytes32 _entity, int32 _energy) public returns (bytes memory) {
-        // address spaceAddrs = Home.get(_entity);
-        // bool isMember = ISpace(spaceAddrs).isMember(msg.sender);
-        // require(isMember, "not space member");
-        require(Owner.get(_entity) == msg.sender, "not creature trainer");
-
-        // bytes32 spaceId = addressToEntityKey(spaceAddrs);
-        // int32 spaceEnergy = Energy.get(spaceId);
-
-        // require(spaceEnergy >= _energy, "not enough energy");
-
-        CareData memory care = Care.get(_entity);
-
-        // require(care.checkedAt + 1 days < block.timestamp, "creature fed");
-
-        int32 energyCost = _energy;
-
-        care.checkedAt = block.timestamp;
-
-        Care.set(_entity, care);
-
-        return abi.encode(energyCost);
     }
 }

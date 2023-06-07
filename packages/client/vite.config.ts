@@ -3,9 +3,10 @@
 
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
-import react from "@vitejs/plugin-react-swc";
 import mkcert from "vite-plugin-mkcert";
 import { VitePWA } from "vite-plugin-pwa";
+import react from "@vitejs/plugin-react-swc";
+// import { sentryVitePlugin } from "@sentry/vite-plugin";
 
 export default defineConfig({
   plugins: [
@@ -21,8 +22,6 @@ export default defineConfig({
       includeAssets: [
         "assets/logo-64.png",
         "assets/logo-310.png",
-        "assets/logo-310.jpg",
-        "masked-icon.svg",
         "assets/cards.png",
         "assets/world.png",
         "assets/profile.png",
@@ -61,9 +60,9 @@ export default defineConfig({
         background_color: "#f0fdfa",
         shortcuts: [
           {
-            name: "Play",
+            name: "Deck",
             description: "Open Plant and Creature Wefadex",
-            url: "/play",
+            url: "/deck",
             icons: [
               {
                 src: "assets/cards.png",
@@ -99,6 +98,13 @@ export default defineConfig({
         ],
       },
     }),
+    // sentryVitePlugin({
+    //   org: "wefa",
+    //   project: "app",
+    //   // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
+    //   // and need `project:releases` and `org:read` scopes
+    //   authToken: import.meta.env.SENTRY_AUTH_TOKEN,
+    // }),
   ],
   server: {
     port: 3000,

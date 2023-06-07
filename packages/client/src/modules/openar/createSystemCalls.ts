@@ -6,7 +6,13 @@ import { ClientComponents } from "./createClientComponents";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
-enum TicTacToeRole {
+// enum MapSize {
+//   Small = 0,
+//   Medium = 1,
+//   Large = 2,
+// }
+
+export enum TicTacToeRole {
   O = 0,
   X = 1,
 }
@@ -15,7 +21,6 @@ export function createSystemCalls(
   { worldSend, txReduced$, singletonEntity }: SetupNetworkResult,
   { Counter }: ClientComponents
 ) {
-  // SANITY CHECK
   const increment = async () => {
     const tx = await worldSend("increment", []);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
@@ -44,24 +49,33 @@ export function createSystemCalls(
   const createTicTacToeMatch = async (
     role: TicTacToeRole,
     name: string,
+    worldId: string,
     spaceId: string
   ) => {
-    const tx = await worldSend("GameStart_create", [role, name, spaceId]);
+    const tx = await worldSend("createGame", [role, name, worldId, spaceId]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const joinTicTacToeMatch = async (matchId: string) => {
-    const tx = await worldSend("GameStart_join", [matchId]);
+  const joinTicTacToeMatch = async (gameId: string) => {
+    const tx = await worldSend("joinGame", [gameId]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const claimTicTacToePosition = async (matchId: string, position: number) => {
-    const tx = await worldSend("GameMove_claimPosition", [matchId, position]);
+  const claimTicTacToePosition = async (
+    gameId: string,
+    matchNumber: number,
+    position: number
+  ) => {
+    const tx = await worldSend("claimPosition", [
+      gameId,
+      matchNumber,
+      position,
+    ]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
-  const claimTicTacToeCollectible = async (matchId: string) => {
-    const tx = await worldSend("GameCollectible_claim", [matchId]);
+  const claimTicTacToeCollectible = async (gameId: string) => {
+    const tx = await worldSend("claimGameTrophy", [gameId]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
   };
 
@@ -75,3 +89,7 @@ export function createSystemCalls(
     claimTicTacToeCollectible,
   };
 }
+
+// role on Wefa
+// get other people involve
+// weeding, planting, harvesting

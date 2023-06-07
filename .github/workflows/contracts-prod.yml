@@ -1,7 +1,7 @@
 on:
-  pull_request:
-    branches:
-      - wefa-alpha
+  # pull_request:
+  #   branches:
+  #     - wefa-alpha
   push:
     branches:
       - wefa-alpha
@@ -18,7 +18,7 @@ jobs:
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 8.6.0
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1

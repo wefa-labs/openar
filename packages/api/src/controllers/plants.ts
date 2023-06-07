@@ -64,14 +64,14 @@ const plantsZones: Record<Plant, number[]> = {
 
 export default async function plantController(fastify: FastifyInstance) {
   fastify.post("/detect", async function (req: FastifyRequest, reply: FastifyReply) {
-    // const body = req.body as { image: string };
+    const body = req.body as { image: string };
 
     try {
-      const file = await req.file();
-      const buffer = await file?.toBuffer();
+      // const file = await req.file();
+      // const buffer = await file?.toBuffer();
 
       // VERIFY PLANT IMAGE
-      const plant = await detectPlantType(buffer);
+      const plant = await detectPlantType(body.image);
 
       reply.send({ plant });
     } catch (error) {

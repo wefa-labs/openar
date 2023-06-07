@@ -1,15 +1,21 @@
+import { WefaElement } from "@prisma/client";
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { detectPlantHealth } from "../modules/plant";
-import { fetchCurrentWeather } from "../modules/weather";
+// import { detectPlantHealth } from "../modules/plant";
+// import { fetchCurrentWeather } from "../modules/weather";
+import { generateCreature } from "../modules/creature-generator";
 
 export default async function creaturesController(fastify: FastifyInstance) {
   fastify.post("/seed", async function (req: FastifyRequest, reply: FastifyReply) {
-    const body = req.body as { plantId: number; image: string; zipcode: number };
+    const body = req.body as { plant: string; element: WefaElement };
+
+    if (!body.plant || !body.element) {
+      return reply.status(400).send({ error: "Missing plant or element" });
+    }
 
     try {
       // GET PLANT INPUTS
-      const health = await detectPlantHealth(body.image);
+      // const health = await detectPlantHealth(body.image);
 
       // Get plant inputs from image like color, shades, etc.
 
@@ -23,11 +29,10 @@ export default async function creaturesController(fastify: FastifyInstance) {
       // Return claim/proof to client
 
       // HIT CREATURE GENERATION MICROSERVICE
-      // Feed inputs to createure generation service
+      const creature = await generateCreature(body.plant, body.element);
       // Return 2D image and 3D model to client
-      // Post requests to the pythonservice that will return a JSOn object with the type structure of a creature.
 
-      reply.send({ health });
+      reply.send({ ...creature });
     } catch (error) {
       console.log(error);
 

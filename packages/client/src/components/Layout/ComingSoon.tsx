@@ -9,8 +9,8 @@ export const ComingSoon: React.FC = () => {
   });
 
   return (
-    <a.div className="grid place-items-center w-full h-full" style={spring}>
-      <h1 className="text-3xl font-bold text-center text-gray-900">
+    <a.div className="grid place-items-center w-screen h-screen" style={spring}>
+      <h1 className="text-6xl font-bold text-center text-gray-900">
         Coming Soon
       </h1>
     </a.div>

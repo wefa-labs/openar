@@ -6,12 +6,13 @@ pragma solidity >=0.8.0;
 import { GrowthLevelEnum } from "./../Types.sol";
 
 interface IPlantSystem {
-  function redeem(
+  function seedPlant(
     string memory image,
     string memory meta,
     int32 long,
     int32 lat,
     GrowthLevelEnum growthLevel,
-    address userAddrs
+    bytes32 spaceId,
+    uint8 cellPosition
   ) external returns (address);
 }

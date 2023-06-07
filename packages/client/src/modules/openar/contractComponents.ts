@@ -135,11 +135,10 @@ export function defineContractComponents(world: World) {
         world,
         {
           turnCount: RecsType.Number,
-          id: RecsType.String,
-          spacePosition: RecsType.Number,
           currentPlayer: RecsType.String,
           winner: RecsType.String,
           players: RecsType.StringArray,
+          board: RecsType.NumberArray,
         },
         {
           metadata: {
@@ -155,7 +154,7 @@ export function defineContractComponents(world: World) {
         world,
         {
           matchesPlayed: RecsType.Number,
-          spaceY: RecsType.Number,
+          worldId: RecsType.String,
           spaceId: RecsType.String,
           winner: RecsType.String,
           players: RecsType.StringArray,
@@ -173,7 +172,7 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          values: RecsType.String,
+          value: RecsType.String,
         },
         {
           metadata: {

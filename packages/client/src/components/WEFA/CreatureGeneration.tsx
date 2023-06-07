@@ -4,7 +4,7 @@ import { Loader } from "../Loader";
 
 interface CreatureGenerationProps {
   error: string | null;
-  creature: Critter | null;
+  creature: Creature | null;
   generating: boolean;
   onRetry: () => void;
   onReset: () => void;

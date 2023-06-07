@@ -1,17 +1,18 @@
 import { a, useTransition } from "@react-spring/web";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-import useDeviceDetect from "../hooks/app/useDeviceDetect";
+import { useApp } from "../hooks/app/useApp";
+import { useDeck } from "../hooks/views/useDeck";
+import { useExplore } from "../hooks/views/useExplore";
+import { useProfile } from "../hooks/views/useProfile";
 
 import Deck from "./Deck";
-import Play from "./Play";
+// import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
 
 export default function Views() {
   const location = useLocation();
-  const { isDesktop } = useDeviceDetect();
-
   const transitions = useTransition(location, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -23,19 +24,24 @@ export default function Views() {
     },
   });
 
+  const { isDesktop } = useApp();
+  const deck = useDeck();
+  const explore = useExplore();
+  const profile = useProfile();
+
   return transitions((style, location) => (
     <a.main
-      className={`overflow-y-contain flex h-[calc(100vh-4rem)] flex-col overflow-y-auto px-6 sm:px-8 ${
+      className={`overflow-y-contain flex h-[calc(100vh-4rem)] overflow-hidden max-h-[calc(100vh-4rem)] ${
         isDesktop ? "" : ""
       }`}
       style={style}
     >
       <Routes location={location}>
-        <Route path="/deck" element={<Deck />} />
-        <Route path="/play" element={<Play />} />
-        <Route path="/world" element={<Explore />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<Navigate to="/world" />} />
+        <Route path="/deck" element={<Deck {...deck} />} />
+        {/* <Route path="/play" element={<Play />} /> */}
+        <Route path="/explore" element={<Explore {...explore} />} />
+        <Route path="/profile" element={<Profile {...profile} />} />
+        <Route path="*" element={<Navigate to="/explore" />} />
       </Routes>
     </a.main>
   ));

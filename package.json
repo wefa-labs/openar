@@ -1,20 +1,21 @@
 {
-  "name": "autonomous-worlds-hackathon",
+  "name": "openar",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/wefa-tech/autonomous-worlds-hackathon"
+    "url": "https://github.com/wefa-tech/openar"
   },
   "scripts": {
     "prepare": "(forge --version || pnpm foundry:up)",
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
     "mud:up": "pnpm recursive exec mud set-version -v canary && pnpm install",
     "initialize": "pnpm recursive run initialize",
-    "dev": "concurrently -n contracts,api,client -c cyan,green,magenta 'cd packages/contracts && pnpm run dev' 'cd packages/api && pnpm run dev' 'cd packages/client && pnpm run dev'",
+    "dev": "concurrently -n contracts,api,generator,client -c cyan,green,yellow,magenta 'cd packages/contracts && pnpm dev' 'cd packages/api && pnpm dev' 'pnpm dev:creature-generator' 'cd packages/client && pnpm dev'",
     "dev:api": "pnpm --filter 'api' run dev",
     "dev:client": "pnpm --filter 'client' run dev",
     "dev:contracts": "pnpm --filter 'contracts' dev",
+    "dev:creature-generator": "cd packages/creature-generator && python3 main.py",
     "test": "pnpm recursive run test",
     "build": "pnpm recursive run build"
   },
@@ -42,5 +43,6 @@
   "engines": {
     "node": "18.x",
     "pnpm": "8.x"
-  }
+  },
+  "packageManager": "pnpm@8.6.0"
 }

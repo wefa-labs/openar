@@ -8,8 +8,8 @@ import { Contract, Signer, utils } from "ethers";
 import { setupMUDV2Network } from "@latticexyz/std-client";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-import openarStoreConfig from "openar/mud.config";
-import { IWorld__factory as OpenArWorld } from "openar/types/ethers-contracts/factories/IWorld__factory";
+import openarStoreConfig from "contracts/mud.config";
+import { IWorld__factory as OpenArWorld } from "contracts/types/ethers-contracts/factories/IWorld__factory";
 
 import { world } from "./world";
 import { getNetworkConfig } from "./getNetworkConfig";
@@ -34,32 +34,25 @@ export async function setupNetwork() {
   const signer = result.network.signer.get();
   if (networkConfig.faucetServiceUrl && signer) {
     const address = await signer.getAddress();
-
     console.info("[Dev Faucet]: Player address -> ", address);
 
     const faucet = createFaucetService(networkConfig.faucetServiceUrl);
 
-    if (address) {
-      const requestDrip = async () => {
-        const balance = await signer.getBalance();
-        console.info(`[Dev Faucet]: Player balance -> ${balance}`);
-        const lowBalance = balance?.lte(utils.parseEther("1"));
-        if (lowBalance) {
-          console.info(
-            "[Dev Faucet]: Balance is low, dripping funds to player"
-          );
-          // Double drip
-          await faucet.dripDev({ address });
-          await faucet.dripDev({ address });
-        }
-      };
+    const requestDrip = async () => {
+      const balance = await signer.getBalance();
+      console.info(`[Dev Faucet]: Player balance -> ${balance}`);
+      const lowBalance = balance?.lte(utils.parseEther("1"));
+      if (lowBalance) {
+        console.info("[Dev Faucet]: Balance is low, dripping funds to player");
+        // Double drip
+        await faucet.dripDev({ address });
+        await faucet.dripDev({ address });
+      }
+    };
 
-      requestDrip();
-
-      setInterval(requestDrip, 20000);
-    }
-
+    requestDrip();
     // Request a drip every 20 seconds
+    setInterval(requestDrip, 20000);
   }
 
   const provider = result.network.providers.get().json;
@@ -108,7 +101,7 @@ export async function setupNetwork() {
   const fastTxExecutor =
     signer?.provider instanceof JsonRpcProvider
       ? await createFastTxExecutor(
-          signerOrProvider as Signer & { provider: JsonRpcProvider }
+          signer as Signer & { provider: JsonRpcProvider }
         )
       : null;
 
