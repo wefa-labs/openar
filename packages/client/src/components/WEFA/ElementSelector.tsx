@@ -65,7 +65,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
               }}
               className={`${
                 active ? "" : "opacity-75"
-              } h-full flex transform-gpu cursor-pointer flex-col items-center rounded-xl border-2 p-2 text-center`}
+              } h-full flex transform-gpu cursor-pointer flex-col items-center rounded-xl border-2 border-transparent p-2 text-center bg-base-100 shadow-xl`}
               onClick={() => handleSelect(element)}
             >
               <Icon

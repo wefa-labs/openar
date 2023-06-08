@@ -9,17 +9,13 @@
   Variables
 */
 :root {
-  --text-color: #000;
-  --surface-color: #f8fafc;
-  --gradient-start: #e3f0f0;
-  --gradient-end: #bcc8e3;
+  --text-color: #191c1c;
+  --surface-color: #fafdfc;
 }
 
 [data-theme="dark"] {
-  --text-color: #fff;
-  --surface-color: #262626;
-  --gradient-start: #0e4445;
-  --gradient-end: #13152e;
+  --text-color: #c4c7c6;
+  --surface-color: #191c1c;
 }
 
 /* 

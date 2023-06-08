@@ -81,12 +81,12 @@ export const Appbar = () => {
               width={32}
               height={32}
               className={`${
-                pathname === path ? "fill-indigo-400" : "fill-neutral"
+                pathname === path ? "fill-primary" : "fill-neutral"
               }`}
             />
             <p
               className={`text-sm tracking-wide ${
-                pathname === path ? "text-indigo-400" : "text-neutral"
+                pathname === path ? "text-primary" : "text-neutral"
               }`}
             >
               {title}
