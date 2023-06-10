@@ -3,7 +3,7 @@ import { a, config, useSpring } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 
-interface PlantInfoProps extends PlantResponseDetails {}
+interface PlantInfoProps extends PlantDetails {}
 
 export const PlantInfo: React.FC<PlantInfoProps> = ({
   common_names,

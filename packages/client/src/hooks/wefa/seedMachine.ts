@@ -11,21 +11,13 @@ import { data as mockCreatures } from "../../mocks/creatures.json";
 import { flower, vegetable, fruit, herb } from "../../mocks/plantGlossary.json";
 
 export interface SeedContext {
+  address?: `0x${string}`;
   image: string | null;
   imageVerified: boolean;
   element: WefaElement | null;
-  plant: PlantResponseDetails | null;
+  plant: PlantDetails | null;
   creature: Creature | null;
   error: string | null;
-}
-
-declare type WefaElement = "water" | "earth" | "fire" | "air";
-
-enum GrowthLevel {
-  SEED,
-  BUDDING,
-  FLOWERING,
-  RIPENING,
 }
 
 export const seedMachine = createMachine(
@@ -44,7 +36,7 @@ export const seedMachine = createMachine(
       services: {} as {
         plantVerifier: {
           data: {
-            details: PlantResponseDetails | undefined;
+            details: PlantDetails | undefined;
             img: string;
           };
         };
@@ -187,15 +179,14 @@ export const seedMachine = createMachine(
           localId: nanoid(),
           name: mockCreature.name,
           description: mockCreature.description,
-          image: mockCreature.image,
+          image: event.data.img,
           createdAt: new Date().getMilliseconds(),
           updatedAt: new Date().getMilliseconds(),
           spaceId: "",
-          trainer: "0x",
-          model: "",
+          trainer: context.address || "0x",
+          model: "", // TODO: Add model
           element: event.data.element,
           isUploaded: false,
-          care: {},
         };
 
         context.creature = creature;
@@ -205,26 +196,18 @@ export const seedMachine = createMachine(
           context.plant &&
             context.image &&
             createPlant({
+              ...context.plant,
               id: `0x${nanoid()}`,
-              caretakerAddress: "0x",
+              localId: nanoid(),
+              isUploaded: false,
+              caretakerAddress: context.address || "0x",
               // spaceAddress: "0x",
               name: context.plant.common_names[0],
               description: "",
-              image: context.image,
-              isUploaded: false,
+              image: context.image ?? context.plant.wiki_image?.value ?? "",
               plantId: 0,
               createdAt: new Date().getMilliseconds(),
               updatedAt: new Date().getMilliseconds(),
-              care: {
-                health: 100,
-                growthLevel: 0 as GrowthLevel,
-              },
-              localId: nanoid(),
-              // health: {
-              //   current: 100,
-              //   max: 100,
-              //   healthStatus: 2 as GrowthLevel,
-              // },
             }),
         ]).then((res) => {
           console.log("Seeded Creature", { res, context, event });
@@ -291,7 +274,7 @@ export const seedMachine = createMachine(
             })
           );
 
-          const details: PlantResponseDetails = {
+          const details: PlantDetails = {
             id: plant.id,
             common_names: [plant.name],
             scientific_name: plant.name,

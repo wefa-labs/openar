@@ -10,7 +10,7 @@ interface PlantDetectorProps {
   onPlantDetection: (image: string | ArrayBuffer) => void;
   detecting: boolean;
   detected?: boolean;
-  plantDetails?: PlantResponseDetails | null;
+  plantDetails?: PlantDetails | null;
 }
 
 export const PlantDetector: React.FC<PlantDetectorProps> = ({

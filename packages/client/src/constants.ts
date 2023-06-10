@@ -29,7 +29,7 @@ import GrasshopperAvatar from "./assets/avatars/grasshopper-100.png";
 import LadybugAvatar from "./assets/avatars/ladybug-100.png";
 import RhinoBeetleAvatar from "./assets/avatars/rhinoceros-beetle-100.png";
 
-export const elements: WefaElement[] = ["water", "earth", "air", "fire"];
+export const elements: WefaElement[] = ["WATER", "EARTH", "AIR", "FIRE"];
 
 interface WefaElementData {
   name: string;
@@ -44,7 +44,7 @@ interface WefaElementData {
 }
 
 export const elementData: Record<WefaElement, WefaElementData> = {
-  water: {
+  WATER: {
     name: "Water",
     description: "Change, Adaptability, and Flexibility.",
     image:
@@ -52,7 +52,7 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     color: "#3b82f6",
     Icon: WaterIcon,
   },
-  earth: {
+  EARTH: {
     name: "Earth",
     description: "Substance, Stability, and Rigidity.",
     image:
@@ -60,7 +60,7 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     color: "#047857",
     Icon: EarthIcon,
   },
-  fire: {
+  FIRE: {
     name: "Fire",
     description: "Power, Assertiveness, and Passion.",
     image:
@@ -68,7 +68,7 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     color: "#dc2626",
     Icon: FireIcon,
   },
-  air: {
+  AIR: {
     name: "Air",
     description: "Freedom, Expansion, and Movement.",
     image:
@@ -79,10 +79,10 @@ export const elementData: Record<WefaElement, WefaElementData> = {
 };
 
 export const elementColors: Record<WefaElement, string> = {
-  water: "#3b82f6",
-  earth: "#047857",
-  fire: "#dc2626",
-  air: "#eab308",
+  WATER: "#3b82f6",
+  EARTH: "#047857",
+  FIRE: "#dc2626",
+  AIR: "#eab308",
 };
 
 export const plantColors: Record<PlantType, string> = {
@@ -145,28 +145,28 @@ export const badges: Record<BadgeType, WefaBadge> = {
     id: "1st-water-creature",
     name: "First Water Creature",
     description: "You created your first water creature!",
-    element: "water",
+    element: "WATER",
     Icon: FirstWaterCreatureBadge,
   },
   "1st-earth-creature": {
     id: "1st-earth-creature",
     name: "First Earth Creature",
     description: "You created your first earth creature!",
-    element: "earth",
+    element: "EARTH",
     Icon: FirstEarthCreatureBadge,
   },
   "1st-fire-creature": {
     id: "1st-fire-creature",
     name: "First Fire Creature",
     description: "You created your first fire creature!",
-    element: "fire",
+    element: "FIRE",
     Icon: FirstFireCreatureBadge,
   },
   "1st-air-creature": {
     id: "1st-air-creature",
     name: "First Air Creature",
     description: "You created your first air creature!",
-    element: "air",
+    element: "AIR",
     Icon: FirstAirCreatureBadge,
   },
   "early-adopter": {
