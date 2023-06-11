@@ -34,11 +34,11 @@ export const Profile: React.FC<ProfileProps> = ({
   });
 
   return (
-    <section className="profile-view flex flex-col max-w-screen-sm w-full mx-auto">
+    <section className="profile-view flex flex-col max-w-screen-sm w-full mx-auto bg-primary">
       <ProfileCard avatar={avatar} avatarSpring={avatarSpring} />
       <a.div
         style={tabsSpring}
-        className="profile-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-primary shadow-xl"
+        className="profile-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
       >
         <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
           {tabs.map((name) => (

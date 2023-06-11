@@ -1,14 +1,29 @@
-import { useApp } from "../../hooks/app/useApp";
+import { themes, useApp } from "../../hooks/app/useApp";
 
 interface ProfileSettingsProps {}
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
-  const { theme, toggleTheme } = useApp();
+  const { theme, toggleTheme, handlseSetTheme } = useApp();
+
+  console.log(theme);
 
   return (
-    <div className="flex flex-col gap-3 items-center pt-6">
-      <div className="form-control w-full">
-        <label className="shadow-lg bg-base-100 px-3 py-6 rounded-xl cursor-pointer label">
+    <div className="flex flex-col gap-3 items-center mt-16">
+      <div className="shadow-lg bg-base-100 px-3 py-6 rounded-xl w-full gap-3 flex flex-col max-w-xs">
+        <h3 className="mb-3 font-bold text-2xl">Theme</h3>
+        <select
+          className="select select-primary w-full"
+          defaultValue={"Choose a Theme"}
+          value={theme}
+          onChange={handlseSetTheme}
+        >
+          {themes.map((theme) => (
+            <option key={theme} value={theme} className="capitalize">
+              {theme.toUpperCase()}
+            </option>
+          ))}
+        </select>
+        <label className=" label w-full">
           <span className="label-text text-xl font-semibold">
             Enable Dark Mode
           </span>

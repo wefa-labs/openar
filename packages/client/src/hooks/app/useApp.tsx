@@ -1,11 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type Theme = "light" | "dark";
+export type Theme = "light" | "dark" | "water" | "earth" | "fire" | "air";
 export type DeviceType = "desktop" | "handheld" | "handsfree";
+
+export const themes: Theme[] = [
+  "light",
+  "dark",
+  "water",
+  "earth",
+  "fire",
+  "air",
+];
 
 export interface AppDataProps {
   theme: Theme;
   toggleTheme: () => void;
+  handlseSetTheme: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   isDesktop: boolean;
   isHandheld: boolean;
   // isHandsfree: boolean;
@@ -30,9 +40,15 @@ export const AppProvider = ({ children }: Props) => {
     (localStorage.getItem("theme") as Theme) ?? "light"
   );
 
-  const toggleTheme = () => {
+  function toggleTheme() {
     setTheme(theme === "dark" ? "light" : "dark");
-  };
+  }
+
+  function handlseSetTheme(e: React.ChangeEvent<HTMLSelectElement>) {
+    const theme = e.target.value as Theme;
+
+    setTheme(theme);
+  }
 
   useEffect(() => {
     const html = document.querySelector("html");
@@ -47,6 +63,7 @@ export const AppProvider = ({ children }: Props) => {
       value={{
         theme,
         toggleTheme,
+        handlseSetTheme,
         isDesktop: device === "desktop",
         isHandheld: device === "handheld",
         // isHandsfree: device === "handsfree",

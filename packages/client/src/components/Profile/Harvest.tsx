@@ -14,6 +14,20 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
 }) => {
   const [openBadge, setOpenBadge] = useState<WefaBadge | null>(null);
 
+  function handleShare(type: BadgeType) {
+    console.log("share");
+    if (navigator.canShare()) {
+      navigator.share({
+        url: "https://wefa.app",
+        title: `WEFA Badge Earned!`,
+        text: `Got your badge yet? Just got my ${type.replace(
+          "_",
+          "  "
+        )} badge on Wefa!`,
+      });
+    }
+  }
+
   return (
     <>
       <ul
@@ -25,11 +39,13 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
         // className={`grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-scroll h-full`}
       >
         {" "}
-        {badges.map((badge) => (
+        {badges.map((badge, index) => (
           <WefaBadgeCard
             {...badge}
             key={badge.id}
             onClick={() => setOpenBadge(badge)}
+            paddingTop={index === 0}
+            isDesktop={isDesktop}
           />
         ))}
       </ul>
@@ -51,8 +67,15 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
                   <h4 className="">{openBadge.name}</h4>
                   <p>{openBadge.description}</p>
                   <div className="flex gap-3">
-                    <button className="btn btn-primary">Share</button>
-                    <button className="btn btn-primary">Mint</button>
+                    <button
+                      className="btn btn-secondary btn-outline"
+                      onClick={() => handleShare(openBadge.id)}
+                    >
+                      Share
+                    </button>
+                    <button className="btn btn-primary" disabled>
+                      Mint
+                    </button>
                   </div>
                 </>
               )}

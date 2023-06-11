@@ -53,13 +53,13 @@ const Deck: React.FC<DeckProps> = ({
   });
 
   return (
-    <section className="deck-view flex-col justify-center">
+    <section className="deck-view flex-col justify-center bg-primary">
       <a.div className="deck-stats sm:px-12 px-6 w-full" style={statsSpring}>
         <DeckStats />
       </a.div>
       <a.div
         style={tabsSpring}
-        className="deck-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-primary shadow-xl"
+        className="deck-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
       >
         <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
           {tabs.map((name) => (
