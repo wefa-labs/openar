@@ -20,7 +20,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   return (
     <a.div
-      className="profile-avatar flex flex-col items-center w-full"
+      className="profile-avatar flex flex-col items-center w-full px-6 sm:px-12"
       style={avatarSpring}
     >
       <div className="avatar">

@@ -14,7 +14,7 @@ module.exports = {
           neutral: "#000", // Font color
           "base-100": "#F7FAF9", // Surface
           info: "#1E1E1E",
-          success: "007A7A",
+          success: "#007A7A",
           error: "#BA1A1A",
         },
         dark: {
@@ -24,7 +24,7 @@ module.exports = {
           neutral: "#C4C7C6",
           "base-100": "#101414",
           info: "#1E1E1E",
-          success: "007A7A",
+          success: "#007A7A",
           error: "#FFB4AB",
         },
         water: {
@@ -34,7 +34,7 @@ module.exports = {
           neutral: "#1B1B1F", // Font Color
           "base-100": "#FAF8FD", // Surface
           info: "#1E1E1E",
-          success: "007A7A",
+          success: "#007A7A",
           error: "#BA1A1A",
         },
         earth: {
@@ -44,7 +44,7 @@ module.exports = {
           neutral: "#201A19", // Font Color
           "base-100": "#FFF8F6", // Surface
           info: "#1E1E1E",
-          success: "007A7A",
+          success: "#007A7A",
           error: "#BA1A1A",
         },
         fire: {
@@ -54,7 +54,7 @@ module.exports = {
           neutral: "#201A19", // Font Color
           "base-100": "#FFF8F7", // Surface
           info: "#1E1E1E",
-          success: "007A7A",
+          success: "#007A7A",
           error: "#BA1A1A",
         },
         air: {
@@ -64,7 +64,7 @@ module.exports = {
           neutral: "#1F1B16", // Font Color
           "base-100": "#FFF8F3", // Surface
           info: "#1E1E1E",
-          success: "007A7A",
+          success: "#007A7A",
           error: "#BA1A1A",
         },
       },

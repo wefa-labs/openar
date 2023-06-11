@@ -34,7 +34,7 @@ export const Profile: React.FC<ProfileProps> = ({
   });
 
   return (
-    <section className="profile-view px-6 sm:px-12 flex flex-col max-w-screen-sm w-full mx-auto">
+    <section className="profile-view flex flex-col max-w-screen-sm w-full mx-auto">
       <ProfileCard avatar={avatar} avatarSpring={avatarSpring} />
       <a.div
         style={tabsSpring}
