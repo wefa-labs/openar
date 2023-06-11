@@ -11,9 +11,10 @@ module.exports = {
           primary: "#006A6A",
           secondary: "#4A6363",
           accent: "#4B607C",
-          neutral: "#000",
-          "base-100": "#F7FAF9",
+          neutral: "#000", // Font color
+          "base-100": "#F7FAF9", // Surface
           info: "#1E1E1E",
+          success: "007A7A",
           error: "#BA1A1A",
         },
         dark: {
@@ -23,42 +24,47 @@ module.exports = {
           neutral: "#C4C7C6",
           "base-100": "#101414",
           info: "#1E1E1E",
+          success: "007A7A",
           error: "#FFB4AB",
         },
         water: {
           primary: "#006A6A",
           secondary: "#4A6363",
           accent: "#4B607C",
-          neutral: "#000",
-          "base-100": "#F7FAF9",
+          neutral: "#000", // Font Color
+          "base-100": "#F7FAF9", // Surface
           info: "#1E1E1E",
+          success: "007A7A",
           error: "#BA1A1A",
         },
         earth: {
           primary: "#006A6A",
           secondary: "#4A6363",
           accent: "#4B607C",
-          neutral: "#000",
-          "base-100": "#F7FAF9",
+          neutral: "#000", // Font Color
+          "base-100": "#F7FAF9", // Surface
           info: "#1E1E1E",
+          success: "007A7A",
           error: "#BA1A1A",
         },
         fire: {
           primary: "#006A6A",
           secondary: "#4A6363",
           accent: "#4B607C",
-          neutral: "#000",
-          "base-100": "#F7FAF9",
+          neutral: "#000", // Font Color
+          "base-100": "#F7FAF9", // Surface
           info: "#1E1E1E",
+          success: "007A7A",
           error: "#BA1A1A",
         },
         air: {
           primary: "#006A6A",
           secondary: "#4A6363",
           accent: "#4B607C",
-          neutral: "#000",
-          "base-100": "#F7FAF9",
+          neutral: "#000", // Font Color
+          "base-100": "#F7FAF9", // Surface
           info: "#1E1E1E",
+          success: "007A7A",
           error: "#BA1A1A",
         },
       },

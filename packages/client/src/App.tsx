@@ -28,7 +28,13 @@ function App() {
                   <Header />
                   <Appbar />
                   <Views />
-                  <ToastContainer className="bottom-16" />
+                  <ToastContainer
+                    bodyClassName=""
+                    toastClassName=""
+                    progressClassName=""
+                    autoClose={3000}
+                    limit={4}
+                  />
                 </SeedProvider>
               </WefaProvider>
             </BrowserRouter>

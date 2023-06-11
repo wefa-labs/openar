@@ -6,7 +6,6 @@ import * as Sentry from "@sentry/react";
 
 // import { MUDProvider } from "./hooks/useMud";
 
-import { ComingSoon } from "./components/Layout/ComingSoon";
 import App from "./App";
 
 import "./index.css";
@@ -43,9 +42,6 @@ const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");
 const root = ReactDOM.createRoot(rootElement);
 
-// if (import.meta.env.PROD) {
-//   root.render(<ComingSoon />);
-// } else {
 // setup().then((result) => {
 root.render(
   // <MUDProvider value={result}>
@@ -54,4 +50,3 @@ root.render(
 );
 // mountDevTools();
 // });
-// }

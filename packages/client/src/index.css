@@ -10,18 +10,44 @@
 */
 :root {
   --text-color: #191c1c;
-  --surface-color: #fafdfc;
+  --surface-color: #fff;
+  --background-color: #fafdfc;
 }
 
 [data-theme="dark"] {
   --text-color: #c4c7c6;
-  --surface-color: #191c1c;
+  --surface-color: #fff;
+  --background-color: #191c1c;
+}
+
+[data-theme="water"] {
+  --text-color: #c4c7c6;
+  --surface-color: #fff;
+  --background-color: #191c1c;
+}
+
+[data-theme="earth"] {
+  --text-color: #c4c7c6;
+  --surface-color: #fff;
+  --background-color: #191c1c;
+}
+
+
+[data-theme="fire"] {
+  --text-color: #c4c7c6;
+  --surface-color: #fff;
+  --background-color: #191c1c;
+}
+
+[data-theme="air"] {
+  --text-color: #c4c7c6;
+  --surface-color: #fff;
+  --background-color: #191c1c;
 }
 
 /* 
   App
 */
-
 html {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -47,7 +73,7 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   overflow: hidden;
   font-family: "Inter", sans-serif;
-  background-color: var(--surface-color);
+  background-color: var(--background-color);
 }
 
 #react-root {
@@ -289,4 +315,33 @@ section {
     right: 0%;
     width: 0%;
   }
+}
+
+/** Classes for the displayed toast **/
+.Toastify__toast {
+}
+.Toastify__toast--rtl {
+}
+.Toastify__toast-body {
+}
+
+/** Used to position the icon **/
+.Toastify__toast-icon {
+}
+
+.Toastify__progress-bar {
+}
+.Toastify__progress-bar--rtl {
+}
+.Toastify__progress-bar-theme--light {
+}
+.Toastify__progress-bar-theme--dark {
+}
+.Toastify__progress-bar--info {
+}
+.Toastify__progress-bar--success {
+}
+.Toastify__progress-bar--warning {
+}
+.Toastify__progress-bar--error {
 }
