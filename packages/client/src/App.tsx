@@ -32,7 +32,7 @@ function App() {
                     bodyClassName=""
                     toastClassName=""
                     progressClassName=""
-                    autoClose={3000}
+                    autoClose={false}
                     limit={4}
                   />
                 </SeedProvider>

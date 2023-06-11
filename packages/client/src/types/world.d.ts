@@ -1,5 +1,17 @@
 declare type WefaElement = "WATER" | "EARTH" | "FIRE" | "AIR";
 
+declare enum WefaRank {
+  WHITE,
+  YELLOW,
+  ORANGE,
+  GREEN,
+  BLUE,
+  BROWN,
+  BLACK,
+  RED_WHITE,
+  RED,
+}
+
 declare type BadgeType = PlantBadgeType | CreatureBadgeType | "early-adopter";
 
 declare interface WefaBadge {

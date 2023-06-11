@@ -14,7 +14,6 @@ export interface DeckViewerProps extends DeckViewerData {
   onDismiss: () => void;
 }
 
-// TODO: Stylize Bleyle following desings in Figma
 export const DeckViewer: React.FC<DeckViewerProps> = ({
   name,
   description,

@@ -58,8 +58,8 @@ const Deck: React.FC<DeckProps> = ({
         <DeckStats />
       </a.div>
       <a.div
-        className="deck-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-primary shadow-xl"
         style={tabsSpring}
+        className="deck-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-primary shadow-xl"
       >
         <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
           {tabs.map((name) => (

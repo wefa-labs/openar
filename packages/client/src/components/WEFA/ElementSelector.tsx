@@ -10,7 +10,6 @@ interface ElementSelectorProps {
   onElementSelected: (element: WefaElement) => void;
 }
 
-// TODO: Stylize Bleyle to make similar to other card components in other tabs
 export const ElementSelector: React.FC<ElementSelectorProps> = ({
   active,
   selectedElement,

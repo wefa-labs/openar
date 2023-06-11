@@ -49,7 +49,7 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     description: "Change, Adaptability, and Flexibility.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#3b82f6",
+    color: "#005AC2",
     Icon: WaterIcon,
   },
   EARTH: {
@@ -57,7 +57,7 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     description: "Substance, Stability, and Rigidity.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#047857",
+    color: "#9C4234",
     Icon: EarthIcon,
   },
   FIRE: {
@@ -65,7 +65,7 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     description: "Power, Assertiveness, and Passion.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#dc2626",
+    color: "#B91D1D",
     Icon: FireIcon,
   },
   AIR: {
@@ -73,16 +73,16 @@ export const elementData: Record<WefaElement, WefaElementData> = {
     description: "Freedom, Expansion, and Movement.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#eab308",
+    color: "#FFBA38",
     Icon: AirIcon,
   },
 };
 
 export const elementColors: Record<WefaElement, string> = {
-  WATER: "#3b82f6",
-  EARTH: "#047857",
-  FIRE: "#dc2626",
-  AIR: "#eab308",
+  WATER: "#005AC2",
+  EARTH: "#9C4234",
+  FIRE: "#B91D1D",
+  AIR: "#FFBA38",
 };
 
 export const plantColors: Record<PlantType, string> = {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FetchBalanceResult } from "wagmi/dist/actions";
-import { SpringValue, useSpring } from "@react-spring/web";
+import { SpringValue, config, useSpring } from "@react-spring/web";
 import { useAccount, useBalance, useEnsAvatar, useEnsName } from "wagmi";
 
 import { useWefa } from "../wefa/useWefa";
@@ -17,7 +17,7 @@ type Status =
   | "loading"
   | "success";
 
-type ProfileTab = "harvest" | "settings" | "wallet";
+export type ProfileTab = "harvest" | "settings" | "wallet";
 
 export interface ProfileDataProps {
   badges: WefaBadge[];
@@ -34,6 +34,9 @@ export interface ProfileDataProps {
   // onCreateWorld: any;
   // games: any[];
   tab: ProfileTab;
+  tabsSpring: {
+    transform: SpringValue<string>;
+  };
   changeTab: (tab: ProfileTab) => void;
   avatarSpring: {
     opacity: SpringValue<number>;
@@ -55,6 +58,14 @@ export const useProfile = (): ProfileDataProps => {
   const avatarSpring = useSpring({
     from: { opacity: 0, transform: "translate3d(0, -100%, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
+  });
+
+  const tabsSpring = useSpring({
+    from: { transform: "translate3d(0, 100%, 0)" },
+    to: { transform: "translate3d(0, 0%, 0)" },
+    config: {
+      ...config.slow,
+    },
   });
 
   // const { worlds, onCreateWorld, handleWorldSubmit, worldFormRegister } = useWorlds();
@@ -86,6 +97,7 @@ export const useProfile = (): ProfileDataProps => {
     // onCreateWorld,
     // games: [...tictactoeGames],
     tab,
+    tabsSpring,
     changeTab,
     avatarSpring,
   };

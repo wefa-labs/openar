@@ -1,8 +1,7 @@
 import React from "react";
 
-import TarotCardAvatar from "../../assets/avatars/tarot-cards-100.png";
+import SunIcon from "../../assets/badges/sun-100.png";
 
-// TODO: Stylize Bleyle following desings in Figma
 export const DeckStats: React.FC = () => {
   return (
     <div className="deck-stats flex items-center gap-3 shadow-lg bg-base-100 px-3 py-2 rounded-xl w-full">
@@ -10,7 +9,7 @@ export const DeckStats: React.FC = () => {
       <div className="placeholder avatar">
         <div className="w-24 rounded-xl ">
           {/* <span className="text-xl">JO</span> */}
-          <img src={TarotCardAvatar} alt="deck image" />
+          <img src={SunIcon} alt="deck image" />
         </div>
       </div>
       <div className="flex flex-col gap-1">

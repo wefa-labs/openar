@@ -132,6 +132,8 @@ export const seedMachine = createMachine(
       if (!db) await initDB();
 
       console.log("Seed machine entered.", context, event);
+
+      toast.info("Seed machine entered.");
     },
     exit: (context, event) => {
       console.log("Seed machine exited.", context, event);

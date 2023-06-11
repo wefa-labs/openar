@@ -28,41 +28,41 @@ module.exports = {
           error: "#FFB4AB",
         },
         water: {
-          primary: "#006A6A",
-          secondary: "#4A6363",
-          accent: "#4B607C",
-          neutral: "#000", // Font Color
-          "base-100": "#F7FAF9", // Surface
+          primary: "#005AC2",
+          secondary: "#575E71",
+          accent: "#715573",
+          neutral: "#1B1B1F", // Font Color
+          "base-100": "#FAF8FD", // Surface
           info: "#1E1E1E",
           success: "007A7A",
           error: "#BA1A1A",
         },
         earth: {
-          primary: "#006A6A",
-          secondary: "#4A6363",
-          accent: "#4B607C",
-          neutral: "#000", // Font Color
-          "base-100": "#F7FAF9", // Surface
+          primary: "#9C4234",
+          secondary: "#775651",
+          accent: "#6F5C2E",
+          neutral: "#201A19", // Font Color
+          "base-100": "#FFF8F6", // Surface
           info: "#1E1E1E",
           success: "007A7A",
           error: "#BA1A1A",
         },
         fire: {
-          primary: "#006A6A",
-          secondary: "#4A6363",
-          accent: "#4B607C",
-          neutral: "#000", // Font Color
-          "base-100": "#F7FAF9", // Surface
+          primary: "#B91D1D",
+          secondary: "#775652",
+          accent: "#715B2E",
+          neutral: "#201A19", // Font Color
+          "base-100": "#FFF8F7", // Surface
           info: "#1E1E1E",
           success: "007A7A",
           error: "#BA1A1A",
         },
         air: {
-          primary: "#006A6A",
-          secondary: "#4A6363",
-          accent: "#4B607C",
-          neutral: "#000", // Font Color
-          "base-100": "#F7FAF9", // Surface
+          primary: "#FFBA38",
+          secondary: "#7E5700",
+          accent: "#6E5C40",
+          neutral: "#1F1B16", // Font Color
+          "base-100": "#FFF8F3", // Surface
           info: "#1E1E1E",
           success: "007A7A",
           error: "#BA1A1A",

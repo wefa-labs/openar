@@ -16,33 +16,33 @@
 
 [data-theme="dark"] {
   --text-color: #c4c7c6;
-  --surface-color: #fff;
+  --surface-color: #101414;
   --background-color: #191c1c;
 }
 
 [data-theme="water"] {
-  --text-color: #c4c7c6;
-  --surface-color: #fff;
-  --background-color: #191c1c;
+  --text-color: #1B1B1F;
+  --surface-color: #FAF8FD;
+  --background-color: #FEFBFF;
 }
 
 [data-theme="earth"] {
-  --text-color: #c4c7c6;
-  --surface-color: #fff;
-  --background-color: #191c1c;
+  --text-color: #1B1B1F;
+  --surface-color: #FFF8F6;
+  --background-color: #FFFBFF;
 }
 
 
 [data-theme="fire"] {
-  --text-color: #c4c7c6;
-  --surface-color: #fff;
-  --background-color: #191c1c;
+  --text-color: #1B1B1F;
+  --surface-color: #FFF8F7;
+  --background-color: #FFFBFF;
 }
 
 [data-theme="air"] {
-  --text-color: #c4c7c6;
-  --surface-color: #fff;
-  --background-color: #191c1c;
+  --text-color: #1B1B1F;
+  --surface-color: #FFF8F3;
+  --background-color: #FFFBFF;
 }
 
 /* 
@@ -117,7 +117,8 @@ section {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    ". avatar ."
+    "avatar . ."
+    "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs"
@@ -155,6 +156,7 @@ section {
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs"
+    "tabs tabs tabs"
     "tabs tabs tabs";
 }
 
@@ -164,6 +166,7 @@ section {
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-areas:
       "avatar avatar"
+      "tabs tabs"
       "tabs tabs"
       "tabs tabs"
       "tabs tabs";
@@ -194,6 +197,7 @@ section {
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
       "stats stats"
+      "tabs tabs"
       "tabs tabs"
       "tabs tabs"
       "tabs tabs"
@@ -318,18 +322,18 @@ section {
 }
 
 /** Classes for the displayed toast **/
-.Toastify__toast {
+/* .Toastify__toast {
 }
 .Toastify__toast--rtl {
 }
 .Toastify__toast-body {
-}
+} */
 
 /** Used to position the icon **/
-.Toastify__toast-icon {
-}
+/* .Toastify__toast-icon {
+} */
 
-.Toastify__progress-bar {
+/* .Toastify__progress-bar {
 }
 .Toastify__progress-bar--rtl {
 }
@@ -344,4 +348,4 @@ section {
 .Toastify__progress-bar--warning {
 }
 .Toastify__progress-bar--error {
-}
+} */

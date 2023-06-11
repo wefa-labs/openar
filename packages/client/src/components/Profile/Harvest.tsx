@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
-import { WefaBadgeCard } from "../../../components/WEFA/BadgeCard";
+import { WefaBadgeCard } from "../WEFA/BadgeCard";
 
 interface ProfileHarvestProps {
   badges: WefaBadge[];
+  isDesktop: boolean;
 }
 
-// TODO: Stylize Bleyle using mockData
-
-export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({ badges }) => {
+export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
+  badges,
+  isDesktop,
+}) => {
   const [openBadge, setOpenBadge] = useState<WefaBadge | null>(null);
 
   return (
     <>
-      <ul className="flex flex-col gap-3 w-full h-full overflow-scroll pt-6 pb-20">
+      <ul
+        className={
+          isDesktop
+            ? "grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-auto gap-6 pb-32 pt-6 h-full"
+            : "flex flex-col overflow-scroll h-full gap-3 pb-20"
+        }
+        // className={`grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-scroll h-full`}
+      >
+        {" "}
         {badges.map((badge) => (
           <WefaBadgeCard
             {...badge}

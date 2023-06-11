@@ -1,4 +1,4 @@
-import { useApp } from "../../../hooks/app/useApp";
+import { useApp } from "../../hooks/app/useApp";
 
 interface ProfileSettingsProps {}
 
