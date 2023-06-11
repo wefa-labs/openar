@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 
 import { WefaBadgeCard } from "../WEFA/BadgeCard";
+import { toast } from "react-toastify";
 
 interface ProfileHarvestProps {
   badges: WefaBadge[];
@@ -15,8 +16,7 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
   const [openBadge, setOpenBadge] = useState<WefaBadge | null>(null);
 
   function handleShare(type: BadgeType) {
-    console.log("share");
-    if (navigator.canShare()) {
+    if (navigator.canShare && navigator.canShare()) {
       navigator.share({
         url: "https://wefa.app",
         title: `WEFA Badge Earned!`,
@@ -25,6 +25,8 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
           "  "
         )} badge on Wefa!`,
       });
+    } else {
+      toast.error("Your browser does not support sharing.");
     }
   }
 
