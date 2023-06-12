@@ -7,7 +7,7 @@ import { DeckDataProps, DeckTab } from "../../hooks/views/useDeck";
 import { DeckStats } from "../../components/Deck/Stats";
 import { DeckViewer, DeckViewerData } from "../../components/Deck/Viewer";
 import { DeckItems } from "../../components/Deck/Items";
-import { useWefa } from '../../hooks/wefa/useWefa';
+import { useWefa } from "../../hooks/wefa/useWefa";
 
 const tabs: DeckTab[] = ["plants", "creatures"];
 
@@ -22,10 +22,10 @@ const Deck: React.FC<DeckProps> = ({
   creatureTrail,
   statsSpring,
   tabsSpring,
-  
 }) => {
   const { isDesktop } = useApp();
-  const { handleFetchPlants, handleFetchCreatures} = useWefa();
+  const { handleFetchEnergy, handleFetchPlants, handleFetchCreatures } =
+    useWefa();
 
   const [viewerOpen, setViewerOpen] = useState(false);
   const [sheetData, setSheetData] = useState<DeckViewerData>({
@@ -56,6 +56,7 @@ const Deck: React.FC<DeckProps> = ({
   });
 
   useEffect(() => {
+    handleFetchEnergy();
     handleFetchPlants();
     handleFetchCreatures();
   }, []);

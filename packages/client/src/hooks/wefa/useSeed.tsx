@@ -64,6 +64,10 @@ export const SeedProvider = ({ children }: Props) => {
     if (state.matches("plant_verified")) {
       handleBadgeCheck();
     }
+
+    if (state.matches("creature_seeded")) {
+      handleBadgeCheck();
+    }
   }, [state.value]);
 
   return (

@@ -175,8 +175,16 @@ export const seedMachine = createMachine(
               plantId: event.data.plantId,
               createdAt: new Date().getMilliseconds(),
               updatedAt: new Date().getMilliseconds(),
-            }).then((res) => {
-              console.log("Created Plant", res);
+            }).then(() => {
+              const energy = localStorage.getItem("energy");
+
+              if (energy) {
+                const energyInt = parseInt(energy);
+
+                localStorage.setItem("energy", `${energyInt + 4}`);
+              } else {
+                localStorage.setItem("energy", "4");
+              }
             });
         }
 

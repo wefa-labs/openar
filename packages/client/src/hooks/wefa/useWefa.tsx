@@ -11,6 +11,7 @@ import {
 import { toast } from "react-toastify";
 
 interface WefadexProps {
+  energy: number;
   badges: WefaBadge[];
   plants: Plant[];
   creatures: Creature[];
@@ -18,6 +19,8 @@ interface WefadexProps {
   handleFetchBadges: () => Promise<void>;
   handleFetchPlants: () => Promise<void>;
   handleFetchCreatures: () => Promise<void>;
+  handleFetchEnergy: () => void;
+  handleEnergyGrowth: (amount: number) => void;
 }
 
 const WefaContext = createContext<WefadexProps | null>(null);
@@ -31,6 +34,9 @@ export const WefaProvider = ({ children }: Props) => {
 
   if (currentValue) throw new Error("WefaProvider can only be used once");
 
+  const [energy, setEnergy] = useState<number>(
+    Number(localStorage.getItem("energy"))
+  );
   const [creatures, setCreatures] = useState<Creature[]>([]);
   const [plants, setPlants] = useState<Plant[]>([]);
   const [badges, setBadges] = useState<WefaBadge[]>([]);
@@ -78,13 +84,13 @@ export const WefaProvider = ({ children }: Props) => {
     }
 
     // If a user has not earned a badge, award 1st plant and creature badge
-    if (dbPlants.length === 1 && !earnedBadgesList["1st-plant"]) {
+    if (dbPlants.length >= 1 && !earnedBadgesList["1st-plant"]) {
       const newBadge = badgeList["1st-plant"];
 
       newBadges.push(newBadge);
     }
 
-    if (dbCreatures.length === 1 && !earnedBadgesList["1st-creature"]) {
+    if (dbCreatures.length >= 1 && !earnedBadgesList["1st-creature"]) {
       const newBadge = badgeList["1st-creature"];
 
       newBadges.push(newBadge);
@@ -93,7 +99,7 @@ export const WefaProvider = ({ children }: Props) => {
     newBadges.forEach(async (badge) => {
       await createBadge(badge);
 
-      toast.success("You've earned a new badge! Check your profile.");
+      toast.success("You earned a new badge! Check your profile.");
     });
 
     const updatedBadges = await readBadges();
@@ -102,6 +108,20 @@ export const WefaProvider = ({ children }: Props) => {
 
     handleFetchPlants();
     handleFetchCreatures();
+  }
+
+  const handleFetchEnergy = () => {
+    const energy = Number(localStorage.getItem("energy"));
+
+    setEnergy(energy);
+  };
+
+  async function handleEnergyGrowth(amount: number) {
+    const newEnergy = energy + amount;
+
+    setEnergy(newEnergy);
+
+    localStorage.setItem("energy", newEnergy.toString());
   }
 
   useEffect(() => {
@@ -113,6 +133,7 @@ export const WefaProvider = ({ children }: Props) => {
   return (
     <WefaContext.Provider
       value={{
+        energy,
         badges,
         plants,
         creatures,
@@ -120,6 +141,8 @@ export const WefaProvider = ({ children }: Props) => {
         handleFetchBadges,
         handleFetchPlants,
         handleFetchCreatures,
+        handleFetchEnergy,
+        handleEnergyGrowth,
       }}
     >
       {children}
