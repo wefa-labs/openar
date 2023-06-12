@@ -93,27 +93,27 @@ export const plantColors: Record<PlantType, string> = {
 };
 
 export const rankColors: Record<WefaRank, string> = {
-  [WefaRank.WHITE]: "#ffffff",
-  [WefaRank.YELLOW]: "#fbbf24",
-  [WefaRank.ORANGE]: "#f59e0b",
-  [WefaRank.GREEN]: "#10b981",
-  [WefaRank.BLUE]: "#3b82f6",
-  [WefaRank.BROWN]: "#9c4224",
-  [WefaRank.BLACK]: "#111827",
-  [WefaRank.RED_WHITE]: "#f87171",
-  [WefaRank.RED]: "#dc2626",
+  0: "#ffffff",
+  1: "#fbbf24",
+  2: "#f59e0b",
+  3: "#10b981",
+  4: "#3b82f6",
+  5: "#9c4224",
+  6: "#111827",
+  7: "#f87171",
+  8: "#dc2626",
 };
 
 export const rankNames: Record<WefaRank, string> = {
-  [WefaRank.WHITE]: "White",
-  [WefaRank.YELLOW]: "Yellow",
-  [WefaRank.ORANGE]: "Orange",
-  [WefaRank.GREEN]: "Green",
-  [WefaRank.BLUE]: "Blue",
-  [WefaRank.BROWN]: "Brown",
-  [WefaRank.BLACK]: "Black",
-  [WefaRank.RED_WHITE]: "Red-White",
-  [WefaRank.RED]: "Red",
+  0: "White",
+  1: "Yellow",
+  2: "Orange",
+  3: "Green",
+  4: "Blue",
+  5: "Brown",
+  6: "Black",
+  7: "Red-White",
+  8: "Red",
 };
 
 export const badges: Record<BadgeType, WefaBadge> = {
