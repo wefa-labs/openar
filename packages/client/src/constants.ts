@@ -92,6 +92,30 @@ export const plantColors: Record<PlantType, string> = {
   vegetable: "#10b981",
 };
 
+export const rankColors: Record<WefaRank, string> = {
+  [WefaRank.WHITE]: "#ffffff",
+  [WefaRank.YELLOW]: "#fbbf24",
+  [WefaRank.ORANGE]: "#f59e0b",
+  [WefaRank.GREEN]: "#10b981",
+  [WefaRank.BLUE]: "#3b82f6", 
+  [WefaRank.BROWN]: "#9c4224",
+  [WefaRank.BLACK]: "#111827",
+  [WefaRank.RED_WHITE]: "#f87171",
+  [WefaRank.RED]: "#dc2626",
+};
+
+export const rankNames: Record<WefaRank, string> = {
+  [WefaRank.WHITE]: "White",
+  [WefaRank.YELLOW]: "Yellow",
+  [WefaRank.ORANGE]: "Orange",
+  [WefaRank.GREEN]: "Green",
+  [WefaRank.BLUE]: "Blue",
+  [WefaRank.BROWN]: "Brown",
+  [WefaRank.BLACK]: "Black",
+  [WefaRank.RED_WHITE]: "Red-White",
+  [WefaRank.RED]: "Red",
+};
+
 export const badges: Record<BadgeType, WefaBadge> = {
   "1st-plant": {
     id: "1st-plant",
@@ -176,6 +200,7 @@ export const badges: Record<BadgeType, WefaBadge> = {
     Icon: EarlyAdopterBadge,
   },
 };
+
 
 export function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];

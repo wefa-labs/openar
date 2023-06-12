@@ -4,12 +4,12 @@ import { createPortal } from "react-dom";
 import { WefaBadgeCard } from "../WEFA/BadgeCard";
 import { toast } from "react-toastify";
 
-interface ProfileHarvestProps {
+interface ProfileBadgesProps {
   badges: WefaBadge[];
   isDesktop: boolean;
 }
 
-export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
+export const ProfileBadges: React.FC<ProfileBadgesProps> = ({
   badges,
   isDesktop,
 }) => {

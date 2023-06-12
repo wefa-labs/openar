@@ -14,6 +14,7 @@ export const themes: Theme[] = [
 
 export interface AppDataProps {
   theme: Theme;
+  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
   toggleTheme: () => void;
   handlseSetTheme: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   isDesktop: boolean;
@@ -62,6 +63,7 @@ export const AppProvider = ({ children }: Props) => {
     <AppContext.Provider
       value={{
         theme,
+        setTheme,
         toggleTheme,
         handlseSetTheme,
         isDesktop: device === "desktop",

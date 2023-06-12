@@ -53,15 +53,11 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   function handleDragOver(e: React.DragEvent<HTMLLabelElement>) {
     e.stopPropagation();
     e.preventDefault();
-
-    console.log("Item Dragged", e);
   }
 
   function handleDrop(e: React.DragEvent<HTMLLabelElement>) {
     e.stopPropagation();
     e.preventDefault();
-
-    console.log("Item Dropped", e);
 
     const files = e.dataTransfer.files;
     if (files.length) {

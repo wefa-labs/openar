@@ -12,10 +12,11 @@
   --text-color: #191c1c;
   --surface-color: #fff;
   --background-color: #fafdfc;
+  --primary-color: #007a7a;
   --toastify-color-info: #3498db;
-  --toastify-color-success: #007A7A;
+  --toastify-color-success: #007a7a;
   --toastify-color-warning: #f1c40f;
-  --toastify-color-error: #BA1A1A;
+  --toastify-color-error: #ba1a1a;
   --toastify-color-transparent: rgba(255, 255, 255, 0.7);
 
   --toastify-icon-color-info: var(--toastify-color-info);
@@ -41,33 +42,37 @@
 
 [data-theme="dark"] {
   --text-color: #c4c7c6;
+  --primary-color: #4cdada;
   --surface-color: #101414;
   --background-color: #191c1c;
 }
 
 [data-theme="water"] {
-  --text-color: #1B1B1F;
-  --surface-color: #FAF8FD;
-  --background-color: #FEFBFF;
+  --text-color: #1b1b1f;
+  --primary-color: #005ac2;
+  --surface-color: #faf8fd;
+  --background-color: #fefbff;
 }
 
 [data-theme="earth"] {
-  --text-color: #1B1B1F;
-  --surface-color: #FFF8F6;
-  --background-color: #FFFBFF;
+  --text-color: #1b1b1f;
+  --primary-color: #9c4234;
+  --surface-color: #fff8f6;
+  --background-color: #fffbff;
 }
 
-
 [data-theme="fire"] {
-  --text-color: #1B1B1F;
-  --surface-color: #FFF8F7;
-  --background-color: #FFFBFF;
+  --text-color: #1b1b1f;
+  --primary-color: #b91d1d;
+  --surface-color: #fff8f7;
+  --background-color: #fffbff;
 }
 
 [data-theme="air"] {
-  --text-color: #1B1B1F;
-  --surface-color: #FFF8F3;
-  --background-color: #FFFBFF;
+  --text-color: #1b1b1f;
+  --primary-color: #ffba38;
+  --surface-color: #fff8f3;
+  --background-color: #fffbff;
 }
 
 /* 
@@ -304,7 +309,7 @@ section {
 }
 .line-loader:before {
   content: "";
-  border: 1px solid #fff;
+  border: 1px solid var(--text-color);
   border-radius: 10px;
   position: absolute;
   top: -4px;
@@ -314,12 +319,12 @@ section {
 }
 .line-loader .line-loader-bar {
   position: absolute;
-  border-radius: 10px;
+  border-radius: 0.5rem;
   top: 0;
   right: 100%;
   bottom: 0;
   left: 0;
-  background: #fff;
+  background: var(--text-color);
   width: 0;
   animation: borealisBar 2s linear infinite;
 }
@@ -346,32 +351,3 @@ section {
     width: 0%;
   }
 }
-
-/** Classes for the displayed toast **/
-/* .Toastify__toast {
-}
-.Toastify__toast--rtl {
-}
-.Toastify__toast-body {
-} */
-
-/** Used to position the icon **/
-/* .Toastify__toast-icon {
-} */
-
-/* .Toastify__progress-bar {
-}
-.Toastify__progress-bar--rtl {
-}
-.Toastify__progress-bar-theme--light {
-}
-.Toastify__progress-bar-theme--dark {
-}
-.Toastify__progress-bar--info {
-}
-.Toastify__progress-bar--success {
-}
-.Toastify__progress-bar--warning {
-}
-.Toastify__progress-bar--error {
-} */

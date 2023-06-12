@@ -1,5 +1,11 @@
 import { a, useTransition } from "@react-spring/web";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 
 import { useApp } from "../hooks/app/useApp";
 import { useDeck } from "../hooks/views/useDeck";
@@ -10,9 +16,15 @@ import Deck from "./Deck";
 // import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
+import { useEffect } from "react";
+
+type LowerElement = "water" | "earth" | "fire" | "air";
 
 export default function Views() {
   const location = useLocation();
+  const { element } = useParams<{
+    element?: LowerElement;
+  }>();
   const transitions = useTransition(location, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -24,10 +36,17 @@ export default function Views() {
     },
   });
 
-  const { isDesktop } = useApp();
+  const { isDesktop, setTheme } = useApp();
+
   const deck = useDeck();
   const explore = useExplore();
   const profile = useProfile();
+
+  useEffect(() => {
+    if (element) {
+      setTheme(element);
+    }
+  }, [element]);
 
   return transitions((style, location) => (
     <a.main

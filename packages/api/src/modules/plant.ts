@@ -93,7 +93,7 @@ export async function detectPlantType(img?: string | ArrayBuffer | Buffer) {
           images: [img],
           // modifiers: ["crops_fast", "similar_images"],
           plant_language: "en",
-          plant_details: ["common_names", "edible_parts", "taxonomy", "watering", "wiki_image"],
+          plant_details: ["common_names", "edible_parts", "taxonomy", "watering", "wiki_image", "wiki_description"],
         }),
       });
 

@@ -56,6 +56,12 @@ declare interface PlantDetails {
     license_name: string;
     license_url: string;
   };
+  wiki_description?: {
+    value: string;
+    citation: string;
+    license_name: string;
+    license_url: string;
+  };
 }
 
 declare interface PlantResponse {

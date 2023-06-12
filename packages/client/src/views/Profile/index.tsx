@@ -5,9 +5,9 @@ import { avatar } from "../../constants";
 import { useApp } from "../../hooks/app/useApp";
 import { ProfileDataProps, ProfileTab } from "../../hooks/views/useProfile";
 
+import { ProfileInfo } from "../../components/Profile/Info";
+import { ProfileBadges } from "../../components/Profile/Badges"; // Badges
 import { ProfileSettings } from "../../components/Profile/Settings";
-import { ProfileHarvest } from "../../components/Profile/Harvest"; // Badges
-import ProfileCard from "../../components/Profile/Card";
 
 const tabs: ProfileTab[] = ["harvest", "settings"];
 
@@ -35,7 +35,7 @@ export const Profile: React.FC<ProfileProps> = ({
 
   return (
     <section className="profile-view flex flex-col max-w-screen-sm w-full mx-auto bg-primary">
-      <ProfileCard avatar={avatar} avatarSpring={avatarSpring} />
+      <ProfileInfo avatar={avatar} avatarSpring={avatarSpring} />
       <a.div
         style={tabsSpring}
         className="profile-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
@@ -57,7 +57,7 @@ export const Profile: React.FC<ProfileProps> = ({
         {transition((style, tab) => (
           <a.div style={style} className="h-full">
             {tab === "harvest" && (
-              <ProfileHarvest badges={badges} isDesktop={isDesktop} />
+              <ProfileBadges badges={badges} isDesktop={isDesktop} />
             )}
             {/* {tab === "wallet" && <ProfileWallet />} */}
             {tab === "settings" && <ProfileSettings />}

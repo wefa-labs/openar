@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { a, config, useTransition } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
@@ -7,6 +7,7 @@ import { DeckDataProps, DeckTab } from "../../hooks/views/useDeck";
 import { DeckStats } from "../../components/Deck/Stats";
 import { DeckViewer, DeckViewerData } from "../../components/Deck/Viewer";
 import { DeckItems } from "../../components/Deck/Items";
+import { useWefa } from '../../hooks/wefa/useWefa';
 
 const tabs: DeckTab[] = ["plants", "creatures"];
 
@@ -21,8 +22,10 @@ const Deck: React.FC<DeckProps> = ({
   creatureTrail,
   statsSpring,
   tabsSpring,
+  
 }) => {
   const { isDesktop } = useApp();
+  const { handleFetchPlants, handleFetchCreatures} = useWefa();
 
   const [viewerOpen, setViewerOpen] = useState(false);
   const [sheetData, setSheetData] = useState<DeckViewerData>({
@@ -52,9 +55,14 @@ const Deck: React.FC<DeckProps> = ({
     },
   });
 
+  useEffect(() => {
+    handleFetchPlants();
+    handleFetchCreatures();
+  }, []);
+
   return (
     <section className="deck-view flex-col justify-center bg-primary">
-      <a.div className="deck-stats sm:px-12 px-6 w-full" style={statsSpring}>
+      <a.div className="deck-stats sm:px-6 px-3 w-full" style={statsSpring}>
         <DeckStats />
       </a.div>
       <a.div

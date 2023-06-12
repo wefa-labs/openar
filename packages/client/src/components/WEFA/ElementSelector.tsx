@@ -1,5 +1,5 @@
 import React from "react";
-import { a, config, useSpring, useTrail } from "@react-spring/web";
+import { a, config, useSpring } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 import { elementData, elements } from "../../constants";
@@ -16,11 +16,11 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   onElementSelected,
 }) => {
   const { isDesktop } = useApp();
-  const elementTrail = useTrail(elements.length, {
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { ...config.default, clamp: true },
-  });
+  // const elementTrail = useTrail(elements.length, {
+  //   from: { opacity: 0 },
+  //   to: { opacity: 1 },
+  //   config: { ...config.default, clamp: true },
+  // });
 
   const spring = useSpring({
     from: { opacity: 0 },
@@ -46,8 +46,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
         <span className="flex-1 text-xl"> Element</span>
       </a.h2>
       <ul className="grid w-full grid-cols-2 grid-rows-2 gap-3 lg:grid-cols-4 lg:grid-rows-1">
-        {elementTrail.map((style, index) => {
-          const element = elements[index];
+        {elements.map((element) => {
           const data = elementData[element];
 
           const Icon = data.Icon;
@@ -56,7 +55,6 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
             <a.li
               key={element}
               style={{
-                ...style,
                 backgroundColor:
                   selectedElement === element ? `${data.color}72` : undefined,
                 borderColor:

@@ -31,6 +31,7 @@ export const seedMachine = createMachine(
       services: {} as {
         plantVerifier: {
           data: {
+            plantId: number;
             details: PlantDetails | undefined;
             img: string;
           };
@@ -117,7 +118,7 @@ export const seedMachine = createMachine(
         },
       },
     },
-    entry: async (context, event) => {
+    entry: async (context) => {
       context.image = null;
       context.imageVerified = false;
       context.element = null;
@@ -125,8 +126,6 @@ export const seedMachine = createMachine(
       context.error = null;
 
       if (!db) await initDB();
-
-      console.log("Seed machine entered.", context, event);
 
       // toast.info("Seed machine entered.");
     },
@@ -145,8 +144,6 @@ export const seedMachine = createMachine(
         return !!event.image;
       },
       isSeedingValid: (context, event: { element: WefaElement }) => {
-        console.log("element", context, event);
-
         return !!context.image && (!!event.element || !!context.element);
       },
       isSeedingRetryValid: (context) => {
@@ -163,6 +160,24 @@ export const seedMachine = createMachine(
         console.log("Verified Image", event);
         if (plantDetails) {
           context.plant = plantDetails;
+
+          context.image &&
+            createPlant({
+              ...plantDetails,
+              id: `0x${nanoid()}`,
+              localId: nanoid(),
+              isUploaded: false,
+              caretakerAddress: context.address || "0x",
+              // spaceAddress: "0x",
+              name: context.plant.common_names[0],
+              description: plantDetails.wiki_description?.value,
+              image: context.image ?? context.plant.wiki_image?.value ?? "",
+              plantId: event.data.plantId,
+              createdAt: new Date().getMilliseconds(),
+              updatedAt: new Date().getMilliseconds(),
+            }).then((res) => {
+              console.log("Created Plant", res);
+            });
         }
 
         toast.success("Plant verified!");
@@ -187,26 +202,7 @@ export const seedMachine = createMachine(
 
         context.creature = creature;
 
-        Promise.all([
-          createCreature(creature),
-          context.plant &&
-            context.image &&
-            createPlant({
-              ...context.plant,
-              id: `0x${nanoid()}`,
-              localId: nanoid(),
-              isUploaded: false,
-              caretakerAddress: context.address || "0x",
-              // spaceAddress: "0x",
-              name: context.plant.common_names[0],
-              description: "",
-              image: context.image ?? context.plant.wiki_image?.value ?? "",
-              plantId: 0,
-              createdAt: new Date().getMilliseconds(),
-              updatedAt: new Date().getMilliseconds(),
-            }),
-        ]).then((res) => {
-          console.log("Seeded Creature", { res, context, event });
+        createCreature(creature).then(() => {
           toast.success("Creature seeded!");
         });
 
@@ -260,6 +256,7 @@ export const seedMachine = createMachine(
           );
 
           return {
+            plantId: data.plant.suggestions[0].id,
             details: data.plant.suggestions[0].plant_details,
             img: image,
           };
