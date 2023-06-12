@@ -144,6 +144,8 @@ export const seedMachine = createMachine(
         return !!event.image;
       },
       isSeedingValid: (context, event: { element: WefaElement }) => {
+        console.log("element", context, event);
+
         return !!context.image && (!!event.element || !!context.element);
       },
       isSeedingRetryValid: (context) => {

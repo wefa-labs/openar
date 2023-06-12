@@ -97,7 +97,7 @@ export const rankColors: Record<WefaRank, string> = {
   [WefaRank.YELLOW]: "#fbbf24",
   [WefaRank.ORANGE]: "#f59e0b",
   [WefaRank.GREEN]: "#10b981",
-  [WefaRank.BLUE]: "#3b82f6", 
+  [WefaRank.BLUE]: "#3b82f6",
   [WefaRank.BROWN]: "#9c4224",
   [WefaRank.BLACK]: "#111827",
   [WefaRank.RED_WHITE]: "#f87171",
@@ -200,7 +200,6 @@ export const badges: Record<BadgeType, WefaBadge> = {
     Icon: EarlyAdopterBadge,
   },
 };
-
 
 export function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
