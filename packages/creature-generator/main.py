@@ -8,6 +8,8 @@ from io import BytesIO
 from PIL import Image
 from dotenv import dotenv_values
 from generator import generate_creature_route
+import math
+import random
 
 config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
@@ -23,6 +25,8 @@ async def generate_creature_route_handler():
     creature_type = data.get('creature_type', '')
     element_type = data.get('element_type', '')
     description = data.get('description', '')
+    #creature randomizer
+    creature_tye = ['butterfly', 'ant', 'dragonfly']*math.floor(random.random()*3)
     creature_img = await generate_creature_route(creature_type, element_type, description, cached=False)
     return jsonify({'img': creature_img})
 

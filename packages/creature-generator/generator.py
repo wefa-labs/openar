@@ -57,7 +57,7 @@ creatures_dic = {
     # },
     'ant':
     {
-        'template':'ant.jpg',
+        'template':'ant.png',
         'id':4
     }
 }
@@ -86,8 +86,8 @@ async def generate_creature_route(creature_type, element_type, description, cach
             # 512 by 512 is cheaper but not sd2
             #This is probably the most editable line (needs some work)
             # Some of these prompts are going to cause copyright issues if not filtered
-            'prompt': 'an anime (anthropomorphic) dragonfly (((cute))), (basil)' + description + ' ' + this_element['prompt'] + ' ',
-            'negative_prompt': 'plant '+this_element['negativePrompt'],
+            'prompt': 'an anime (anthropomorphic) (((cute))) ' + description + ' ' + this_element['prompt'] + ' ',
+            'negative_prompt': '((girl)) ((person)) '+this_element['negativePrompt'],
             "seed": -1,
             "subseed": -1,
             "subseed_strength": 0,
@@ -104,7 +104,7 @@ async def generate_creature_route(creature_type, element_type, description, cach
             	"controlnet":{
             	    "args":[{
             	    "input_image": base64_string,
-            	    "module": 'seg_ofcoco',
+            	    "module": 'depth_midas',
             	    "model": 'control_sd15_seg [fef5e48e]',
             	    "weight": 2,
             	    "guidance": 1,
