@@ -1,10 +1,11 @@
 import { a, config, useSpring } from "@react-spring/web";
 import { Link, useLocation } from "react-router-dom";
 
-import { RC as CardsIcon } from "../../assets/cards.svg";
-import { RC as WorldIcon } from "../../assets/world.svg";
-import { RC as ProfileIcon } from "../../assets/profile.svg";
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { useApp } from "../../hooks/app/useApp";
+
+import { RC as CardsIcon } from "../../assets/icons/cards.svg";
+import { RC as WorldIcon } from "../../assets/icons/world.svg";
+import { RC as ProfileIcon } from "../../assets/icons/profile.svg";
 
 const tabs: {
   path: string;
@@ -16,10 +17,15 @@ const tabs: {
   >;
 }[] = [
   {
-    path: "/play",
-    title: "Play",
+    path: "/deck",
+    title: "Deck",
     Icon: CardsIcon,
   },
+  // {
+  //   path: "/play",
+  //   title: "Play",
+  //   Icon: CardsIcon,
+  // },
   {
     path: "/explore",
     title: "Explore",
@@ -34,7 +40,7 @@ const tabs: {
 
 export const Appbar = () => {
   const { pathname } = useLocation();
-  const { isDesktop } = useDeviceDetect();
+  const { isDesktop } = useApp();
 
   const spring = useSpring({
     from: {
@@ -52,12 +58,15 @@ export const Appbar = () => {
     },
   });
 
+  {
+    /* Added a Div  to center Nav bar */
+  }
   return (
     <a.nav
       className={
         isDesktop
-          ? "tabs w-full bg-white rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg"
-          : "btm-nav z-50 bg-white py-4 fixed z-10"
+          ? "relative tabs w-full bg-base-100 rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg mx-auto mt-16 z-10"
+          : "btm-nav z-20 bg-base-100 py-4 fixed bottom-0"
       }
       style={spring}
     >
@@ -72,12 +81,12 @@ export const Appbar = () => {
               width={32}
               height={32}
               className={`${
-                pathname === path ? "fill-indigo-400" : "fill-slate-800"
+                pathname === path ? "fill-primary" : "fill-neutral"
               }`}
             />
             <p
               className={`text-sm tracking-wide ${
-                pathname === path ? "text-indigo-400" : "text-slate-800"
+                pathname === path ? "text-primary" : "text-neutral"
               }`}
             >
               {title}

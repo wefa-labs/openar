@@ -1,5 +1,5 @@
 import { SetupContractConfig, getBurnerWallet } from "@latticexyz/std-client";
-import worldsJson from "openar/worlds.json";
+import worldsJson from "contracts/worlds.json";
 import { supportedChains } from "./supportedChains";
 
 const worlds = worldsJson as Partial<
@@ -16,7 +16,7 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   const params = new URLSearchParams(window.location.search);
 
   const chainId = Number(
-    params.get("chainId") || import.meta.env.VITE_CHAIN_ID || 31337
+    params.get("chainId") || import.meta.env.VITE_VERCEL_CHAIN_ID || 31337
   );
   const chainIndex = supportedChains.findIndex((c) => c.id === chainId);
   const chain = supportedChains[chainIndex];
@@ -25,7 +25,11 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   }
 
   const world = worlds[chain.id.toString()];
-  const worldAddress = params.get("worldAddress") || world?.address;
+  const worldAddress =
+    params.get("worldAddress") ||
+    world?.address ||
+    import.meta.env.VITE_VERCEL_WORLD_ADDRESS ||
+    null;
   if (!worldAddress) {
     throw new Error(
       `No world address found for chain ${chainId}. Did you run \`mud deploy\`?`

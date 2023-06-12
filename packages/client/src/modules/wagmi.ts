@@ -1,18 +1,21 @@
 import { createConfig, configureChains } from "wagmi";
+import { optimismGoerli, optimism } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { latticeTestnet } from "@latticexyz/common/chains";
 
 import "@rainbow-me/rainbowkit/styles.css";
 
 const { chains, publicClient } = configureChains(
-  [latticeTestnet],
-  [alchemyProvider({ apiKey: import.meta.env.ALCHEMY_ID }), publicProvider()]
+  [optimismGoerli, optimism],
+  [
+    alchemyProvider({ apiKey: import.meta.env.VITE_VERCEL_ALCHEMY_ID ?? "" }),
+    publicProvider(),
+  ]
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "OpenAR",
+  appName: "WEFA",
   chains,
 });
 

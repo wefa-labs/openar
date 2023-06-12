@@ -6,23 +6,31 @@ export default mudConfig({
     RoleEnum: ["O", "X"],
     StateEnum: ["Active", "Frozen"],
     SizeEnum: ["Mini", "Small", "Medium", "Large"],
+    ElementEnum: ["WATER", "EARTH", "FIRE", "AIR"],
+    GrowthLevelEnum: ["SEED", "BUDDING", "FLOWERING", "RIPENING"],
   },
   tables: {
+    State: "StateEnum",
+    Size: "SizeEnum",
+    Element: "ElementEnum",
+    Owner: "address",
     Role: {
       keySchema: { user: "address", matchId: "bytes32" },
       schema: "RoleEnum",
     },
-    State: {
+    Asset: {
       keySchema: { id: "bytes32" },
-      schema: "StateEnum",
+      schema: {
+        image: "string",
+        model: "string",
+      },
     },
-    Size: {
+    Care: {
       keySchema: { id: "bytes32" },
-      schema: "SizeEnum",
-    },
-    Owner: {
-      keySchema: { id: "bytes32" },
-      schema: "address",
+      schema: {
+        growthLevel: "GrowthLevelEnum",
+        checkedAt: "uint256",
+      },
     },
     Identity: {
       keySchema: { id: "bytes32" },
@@ -30,33 +38,35 @@ export default mudConfig({
         name: "string",
         description: "string",
         image: "string",
+        // createdAt: "uint256",
       },
     },
     Match: {
-      keySchema: { gameId: "bytes32", matchId: "bytes32" },
+      keySchema: { gameId: "bytes32", matchNumber: "uint8" },
       schema: {
         turnCount: "uint8",
-        id: "bytes32",
-        spacePosition: "uint8", // TODO: Integrate for 9 space tic tac toe, hardcoded to 0 for now.
         currentPlayer: "address",
         winner: "address",
         players: "address[]",
+        board: "uint8[]",
       },
     },
     Game: {
       keySchema: { gameId: "bytes32" },
       schema: {
         matchesPlayed: "uint8",
-        spaceY: "uint32",
+        worldId: "bytes32",
         spaceId: "bytes32",
         winner: "address",
         players: "address[]",
       },
     },
     Cell: {
-      keySchema: { worldId: "bytes32", spaceId: "bytes32", x: "uint32", y: "uint32", z: "uint32" },
+      keySchema: { worldId: "bytes32", spaceId: "bytes32", position: "uint8" },
       schema: {
-        values: "bytes32",
+        // x: "uint32",
+        // y: "uint32",
+        value: "bytes32",
       },
     },
     Space: {
@@ -92,6 +102,22 @@ export default mudConfig({
     GameCollectibleSystem: {
       name: "GameCollectible",
       openAccess: true,
+    },
+    CreatureSystem: {
+      name: "Creature",
+      openAccess: true,
+    },
+    PlantSystem: {
+      name: "Plant",
+      openAccess: true,
+    },
+    SpaceSystem: {
+      openAccess: true,
+      accessList: ["GameStartSystem", "GameMoveSystem"],
+    },
+    CellSystem: {
+      openAccess: true,
+      accessList: ["GameStartSystem", "GameMoveSystem", "CreatureSystem", "PlantSystem"],
     },
   },
   modules: [

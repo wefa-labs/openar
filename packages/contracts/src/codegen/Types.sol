@@ -18,3 +18,17 @@ enum SizeEnum {
   Medium,
   Large
 }
+
+enum ElementEnum {
+  WATER,
+  EARTH,
+  FIRE,
+  AIR
+}
+
+enum GrowthLevelEnum {
+  SEED,
+  BUDDING,
+  FLOWERING,
+  RIPENING
+}

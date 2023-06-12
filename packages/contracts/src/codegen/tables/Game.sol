@@ -22,7 +22,7 @@ bytes32 constant GameTableId = _tableId;
 
 struct GameData {
   uint8 matchesPlayed;
-  uint32 spaceY;
+  bytes32 worldId;
   bytes32 spaceId;
   address winner;
   address[] players;
@@ -33,7 +33,7 @@ library Game {
   function getSchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](5);
     _schema[0] = SchemaType.UINT8;
-    _schema[1] = SchemaType.UINT32;
+    _schema[1] = SchemaType.BYTES32;
     _schema[2] = SchemaType.BYTES32;
     _schema[3] = SchemaType.ADDRESS;
     _schema[4] = SchemaType.ADDRESS_ARRAY;
@@ -52,7 +52,7 @@ library Game {
   function getMetadata() internal pure returns (string memory, string[] memory) {
     string[] memory _fieldNames = new string[](5);
     _fieldNames[0] = "matchesPlayed";
-    _fieldNames[1] = "spaceY";
+    _fieldNames[1] = "worldId";
     _fieldNames[2] = "spaceId";
     _fieldNames[3] = "winner";
     _fieldNames[4] = "players";
@@ -115,38 +115,38 @@ library Game {
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((matchesPlayed)));
   }
 
-  /** Get spaceY */
-  function getSpaceY(bytes32 gameId) internal view returns (uint32 spaceY) {
+  /** Get worldId */
+  function getWorldId(bytes32 gameId) internal view returns (bytes32 worldId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((gameId));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (Bytes.slice32(_blob, 0));
   }
 
-  /** Get spaceY (using the specified store) */
-  function getSpaceY(IStore _store, bytes32 gameId) internal view returns (uint32 spaceY) {
+  /** Get worldId (using the specified store) */
+  function getWorldId(IStore _store, bytes32 gameId) internal view returns (bytes32 worldId) {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((gameId));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
-    return (uint32(Bytes.slice4(_blob, 0)));
+    return (Bytes.slice32(_blob, 0));
   }
 
-  /** Set spaceY */
-  function setSpaceY(bytes32 gameId, uint32 spaceY) internal {
+  /** Set worldId */
+  function setWorldId(bytes32 gameId, bytes32 worldId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((gameId));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((spaceY)));
+    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((worldId)));
   }
 
-  /** Set spaceY (using the specified store) */
-  function setSpaceY(IStore _store, bytes32 gameId, uint32 spaceY) internal {
+  /** Set worldId (using the specified store) */
+  function setWorldId(IStore _store, bytes32 gameId, bytes32 worldId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((gameId));
 
-    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((spaceY)));
+    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((worldId)));
   }
 
   /** Get spaceId */
@@ -357,12 +357,12 @@ library Game {
   function set(
     bytes32 gameId,
     uint8 matchesPlayed,
-    uint32 spaceY,
+    bytes32 worldId,
     bytes32 spaceId,
     address winner,
     address[] memory players
   ) internal {
-    bytes memory _data = encode(matchesPlayed, spaceY, spaceId, winner, players);
+    bytes memory _data = encode(matchesPlayed, worldId, spaceId, winner, players);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((gameId));
@@ -375,12 +375,12 @@ library Game {
     IStore _store,
     bytes32 gameId,
     uint8 matchesPlayed,
-    uint32 spaceY,
+    bytes32 worldId,
     bytes32 spaceId,
     address winner,
     address[] memory players
   ) internal {
-    bytes memory _data = encode(matchesPlayed, spaceY, spaceId, winner, players);
+    bytes memory _data = encode(matchesPlayed, worldId, spaceId, winner, players);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((gameId));
@@ -390,32 +390,32 @@ library Game {
 
   /** Set the full data using the data struct */
   function set(bytes32 gameId, GameData memory _table) internal {
-    set(gameId, _table.matchesPlayed, _table.spaceY, _table.spaceId, _table.winner, _table.players);
+    set(gameId, _table.matchesPlayed, _table.worldId, _table.spaceId, _table.winner, _table.players);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 gameId, GameData memory _table) internal {
-    set(_store, gameId, _table.matchesPlayed, _table.spaceY, _table.spaceId, _table.winner, _table.players);
+    set(_store, gameId, _table.matchesPlayed, _table.worldId, _table.spaceId, _table.winner, _table.players);
   }
 
   /** Decode the tightly packed blob using this table's schema */
   function decode(bytes memory _blob) internal view returns (GameData memory _table) {
-    // 57 is the total byte length of static data
-    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 57));
+    // 85 is the total byte length of static data
+    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 85));
 
     _table.matchesPlayed = (uint8(Bytes.slice1(_blob, 0)));
 
-    _table.spaceY = (uint32(Bytes.slice4(_blob, 1)));
+    _table.worldId = (Bytes.slice32(_blob, 1));
 
-    _table.spaceId = (Bytes.slice32(_blob, 5));
+    _table.spaceId = (Bytes.slice32(_blob, 33));
 
-    _table.winner = (address(Bytes.slice20(_blob, 37)));
+    _table.winner = (address(Bytes.slice20(_blob, 65)));
 
     // Store trims the blob if dynamic fields are all empty
-    if (_blob.length > 57) {
+    if (_blob.length > 85) {
       uint256 _start;
       // skip static data length + dynamic lengths word
-      uint256 _end = 89;
+      uint256 _end = 117;
 
       _start = _end;
       _end += _encodedLengths.atIndex(0);
@@ -426,7 +426,7 @@ library Game {
   /** Tightly pack full data using this table's schema */
   function encode(
     uint8 matchesPlayed,
-    uint32 spaceY,
+    bytes32 worldId,
     bytes32 spaceId,
     address winner,
     address[] memory players
@@ -436,7 +436,14 @@ library Game {
     PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
 
     return
-      abi.encodePacked(matchesPlayed, spaceY, spaceId, winner, _encodedLengths.unwrap(), EncodeArray.encode((players)));
+      abi.encodePacked(
+        matchesPlayed,
+        worldId,
+        spaceId,
+        winner,
+        _encodedLengths.unwrap(),
+        EncodeArray.encode((players))
+      );
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

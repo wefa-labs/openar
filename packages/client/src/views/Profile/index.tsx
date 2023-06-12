@@ -1,72 +1,71 @@
-import { useProfile } from "../../hooks/views/useProfile";
+import { a, useTransition } from "@react-spring/web";
 
-export default function Profile() {
-  const {
-    address,
-    name,
-    avatar,
-    balance,
-    worlds,
-    games,
-    accountStatus,
-    // avatarStatus,
-    // nameStatus,
-    onCreateWorld,
-    handleWorldSubmit,
-    worldFormRegister,
-  } = useProfile();
+import { avatar } from "../../constants";
+
+import { useApp } from "../../hooks/app/useApp";
+import { ProfileDataProps, ProfileTab } from "../../hooks/views/useProfile";
+
+import { ProfileInfo } from "../../components/Profile/Info";
+import { ProfileBadges } from "../../components/Profile/Badges"; // Badges
+import { ProfileSettings } from "../../components/Profile/Settings";
+
+const tabs: ProfileTab[] = ["harvest", "settings"];
+
+interface ProfileProps extends ProfileDataProps {}
+
+export const Profile: React.FC<ProfileProps> = ({
+  badges,
+  tab,
+  changeTab,
+  tabsSpring,
+  avatarSpring,
+}) => {
+  const { isDesktop } = useApp();
+
+  const transition = useTransition(tab, {
+    from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
+    enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
+    leave: { opacity: 0, transform: "translate3d(0,0, -100%)" },
+    config: {
+      tension: 300,
+      friction: 20,
+      clamp: true,
+    },
+  });
 
   return (
-    <div className="space">
-      Profile
-      <section>
-        <div>
-          <div>
-            {avatar && <img src={avatar} alt="avatar" className="" />}
-            <p>
-              {name} {accountStatus}
-            </p>
-            <p>{address}</p>
-            <p>{balance?.decimals}</p>
-          </div>
-          <div>
-            <form
-              onSubmit={handleWorldSubmit(onCreateWorld)}
-              className="flex flex-col w-20"
+    <section className="profile-view flex flex-col max-w-screen-sm w-full mx-auto bg-primary">
+      <ProfileInfo avatar={avatar} avatarSpring={avatarSpring} />
+      <a.div
+        style={tabsSpring}
+        className="profile-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
+      >
+        <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
+          {tabs.map((name) => (
+            <button
+              key={name}
+              className={`tab capitalize w-20 ${
+                name === tab ? "tab-active" : ""
+              }`}
+              onClick={() => changeTab(name)}
+              type="button"
             >
-              <button type="submit">Create World</button>
-              <input
-                type="text"
-                placeholder="World Name"
-                {...worldFormRegister("name")}
-              />
-              <input
-                type="text"
-                placeholder="World Description"
-                {...worldFormRegister("description")}
-              />
-              <input
-                type="text"
-                placeholder="World Image"
-                {...worldFormRegister("image")}
-              />
-            </form>
-          </div>
+              {name}
+            </button>
+          ))}
         </div>
-        <ul>
-          {/* {worlds.map((world) => (
-            <li key={world.value.id}>{world.value.spaceCount}</li>
-          ))} */}
-        </ul>
-      </section>
-      <aside>
-        <h3>Games</h3>
-        <ul>
-          {/* {games.map((game) => (
-            <li key={game.value.id}>{game.value.turnCount}</li>
-          ))} */}
-        </ul>
-      </aside>
-    </div>
+        {transition((style, tab) => (
+          <a.div style={style} className="h-full">
+            {tab === "harvest" && (
+              <ProfileBadges badges={badges} isDesktop={isDesktop} />
+            )}
+            {/* {tab === "wallet" && <ProfileWallet />} */}
+            {tab === "settings" && <ProfileSettings />}
+          </a.div>
+        ))}
+      </a.div>
+    </section>
   );
-}
+};
+
+export default Profile;

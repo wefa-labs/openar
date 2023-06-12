@@ -1,22 +1,23 @@
 import React from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import { useTheme } from "../../hooks/app/useTheme";
-import { useAuthWeb3 } from "../../hooks/useWeb3";
-import useDeviceDetect from "../../hooks/app/useDeviceDetect";
+import { useApp } from "../../hooks/app/useApp";
+// import { useAuthWeb3 } from "../../hooks/auth/useWeb3";
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { isDesktop } = useDeviceDetect();
-  const { address } = useAuthWeb3();
+  const { theme, toggleTheme, isDesktop } = useApp();
+  // const { address } = useAuthWeb3();
+
+  if (!isDesktop) {
+    return null;
+  }
 
   return (
-    <header className="navbar bg-transparent w-full px-8">
+    <header className="navbar bg-transparent w-full px-8 fixed top-0 left-0">
       <div className="navbar-start">
         <a href="/" className="font-bold tracking-wider text-2xl">
-          Open AR
+          WEFA
         </a>
       </div>
       <div className="navbar-end flex gap-4">
@@ -38,19 +39,6 @@ export const Header: React.FC<HeaderProps> = () => {
             <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
           </svg>
         </label>
-        {isDesktop && (
-          <>
-            {address ? (
-              <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
-                <div className="w-10 rounded-full">
-                  <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-              </label>
-            ) : (
-              <ConnectButton />
-            )}
-          </>
-        )}
       </div>
     </header>
   );

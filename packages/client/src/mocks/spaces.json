@@ -1,0 +1,200 @@
+{
+  "data": [
+    {
+      "id": "0x120",
+      "world": "0x123",
+      "name": "Personal",
+      "purpose": "Private space for plants and critters",
+      "metadata": "",
+      "private": true,
+      "energy": 10,
+      "zipcode": 2354,
+      "country": "USA",
+      "planet": 0,
+      "status": 0,
+      "elements": [0, 3],
+      "actions": [0],
+      "members": [
+        {
+          "id": "0x123",
+          "status": 0,
+          "plantsAdded": 7,
+          "leader": true
+        },
+        {
+          "id": "0x127",
+          "status": 0,
+          "plantsAdded": 11,
+          "leader": false
+        },
+        {
+          "id": "0x128",
+          "status": 1,
+          "plantsAdded": 9,
+          "leader": false
+        },
+        {
+          "id": "0x124",
+          "status": 0,
+          "plantsAdded": 3,
+          "leader": true
+        }
+      ],
+      "createdAt": 1453325678,
+      "updatedAt": 1453325678
+    },
+    {
+      "id": "0x121",
+      "world": "0x123",
+      "name": "Fireflies",
+      "purpose": "Private space for the fireflies to play.",
+      "metadata": "",
+      "private": true,
+      "energy": 100,
+      "zipcode": 92378,
+      "country": "Canada",
+      "planet": 0,
+      "status": 0,
+      "elements": [3],
+      "actions": [0],
+      "members": [
+        {
+          "id": "0x123",
+          "status": 0,
+          "plantsAdded": 20,
+          "leader": true
+        },
+        {
+          "id": "0x127",
+          "status": 1,
+          "plantsAdded": 31,
+          "leader": false
+        },
+        {
+          "id": "0x128",
+          "status": 1,
+          "plantsAdded": 16,
+          "leader": false
+        },
+        {
+          "id": "0x124",
+          "status": 0,
+          "plantsAdded": 3,
+          "leader": false
+        }
+      ],
+      "createdAt": 1453325678,
+      "updatedAt": 1453325678
+    },
+    {
+      "id": "0x122",
+      "world": "0x123",
+      "name": "Mr. DeVoe's Biology Class",
+      "purpose": "Space for biology class to grow plants and learn about the environment.",
+      "metadata": "",
+      "private": false,
+      "energy": 200,
+      "zipcode": 92354,
+      "country": "USA",
+      "planet": 0,
+      "status": 0,
+      "elements": [0, 1, 2, 3],
+      "actions": [0],
+      "members": [
+        {
+          "id": "0x123",
+          "status": 0,
+          "plantsAdded": 7,
+          "leader": true
+        },
+        {
+          "id": "0x127",
+          "status": 0,
+          "plantsAdded": 11,
+          "leader": false
+        },
+        {
+          "id": "0x128",
+          "status": 1,
+          "plantsAdded": 9,
+          "leader": false
+        },
+        {
+          "id": "0x124",
+          "status": 0,
+          "plantsAdded": 3,
+          "leader": false
+        },
+        {
+          "id": "0x125",
+          "status": 0,
+          "plantsAdded": 3,
+          "leader": false
+        },
+        {
+          "id": "0x126",
+          "status": 0,
+          "plantsAdded": 3,
+          "leader": false
+        }
+      ],
+      "createdAt": 1453325678,
+      "updatedAt": 1453325678
+    },
+    {
+      "id": "0x123",
+      "world": "0x123",
+      "name": "Hulda Crooks Park",
+      "purpose": "Space for the community to grow plants and learn about the environment.",
+      "metadata": "",
+      "private": true,
+      "energy": 10,
+      "zipcode": 92354,
+      "country": "USA",
+      "planet": 0,
+      "status": 0,
+      "elements": [0, 2],
+      "actions": [0],
+      "members": [
+        {
+          "id": "0x123",
+          "status": 0,
+          "plantsAdded": 7,
+          "leader": true
+        },
+        {
+          "id": "0x127",
+          "status": 0,
+          "plantsAdded": 11,
+          "leader": false
+        },
+        {
+          "id": "0x128",
+          "status": 1,
+          "plantsAdded": 9,
+          "leader": false
+        },
+        {
+          "id": "0x124",
+          "status": 0,
+          "plantsAdded": 5,
+          "leader": true
+        },
+        {
+          "id": "0x125",
+          "status": 1,
+          "plantsAdded": 3,
+          "leader": false
+        },
+        {
+          "id": "0x126",
+          "status": 0,
+          "plantsAdded": 20,
+          "leader": false
+        }
+      ],
+      "createdAt": 1453325678,
+      "updatedAt": 1453325678
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+on:
+  # pull_request:
+  #   branches:
+  #     - wefa-alpha
+  push:
+    branches:
+      - wefa-alpha
+
+name: Contract Prod Testing & Deployment
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.0
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Run Tests & Lint
+        working-directory: ./packages/contracts
+        run: |
+          pnpm i
+          pnpm initialize
+
+      - name: Deploy Contracts to Lattice Testnet
+        working-directory: ./packages/contracts
+        env:
+          PRIVATE_KEY: ${{ secrets.CONTRACT_DEPLOYER_KEY }}
+        run: |
+          pnpm deploy:testnet

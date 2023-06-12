@@ -16,7 +16,7 @@ export const useGames = () => {
     namespace: "tictactoe",
   });
 
-  console.log("Games Data", { checkerGames, tictactoeGames });
+  // console.log("Games Data", { checkerGames, tictactoeGames });
 
   return {
     checkerGames,

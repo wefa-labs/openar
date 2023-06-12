@@ -6,7 +6,7 @@ pragma solidity >=0.8.0;
 import { RoleEnum } from "./../Types.sol";
 
 interface IGameStartSystem {
-  function create(RoleEnum role, string memory name, bytes32 spaceId) external returns (bytes32);
+  function createGame(RoleEnum role, string memory name, bytes32 worldId, bytes32 spaceId) external returns (bytes32);
 
-  function join(bytes32 matchId) external returns (RoleEnum);
+  function joinGame(bytes32 gameId) external returns (RoleEnum);
 }

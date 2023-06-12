@@ -8,8 +8,7 @@ import { RoleEnum } from "../codegen/Types.sol";
 import { Identity, Match, MatchData, Role } from "../codegen/Tables.sol";
 
 contract GameCollectibleSystem is System {
-
-  function claim(
+  function claimGameTrophy(
     bytes32 matchId
   ) public returns (string memory meta) {
     address user = _msgSender();
@@ -18,7 +17,6 @@ contract GameCollectibleSystem is System {
 
     MatchData memory matchData = Match.get(matchId, 0);
 
-    require(matchData.id == matchId, "game doesn't exist");
     require(matchData.players[0] != user, "already in game");
     require(matchData.players[1] == address(0), "game is full");
     

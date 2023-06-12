@@ -1,11 +1,13 @@
 import { a, useTransition } from "@react-spring/web";
 
-import { usePlay } from "../../hooks/views/usePlay";
+import { PlayDataProps, usePlay } from "../../hooks/views/usePlay";
 
 import { Counter } from "./Counter";
 import { TicTacToeGame } from "./TicTacToe";
 
-export default function Play() {
+interface PlayProps extends PlayDataProps {}
+
+const Play: React.FC<PlayProps> = () => {
   const {
     view,
     // checkerGames,
@@ -35,4 +37,6 @@ export default function Play() {
       {item === "tic-tac-toe" && <TicTacToeGame gameMode="2D" />}
     </a.main>
   ));
-}
+};
+
+export default Play;

@@ -22,23 +22,21 @@ bytes32 constant MatchTableId = _tableId;
 
 struct MatchData {
   uint8 turnCount;
-  bytes32 id;
-  uint8 spacePosition;
   address currentPlayer;
   address winner;
   address[] players;
+  uint8[] board;
 }
 
 library Match {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](6);
+    SchemaType[] memory _schema = new SchemaType[](5);
     _schema[0] = SchemaType.UINT8;
-    _schema[1] = SchemaType.BYTES32;
-    _schema[2] = SchemaType.UINT8;
-    _schema[3] = SchemaType.ADDRESS;
-    _schema[4] = SchemaType.ADDRESS;
-    _schema[5] = SchemaType.ADDRESS_ARRAY;
+    _schema[1] = SchemaType.ADDRESS;
+    _schema[2] = SchemaType.ADDRESS;
+    _schema[3] = SchemaType.ADDRESS_ARRAY;
+    _schema[4] = SchemaType.UINT8_ARRAY;
 
     return SchemaLib.encode(_schema);
   }
@@ -46,20 +44,19 @@ library Match {
   function getKeySchema() internal pure returns (Schema) {
     SchemaType[] memory _schema = new SchemaType[](2);
     _schema[0] = SchemaType.BYTES32;
-    _schema[1] = SchemaType.BYTES32;
+    _schema[1] = SchemaType.UINT8;
 
     return SchemaLib.encode(_schema);
   }
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](6);
+    string[] memory _fieldNames = new string[](5);
     _fieldNames[0] = "turnCount";
-    _fieldNames[1] = "id";
-    _fieldNames[2] = "spacePosition";
-    _fieldNames[3] = "currentPlayer";
-    _fieldNames[4] = "winner";
-    _fieldNames[5] = "players";
+    _fieldNames[1] = "currentPlayer";
+    _fieldNames[2] = "winner";
+    _fieldNames[3] = "players";
+    _fieldNames[4] = "board";
     return ("Match", _fieldNames);
   }
 
@@ -86,130 +83,50 @@ library Match {
   }
 
   /** Get turnCount */
-  function getTurnCount(bytes32 gameId, bytes32 matchId) internal view returns (uint8 turnCount) {
+  function getTurnCount(bytes32 gameId, uint8 matchNumber) internal view returns (uint8 turnCount) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Get turnCount (using the specified store) */
-  function getTurnCount(IStore _store, bytes32 gameId, bytes32 matchId) internal view returns (uint8 turnCount) {
+  function getTurnCount(IStore _store, bytes32 gameId, uint8 matchNumber) internal view returns (uint8 turnCount) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (uint8(Bytes.slice1(_blob, 0)));
   }
 
   /** Set turnCount */
-  function setTurnCount(bytes32 gameId, bytes32 matchId, uint8 turnCount) internal {
+  function setTurnCount(bytes32 gameId, uint8 matchNumber, uint8 turnCount) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((turnCount)));
   }
 
   /** Set turnCount (using the specified store) */
-  function setTurnCount(IStore _store, bytes32 gameId, bytes32 matchId, uint8 turnCount) internal {
+  function setTurnCount(IStore _store, bytes32 gameId, uint8 matchNumber, uint8 turnCount) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((turnCount)));
   }
 
-  /** Get id */
-  function getId(bytes32 gameId, bytes32 matchId) internal view returns (bytes32 id) {
+  /** Get currentPlayer */
+  function getCurrentPlayer(bytes32 gameId, uint8 matchNumber) internal view returns (address currentPlayer) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
-    return (Bytes.slice32(_blob, 0));
-  }
-
-  /** Get id (using the specified store) */
-  function getId(IStore _store, bytes32 gameId, bytes32 matchId) internal view returns (bytes32 id) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
-    return (Bytes.slice32(_blob, 0));
-  }
-
-  /** Set id */
-  function setId(bytes32 gameId, bytes32 matchId, bytes32 id) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((id)));
-  }
-
-  /** Set id (using the specified store) */
-  function setId(IStore _store, bytes32 gameId, bytes32 matchId, bytes32 id) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((id)));
-  }
-
-  /** Get spacePosition */
-  function getSpacePosition(bytes32 gameId, bytes32 matchId) internal view returns (uint8 spacePosition) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
-    return (uint8(Bytes.slice1(_blob, 0)));
-  }
-
-  /** Get spacePosition (using the specified store) */
-  function getSpacePosition(
-    IStore _store,
-    bytes32 gameId,
-    bytes32 matchId
-  ) internal view returns (uint8 spacePosition) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
-    return (uint8(Bytes.slice1(_blob, 0)));
-  }
-
-  /** Set spacePosition */
-  function setSpacePosition(bytes32 gameId, bytes32 matchId, uint8 spacePosition) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((spacePosition)));
-  }
-
-  /** Set spacePosition (using the specified store) */
-  function setSpacePosition(IStore _store, bytes32 gameId, bytes32 matchId, uint8 spacePosition) internal {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((spacePosition)));
-  }
-
-  /** Get currentPlayer */
-  function getCurrentPlayer(bytes32 gameId, bytes32 matchId) internal view returns (address currentPlayer) {
-    bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
-
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
     return (address(Bytes.slice20(_blob, 0)));
   }
 
@@ -217,137 +134,141 @@ library Match {
   function getCurrentPlayer(
     IStore _store,
     bytes32 gameId,
-    bytes32 matchId
+    uint8 matchNumber
   ) internal view returns (address currentPlayer) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (address(Bytes.slice20(_blob, 0)));
   }
 
   /** Set currentPlayer */
-  function setCurrentPlayer(bytes32 gameId, bytes32 matchId, address currentPlayer) internal {
+  function setCurrentPlayer(bytes32 gameId, uint8 matchNumber, address currentPlayer) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((currentPlayer)));
+    StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((currentPlayer)));
   }
 
   /** Set currentPlayer (using the specified store) */
-  function setCurrentPlayer(IStore _store, bytes32 gameId, bytes32 matchId, address currentPlayer) internal {
+  function setCurrentPlayer(IStore _store, bytes32 gameId, uint8 matchNumber, address currentPlayer) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((currentPlayer)));
+    _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((currentPlayer)));
   }
 
   /** Get winner */
-  function getWinner(bytes32 gameId, bytes32 matchId) internal view returns (address winner) {
+  function getWinner(bytes32 gameId, uint8 matchNumber) internal view returns (address winner) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 4);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
     return (address(Bytes.slice20(_blob, 0)));
   }
 
   /** Get winner (using the specified store) */
-  function getWinner(IStore _store, bytes32 gameId, bytes32 matchId) internal view returns (address winner) {
+  function getWinner(IStore _store, bytes32 gameId, uint8 matchNumber) internal view returns (address winner) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 4);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
     return (address(Bytes.slice20(_blob, 0)));
   }
 
   /** Set winner */
-  function setWinner(bytes32 gameId, bytes32 matchId, address winner) internal {
+  function setWinner(bytes32 gameId, uint8 matchNumber, address winner) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 4, abi.encodePacked((winner)));
+    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked((winner)));
   }
 
   /** Set winner (using the specified store) */
-  function setWinner(IStore _store, bytes32 gameId, bytes32 matchId, address winner) internal {
+  function setWinner(IStore _store, bytes32 gameId, uint8 matchNumber, address winner) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    _store.setField(_tableId, _keyTuple, 4, abi.encodePacked((winner)));
+    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((winner)));
   }
 
   /** Get players */
-  function getPlayers(bytes32 gameId, bytes32 matchId) internal view returns (address[] memory players) {
+  function getPlayers(bytes32 gameId, uint8 matchNumber) internal view returns (address[] memory players) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 5);
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
     return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_address());
   }
 
   /** Get players (using the specified store) */
-  function getPlayers(IStore _store, bytes32 gameId, bytes32 matchId) internal view returns (address[] memory players) {
+  function getPlayers(
+    IStore _store,
+    bytes32 gameId,
+    uint8 matchNumber
+  ) internal view returns (address[] memory players) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = _store.getField(_tableId, _keyTuple, 5);
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
     return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_address());
   }
 
   /** Set players */
-  function setPlayers(bytes32 gameId, bytes32 matchId, address[] memory players) internal {
+  function setPlayers(bytes32 gameId, uint8 matchNumber, address[] memory players) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    StoreSwitch.setField(_tableId, _keyTuple, 5, EncodeArray.encode((players)));
+    StoreSwitch.setField(_tableId, _keyTuple, 3, EncodeArray.encode((players)));
   }
 
   /** Set players (using the specified store) */
-  function setPlayers(IStore _store, bytes32 gameId, bytes32 matchId, address[] memory players) internal {
+  function setPlayers(IStore _store, bytes32 gameId, uint8 matchNumber, address[] memory players) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    _store.setField(_tableId, _keyTuple, 5, EncodeArray.encode((players)));
+    _store.setField(_tableId, _keyTuple, 3, EncodeArray.encode((players)));
   }
 
   /** Get the length of players */
-  function lengthPlayers(bytes32 gameId, bytes32 matchId) internal view returns (uint256) {
+  function lengthPlayers(bytes32 gameId, uint8 matchNumber) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 5, getSchema());
+    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 3, getSchema());
     return _byteLength / 20;
   }
 
   /** Get the length of players (using the specified store) */
-  function lengthPlayers(IStore _store, bytes32 gameId, bytes32 matchId) internal view returns (uint256) {
+  function lengthPlayers(IStore _store, bytes32 gameId, uint8 matchNumber) internal view returns (uint256) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 5, getSchema());
+    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 3, getSchema());
     return _byteLength / 20;
   }
 
   /** Get an item of players (unchecked, returns invalid data if index overflows) */
-  function getItemPlayers(bytes32 gameId, bytes32 matchId, uint256 _index) internal view returns (address) {
+  function getItemPlayers(bytes32 gameId, uint8 matchNumber, uint256 _index) internal view returns (address) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 5, getSchema(), _index * 20, (_index + 1) * 20);
+    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 3, getSchema(), _index * 20, (_index + 1) * 20);
     return (address(Bytes.slice20(_blob, 0)));
   }
 
@@ -355,86 +276,223 @@ library Match {
   function getItemPlayers(
     IStore _store,
     bytes32 gameId,
-    bytes32 matchId,
+    uint8 matchNumber,
     uint256 _index
   ) internal view returns (address) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 5, getSchema(), _index * 20, (_index + 1) * 20);
+    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 3, getSchema(), _index * 20, (_index + 1) * 20);
     return (address(Bytes.slice20(_blob, 0)));
   }
 
   /** Push an element to players */
-  function pushPlayers(bytes32 gameId, bytes32 matchId, address _element) internal {
+  function pushPlayers(bytes32 gameId, uint8 matchNumber, address _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    StoreSwitch.pushToField(_tableId, _keyTuple, 5, abi.encodePacked((_element)));
+    StoreSwitch.pushToField(_tableId, _keyTuple, 3, abi.encodePacked((_element)));
   }
 
   /** Push an element to players (using the specified store) */
-  function pushPlayers(IStore _store, bytes32 gameId, bytes32 matchId, address _element) internal {
+  function pushPlayers(IStore _store, bytes32 gameId, uint8 matchNumber, address _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    _store.pushToField(_tableId, _keyTuple, 5, abi.encodePacked((_element)));
+    _store.pushToField(_tableId, _keyTuple, 3, abi.encodePacked((_element)));
   }
 
   /** Pop an element from players */
-  function popPlayers(bytes32 gameId, bytes32 matchId) internal {
+  function popPlayers(bytes32 gameId, uint8 matchNumber) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    StoreSwitch.popFromField(_tableId, _keyTuple, 5, 20);
+    StoreSwitch.popFromField(_tableId, _keyTuple, 3, 20);
   }
 
   /** Pop an element from players (using the specified store) */
-  function popPlayers(IStore _store, bytes32 gameId, bytes32 matchId) internal {
+  function popPlayers(IStore _store, bytes32 gameId, uint8 matchNumber) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    _store.popFromField(_tableId, _keyTuple, 5, 20);
+    _store.popFromField(_tableId, _keyTuple, 3, 20);
   }
 
   /** Update an element of players at `_index` */
-  function updatePlayers(bytes32 gameId, bytes32 matchId, uint256 _index, address _element) internal {
+  function updatePlayers(bytes32 gameId, uint8 matchNumber, uint256 _index, address _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    StoreSwitch.updateInField(_tableId, _keyTuple, 5, _index * 20, abi.encodePacked((_element)));
+    StoreSwitch.updateInField(_tableId, _keyTuple, 3, _index * 20, abi.encodePacked((_element)));
   }
 
   /** Update an element of players (using the specified store) at `_index` */
-  function updatePlayers(IStore _store, bytes32 gameId, bytes32 matchId, uint256 _index, address _element) internal {
+  function updatePlayers(IStore _store, bytes32 gameId, uint8 matchNumber, uint256 _index, address _element) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
-    _store.updateInField(_tableId, _keyTuple, 5, _index * 20, abi.encodePacked((_element)));
+    _store.updateInField(_tableId, _keyTuple, 3, _index * 20, abi.encodePacked((_element)));
+  }
+
+  /** Get board */
+  function getBoard(bytes32 gameId, uint8 matchNumber) internal view returns (uint8[] memory board) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 4);
+    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+  }
+
+  /** Get board (using the specified store) */
+  function getBoard(IStore _store, bytes32 gameId, uint8 matchNumber) internal view returns (uint8[] memory board) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 4);
+    return (SliceLib.getSubslice(_blob, 0, _blob.length).decodeArray_uint8());
+  }
+
+  /** Set board */
+  function setBoard(bytes32 gameId, uint8 matchNumber, uint8[] memory board) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 4, EncodeArray.encode((board)));
+  }
+
+  /** Set board (using the specified store) */
+  function setBoard(IStore _store, bytes32 gameId, uint8 matchNumber, uint8[] memory board) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    _store.setField(_tableId, _keyTuple, 4, EncodeArray.encode((board)));
+  }
+
+  /** Get the length of board */
+  function lengthBoard(bytes32 gameId, uint8 matchNumber) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    uint256 _byteLength = StoreSwitch.getFieldLength(_tableId, _keyTuple, 4, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get the length of board (using the specified store) */
+  function lengthBoard(IStore _store, bytes32 gameId, uint8 matchNumber) internal view returns (uint256) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    uint256 _byteLength = _store.getFieldLength(_tableId, _keyTuple, 4, getSchema());
+    return _byteLength / 1;
+  }
+
+  /** Get an item of board (unchecked, returns invalid data if index overflows) */
+  function getItemBoard(bytes32 gameId, uint8 matchNumber, uint256 _index) internal view returns (uint8) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    bytes memory _blob = StoreSwitch.getFieldSlice(_tableId, _keyTuple, 4, getSchema(), _index * 1, (_index + 1) * 1);
+    return (uint8(Bytes.slice1(_blob, 0)));
+  }
+
+  /** Get an item of board (using the specified store) (unchecked, returns invalid data if index overflows) */
+  function getItemBoard(
+    IStore _store,
+    bytes32 gameId,
+    uint8 matchNumber,
+    uint256 _index
+  ) internal view returns (uint8) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    bytes memory _blob = _store.getFieldSlice(_tableId, _keyTuple, 4, getSchema(), _index * 1, (_index + 1) * 1);
+    return (uint8(Bytes.slice1(_blob, 0)));
+  }
+
+  /** Push an element to board */
+  function pushBoard(bytes32 gameId, uint8 matchNumber, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    StoreSwitch.pushToField(_tableId, _keyTuple, 4, abi.encodePacked((_element)));
+  }
+
+  /** Push an element to board (using the specified store) */
+  function pushBoard(IStore _store, bytes32 gameId, uint8 matchNumber, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    _store.pushToField(_tableId, _keyTuple, 4, abi.encodePacked((_element)));
+  }
+
+  /** Pop an element from board */
+  function popBoard(bytes32 gameId, uint8 matchNumber) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    StoreSwitch.popFromField(_tableId, _keyTuple, 4, 1);
+  }
+
+  /** Pop an element from board (using the specified store) */
+  function popBoard(IStore _store, bytes32 gameId, uint8 matchNumber) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    _store.popFromField(_tableId, _keyTuple, 4, 1);
+  }
+
+  /** Update an element of board at `_index` */
+  function updateBoard(bytes32 gameId, uint8 matchNumber, uint256 _index, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    StoreSwitch.updateInField(_tableId, _keyTuple, 4, _index * 1, abi.encodePacked((_element)));
+  }
+
+  /** Update an element of board (using the specified store) at `_index` */
+  function updateBoard(IStore _store, bytes32 gameId, uint8 matchNumber, uint256 _index, uint8 _element) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = bytes32((gameId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
+
+    _store.updateInField(_tableId, _keyTuple, 4, _index * 1, abi.encodePacked((_element)));
   }
 
   /** Get the full data */
-  function get(bytes32 gameId, bytes32 matchId) internal view returns (MatchData memory _table) {
+  function get(bytes32 gameId, uint8 matchNumber) internal view returns (MatchData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
   }
 
   /** Get the full data (using the specified store) */
-  function get(IStore _store, bytes32 gameId, bytes32 matchId) internal view returns (MatchData memory _table) {
+  function get(IStore _store, bytes32 gameId, uint8 matchNumber) internal view returns (MatchData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -443,19 +501,18 @@ library Match {
   /** Set the full data using individual values */
   function set(
     bytes32 gameId,
-    bytes32 matchId,
+    uint8 matchNumber,
     uint8 turnCount,
-    bytes32 id,
-    uint8 spacePosition,
     address currentPlayer,
     address winner,
-    address[] memory players
+    address[] memory players,
+    uint8[] memory board
   ) internal {
-    bytes memory _data = encode(turnCount, id, spacePosition, currentPlayer, winner, players);
+    bytes memory _data = encode(turnCount, currentPlayer, winner, players, board);
 
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -464,125 +521,113 @@ library Match {
   function set(
     IStore _store,
     bytes32 gameId,
-    bytes32 matchId,
+    uint8 matchNumber,
     uint8 turnCount,
-    bytes32 id,
-    uint8 spacePosition,
     address currentPlayer,
     address winner,
-    address[] memory players
+    address[] memory players,
+    uint8[] memory board
   ) internal {
-    bytes memory _data = encode(turnCount, id, spacePosition, currentPlayer, winner, players);
+    bytes memory _data = encode(turnCount, currentPlayer, winner, players, board);
 
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
 
   /** Set the full data using the data struct */
-  function set(bytes32 gameId, bytes32 matchId, MatchData memory _table) internal {
-    set(
-      gameId,
-      matchId,
-      _table.turnCount,
-      _table.id,
-      _table.spacePosition,
-      _table.currentPlayer,
-      _table.winner,
-      _table.players
-    );
+  function set(bytes32 gameId, uint8 matchNumber, MatchData memory _table) internal {
+    set(gameId, matchNumber, _table.turnCount, _table.currentPlayer, _table.winner, _table.players, _table.board);
   }
 
   /** Set the full data using the data struct (using the specified store) */
-  function set(IStore _store, bytes32 gameId, bytes32 matchId, MatchData memory _table) internal {
+  function set(IStore _store, bytes32 gameId, uint8 matchNumber, MatchData memory _table) internal {
     set(
       _store,
       gameId,
-      matchId,
+      matchNumber,
       _table.turnCount,
-      _table.id,
-      _table.spacePosition,
       _table.currentPlayer,
       _table.winner,
-      _table.players
+      _table.players,
+      _table.board
     );
   }
 
   /** Decode the tightly packed blob using this table's schema */
   function decode(bytes memory _blob) internal view returns (MatchData memory _table) {
-    // 74 is the total byte length of static data
-    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 74));
+    // 41 is the total byte length of static data
+    PackedCounter _encodedLengths = PackedCounter.wrap(Bytes.slice32(_blob, 41));
 
     _table.turnCount = (uint8(Bytes.slice1(_blob, 0)));
 
-    _table.id = (Bytes.slice32(_blob, 1));
+    _table.currentPlayer = (address(Bytes.slice20(_blob, 1)));
 
-    _table.spacePosition = (uint8(Bytes.slice1(_blob, 33)));
-
-    _table.currentPlayer = (address(Bytes.slice20(_blob, 34)));
-
-    _table.winner = (address(Bytes.slice20(_blob, 54)));
+    _table.winner = (address(Bytes.slice20(_blob, 21)));
 
     // Store trims the blob if dynamic fields are all empty
-    if (_blob.length > 74) {
+    if (_blob.length > 41) {
       uint256 _start;
       // skip static data length + dynamic lengths word
-      uint256 _end = 106;
+      uint256 _end = 73;
 
       _start = _end;
       _end += _encodedLengths.atIndex(0);
       _table.players = (SliceLib.getSubslice(_blob, _start, _end).decodeArray_address());
+
+      _start = _end;
+      _end += _encodedLengths.atIndex(1);
+      _table.board = (SliceLib.getSubslice(_blob, _start, _end).decodeArray_uint8());
     }
   }
 
   /** Tightly pack full data using this table's schema */
   function encode(
     uint8 turnCount,
-    bytes32 id,
-    uint8 spacePosition,
     address currentPlayer,
     address winner,
-    address[] memory players
+    address[] memory players,
+    uint8[] memory board
   ) internal view returns (bytes memory) {
-    uint40[] memory _counters = new uint40[](1);
+    uint40[] memory _counters = new uint40[](2);
     _counters[0] = uint40(players.length * 20);
+    _counters[1] = uint40(board.length * 1);
     PackedCounter _encodedLengths = PackedCounterLib.pack(_counters);
 
     return
       abi.encodePacked(
         turnCount,
-        id,
-        spacePosition,
         currentPlayer,
         winner,
         _encodedLengths.unwrap(),
-        EncodeArray.encode((players))
+        EncodeArray.encode((players)),
+        EncodeArray.encode((board))
       );
   }
 
   /** Encode keys as a bytes32 array using this table's schema */
-  function encodeKeyTuple(bytes32 gameId, bytes32 matchId) internal pure returns (bytes32[] memory _keyTuple) {
+  function encodeKeyTuple(bytes32 gameId, uint8 matchNumber) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
   }
 
   /* Delete all data for given keys */
-  function deleteRecord(bytes32 gameId, bytes32 matchId) internal {
+  function deleteRecord(bytes32 gameId, uint8 matchNumber) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
 
   /* Delete all data for given keys (using the specified store) */
-  function deleteRecord(IStore _store, bytes32 gameId, bytes32 matchId) internal {
+  function deleteRecord(IStore _store, bytes32 gameId, uint8 matchNumber) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = bytes32((gameId));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[1] = bytes32(uint256((matchNumber)));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

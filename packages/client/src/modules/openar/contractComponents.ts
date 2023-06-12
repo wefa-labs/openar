@@ -5,21 +5,6 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 
 export function defineContractComponents(world: World) {
   return {
-    Role: (() => {
-      const tableId = new TableId("", "Role");
-      return defineComponent(
-        world,
-        {
-          value: RecsType.Number,
-        },
-        {
-          metadata: {
-            contractId: tableId.toHexString(),
-            tableId: tableId.toString(),
-          },
-        }
-      );
-    })(),
     State: (() => {
       const tableId = new TableId("", "State");
       return defineComponent(
@@ -50,12 +35,74 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Element: (() => {
+      const tableId = new TableId("", "Element");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
     Owner: (() => {
       const tableId = new TableId("", "Owner");
       return defineComponent(
         world,
         {
           value: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Role: (() => {
+      const tableId = new TableId("", "Role");
+      return defineComponent(
+        world,
+        {
+          value: RecsType.Number,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Asset: (() => {
+      const tableId = new TableId("", "Asset");
+      return defineComponent(
+        world,
+        {
+          image: RecsType.String,
+          model: RecsType.String,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
+    Care: (() => {
+      const tableId = new TableId("", "Care");
+      return defineComponent(
+        world,
+        {
+          growthLevel: RecsType.Number,
+          checkedAt: RecsType.BigInt,
         },
         {
           metadata: {
@@ -88,11 +135,10 @@ export function defineContractComponents(world: World) {
         world,
         {
           turnCount: RecsType.Number,
-          id: RecsType.String,
-          spacePosition: RecsType.Number,
           currentPlayer: RecsType.String,
           winner: RecsType.String,
           players: RecsType.StringArray,
+          board: RecsType.NumberArray,
         },
         {
           metadata: {
@@ -108,7 +154,7 @@ export function defineContractComponents(world: World) {
         world,
         {
           matchesPlayed: RecsType.Number,
-          spaceY: RecsType.Number,
+          worldId: RecsType.String,
           spaceId: RecsType.String,
           winner: RecsType.String,
           players: RecsType.StringArray,
@@ -126,7 +172,7 @@ export function defineContractComponents(world: World) {
       return defineComponent(
         world,
         {
-          values: RecsType.String,
+          value: RecsType.String,
         },
         {
           metadata: {

@@ -6,10 +6,12 @@ pragma solidity >=0.8.0;
 import { IBaseWorld } from "@latticexyz/world/src/interfaces/IBaseWorld.sol";
 
 import { ICellSystem } from "./ICellSystem.sol";
+import { ICreatureSystem } from "./ICreatureSystem.sol";
 import { IGameCollectibleSystem } from "./IGameCollectibleSystem.sol";
 import { IGameMoveSystem } from "./IGameMoveSystem.sol";
 import { IGameStartSystem } from "./IGameStartSystem.sol";
 import { IIncrementSystem } from "./IIncrementSystem.sol";
+import { IPlantSystem } from "./IPlantSystem.sol";
 import { ISpaceSystem } from "./ISpaceSystem.sol";
 import { IWorldSystem } from "./IWorldSystem.sol";
 
@@ -20,10 +22,12 @@ import { IWorldSystem } from "./IWorldSystem.sol";
 interface IWorld is
   IBaseWorld,
   ICellSystem,
+  ICreatureSystem,
   IGameCollectibleSystem,
   IGameMoveSystem,
   IGameStartSystem,
   IIncrementSystem,
+  IPlantSystem,
   ISpaceSystem,
   IWorldSystem
 {

@@ -1,19 +1,21 @@
 {
-  "name": "autonomous-worlds-hackathon",
+  "name": "openar",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/wefa-tech/autonomous-worlds-hackathon"
+    "url": "https://github.com/wefa-tech/openar"
   },
   "scripts": {
     "prepare": "(forge --version || pnpm foundry:up)",
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
     "mud:up": "pnpm recursive exec mud set-version -v canary && pnpm install",
     "initialize": "pnpm recursive run initialize",
-    "dev": "concurrently -n contracts,client -c cyan,magenta 'cd packages/contracts/openar && pnpm run dev' 'cd packages/client && pnpm run dev'",
+    "dev": "concurrently -n contracts,api,generator,client -c cyan,green,yellow,magenta 'cd packages/contracts && pnpm dev' 'cd packages/api && pnpm dev' 'pnpm dev:creature-generator' 'cd packages/client && pnpm dev'",
+    "dev:api": "pnpm --filter 'api' run dev",
     "dev:client": "pnpm --filter 'client' run dev",
     "dev:contracts": "pnpm --filter 'contracts' dev",
+    "dev:creature-generator": "cd packages/creature-generator && python3 main.py",
     "test": "pnpm recursive run test",
     "build": "pnpm recursive run build"
   },
@@ -26,12 +28,13 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "17.0.38",
+    "concurrently": "^8.0.1",
     "cypress": "12.8.1",
+    "dotenv": "16.1.0",
     "identity-obj-proxy": "3.0.0",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.3",
     "start-server-and-test": "2.0.0",
-    "concurrently": "^8.0.1",
     "eslint": "8.29.0",
     "rimraf": "^3.0.2",
     "typescript": "^5.0.4",
@@ -40,5 +43,6 @@
   "engines": {
     "node": "18.x",
     "pnpm": "8.x"
-  }
+  },
+  "packageManager": "pnpm@8.6.0"
 }
