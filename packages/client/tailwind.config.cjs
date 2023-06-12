@@ -13,7 +13,7 @@ module.exports = {
           accent: "#4B607C",
           neutral: "#000", // Font color
           "base-100": "#F7FAF9", // Surface
-          info: "#1E1E1E",
+          info: "#3498db",
           success: "#007A7A",
           error: "#BA1A1A",
         },
@@ -23,7 +23,7 @@ module.exports = {
           accent: "#B3C8E9",
           neutral: "#C4C7C6",
           "base-100": "#101414",
-          info: "#1E1E1E",
+          info: "#3498db",
           success: "#007A7A",
           error: "#FFB4AB",
         },
@@ -33,7 +33,7 @@ module.exports = {
           accent: "#715573",
           neutral: "#1B1B1F", // Font Color
           "base-100": "#FAF8FD", // Surface
-          info: "#1E1E1E",
+          info: "#3498db",
           success: "#007A7A",
           error: "#BA1A1A",
         },
@@ -43,7 +43,7 @@ module.exports = {
           accent: "#6F5C2E",
           neutral: "#201A19", // Font Color
           "base-100": "#FFF8F6", // Surface
-          info: "#1E1E1E",
+          info: "#3498db",
           success: "#007A7A",
           error: "#BA1A1A",
         },
@@ -53,7 +53,7 @@ module.exports = {
           accent: "#715B2E",
           neutral: "#201A19", // Font Color
           "base-100": "#FFF8F7", // Surface
-          info: "#1E1E1E",
+          info: "#3498db",
           success: "#007A7A",
           error: "#BA1A1A",
         },
@@ -63,7 +63,7 @@ module.exports = {
           accent: "#6E5C40",
           neutral: "#1F1B16", // Font Color
           "base-100": "#FFF8F3", // Surface
-          info: "#1E1E1E",
+          info: "#3498db",
           success: "#007A7A",
           error: "#BA1A1A",
         },

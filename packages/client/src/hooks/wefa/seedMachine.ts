@@ -2,13 +2,8 @@ import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
 import { createMachine, assign } from "xstate";
 
-import { pickRandom } from "../../constants";
-
 import { apiClient } from "../../modules/axios";
 import { createPlant, createCreature, db, initDB } from "../../modules/idb";
-
-import { data as mockCreatures } from "../../mocks/creatures.json";
-import { flower, vegetable, fruit, herb } from "../../mocks/plantGlossary.json";
 
 export interface SeedContext {
   address?: `0x${string}`;
@@ -133,7 +128,7 @@ export const seedMachine = createMachine(
 
       console.log("Seed machine entered.", context, event);
 
-      toast.info("Seed machine entered.");
+      // toast.info("Seed machine entered.");
     },
     exit: (context, event) => {
       console.log("Seed machine exited.", context, event);
@@ -175,12 +170,11 @@ export const seedMachine = createMachine(
         return context;
       }),
       seeded: assign((context, event) => {
-        const mockCreature = pickRandom(mockCreatures);
         const creature: Creature = {
           id: `0x${nanoid()}`,
           localId: nanoid(),
-          name: mockCreature.name,
-          description: mockCreature.description,
+          name: "New Creature",
+          description: "",
           image: event.data.img,
           createdAt: new Date().getMilliseconds(),
           updatedAt: new Date().getMilliseconds(),
@@ -260,38 +254,15 @@ export const seedMachine = createMachine(
         // formData.append("data", JSON.stringify(data));
 
         try {
-          // const { data } = await apiClient.post<{ plant: PlantResponse }>(
-          //   "/plants/detect",
-          //   { image }
-          // );
-
-          // return { ...data.plant.suggestions[0].plant_details };
-
-          const plant = pickRandom(
-            Object.values({
-              ...flower,
-              ...vegetable,
-              ...fruit,
-              ...herb,
-            })
+          const { data } = await apiClient.post<{ plant: PlantResponse }>(
+            "/plants/detect",
+            { image }
           );
 
-          const details: PlantDetails = {
-            id: plant.id,
-            common_names: [plant.name],
-            scientific_name: plant.name,
-            edible_parts: [],
-            structured_name: {
-              genus: plant.name,
-              species: plant.name,
-            },
-            watering: {
-              min: 3,
-              max: 2,
-            },
+          return {
+            details: data.plant.suggestions[0].plant_details,
+            img: image,
           };
-
-          return { details, img: plant.image };
         } catch (error) {
           console.log("Photo verification failed!", error);
           throw error;
@@ -317,9 +288,7 @@ export const seedMachine = createMachine(
             }
           );
 
-          console.log("Creature generated!", data);
-
-          return { element, img: pickRandom(mockCreatures).image };
+          return { element, img: `data:image/png;base64,${data.img}` };
         } catch (error) {
           console.log("Creature generation failed!", error);
           throw error;
