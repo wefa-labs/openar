@@ -28,12 +28,6 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
     config: { ...config.gentle, clamp: true },
   });
 
-  const spring = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: active ? 1 : 0 },
-    config: { ...config.gentle, clamp: true },
-  });
-
   function handleSelect(element: WefaElement) {
     onElementSelected(element);
   }
