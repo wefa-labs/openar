@@ -20,15 +20,15 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   return (
     <a.div
-      className="profile-avatar flex flex-col items-center w-full px-6 sm:px-12"
+      className="profile-avatar flex flex-col items-center w-full px-6 sm:px-12 h-full"
       style={avatarSpring}
     >
       <div className="avatar">
-        <div className=" text-neutral-content rounded-full w-32">
+        <div className=" text-neutral-content rounded-full w-24">
           <img src={avatar} alt="profile avatar" />
         </div>
       </div>
-      <h2 className="text-2xl font-semibold mb-6">{username}</h2>
+      <h2 className="text-2xl font-semibold ">{username}</h2>
     </a.div>
   );
 };

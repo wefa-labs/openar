@@ -15,8 +15,11 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
 }) => {
   const [openBadge, setOpenBadge] = useState<WefaBadge | null>(null);
 
-  function handleShare(type: BadgeType) {
+  function handleShare(type: BadgeType, image: string) {
     if (navigator.canShare && navigator.canShare()) {
+      const blob = new Blob([image], { type: "image/png" });
+      const file = new File([blob], "wefa-badge.png", { type: "image/png" });
+
       navigator.share({
         url: "https://wefa.app",
         title: `WEFA Badge Earned!`,
@@ -24,6 +27,7 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
           "_",
           "  "
         )} badge on Wefa!`,
+        files: [file],
       });
     } else {
       toast.error("Your browser does not support sharing.");
@@ -71,7 +75,7 @@ export const ProfileHarvest: React.FC<ProfileHarvestProps> = ({
                   <div className="flex gap-3">
                     <button
                       className="btn btn-secondary btn-outline"
-                      onClick={() => handleShare(openBadge.id)}
+                      onClick={() => handleShare(openBadge.id, openBadge.Icon)}
                     >
                       Share
                     </button>

@@ -64,7 +64,7 @@ html {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: var(--text-color);
   max-width: 100vw;
   max-height: 100vh;
   width: 100vw;
@@ -163,9 +163,10 @@ section {
 @media (max-width: 640px) {
   .profile-view {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas:
       "avatar avatar"
+      "tabs tabs"
       "tabs tabs"
       "tabs tabs"
       "tabs tabs"
@@ -200,7 +201,7 @@ section {
       "tabs tabs"
       "tabs tabs"
       "tabs tabs"
-      /* "tabs tabs" */
+      "tabs tabs"
       "tabs tabs";
   }
 }

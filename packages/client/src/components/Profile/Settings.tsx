@@ -13,7 +13,6 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = () => {
         <h3 className="mb-3 font-bold text-2xl">Theme</h3>
         <select
           className="select select-primary w-full"
-          defaultValue={"Choose a Theme"}
           value={theme}
           onChange={handlseSetTheme}
         >
