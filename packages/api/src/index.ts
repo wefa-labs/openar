@@ -6,6 +6,8 @@ import session, { SessionStore } from "@fastify/session";
 
 dotenv.config();
 
+import "./modules/sentry";
+
 import { router } from "./router";
 import { server } from "./server";
 // import { redis } from "./modules/redis";
