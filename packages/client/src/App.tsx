@@ -28,7 +28,15 @@ function App() {
                   <Header />
                   <Appbar />
                   <Views />
-                  <ToastContainer className="bottom-16" />
+                  <ToastContainer
+                    bodyClassName=""
+                    toastClassName="max-w-xs mx-auto text-neutral bg-primary rounded-xl py-2 px-3"
+                    progressClassName=""
+                    // hideProgressBar
+                    autoClose={2400}
+                    closeButton={false}
+                    limit={4}
+                  />
                 </SeedProvider>
               </WefaProvider>
             </BrowserRouter>

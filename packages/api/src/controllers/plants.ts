@@ -148,7 +148,7 @@ export default async function plantController(fastify: FastifyInstance) {
       // CHECK PLANT HEALTH
       const health = await detectPlantHealth(body.image);
 
-      console.log("API Plant Nurture", { health });
+      // console.log("API Plant Nurture", { health });
 
       // Detemine based on health how much to nurture plant
 

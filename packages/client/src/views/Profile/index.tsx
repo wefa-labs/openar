@@ -1,13 +1,15 @@
 import { a, useTransition } from "@react-spring/web";
 
-import { ProfileHarvest } from "./Harvest"; // Badges
-import { ProfileSettings } from "./Settings";
-import { ProfileDataProps } from "../../hooks/views/useProfile";
 import { avatar } from "../../constants";
 
-type Tab = "harvest" | "settings" | "wallet";
+import { useApp } from "../../hooks/app/useApp";
+import { ProfileDataProps, ProfileTab } from "../../hooks/views/useProfile";
 
-const tabs: Tab[] = ["harvest", "settings"];
+import { ProfileInfo } from "../../components/Profile/Info";
+import { ProfileBadges } from "../../components/Profile/Badges"; // Badges
+import { ProfileSettings } from "../../components/Profile/Settings";
+
+const tabs: ProfileTab[] = ["harvest", "settings"];
 
 interface ProfileProps extends ProfileDataProps {}
 
@@ -15,8 +17,11 @@ export const Profile: React.FC<ProfileProps> = ({
   badges,
   tab,
   changeTab,
+  tabsSpring,
   avatarSpring,
 }) => {
+  const { isDesktop } = useApp();
+
   const transition = useTransition(tab, {
     from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
     enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
@@ -29,22 +34,19 @@ export const Profile: React.FC<ProfileProps> = ({
   });
 
   return (
-    <section className="profile-view px-6 sm:px-12 flex flex-col max-w-screen-sm w-full mx-auto">
+    <section className="profile-view flex flex-col max-w-screen-sm w-full mx-auto bg-primary">
+      <ProfileInfo avatar={avatar} avatarSpring={avatarSpring} />
       <a.div
-        className="profile-avatar flex flex-col items-center w-full"
-        style={avatarSpring}
+        style={tabsSpring}
+        className="profile-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
       >
-        <div className="avatar">
-          <div className=" text-neutral-content rounded-full w-32">
-            <img src={avatar} alt="profile avatar" />
-          </div>
-        </div>
-        <h2 className="text-2xl font-semibold mb-6">Username</h2>
-        <div className="tabs tabs-boxed w-fit">
+        <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
           {tabs.map((name) => (
             <button
               key={name}
-              className={`tab capitalize ${name === tab ? "tab-active" : ""}`}
+              className={`tab capitalize w-20 ${
+                name === tab ? "tab-active" : ""
+              }`}
               onClick={() => changeTab(name)}
               type="button"
             >
@@ -52,14 +54,16 @@ export const Profile: React.FC<ProfileProps> = ({
             </button>
           ))}
         </div>
+        {transition((style, tab) => (
+          <a.div style={style} className="h-full">
+            {tab === "harvest" && (
+              <ProfileBadges badges={badges} isDesktop={isDesktop} />
+            )}
+            {/* {tab === "wallet" && <ProfileWallet />} */}
+            {tab === "settings" && <ProfileSettings />}
+          </a.div>
+        ))}
       </a.div>
-      {transition((style, tab) => (
-        <a.div style={style} className="profile-tabs w-full">
-          {tab === "harvest" && <ProfileHarvest badges={badges} />}
-          {/* {tab === "wallet" && <ProfileWallet />} */}
-          {tab === "settings" && <ProfileSettings />}
-        </a.div>
-      ))}
     </section>
   );
 };

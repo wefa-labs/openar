@@ -41,8 +41,10 @@ export const CreatureGeneration: React.FC<CreatureGenerationProps> = ({
         className="aspect-square overflow-hidden rounded-lg object-cover"
       />
       <div className="flex w-full gap-2 px-1">
-        <button className="btn flex-1">Nurture</button>
-        <button className="btn flex-1">Regenerate</button>
+        {/* <button className="btn flex-1">Nurture</button> */}
+        <button className="btn flex-1" onClick={onReset}>
+          Reset
+        </button>
       </div>
     </>
   );

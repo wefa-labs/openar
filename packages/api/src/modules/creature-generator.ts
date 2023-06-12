@@ -18,7 +18,7 @@ export async function generateCreature(plant: string, element: WefaElement) {
       })
     ).json();
 
-    console.log("Generator Data", data);
+    // console.log("Generator Data", data);
 
     return data;
   } catch (error) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { a, config, useTransition } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
@@ -7,6 +7,7 @@ import { DeckDataProps, DeckTab } from "../../hooks/views/useDeck";
 import { DeckStats } from "../../components/Deck/Stats";
 import { DeckViewer, DeckViewerData } from "../../components/Deck/Viewer";
 import { DeckItems } from "../../components/Deck/Items";
+import { useWefa } from "../../hooks/wefa/useWefa";
 
 const tabs: DeckTab[] = ["plants", "creatures"];
 
@@ -23,6 +24,8 @@ const Deck: React.FC<DeckProps> = ({
   tabsSpring,
 }) => {
   const { isDesktop } = useApp();
+  const { handleFetchEnergy, handleFetchPlants, handleFetchCreatures } =
+    useWefa();
 
   const [viewerOpen, setViewerOpen] = useState(false);
   const [sheetData, setSheetData] = useState<DeckViewerData>({
@@ -52,14 +55,20 @@ const Deck: React.FC<DeckProps> = ({
     },
   });
 
+  useEffect(() => {
+    handleFetchEnergy();
+    handleFetchPlants();
+    handleFetchCreatures();
+  }, []);
+
   return (
-    <section className="deck-view flex-col justify-center">
-      <a.div className="deck-stats sm:px-12 px-6 w-full" style={statsSpring}>
+    <section className="deck-view flex-col justify-center bg-primary">
+      <a.div className="deck-stats sm:px-6 px-3 w-full" style={statsSpring}>
         <DeckStats />
       </a.div>
       <a.div
-        className="deck-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-primary shadow-xl"
         style={tabsSpring}
+        className="deck-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
       >
         <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
           {tabs.map((name) => (

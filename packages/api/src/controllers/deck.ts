@@ -55,7 +55,7 @@ export default async function userController(fastify: FastifyInstance) {
 
     let verification: VerifiedRegistrationResponse;
 
-    console.log("Registering device", body);
+    // console.log("Registering device", body);
 
     try {
       const opts: VerifyRegistrationResponseOpts = {

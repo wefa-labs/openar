@@ -29,7 +29,7 @@ import GrasshopperAvatar from "./assets/avatars/grasshopper-100.png";
 import LadybugAvatar from "./assets/avatars/ladybug-100.png";
 import RhinoBeetleAvatar from "./assets/avatars/rhinoceros-beetle-100.png";
 
-export const elements: WefaElement[] = ["water", "earth", "air", "fire"];
+export const elements: WefaElement[] = ["WATER", "EARTH", "AIR", "FIRE"];
 
 interface WefaElementData {
   name: string;
@@ -44,45 +44,45 @@ interface WefaElementData {
 }
 
 export const elementData: Record<WefaElement, WefaElementData> = {
-  water: {
+  WATER: {
     name: "Water",
     description: "Change, Adaptability, and Flexibility.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#3b82f6",
+    color: "#005AC2",
     Icon: WaterIcon,
   },
-  earth: {
+  EARTH: {
     name: "Earth",
     description: "Substance, Stability, and Rigidity.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#047857",
+    color: "#9C4234",
     Icon: EarthIcon,
   },
-  fire: {
+  FIRE: {
     name: "Fire",
     description: "Power, Assertiveness, and Passion.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#dc2626",
+    color: "#B91D1D",
     Icon: FireIcon,
   },
-  air: {
+  AIR: {
     name: "Air",
     description: "Freedom, Expansion, and Movement.",
     image:
       "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-    color: "#eab308",
+    color: "#FFBA38",
     Icon: AirIcon,
   },
 };
 
 export const elementColors: Record<WefaElement, string> = {
-  water: "#3b82f6",
-  earth: "#047857",
-  fire: "#dc2626",
-  air: "#eab308",
+  WATER: "#005AC2",
+  EARTH: "#9C4234",
+  FIRE: "#B91D1D",
+  AIR: "#FFBA38",
 };
 
 export const plantColors: Record<PlantType, string> = {
@@ -90,6 +90,30 @@ export const plantColors: Record<PlantType, string> = {
   fruit: "#f59e0b",
   herb: "#f472b6",
   vegetable: "#10b981",
+};
+
+export const rankColors: Record<WefaRank, string> = {
+  [WefaRank.WHITE]: "#ffffff",
+  [WefaRank.YELLOW]: "#fbbf24",
+  [WefaRank.ORANGE]: "#f59e0b",
+  [WefaRank.GREEN]: "#10b981",
+  [WefaRank.BLUE]: "#3b82f6",
+  [WefaRank.BROWN]: "#9c4224",
+  [WefaRank.BLACK]: "#111827",
+  [WefaRank.RED_WHITE]: "#f87171",
+  [WefaRank.RED]: "#dc2626",
+};
+
+export const rankNames: Record<WefaRank, string> = {
+  [WefaRank.WHITE]: "White",
+  [WefaRank.YELLOW]: "Yellow",
+  [WefaRank.ORANGE]: "Orange",
+  [WefaRank.GREEN]: "Green",
+  [WefaRank.BLUE]: "Blue",
+  [WefaRank.BROWN]: "Brown",
+  [WefaRank.BLACK]: "Black",
+  [WefaRank.RED_WHITE]: "Red-White",
+  [WefaRank.RED]: "Red",
 };
 
 export const badges: Record<BadgeType, WefaBadge> = {
@@ -145,28 +169,28 @@ export const badges: Record<BadgeType, WefaBadge> = {
     id: "1st-water-creature",
     name: "First Water Creature",
     description: "You created your first water creature!",
-    element: "water",
+    element: "WATER",
     Icon: FirstWaterCreatureBadge,
   },
   "1st-earth-creature": {
     id: "1st-earth-creature",
     name: "First Earth Creature",
     description: "You created your first earth creature!",
-    element: "earth",
+    element: "EARTH",
     Icon: FirstEarthCreatureBadge,
   },
   "1st-fire-creature": {
     id: "1st-fire-creature",
     name: "First Fire Creature",
     description: "You created your first fire creature!",
-    element: "fire",
+    element: "FIRE",
     Icon: FirstFireCreatureBadge,
   },
   "1st-air-creature": {
     id: "1st-air-creature",
     name: "First Air Creature",
     description: "You created your first air creature!",
-    element: "air",
+    element: "AIR",
     Icon: FirstAirCreatureBadge,
   },
   "early-adopter": {

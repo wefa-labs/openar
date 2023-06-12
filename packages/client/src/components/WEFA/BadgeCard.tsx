@@ -7,6 +7,8 @@ export interface WefaBadgeCardProps extends WefaBadge {
     transform: SpringValue<string>;
   };
   onClick?: () => void;
+  isDesktop: boolean;
+  paddingTop?: boolean;
 }
 
 export const WefaBadgeCard: React.FC<WefaBadgeCardProps> = ({
@@ -15,13 +17,17 @@ export const WefaBadgeCard: React.FC<WefaBadgeCardProps> = ({
   description,
   style,
   onClick,
+  isDesktop,
+  paddingTop,
 }) => {
   return (
     <a.li style={style}>
       <label
         htmlFor="badge-viewer-dialog"
         onClick={onClick}
-        className="unselectable card-compact card-side card bg-base-100 shadow-xl cursor-pointer py-2 px-2"
+        className={`${
+          isDesktop ? "" : `${paddingTop ? "mt-16" : ""}`
+        } unselectable card-compact card-side card bg-base-100 shadow-xl cursor-pointer py-2 px-2`}
       >
         <figure className="w-24 aspect-square object-cover rounded-lg">
           <img src={Icon} alt={name} />

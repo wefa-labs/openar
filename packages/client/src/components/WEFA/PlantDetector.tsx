@@ -10,7 +10,7 @@ interface PlantDetectorProps {
   onPlantDetection: (image: string | ArrayBuffer) => void;
   detecting: boolean;
   detected?: boolean;
-  plantDetails?: PlantResponseDetails | null;
+  plantDetails?: PlantDetails | null;
 }
 
 export const PlantDetector: React.FC<PlantDetectorProps> = ({
@@ -53,15 +53,11 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   function handleDragOver(e: React.DragEvent<HTMLLabelElement>) {
     e.stopPropagation();
     e.preventDefault();
-
-    console.log("Item Dragged", e);
   }
 
   function handleDrop(e: React.DragEvent<HTMLLabelElement>) {
     e.stopPropagation();
     e.preventDefault();
-
-    console.log("Item Dropped", e);
 
     const files = e.dataTransfer.files;
     if (files.length) {
@@ -79,7 +75,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
 
   return (
     <label
-      className={`relative grid aspect-square w-full cursor-pointer appearance-none place-items-center rounded-lg border-2 border-dashed border-green-500 transition-all focus:outline-none ${
+      className={`relative grid aspect-square w-full cursor-pointer appearance-none place-items-center rounded-lg border-2 border-dashed border-primary transition-all focus:outline-none ${
         isDesktop ? "hover:border-yellow-600 hover:text-blue-500" : ""
       }`}
       onDragOver={handleDragOver}
