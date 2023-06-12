@@ -5,6 +5,7 @@ import {
   Routes,
   useLocation,
   useParams,
+  useSearchParams,
 } from "react-router-dom";
 
 import { useApp } from "../hooks/app/useApp";
@@ -22,9 +23,7 @@ type LowerElement = "water" | "earth" | "fire" | "air";
 
 export default function Views() {
   const location = useLocation();
-  const { element } = useParams<{
-    element?: LowerElement;
-  }>();
+  const [element] = useSearchParams();
   const transitions = useTransition(location, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -36,13 +35,13 @@ export default function Views() {
     },
   });
 
-  console.log("element", element);
-
   const { isDesktop, setTheme } = useApp();
 
   const deck = useDeck();
   const explore = useExplore();
   const profile = useProfile();
+
+  console.log("element", element);
 
   useEffect(() => {
     if (element) {
