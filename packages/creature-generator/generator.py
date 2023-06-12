@@ -37,7 +37,7 @@ element_dic = {
 creatures_dic = {
     'butterfly':
     {
-        'template':'butterfly.jpg',
+        'template':'butterfly.png',
         'id':0
     },
     # 'firefly':
