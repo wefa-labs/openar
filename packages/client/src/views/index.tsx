@@ -4,7 +4,6 @@ import {
   Route,
   Routes,
   useLocation,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
 
@@ -23,7 +22,7 @@ type LowerElement = "water" | "earth" | "fire" | "air";
 
 export default function Views() {
   const location = useLocation();
-  const [element] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const transitions = useTransition(location, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -40,6 +39,8 @@ export default function Views() {
   const deck = useDeck();
   const explore = useExplore();
   const profile = useProfile();
+
+  const element = searchParams.get("element") as LowerElement | null;
 
   console.log("element", element);
 
