@@ -24,7 +24,7 @@ const Deck: React.FC<DeckProps> = ({
   tabsSpring,
 }) => {
   const { isDesktop } = useApp();
-  const { handleFetchEnergy, handleFetchPlants, handleFetchCreatures } =
+  const { energy, handleFetchEnergy, handleFetchPlants, handleFetchCreatures } =
     useWefa();
 
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -64,7 +64,7 @@ const Deck: React.FC<DeckProps> = ({
   return (
     <section className="deck-view flex-col justify-center bg-primary">
       <a.div className="deck-stats sm:px-6 px-3 w-full" style={statsSpring}>
-        <DeckStats />
+        <DeckStats energy={energy} />
       </a.div>
       <a.div
         style={tabsSpring}

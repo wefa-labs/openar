@@ -36,6 +36,8 @@ export default function Views() {
     },
   });
 
+  console.log("element", element);
+
   const { isDesktop, setTheme } = useApp();
 
   const deck = useDeck();
