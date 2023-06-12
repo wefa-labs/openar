@@ -26,7 +26,7 @@ async def generate_creature_route_handler():
     element_type = data.get('element_type', '')
     description = data.get('description', '')
     #creature randomizer
-    creature_tye = ['butterfly', 'ant', 'dragonfly']*math.floor(random.random()*3)
+    creature_tye = ['butterfly', 'ant', 'dragonfly'][math.floor(random.random()*3)]
     creature_img = await generate_creature_route(creature_type, element_type, description, cached=False)
     return jsonify({'img': creature_img})
 
