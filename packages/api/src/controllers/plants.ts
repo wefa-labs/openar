@@ -77,7 +77,7 @@ export default async function plantController(fastify: FastifyInstance) {
     } catch (error) {
       console.log(error);
 
-      reply.status(400).send({ error });
+      reply.status(400).send({ error: "Error detecting plant." });
     }
   });
 
