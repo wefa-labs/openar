@@ -95,7 +95,7 @@ export const useDevice = () => {
         setError("register-not-verified");
       }
 
-      console.log("REGISTERED", data);
+      // console.log("REGISTERED", data);
     } catch (err: any) {
       console.error("ERROR REGISTERING", err);
       setError("register");
@@ -127,7 +127,7 @@ export const useDevice = () => {
 
       setAuthenticated(true);
 
-      console.log("LOGGED IN", data);
+      // console.log("LOGGED IN", data);
     } catch (error: any) {
       setError("auth");
     }

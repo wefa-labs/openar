@@ -71,8 +71,9 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
       className="z-20 fixed min-h-5/6 max-h-5/6 bg-base-100"
       open={open}
       onDismiss={onDismiss}
+
       // style={}
-      snapPoints={({ minHeight }) => minHeight}
+      // snapPoints={({ minHeight }) => minHeight}
     >
       <Content />
     </BottomSheet>

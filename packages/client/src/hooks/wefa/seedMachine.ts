@@ -128,9 +128,9 @@ export const seedMachine = createMachine(
 
       // toast.info("Seed machine entered.");
     },
-    exit: (context, event) => {
-      console.log("Seed machine exited.", context, event);
-    },
+    // exit: (context, event) => {
+    //   console.log("Seed machine exited.", context, event);
+    // },
   },
   {
     delays: {
@@ -143,8 +143,6 @@ export const seedMachine = createMachine(
         return !!event.image;
       },
       isSeedingValid: (context, event: { element: WefaElement }) => {
-        console.log("element", context, event);
-
         return !!context.image && (!!event.element || !!context.element);
       },
       isSeedingRetryValid: (context) => {

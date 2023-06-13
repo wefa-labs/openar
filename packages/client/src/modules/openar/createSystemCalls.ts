@@ -36,8 +36,6 @@ export function createSystemCalls(
   ) => {
     const tx = await worldSend("createWorld", [name, description, image]);
     await awaitStreamValue(txReduced$, (txHash) => txHash === tx.hash);
-
-    console.log("world created");
   };
 
   const claimSpace = async (worldId: string) => {

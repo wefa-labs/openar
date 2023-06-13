@@ -21,8 +21,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   });
 
   return (
-    <a.div className="line-loader" style={spring}>
-      <div className="line-loader-bar bg-primary h-1" />
+    <a.div className="line-loader h-full" style={spring}>
+      <div className="line-loader-bar bg-secondary h-1" />
     </a.div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import imageCompression from "browser-image-compression";
 
 import { RC as PlantIcon } from "../../assets/icons/plant.svg";
 import { useApp } from "../../hooks/app/useApp";
@@ -29,7 +30,15 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
       return;
     }
 
-    const url = URL.createObjectURL(file);
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
+    const compressedFile = await imageCompression(file, options);
+
+    const url = URL.createObjectURL(compressedFile);
 
     if (url) {
       setPreview(url);
@@ -105,9 +114,9 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
         </>
       ) : (
         <div className="flex flex-col items-center justify-center gap-1">
-          <PlantIcon className="scale-125 fill-green-600" />
+          <PlantIcon className="scale-125 fill-secondary" />
           <p
-            className={`text-center text-2xl tracking-wide ${
+            className={`text-center text-2xl tracking-wide text-secondary ${
               isDesktop ? "hover:text-blue-500" : ""
             }`}
           >

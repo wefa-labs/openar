@@ -60,7 +60,6 @@ export const WefaProvider = ({ children }: Props) => {
   async function handleFetchBadges() {
     const newBadges = await readBadges();
 
-    // console.log("newBadges", newBadges);
     setBadges(newBadges);
   }
 

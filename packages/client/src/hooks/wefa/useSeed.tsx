@@ -1,6 +1,5 @@
 import { assign } from "xstate";
 import { nanoid } from "nanoid";
-import { toast } from "react-toastify";
 import { useMachine } from "@xstate/react";
 import { createContext, useContext, useEffect } from "react";
 
@@ -38,7 +37,6 @@ export const SeedProvider = ({ children }: Props) => {
 
         const plantDetails = event.data.details;
 
-        console.log("Verified Image", event);
         if (plantDetails) {
           context.plant = plantDetails;
 
@@ -69,8 +67,6 @@ export const SeedProvider = ({ children }: Props) => {
             });
         }
 
-        toast.success("Plant verified!");
-
         return context;
       }),
       seeded: assign((context, event) => {
@@ -91,9 +87,7 @@ export const SeedProvider = ({ children }: Props) => {
 
         context.creature = creature;
 
-        handleCreateCreature(creature).then(() => {
-          toast.success("Creature seeded!");
-        });
+        handleCreateCreature(creature);
 
         return context;
       }),

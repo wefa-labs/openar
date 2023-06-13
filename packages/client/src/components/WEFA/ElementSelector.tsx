@@ -25,36 +25,35 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   //   config: { ...config.default, clamp: true },
   // });
 
-  const transition = useTransition(state, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    config: { ...config.gentle, clamp: true },
-  });
-
   function handleSelect(element: WefaElement) {
     onElementSelected(element);
   }
 
+  const items = {
+    idle: null,
+    loading: <ProgressBar />,
+    done: (
+      <>
+        <span className="flex flex-1 justify-end text-xl">Select</span>
+        <span className="flex-1 text-xl"> Element</span>
+      </>
+    ),
+  };
+
   return (
     <div
-      className={`explore-selector flex flex-col items-center gap-2 overflow-hidden pb-4 ${
+      className={`explore-selector flex flex-col gap-2 items-center overflow-hidden pb-4 ${
         isDesktop ? "" : ""
       }`}
     >
-      {transition((style, state) => (
-        <a.div className="pt-2 w-full" style={style}>
-          {state === "idle" && null}
-          {state === "loading" && <ProgressBar />}
-          {state === "done" && (
-            <a.h2 className="flex w-full items-center justify-center gap-3 font-semibold tracking-wide">
-              <span className="flex flex-1 justify-end text-xl">Select</span>
-              <span className="flex-1 text-xl"> Element</span>
-            </a.h2>
-          )}
-        </a.div>
-      ))}
-      <ul className="grid w-full grid-cols-2 grid-rows-2 gap-3 lg:grid-cols-4 lg:grid-rows-1">
+      <div
+        className="pt-2 w-full h-9 max-h-9 flex w-full items-center justify-center gap-3 font-semibold tracking-wide"
+        // style={style}
+      >
+        {items[state]}
+      </div>
+
+      <ul className="grid w-full grid-cols-2 grid-rows-2 gap-3 lg:grid-cols-4 lg:grid-rows-1 flex-1">
         {elements.map((element) => {
           const data = elementData[element];
 

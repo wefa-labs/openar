@@ -30,6 +30,7 @@ export const DeckCard: React.FC<DeckCardProps> = ({
   // description,
   image,
   style,
+  element,
   // actions,
   isDesktop,
   paddingTop,
@@ -44,10 +45,10 @@ export const DeckCard: React.FC<DeckCardProps> = ({
         } unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-xl`}
       >
         <div className="pl-4 flex flex-col gap-3">
-          <h4 className="font-bold text-xl line-clamp-1">{name}</h4>
-          <div>
+          <h4 className="font-bold text-xl line-clamp-1 capitalize">{name}</h4>
+          {/* <div>
             <span className="badge">Water</span>
-          </div>
+          </div> */}
         </div>
         <figure className="h-28 w-28 object-cover md:h-full md:w-48 aspect-square object-cover rounded-xl">
           <img

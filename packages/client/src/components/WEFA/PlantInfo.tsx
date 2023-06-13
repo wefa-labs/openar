@@ -27,14 +27,14 @@ export const PlantInfo: React.FC<PlantInfoProps> = ({
 
   return (
     <a.div
-      className={`bg-base-100 p-2 shadow-xl rounded-xl absolute bottom-2 left-2 w-5/6 flex flex-col transition-all ${
+      className={`bg-base-100 p-2 border-success bprder-1 shadow-xl rounded-xl absolute bottom-2 left-2 w-5/6 flex flex-col transition-all ${
         isDesktop ? "" : ""
       }`}
       style={spring}
     >
       <h4 className="line-clamp-1 text-base">
         <span className="font-semibold capitalize">{common_names[0]}</span>{" "}
-        Detected
+        <span className="text-success">Detected</span>
       </h4>
       <p className="line-clamp-1 text-sm font-light">{scientific_name}</p>
       {/* <div className="flex gap-3">

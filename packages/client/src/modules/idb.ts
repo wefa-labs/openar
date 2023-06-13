@@ -93,10 +93,7 @@ export async function readPlants() {
   // const range = IDBKeyRange.only(spaceId);
   // const cursor = index?.openCursor(range);
 
-  if (!data) {
-    console.log("no plants");
-    return [];
-  }
+  if (!data) return [];
 
   return data;
 }
@@ -107,10 +104,7 @@ export async function readCreatures() {
   const store = transaction?.objectStore("creatures");
   const data = await store?.getAll();
 
-  if (!data) {
-    console.log("no creatures");
-    return [];
-  }
+  if (!data) return [];
 
   return data;
 }
@@ -121,10 +115,7 @@ export async function readBadges() {
   const store = transaction?.objectStore("badges");
   const data = await store?.getAll();
 
-  if (!data) {
-    console.log("no badges");
-    return [];
-  }
+  if (!data) return [];
 
   return data;
 }
