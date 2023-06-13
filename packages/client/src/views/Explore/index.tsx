@@ -21,8 +21,8 @@ const Explore: React.FC<ExploreProps> = ({
   reset,
 }) => {
   return (
-    <section className="explore-view flex-col px-6 sm:px-12 pt-6">
-      <div className="explore-detector relative flex flex-col items-center justify-end gap-2 overflow-hidden">
+    <section className="explore-view flex-col px-6 sm:px-12 pt-6 overflow-scroll">
+      <div className="explore-detector relative h-full flex flex-col items-center justify-end gap-2 overflow-hidden">
         {plantingState ? (
           <PlantDetector
             detecting={isDetecting}

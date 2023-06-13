@@ -1,5 +1,5 @@
 import React from "react";
-import { a, config, useTransition } from "@react-spring/web";
+import { a } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 import { elementData, elements } from "../../constants";
@@ -43,7 +43,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   return (
     <div
       className={`explore-selector flex flex-col gap-2 items-center overflow-hidden pb-4 ${
-        isDesktop ? "" : ""
+        isDesktop ? "" : "overflow-scroll"
       }`}
     >
       <div
