@@ -43,7 +43,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   return (
     <div
       className={`explore-selector flex flex-col gap-2 items-center overflow-hidden pb-4 ${
-        isDesktop ? "" : "overflow-scroll"
+        isDesktop ? "" : ""
       }`}
     >
       <div

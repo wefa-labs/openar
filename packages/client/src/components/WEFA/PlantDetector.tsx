@@ -86,7 +86,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
 
   return (
     <label
-      className={`relative grid h-full max-h-60 aspect-square sm:w-full cursor-pointer appearance-none place-items-center rounded-lg border-2 border-dashed border-primary transition-all focus:outline-none ${
+      className={`relative grid w-full aspect-square sm:w-full cursor-pointer appearance-none place-items-center rounded-lg border-2 border-dashed border-primary transition-all focus:outline-none ${
         isDesktop ? "hover:border-yellow-600 hover:text-blue-500" : ""
       }`}
       onDragOver={handleDragOver}
