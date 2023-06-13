@@ -23,7 +23,11 @@ export const Profile: React.FC<ProfileProps> = ({
   const { isDesktop } = useApp();
 
   return (
-    <section className="profile-view h-[calc(100vh-4rem)] overflow-hidden max-h-[calc(100vh-4rem)] flex flex-col w-full bg-primary">
+    <section
+      className={`overflow-hidden ${
+        isDesktop ? "bg-inherit" : "bg-primary"
+      } profile-view flex-col justify-center`}
+    >
       <ProfileInfo avatar={avatar} avatarSpring={avatarSpring} />
       <a.div
         style={tabsSpring}
