@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTrail, config, SpringValue, useSpring } from "@react-spring/web";
+import { config, SpringValue, useSpring } from "@react-spring/web";
 
 import { useWefa } from "../wefa/useWefa";
 
@@ -16,14 +16,14 @@ export interface DeckDataProps {
     transform: SpringValue<string>;
   };
   creatures: Creature[];
-  plantTrail: {
-    opacity: SpringValue<number>;
-    transform: SpringValue<string>;
-  }[];
-  creatureTrail: {
-    opacity: SpringValue<number>;
-    transform: SpringValue<string>;
-  }[];
+  // plantTrail: {
+  //   opacity: SpringValue<number>;
+  //   transform: SpringValue<string>;
+  // }[];
+  // creatureTrail: {
+  //   opacity: SpringValue<number>;
+  //   transform: SpringValue<string>;
+  // }[];
   tab: DeckTab;
   changeTab: (tab: DeckTab) => void;
 }
@@ -53,24 +53,24 @@ export const useDeck = (): DeckDataProps => {
     },
   });
 
-  const plantTrail = useTrail(plants?.length ?? 0, {
-    from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
-    config: {
-      ...config.gentle,
-      friction: 20,
-      clamp: true,
-    },
-  });
-  const creatureTrail = useTrail(creatures?.length ?? 0, {
-    from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
-    config: {
-      ...config.gentle,
-      friction: 20,
-      clamp: true,
-    },
-  });
+  // const plantTrail = useTrail(plants?.length ?? 0, {
+  //   from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
+  //   to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
+  //   config: {
+  //     ...config.gentle,
+  //     friction: 20,
+  //     clamp: true,
+  //   },
+  // });
+  // const creatureTrail = useTrail(creatures?.length ?? 0, {
+  //   from: { opacity: 0, transform: "translate3d(0, 30px, 0)" },
+  //   to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
+  //   config: {
+  //     ...config.gentle,
+  //     friction: 20,
+  //     clamp: true,
+  //   },
+  // });
 
   function changeTab(tab: DeckTab) {
     setTab(tab);
@@ -82,8 +82,8 @@ export const useDeck = (): DeckDataProps => {
     creatures,
     statsSpring,
     tabsSpring,
-    plantTrail,
-    creatureTrail,
+    // plantTrail,
+    // creatureTrail,
     tab,
     changeTab,
   };

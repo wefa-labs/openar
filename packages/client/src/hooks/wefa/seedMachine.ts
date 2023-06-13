@@ -219,6 +219,7 @@ export const seedMachine = createMachine(
         return context;
       }),
       reset: assign((context, _event) => {
+        context.address = undefined;
         context.image = null;
         context.element = null;
         context.plant = null;
@@ -229,10 +230,27 @@ export const seedMachine = createMachine(
         return context;
       }),
       error: assign((context, event) => {
-        context.error = "Something went wrong!";
+        switch (event.type) {
+          case "error.platform.plantVerifier":
+            context.imageVerified = false;
+            context.image = null;
+            context.element = null;
+
+            // @ts-ignore
+            context.error = event.data.message;
+            break;
+
+          case "error.platform.creatureGenerator":
+            // @ts-ignore
+            context.error = event.data.message;
+            break;
+
+          default:
+            break;
+        }
         console.log("Error!", context, event);
 
-        toast.error("Something went wrong!");
+        toast.error(context.error || "Error with creature generator.");
 
         return context;
       }),
@@ -280,6 +298,7 @@ export const seedMachine = createMachine(
 
         if (event.element) {
           element = event.element;
+          context.element = event.element;
         }
 
         if (!element || !context.plant) {

@@ -30,7 +30,7 @@ function App() {
                   <Views />
                   <ToastContainer
                     bodyClassName=""
-                    toastClassName="max-w-xs mx-auto text-neutral bg-primary rounded-xl py-2 px-3"
+                    // toastClassName="max-w-xs mx-auto text-neutral bg-primary rounded-xl py-2 px-3"
                     progressClassName=""
                     // hideProgressBar
                     autoClose={2400}

@@ -1,5 +1,3 @@
-import { SpringValue } from "@react-spring/web";
-
 import { DeckCard } from "./Card";
 import { DeckViewerData } from "./Viewer";
 
@@ -7,16 +5,11 @@ interface DeckItemsProps {
   type: "plants" | "creatures";
   isDesktop: boolean;
   items: (Plant | Creature)[];
-  trail: {
-    opacity: SpringValue<number>;
-    transform: SpringValue<string>;
-  }[];
   openSheet: ({ data }: { data?: DeckViewerData }) => void;
 }
 
 export const DeckItems: React.FC<DeckItemsProps> = ({
   items,
-  trail,
   isDesktop,
   openSheet,
   type,
@@ -30,16 +23,15 @@ export const DeckItems: React.FC<DeckItemsProps> = ({
       }
       // className={`grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-scroll h-full`}
     >
-      {trail.map((props, index) => (
+      {items.map((item, index) => (
         <DeckCard
-          {...items[index]}
-          key={items[index].id}
-          style={{ ...props }}
+          {...item}
+          key={item.id}
           paddingTop={index === 0}
           onClick={() =>
             openSheet({
               data: {
-                ...items[index],
+                ...item,
                 type: type === "plants" ? "plant" : "creature",
                 actions: [],
               },

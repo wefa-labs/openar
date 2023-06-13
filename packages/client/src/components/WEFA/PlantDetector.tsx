@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { RC as PlantIcon } from "../../assets/icons/plant.svg";
 import { useApp } from "../../hooks/app/useApp";
 
-// import { Loader } from "../Loader";
 import { PlantInfo } from "./PlantInfo";
+import { PlantError } from "./PlantError";
 
 interface PlantDetectorProps {
   onPlantDetection: (image: string | ArrayBuffer) => void;
   detecting: boolean;
   detected?: boolean;
+  error: string | null;
   plantDetails?: PlantDetails | null;
 }
 
@@ -17,6 +18,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
   onPlantDetection,
   detecting,
   detected,
+  error,
   plantDetails,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
@@ -80,9 +82,6 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
       }`}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      // onPaste={handlePaste}
-      // contentEditable
-      // suppressContentEditableWarning
     >
       <input
         className="hidden"
@@ -99,13 +98,10 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
             alt="Selected Plant Photo"
             className="w-full rounded-lg object-cover"
           />
-          {!detected && plantDetails && <PlantInfo {...plantDetails} />}
-          {/* <button
-            className="badge absolute right-2 top-2 z-20 bg-red-500 px-4 py-3 text-xl text-white"
-            onClick={handleRemove}
-          >
-            &times;
-          </button> */}
+          {!detected && plantDetails && !error && (
+            <PlantInfo {...plantDetails} />
+          )}
+          {error && <PlantError message={error} />}
         </>
       ) : (
         <div className="flex flex-col items-center justify-center gap-1">

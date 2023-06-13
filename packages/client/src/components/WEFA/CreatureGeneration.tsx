@@ -42,7 +42,7 @@ export const CreatureGeneration: React.FC<CreatureGenerationProps> = ({
       />
       <div className="flex w-full gap-2 px-1">
         {/* <button className="btn flex-1">Nurture</button> */}
-        <button className="btn flex-1" onClick={onReset}>
+        <button className="btn flex-1 btn-primary" onClick={onReset}>
           Reset
         </button>
       </div>

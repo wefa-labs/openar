@@ -1,4 +1,3 @@
-import { a, useTransition } from "@react-spring/web";
 import {
   Navigate,
   Route,
@@ -6,6 +5,8 @@ import {
   useLocation,
   useSearchParams,
 } from "react-router-dom";
+import { toast } from "react-toastify";
+import { a, useTransition } from "@react-spring/web";
 
 import { useApp } from "../hooks/app/useApp";
 import { useDeck } from "../hooks/views/useDeck";
@@ -42,13 +43,15 @@ export default function Views() {
 
   const element = searchParams.get("element") as LowerElement | null;
 
-  console.log("element", element);
-
   useEffect(() => {
     if (element) {
       setTheme(element);
     }
-  }, [element]);
+
+    if (isDesktop) {
+      toast.info("Use on mobile for best experience.");
+    }
+  }, []);
 
   return transitions((style, location) => (
     <a.main

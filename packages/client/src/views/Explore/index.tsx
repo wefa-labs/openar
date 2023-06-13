@@ -29,6 +29,7 @@ const Explore: React.FC<ExploreProps> = ({
             detecting={isDetecting}
             onPlantDetection={verifyPlant}
             plantDetails={plant}
+            error={error}
           />
         ) : (
           <CreatureGeneration
@@ -41,7 +42,7 @@ const Explore: React.FC<ExploreProps> = ({
         )}
       </div>
       <ElementSelector
-        active={elementState}
+        state={isDetecting ? "loading" : elementState ? "done" : "idle"}
         onElementSelected={seedCreature}
         selectedElement={element ?? null}
       />

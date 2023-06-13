@@ -23,7 +23,6 @@ export const PlantInfo: React.FC<PlantInfoProps> = ({
       ...config.default,
       clamp: true,
     },
-    delay: 420,
   });
 
   return (
@@ -34,7 +33,8 @@ export const PlantInfo: React.FC<PlantInfoProps> = ({
       style={spring}
     >
       <h4 className="line-clamp-1 text-base">
-        <span className="font-semibold">{common_names[0]}</span> Detected
+        <span className="font-semibold capitalize">{common_names[0]}</span>{" "}
+        Detected
       </h4>
       <p className="line-clamp-1 text-sm font-light">{scientific_name}</p>
       {/* <div className="flex gap-3">

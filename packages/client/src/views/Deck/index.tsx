@@ -18,8 +18,6 @@ const Deck: React.FC<DeckProps> = ({
   changeTab,
   plants,
   creatures,
-  plantTrail,
-  creatureTrail,
   statsSpring,
   tabsSpring,
 }) => {
@@ -91,7 +89,6 @@ const Deck: React.FC<DeckProps> = ({
                 type={tab}
                 isDesktop={isDesktop}
                 items={plants}
-                trail={plantTrail}
                 openSheet={openSheet}
               />
             )}
@@ -100,7 +97,6 @@ const Deck: React.FC<DeckProps> = ({
                 type={tab}
                 isDesktop={isDesktop}
                 items={creatures}
-                trail={creatureTrail}
                 openSheet={openSheet}
               />
             )}

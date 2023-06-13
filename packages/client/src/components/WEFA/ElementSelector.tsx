@@ -1,17 +1,20 @@
 import React from "react";
-import { a, config, useSpring } from "@react-spring/web";
+import { a, config, useTransition } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 import { elementData, elements } from "../../constants";
+import { ProgressBar } from "../ProgressBar";
+
+type State = "idle" | "loading" | "done";
 
 interface ElementSelectorProps {
-  active: boolean;
+  state: State;
   selectedElement: WefaElement | null;
   onElementSelected: (element: WefaElement) => void;
 }
 
 export const ElementSelector: React.FC<ElementSelectorProps> = ({
-  active,
+  state,
   selectedElement,
   onElementSelected,
 }) => {
@@ -22,9 +25,10 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
   //   config: { ...config.default, clamp: true },
   // });
 
-  const spring = useSpring({
+  const transition = useTransition(state, {
     from: { opacity: 0 },
-    to: { opacity: active ? 1 : 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
     config: { ...config.gentle, clamp: true },
   });
 
@@ -38,18 +42,25 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
         isDesktop ? "" : ""
       }`}
     >
-      <a.h2
-        className="flex w-full items-center justify-center gap-3 pt-2 font-semibold tracking-wide text-slate-800"
-        style={spring}
-      >
-        <span className="flex flex-1 justify-end text-xl">Select</span>
-        <span className="flex-1 text-xl"> Element</span>
-      </a.h2>
+      {transition((style, state) => (
+        <a.div className="pt-2 w-full" style={style}>
+          {state === "idle" && null}
+          {state === "loading" && <ProgressBar />}
+          {state === "done" && (
+            <a.h2 className="flex w-full items-center justify-center gap-3 font-semibold tracking-wide">
+              <span className="flex flex-1 justify-end text-xl">Select</span>
+              <span className="flex-1 text-xl"> Element</span>
+            </a.h2>
+          )}
+        </a.div>
+      ))}
       <ul className="grid w-full grid-cols-2 grid-rows-2 gap-3 lg:grid-cols-4 lg:grid-rows-1">
         {elements.map((element) => {
           const data = elementData[element];
 
           const Icon = data.Icon;
+
+          console.log(selectedElement, element);
 
           return (
             <a.li
@@ -61,18 +72,23 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
                   selectedElement === element ? `${data.color}` : undefined,
               }}
               className={`${
-                active ? "" : "opacity-75"
+                state === "done" ? "" : "opacity-75"
               } h-full flex transform-gpu cursor-pointer flex-col items-center rounded-xl border-2 border-transparent p-2 text-center bg-base-100 shadow-xl`}
               onClick={() => handleSelect(element)}
             >
               <Icon
-                style={{ fill: data.color, opacity: active ? 1 : 0.5 }}
+                style={{
+                  fill: data.color,
+                  opacity: state === "done" ? 1 : 0.5,
+                }}
                 className={`
-                ${active ? "" : "opacity-75"}
+                ${state === "done" ? "" : "opacity-75"}
               `}
               />
               <h3
-                className={`text-2xl font-bold ${active ? "" : "opacity-40"}`}
+                className={`text-2xl font-bold ${
+                  state === "done" ? "" : "opacity-40"
+                }`}
                 style={{ color: data.color }}
               >
                 {data.name}
