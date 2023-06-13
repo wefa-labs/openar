@@ -1,5 +1,6 @@
 import { SpringValue, a } from "@react-spring/web";
-import { rankNames } from "../../constants";
+// import { rankNames } from "../../constants";
+import { useApp } from "../../hooks/app/useApp";
 
 interface ProfileInfoProps {
   username?: string;
@@ -15,10 +16,19 @@ interface ProfileInfoProps {
 export const ProfileInfo: React.FC<ProfileInfoProps> = ({
   // username,
   // xp,
-  rank,
+  // rank,
   avatar,
   avatarSpring,
 }) => {
+  const { theme } = useApp();
+
+  function generateUsername() {
+    if (!(theme === "light" || theme === "dark")) {
+      return `Team ${theme}`;
+    }
+
+    return "Username";
+  }
   return (
     <a.div
       className="profile-avatar flex items-center w-full px-3 sm:px-6 h-full"
@@ -37,10 +47,12 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({
             //   color: rankColors[rank ?? 0],
             // }}
           >
-            <h3 className="text-xl font-bold">Rank</h3>
-            <p className="text-xl font-semibold badge">
+            <h3 className="text-xl font-bold capitalize">
+              {generateUsername()}
+            </h3>
+            {/* <p className="text-xl font-semibold badge">
               {rankNames[rank ?? 0]}
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

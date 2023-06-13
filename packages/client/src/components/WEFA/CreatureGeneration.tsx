@@ -1,12 +1,12 @@
 import React from "react";
 
 import { Loader } from "../Loader";
+import { PlantError } from "./PlantError";
 
 interface CreatureGenerationProps {
   error: string | null;
   creature: Creature | null;
   generating: boolean;
-  onRetry: () => void;
   onReset: () => void;
 }
 
@@ -14,18 +14,8 @@ export const CreatureGeneration: React.FC<CreatureGenerationProps> = ({
   error,
   creature,
   generating,
-  onRetry,
   onReset,
 }) => {
-  if (error)
-    return (
-      <>
-        <p>Something went wrong: {error}</p>
-        <button onClick={onRetry}>Try again</button>
-        <button onClick={onReset}>Reset</button>
-      </>
-    );
-
   if (generating || !creature)
     return (
       <div className="grid h-full w-full place-items-center">
@@ -46,6 +36,7 @@ export const CreatureGeneration: React.FC<CreatureGenerationProps> = ({
           Reset
         </button>
       </div>
+      {error && <PlantError message={error} />}
     </>
   );
 };

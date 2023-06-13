@@ -46,6 +46,7 @@
   --rsbs-ml: env(safe-area-inset-left);
   --rsbs-mr: env(safe-area-inset-right);
   --rsbs-overlay-rounded: 16px;
+  --rsbs-overlay-h: 90vh;
 }
 
 [data-theme="dark"] {

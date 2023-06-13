@@ -22,17 +22,6 @@ export const Profile: React.FC<ProfileProps> = ({
 }) => {
   const { isDesktop } = useApp();
 
-  const transition = useTransition(tab, {
-    from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
-    enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
-    leave: { opacity: 0, transform: "translate3d(0,0, -100%)" },
-    config: {
-      tension: 300,
-      friction: 20,
-      clamp: true,
-    },
-  });
-
   return (
     <section className="profile-view flex flex-col w-full bg-primary">
       <ProfileInfo avatar={avatar} avatarSpring={avatarSpring} />
@@ -54,15 +43,13 @@ export const Profile: React.FC<ProfileProps> = ({
             </button>
           ))}
         </div>
-        {transition((style, tab) => (
-          <a.div style={style} className="h-full">
-            {tab === "harvest" && (
-              <ProfileBadges badges={badges} isDesktop={isDesktop} />
-            )}
-            {/* {tab === "wallet" && <ProfileWallet />} */}
-            {tab === "settings" && <ProfileSettings />}
-          </a.div>
-        ))}
+        <div className="h-full">
+          {tab === "harvest" && (
+            <ProfileBadges badges={badges} isDesktop={isDesktop} />
+          )}
+          {/* {tab === "wallet" && <ProfileWallet />} */}
+          {tab === "settings" && <ProfileSettings />}
+        </div>
       </a.div>
     </section>
   );

@@ -5,6 +5,7 @@ import {
   useLocation,
   useSearchParams,
 } from "react-router-dom";
+import { useEffect, Profiler } from "react";
 import { toast } from "react-toastify";
 import { a, useTransition } from "@react-spring/web";
 
@@ -17,7 +18,6 @@ import Deck from "./Deck";
 // import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
-import { useEffect } from "react";
 
 type LowerElement = "water" | "earth" | "fire" | "air";
 
@@ -43,6 +43,21 @@ export default function Views() {
 
   const element = searchParams.get("element") as LowerElement | null;
 
+  const callback = (
+    id: any,
+    phase: any,
+    actualTime: any,
+    baseTime: any,
+    startTime: any,
+    commitTime: any
+  ) => {
+    console.log(`${id}'s ${phase} phase:`);
+    console.log(`Actual time: ${actualTime}`);
+    console.log(`Base time: ${baseTime}`);
+    console.log(`Start time: ${startTime}`);
+    console.log(`Commit time: ${commitTime}`);
+  };
+
   useEffect(() => {
     if (element) {
       setTheme(element);
@@ -54,19 +69,21 @@ export default function Views() {
   }, []);
 
   return transitions((style, location) => (
-    <a.main
-      className={`overflow-y-contain flex h-[calc(100vh-4rem)] overflow-hidden max-h-[calc(100vh-4rem)] ${
-        isDesktop ? "" : ""
-      }`}
-      style={style}
-    >
-      <Routes location={location}>
-        <Route path="/deck" element={<Deck {...deck} />} />
-        {/* <Route path="/play" element={<Play />} /> */}
-        <Route path="/explore" element={<Explore {...explore} />} />
-        <Route path="/profile" element={<Profile {...profile} />} />
-        <Route path="*" element={<Navigate to="/explore" />} />
-      </Routes>
-    </a.main>
+    <Profiler id="views" onRender={callback}>
+      <a.main
+        className={`overflow-y-contain flex h-[calc(100vh-4rem)] overflow-hidden max-h-[calc(100vh-4rem)] ${
+          isDesktop ? "" : ""
+        }`}
+        style={style}
+      >
+        <Routes location={location}>
+          <Route path="/deck" element={<Deck {...deck} />} />
+          {/* <Route path="/play" element={<Play />} /> */}
+          <Route path="/explore" element={<Explore {...explore} />} />
+          <Route path="/profile" element={<Profile {...profile} />} />
+          <Route path="*" element={<Navigate to="/explore" />} />
+        </Routes>
+      </a.main>
+    </Profiler>
   ));
 }

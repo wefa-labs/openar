@@ -42,16 +42,6 @@ const Deck: React.FC<DeckProps> = ({
     setViewerOpen(false);
   }
 
-  const transition = useTransition(tab, {
-    from: { opacity: 0, transform: "translate3d(0, 0, 100%)" },
-    enter: { opacity: 1, transform: "translate3d(0, 0%, 0)" },
-    leave: { opacity: 0, transform: "translate3d(0,0, -100%)" },
-    config: {
-      ...config.gentle,
-      clamp: true,
-    },
-  });
-
   useEffect(() => {
     handleFetchEnergy();
   }, []);
@@ -79,26 +69,24 @@ const Deck: React.FC<DeckProps> = ({
             </button>
           ))}
         </div>
-        {transition((style, tab) => (
-          <a.div style={style} className="h-full">
-            {tab === "plants" && (
-              <DeckItems
-                type={tab}
-                isDesktop={isDesktop}
-                items={plants}
-                openSheet={openSheet}
-              />
-            )}
-            {tab === "creatures" && (
-              <DeckItems
-                type={tab}
-                isDesktop={isDesktop}
-                items={creatures}
-                openSheet={openSheet}
-              />
-            )}
-          </a.div>
-        ))}
+        <div className="h-full">
+          {tab === "plants" && (
+            <DeckItems
+              type={tab}
+              isDesktop={isDesktop}
+              items={plants}
+              openSheet={openSheet}
+            />
+          )}
+          {tab === "creatures" && (
+            <DeckItems
+              type={tab}
+              isDesktop={isDesktop}
+              items={creatures}
+              openSheet={openSheet}
+            />
+          )}
+        </div>
       </a.div>
       <DeckViewer {...sheetData} open={viewerOpen} onDismiss={closeSheet} />
     </section>
