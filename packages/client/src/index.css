@@ -111,6 +111,7 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none; /* IE and Edge */
   overflow:-x hidden;
+  overflow-y: visible;
   font-family: "Inter", sans-serif;
   background-color: var(--background-color);
 }

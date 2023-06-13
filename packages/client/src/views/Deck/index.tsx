@@ -48,7 +48,7 @@ const Deck: React.FC<DeckProps> = ({
 
   return (
     <section
-      className={`${
+      className={`overflow-hidden ${
         isDesktop ? "bg-inherit" : "bg-primary"
       } deck-view flex-col justify-center`}
     >
