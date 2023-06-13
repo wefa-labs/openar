@@ -28,7 +28,7 @@ export interface Typegen0 {
     plantVerifier: "done.invoke.plantVerifier";
   };
   missingImplementations: {
-    actions: never;
+    actions: "seeded" | "verified";
     delays: never;
     guards: never;
     services: never;

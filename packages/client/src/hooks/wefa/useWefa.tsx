@@ -4,6 +4,8 @@ import { badges as badgeList } from "../../constants";
 
 import {
   createBadge,
+  createPlant,
+  createCreature,
   readPlants,
   readCreatures,
   readBadges,
@@ -21,6 +23,8 @@ interface WefadexProps {
   handleFetchCreatures: () => Promise<void>;
   handleFetchEnergy: () => void;
   handleEnergyGrowth: (amount: number) => void;
+  handleCreatePlant: (plant: Plant) => Promise<void>;
+  handleCreateCreature: (creature: Creature) => Promise<void>;
 }
 
 const WefaContext = createContext<WefadexProps | null>(null);
@@ -124,6 +128,22 @@ export const WefaProvider = ({ children }: Props) => {
     localStorage.setItem("energy", newEnergy.toString());
   }
 
+  async function handleCreatePlant(plant: Plant) {
+    await createPlant(plant);
+
+    const newPlants = [...plants, plant];
+
+    setPlants(newPlants);
+  }
+
+  async function handleCreateCreature(creature: Creature) {
+    await createCreature(creature);
+
+    const newCreatures = [...creatures, creature];
+
+    setCreatures(newCreatures);
+  }
+
   useEffect(() => {
     handleFetchBadges();
     handleFetchPlants();
@@ -138,6 +158,8 @@ export const WefaProvider = ({ children }: Props) => {
         plants,
         creatures,
         handleBadgeCheck,
+        handleCreatePlant,
+        handleCreateCreature,
         handleFetchBadges,
         handleFetchPlants,
         handleFetchCreatures,

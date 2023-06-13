@@ -309,8 +309,8 @@ section {
 }
 .line-loader:before {
   content: "";
-  border: 1px solid var(--text-color);
-  border-radius: 10px;
+  /* border: 2px solid var(--text-color); */
+  border-radius: 0.5rem;
   position: absolute;
   top: -4px;
   right: -4px;
@@ -324,7 +324,7 @@ section {
   right: 100%;
   bottom: 0;
   left: 0;
-  background: var(--text-color);
+  /* background: var(--text-color); */
   width: 0;
   animation: borealisBar 2s linear infinite;
 }

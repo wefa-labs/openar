@@ -1,8 +1,11 @@
+import { assign } from "xstate";
+import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
 import { useMachine } from "@xstate/react";
 import { createContext, useContext, useEffect } from "react";
 
-import { SeedContext as SeedMachineContext, seedMachine } from "./seedMachine";
 import { useWefa } from "./useWefa";
+import { SeedContext as SeedMachineContext, seedMachine } from "./seedMachine";
 
 export interface SeedDataProps extends SeedMachineContext {
   plantingState: boolean;
@@ -25,8 +28,77 @@ export const SeedProvider = ({ children }: Props) => {
   const currentValue = useContext(SeedContext);
 
   if (currentValue) throw new Error("SeedProvider can only be used once");
-  const { handleBadgeCheck } = useWefa();
-  const [state, send] = useMachine(seedMachine);
+  const { handleBadgeCheck, handleCreatePlant, handleCreateCreature } =
+    useWefa();
+  const [state, send] = useMachine(seedMachine, {
+    actions: {
+      verified: assign((context, event) => {
+        context.imageVerified = true;
+        context.image = event.data.img;
+
+        const plantDetails = event.data.details;
+
+        console.log("Verified Image", event);
+        if (plantDetails) {
+          context.plant = plantDetails;
+
+          context.image &&
+            handleCreatePlant({
+              ...plantDetails,
+              id: `0x${nanoid()}`,
+              localId: nanoid(),
+              isUploaded: false,
+              caretakerAddress: context.address || "0x",
+              // spaceAddress: "0x",
+              name: context.plant.common_names[0],
+              description: plantDetails.wiki_description?.value,
+              image: context.image ?? context.plant.wiki_image?.value ?? "",
+              plantId: event.data.plantId,
+              createdAt: new Date().getMilliseconds(),
+              updatedAt: new Date().getMilliseconds(),
+            }).then(() => {
+              const energy = localStorage.getItem("energy");
+
+              if (energy) {
+                const energyInt = parseInt(energy);
+
+                localStorage.setItem("energy", `${energyInt + 4}`);
+              } else {
+                localStorage.setItem("energy", "4");
+              }
+            });
+        }
+
+        toast.success("Plant verified!");
+
+        return context;
+      }),
+      seeded: assign((context, event) => {
+        const creature: Creature = {
+          id: `0x${nanoid()}`,
+          localId: nanoid(),
+          name: "New Creature",
+          description: "",
+          image: event.data.img,
+          createdAt: new Date().getMilliseconds(),
+          updatedAt: new Date().getMilliseconds(),
+          spaceId: "",
+          trainer: context.address || "0x",
+          model: "", // TODO: Add model
+          element: event.data.element,
+          isUploaded: false,
+        };
+
+        context.creature = creature;
+
+        handleCreateCreature(creature).then(() => {
+          toast.success("Creature seeded!");
+        });
+
+        return context;
+      }),
+    },
+  });
 
   const plantingState =
     state.matches("idle") ||

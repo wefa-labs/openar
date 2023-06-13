@@ -22,8 +22,7 @@ const Deck: React.FC<DeckProps> = ({
   tabsSpring,
 }) => {
   const { isDesktop } = useApp();
-  const { energy, handleFetchEnergy, handleFetchPlants, handleFetchCreatures } =
-    useWefa();
+  const { energy, handleFetchEnergy } = useWefa();
 
   const [viewerOpen, setViewerOpen] = useState(false);
   const [sheetData, setSheetData] = useState<DeckViewerData>({
@@ -55,8 +54,6 @@ const Deck: React.FC<DeckProps> = ({
 
   useEffect(() => {
     handleFetchEnergy();
-    handleFetchPlants();
-    handleFetchCreatures();
   }, []);
 
   return (
