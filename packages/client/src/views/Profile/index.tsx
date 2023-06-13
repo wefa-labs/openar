@@ -29,7 +29,11 @@ export const Profile: React.FC<ProfileProps> = ({
         style={tabsSpring}
         className="profile-tabs relative flex flex-col rounded-t-3xl w-full px-6 bg-base-100 shadow-xl"
       >
-        <div className="absolute top-3 left-3 tabs tabs-boxed rounded-xl w-fit z-10">
+        <div
+          className={`${
+            isDesktop ? "-top-24 left-6" : "top-3 left-3"
+          } absolute tabs tabs-boxed rounded-xl w-fit z-10`}
+        >
           {tabs.map((name) => (
             <button
               key={name}

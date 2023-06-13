@@ -53,7 +53,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
         {items[state]}
       </div>
 
-      <ul className="grid w-full grid-cols-2 grid-rows-2 gap-3 lg:grid-cols-4 lg:grid-rows-1 flex-1">
+      <ul className="grid w-full grid-cols-2 grid-rows-2 gap-3 lg:grid-cols-4 lg:grid-rows-1 sm-py-6 flex-1">
         {elements.map((element) => {
           const data = elementData[element];
 
@@ -70,7 +70,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
               }}
               className={`${
                 state === "done" ? "" : "opacity-75"
-              } h-full flex transform-gpu cursor-pointer flex-col items-center rounded-xl border-2 border-transparent p-2 text-center bg-base-100 shadow-xl`}
+              }h-full max-h-48 flex transform-gpu cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-transparent p-2 text-center bg-base-100 shadow-xl`}
               onClick={() => handleSelect(element)}
             >
               <Icon

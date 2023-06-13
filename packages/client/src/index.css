@@ -156,7 +156,7 @@ section {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    "avatar . ."
+    " . . avatar"
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs"
@@ -191,7 +191,7 @@ section {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    "stats . ."
+    " . . stats"
     "tabs tabs tabs"
     "tabs tabs tabs"
     "tabs tabs tabs"

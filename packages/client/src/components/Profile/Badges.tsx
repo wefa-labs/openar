@@ -74,6 +74,7 @@ export const ProfileBadges: React.FC<ProfileBadgesProps> = ({
                   <p>{openBadge.description}</p>
                   <div className="flex gap-3">
                     <button
+                      disabled={isDesktop}
                       className="btn btn-secondary btn-outline"
                       onClick={() => handleShare(openBadge.id, openBadge.Icon)}
                     >
