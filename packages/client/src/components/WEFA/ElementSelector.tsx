@@ -78,12 +78,12 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
                   fill: data.color,
                   opacity: state === "done" ? 1 : 0.5,
                 }}
-                className={`
-                ${state === "done" ? "" : "opacity-75"}
+                className={` w-12 h-12
+                ${state === "done" ? "" : "opacity-75 "}
               `}
               />
               <h3
-                className={`text-2xl font-bold ${
+                className={`text-xl sm:text-2xl font-bold ${
                   state === "done" ? "" : "opacity-40"
                 }`}
                 style={{ color: data.color }}
