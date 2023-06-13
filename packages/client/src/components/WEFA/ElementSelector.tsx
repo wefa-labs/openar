@@ -45,7 +45,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
       {transition((style, state) => (
         <a.div className="pt-2 w-full" style={style}>
           {state === "idle" && null}
-          {state !== "loading" && <ProgressBar />}
+          {state === "loading" && <ProgressBar />}
           {state === "done" && (
             <a.h2 className="flex w-full items-center justify-center gap-3 font-semibold tracking-wide">
               <span className="flex flex-1 justify-end text-xl">Select</span>
@@ -59,8 +59,6 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
           const data = elementData[element];
 
           const Icon = data.Icon;
-
-          console.log(selectedElement, element);
 
           return (
             <a.li

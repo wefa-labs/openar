@@ -82,6 +82,8 @@ export async function detectPlantType(img?: string | ArrayBuffer | Buffer) {
       throw new Error("No image provided!");
     }
 
+    let predictions: PlantResponse;
+
     if (typeof img === "string") {
       const predictionReq = await fetch(`${PLANT_API_URL}/identify`, {
         method: "POST",
@@ -97,9 +99,7 @@ export async function detectPlantType(img?: string | ArrayBuffer | Buffer) {
         }),
       });
 
-      const predictions: PlantResponse = await predictionReq.json();
-
-      return predictions;
+      predictions = await predictionReq.json();
     } else {
       const imageBlob = new Blob([img], { type: "image/jpeg" });
       const formData = new FormData();
@@ -116,12 +116,18 @@ export async function detectPlantType(img?: string | ArrayBuffer | Buffer) {
         body: formData,
       });
 
-      const predictions: PlantResponse = await predictionReq.json();
-
-      return predictions;
+      predictions = await predictionReq.json();
     }
-  } catch (error) {
+
+    if (!predictions.is_plant) {
+      throw new Error("No plant detected in image :(");
+    }
+
+    return predictions;
+  } catch (error: any) {
     console.error("Error detecting objects in image", error);
+
+    throw error;
   }
 }
 
