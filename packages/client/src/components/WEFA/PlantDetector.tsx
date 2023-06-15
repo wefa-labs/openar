@@ -110,7 +110,7 @@ export const PlantDetector: React.FC<PlantDetectorProps> = ({
           {!detected && plantDetails && !error && (
             <PlantInfo {...plantDetails} />
           )}
-          {error && <PlantError message={error} />}
+          {error && <PlantError />}
         </>
       ) : (
         <div className="flex flex-col items-center justify-center gap-1">
