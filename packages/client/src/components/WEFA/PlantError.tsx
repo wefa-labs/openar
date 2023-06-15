@@ -28,7 +28,7 @@ export const PlantError: React.FC<PlantErrorProps> = ({ message }) => {
     >
       <h4 className="text-base text-error font-semibold">Error</h4>
       <p className="line-clamp-2 text-sm font-light">
-        {message ?? "Error Detecting Plant"}
+        {message ?? "Error detecting plant, try again"}
       </p>
     </a.div>
   );
