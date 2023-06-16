@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { createMachine, assign } from "xstate";
 
 import { apiClient } from "../../modules/axios";
@@ -182,7 +182,7 @@ export const seedMachine = createMachine(
         }
         console.log("Error!", context, event);
 
-        toast.error(context.error || "Error with creature generator.");
+        // toast.error(context.error || "Error with creature generator.");
 
         return context;
       }),
