@@ -63,15 +63,11 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
 
   return (
     <BottomSheet
-      // className="fixed bottom-0 left-0 right-0 z-10 mb-16 flex h-screen touch-pan-y flex-col gap-4 rounded-lg p-4 "
-      // style={style}
-      style={{
-        maxHeight: "90vh",
-        height: "90vh",
-      }}
       className="z-20 fixed bg-base-100"
       open={open}
       onDismiss={onDismiss}
+      defaultSnap={({ maxHeight }) => maxHeight * 0.76}
+      snapPoints={({ minHeight, maxHeight }) => [minHeight, maxHeight * 0.76]}
 
       // style={}
       // snapPoints={({ minHeight }) => minHeight}
