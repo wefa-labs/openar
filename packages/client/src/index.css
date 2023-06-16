@@ -58,28 +58,28 @@
 
 [data-theme="water"] {
   --text-color: #1b1b1f;
-  --primary-color: #005ac2;
+  --primary-color: #3f88de;
   --surface-color: #faf8fd;
   --background-color: #fefbff;
 }
 
 [data-theme="earth"] {
   --text-color: #1b1b1f;
-  --primary-color: #9c4234;
+  --primary-color: #74564a;
   --surface-color: #fff8f6;
   --background-color: #fffbff;
 }
 
 [data-theme="fire"] {
   --text-color: #1b1b1f;
-  --primary-color: #b91d1d;
+  --primary-color: #a82d26;
   --surface-color: #fff8f7;
   --background-color: #fffbff;
 }
 
 [data-theme="air"] {
   --text-color: #1b1b1f;
-  --primary-color: #ffba38;
+  --primary-color: #f4b53f;
   --surface-color: #fff8f3;
   --background-color: #fffbff;
 }

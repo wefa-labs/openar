@@ -28,7 +28,7 @@ module.exports = {
           error: "#FFB4AB",
         },
         water: {
-          primary: "#005AC2",
+          primary: "#3F88DE",
           secondary: "#575E71",
           accent: "#715573",
           neutral: "#1B1B1F", // Font Color
@@ -38,7 +38,7 @@ module.exports = {
           error: "#BA1A1A",
         },
         earth: {
-          primary: "#9C4234",
+          primary: "#74564A",
           secondary: "#775651",
           accent: "#6F5C2E",
           neutral: "#201A19", // Font Color
@@ -48,7 +48,7 @@ module.exports = {
           error: "#BA1A1A",
         },
         fire: {
-          primary: "#B91D1D",
+          primary: "#A82D26",
           secondary: "#775652",
           accent: "#715B2E",
           neutral: "#201A19", // Font Color
@@ -58,7 +58,7 @@ module.exports = {
           error: "#BA1A1A",
         },
         air: {
-          primary: "#FFBA38",
+          primary: "#F4B53F",
           secondary: "#7E5700",
           accent: "#6E5C40",
           neutral: "#1F1B16", // Font Color
