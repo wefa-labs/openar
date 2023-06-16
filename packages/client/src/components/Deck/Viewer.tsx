@@ -34,12 +34,9 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
         alt={name}
         className="w-full aspect-square object-cover rounded-xl"
       />
-      <h2 className="font-bold text-2xl">{name}</h2>
+      <h2 className="font-bold text-2xl capitalize">{name}</h2>
       <p className="font-light">{description}</p>
-      <div>
-        <div className="badge badge-lg capitalize">{type}</div>
-        {}
-      </div>
+      <div>{/* <div className="badge badge-lg capitalize">{type}</div> */}</div>
     </div>
   );
 
@@ -70,6 +67,7 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
       // style={style}
       style={{
         maxHeight: "90vh",
+        height: "90vh",
       }}
       className="z-20 fixed bg-base-100"
       open={open}
