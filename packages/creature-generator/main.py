@@ -11,7 +11,7 @@ from generator import generate_creature_route
 import math
 import random
 
-config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+config = dotenv_values(".env")
 
 app = Flask(__name__)
 
@@ -22,12 +22,11 @@ def status():
 @app.route('/generate-creature', methods=['POST'])
 async def generate_creature_route_handler():
     data = request.get_json()
-    creature_type = data.get('creature_type', '')
     element_type = data.get('element_type', '')
-    description = data.get('description', '')
-    #creature randomizer
-    creature_tye = ['butterfly', 'ant', 'dragonfly'][math.floor(random.random()*3)]
-    creature_img = await generate_creature_route(creature_type, element_type, description, cached=False)
+    plant_name = data.get('plant_name', '')
+
+    creature_img = await generate_creature_route(element_type, plant_name, cached=False)
+    
     return jsonify({'img': creature_img})
 
 if __name__ == "__main__":
