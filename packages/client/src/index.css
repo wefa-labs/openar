@@ -128,7 +128,7 @@ body {
 #react-root {
   width: 100%;
   height: 100%;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 #react-root > div {
@@ -136,7 +136,7 @@ body {
   /* flex-direction: column; */
   width: 100%;
   height: 100%;
-  /* overflow: hidden; */
+  overflow: hidden;
   /* padding-top: 4rem; */
   /* align-items: center; */
 }
