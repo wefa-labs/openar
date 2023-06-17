@@ -49,29 +49,34 @@ export const DeckCard: React.FC<DeckCardProps> = ({
   badges,
 }) => {
   return (
-    <a.li style={style} onClick={onClick} className="">
+    <a.li style={style} onClick={onClick} className="w-full max-w-full">
       <label
         htmlFor="deck-viewer-dialog"
         className={`${
           isDesktop ? "" : `${paddingTop ? "mt-16" : ""}`
-        } unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-xl`}
+        } w-full max-w-full unselectable bg-base-100 shadow-xl cursor-pointer flex justify-between items-center rounded-xl`}
       >
-        <div className="pl-4 flex flex-col gap-3">
+        <div className="pl-4 flex flex-col flex-1 gap-3">
           <h4 className="font-bold text-xl line-clamp-1 capitalize">{name}</h4>
-          <div className="flex gap-3">
-            {badges?.slice().map(({ name, color, Icon }) => (
+          <div className="flex gap-1 w-full flex-wrap">
+            {badges?.map(({ name, color, Icon }) => (
               <div
                 key={name}
-                className={`badge md:badge-lg capitalize ${
-                  color ? `bg-[${color}]` : "bg-secondary"
+                style={{
+                  background: color ? color : undefined,
+                  borderColor: color ? color : undefined,
+                }}
+                className={`flex badge md:badge-lg capitalize text-base-100 ${
+                  color ? `bg-[${color}]` : "badge-secondary"
                 } max-w-32 line-clamp-1`}
               >
-                {Icon && <Icon />} {name}
+                {Icon && <Icon className="w-4 h-4 fill-base-100" />}
+                {name}
               </div>
             ))}
           </div>
         </div>
-        <figure className="h-28 w-28 object-cover md:h-full md:w-48 aspect-square object-cover rounded-xl">
+        <figure className="h-28 w-28 basis-28 object-cover md:h-full md:w-48 aspect-square object-cover rounded-xl">
           <img
             src={image}
             alt={name}

@@ -31,6 +31,7 @@ const Deck: React.FC<DeckProps> = ({
     image: "",
     type: "creature",
     actions: [],
+    badges: [],
   });
 
   function openSheet({ data }: { data?: DeckViewerData }) {

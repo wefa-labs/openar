@@ -36,7 +36,7 @@ export const DeckItems: React.FC<DeckItemsProps> = ({
           });
         } else {
           item.edible_parts?.length &&
-            badges.push({ name: "Edible", color: "green-500" });
+            badges.push({ name: "Edible", color: "#15803d" });
           item.structured_name?.species &&
             badges.push({
               name: item.structured_name.species,
@@ -59,6 +59,7 @@ export const DeckItems: React.FC<DeckItemsProps> = ({
                   ...item,
                   type: type === "plants" ? "plant" : "creature",
                   actions: [],
+                  badges,
                 },
               })
             }
