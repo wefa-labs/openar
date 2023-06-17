@@ -56,8 +56,8 @@ export default function Views() {
   return transitions((style, location) => (
     // <Profiler id="views" onRender={callback}>
     <a.main
-      className={`overflow-y-contain flex h-[calc(100vh-4rem)] overflow-hidden max-h-[calc(100vh-4rem)] ${
-        isDesktop ? "" : ""
+      className={`flex h-[calc(100vh-4rem)] overflow-hidden max-h-[calc(100vh-4rem)] ${
+        isDesktop ? "" : "overflow-y-contain "
       }`}
       style={style}
     >
