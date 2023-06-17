@@ -78,7 +78,7 @@ export const ElementSelector: React.FC<ElementSelectorProps> = ({
                   fill: data.color,
                   opacity: state === "done" ? 1 : 0.5,
                 }}
-                className={` w-12 h-12
+                className={`sm:w-12 sm:h-12 h- s8 w-8
                 ${state === "done" ? "" : "opacity-75 "}
               `}
               />
