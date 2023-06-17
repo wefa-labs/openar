@@ -35,7 +35,6 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
         className="w-full aspect-square object-cover rounded-xl"
       />
       <h2 className="font-bold text-2xl capitalize">{name}</h2>
-      {description && <p className="font-light">{description}</p>}
       <div className="flex gap-3">
         {badges?.map(({ name, color, Icon }) => (
           <div
@@ -53,6 +52,7 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
           </div>
         ))}
       </div>
+      {description && <p className="font-light">{description}</p>}
     </div>
   );
 
