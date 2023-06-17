@@ -1,4 +1,6 @@
-import { DeckCard } from "./Card";
+import { elementData } from "../../constants";
+
+import { Badge, DeckCard } from "./Card";
 import { DeckViewerData } from "./Viewer";
 
 interface DeckItemsProps {
@@ -23,24 +25,49 @@ export const DeckItems: React.FC<DeckItemsProps> = ({
       }
       // className={`grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] px-6 sm:px-12 overflow-scroll h-full`}
     >
-      {items.map((item, index) => (
-        <DeckCard
-          {...item}
-          key={item.id}
-          paddingTop={index === 0}
-          onClick={() =>
-            openSheet({
-              data: {
-                ...item,
-                type: type === "plants" ? "plant" : "creature",
-                actions: [],
-              },
-            })
-          }
-          isDesktop={isDesktop}
-          actions={[]}
-        />
-      ))}
+      {items.map((item, index) => {
+        const badges: Badge[] = [];
+
+        if ("trainer" in item) {
+          badges.push({
+            name: elementData[item.element].name,
+            color: elementData[item.element].color,
+            Icon: elementData[item.element].Icon,
+          });
+        } else {
+          item.edible_parts?.length &&
+            badges.push({ name: "Edible", color: "green-500" });
+          item.structured_name?.species &&
+            badges.push({
+              name: item.structured_name.species,
+            });
+          item.structured_name?.genus &&
+            badges.push({
+              name: item.structured_name.genus,
+            });
+          // Watering
+        }
+
+        return (
+          <DeckCard
+            {...item}
+            key={item.id}
+            paddingTop={index === 0}
+            onClick={() =>
+              openSheet({
+                data: {
+                  ...item,
+                  type: type === "plants" ? "plant" : "creature",
+                  actions: [],
+                },
+              })
+            }
+            isDesktop={isDesktop}
+            badges={badges}
+            actions={[]}
+          />
+        );
+      })}
     </ul>
   );
 };

@@ -18,10 +18,10 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
   name,
   description,
   image,
-
-  type,
+  badges,
+  // type,
   // actions,
-  element,
+  // element,
   open,
   onDismiss,
 }) => {
@@ -36,7 +36,18 @@ export const DeckViewer: React.FC<DeckViewerProps> = ({
       />
       <h2 className="font-bold text-2xl capitalize">{name}</h2>
       <p className="font-light">{description}</p>
-      <div>{/* <div className="badge badge-lg capitalize">{type}</div> */}</div>
+      <div className="flex gap-3">
+        {badges?.map(({ name, color, Icon }) => (
+          <div
+            key={name}
+            className={`badge md:badge-lg capitalize ${
+              color ? `bg-[${color}]` : "bg-secondary"
+            } max-w-32 line-clamp-1`}
+          >
+            {Icon && <Icon />} {name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 

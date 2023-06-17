@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { a, config, useTransition } from "@react-spring/web";
+import { a } from "@react-spring/web";
 
 import { useApp } from "../../hooks/app/useApp";
 import { DeckDataProps, DeckTab } from "../../hooks/views/useDeck";
