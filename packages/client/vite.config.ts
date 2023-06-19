@@ -54,7 +54,7 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-        start_url: "/explore",
+        start_url: "/",
         display: "fullscreen",
         theme_color: "#38bdf8",
         background_color: "#f0fdfa",
