@@ -10,62 +10,59 @@ from dotenv import dotenv_values
 config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
 
 health_dic = {
-    "dead": "dying, dead, deathly, passed",
+    "dead": "dying, dead, deathly",
     "sick": "drained, tired, sad, hungry, starving",
     "healthy": "lush, lively, healthy, excited, energetic",
 }
 element_dic = {
-    "water": {"prompt": "water ocean aqua clear blue", "negativePrompt": "white"},
-    "earth": {
+    "WATER": {"prompt": "water ocean aqua clear blue", "negativePrompt": "white"},
+    "EARTH": {
         "prompt": "ground soil earth dirt brown green",
         "negativePrompt": "red yellow",
     },
-    "fire": {"prompt": "flames inferno blaze fire red", "negativePrompt": "yellow"},
-    "air": {"prompt": "sky breeze cloud wind air orange sun", "negativePrompt": "blue"},
+    "FIRE": {"prompt": "flames inferno blaze fire red", "negativePrompt": "yellow"},
+    "AIR": {"prompt": "sky breeze cloud wind air orange sun", "negativePrompt": "blue"},
 }
 creatures_dic = {
-    "water": {
+    "WATER": {
         "dragonfly": {"template": "assets/creatures/dragonfly.png", "id": 1},
-        "water_strider": {"template": "assets/creatures/water_strider.png", "id": 2},
+        "water_strider": {"template": "assets/creatures/water_strider.jpeg", "id": 2},
         "water_scorpion": {"template": "assets/creatures/water_scorpion.png", "id": 3},
-        "boatman": {"template": "assets/creatures/boatman.png", "id": 4},
+        "boatman": {"template": "assets/creatures/boatman2.webp", "id": 4},
     },
-    "earth": {
-        "earthworm": {"template": "assets/creatures/earthworm.png", "id": 5},
-        "millipede": {"template": "assets/creatures/millipede.png", "id": 6},
+    "EARTH": {
+        "earthworm": {"template": "assets/creatures/earthworm.jpeg", "id": 5},
+        "millipede": {"template": "assets/creatures/millipede2.jpeg", "id": 6},
         "rolypoly": {"template": "assets/creatures/rolypoly.png", "id": 7},
-        "ant": {"template": "assets/creatures/ant.png", "id": 8},
-        "cricket": {"template": "assets/creatures/cricket.png", "id": 9},
+        "ant": {"template": "assets/creatures/ant2.png", "id": 8},
+        "cricket": {"template": "assets/creatures/cricket.jpeg", "id": 9},
     },
-    "fire": {
-        "fire_ant": {"template": "assets/creatures/fire_ant.png", "id": 10},
-        "black_widow": {"template": "assets/creatures/black_widow.png", "id": 11},
-        "firefly": {"template": "assets/creatures/firefly.png", "id": 12},
-        "pincher_bug": {"template": "assets/creatures/pincher_bug.png", "id": 13},
+    "FIRE": {
+        "fire_ant": {"template": "assets/creatures/fire_ant.webp", "id": 10},
+        "black_widow": {"template": "assets/creatures/black_widow.webp", "id": 11},
+        "firefly": {"template": "assets/creatures/firefly.jpeg", "id": 12},
+        "pincher_bug": {"template": "assets/creatures/pincher_bug.webp", "id": 13},
     },
-    "air": {
-        "bee": {"template": "assets/creatures/bee.png", "id": 14},
-        "dune_beetle": {"template": "assets/creatures/beetle.png", "id": 15},
-        "butterfly": {"template": "assets/creatures/butterfly.png", "id": 16},
-        "ladybug": {"template": "assets/creatures/ladybug.png", "id": 17},
+    "AIR": {
+        "bee": {"template": "assets/creatures/bee2.png", "id": 14},
+        "dune_beetle": {"template": "assets/creatures/beetle2.jpeg", "id": 15},
+        "butterfly": {"template": "assets/creatures/butterfly3.jpeg", "id": 16},
+        "ladybug": {"template": "assets/creatures/ladybug.jpeg", "id": 17},
     },
     "dragonfly": {"template": "assets/creatures/dragonfly.png", "id": 1},
     "ant": {"template": "assets/creatures/ant.png", "id": 8},
     "butterfly": {"template": "assets/creatures/butterfly.png", "id": 18},
 }
 
-GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "")
+GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "htttp://localhost:7879")
 ENCODING = "utf-8"
-
 
 # stable diffusion
 # this is subject to change so maybe use kwargs
-async def generate_creature_route(element_type, plant_name, cached=True):
+async def generate_creature_route(plant, element, cached=True):
     # creature randomizer
-    creature_type = ["butterfly", "ant", "dragonfly"][math.floor(random.random() * 3)]
-
-    this_element = element_dic[element_type]
-    this_creature = creatures_dic[creature_type]
+    this_element = element_dic[element]
+    this_creature = creatures_dic[element][math.floor(random.random() * 4)]
 
     if cached == False:
         url = GENERATOR_GPU_URL + "/sdapi/v1/txt2img"
@@ -81,7 +78,7 @@ async def generate_creature_route(element_type, plant_name, cached=True):
             # This is probably the most editable line (needs some work)
             # Some of these prompts are going to cause copyright issues if not filtered
             "prompt": "an anime (anthropomorphic) (((cute))) "
-            + plant_name
+            + plant
             + " "
             + this_element["prompt"]
             + " ",

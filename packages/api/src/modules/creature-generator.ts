@@ -11,9 +11,8 @@ export async function generateCreature(plant: string, element: WefaElement) {
         },
         method: "POST",
         body: JSON.stringify({
-          description: plant,
-          creature_type: "butterfly",
-          element_type: element.toLowerCase(),
+          plant,
+          element,
         }),
       })
     ).json();

@@ -15,7 +15,6 @@ config = dotenv_values(".env")
 
 app = Flask(__name__)
 
-
 @app.route("/status")
 def status():
     return jsonify({"status": "ok"})
@@ -24,10 +23,10 @@ def status():
 @app.route("/generate-creature", methods=["POST"])
 async def generate_creature_route_handler():
     data = request.get_json()
-    element_type = data.get("element_type", "")
-    plant_name = data.get("plant_name", "")
+    plant = data.get("plant", "")
+    element = data.get("element", "")
 
-    creature_img = await generate_creature_route(element_type, plant_name, cached=False)
+    creature_img = await generate_creature_route(plant, element, cached=False)
 
     return jsonify({"img": creature_img})
 
