@@ -165,7 +165,7 @@ export const seedMachine = createMachine(
         switch (event.type) {
           case "error.platform.plantVerifier":
             context.imageVerified = false;
-            context.image = null;
+            // context.image = null;
             context.element = null;
 
             // @ts-ignore

@@ -1,6 +1,8 @@
 import os
 import requests
 import json
+import math
+import random
 
 from io import BytesIO
 from PIL import Image
@@ -21,7 +23,7 @@ element_dic = {
         "negativePrompt": "red yellow",
     },
     "FIRE": {"prompt": "flames inferno blaze fire red", "negativePrompt": "yellow"},
-    "AIR": {"prompt": "sky breeze cloud wind air orange sun", "negativePrompt": "blue"},
+    "AIR": {"prompt": "sky breeze cloud wind air orange", "negativePrompt": "blue sun"},
 }
 creatures_dic = {
     "WATER": {
@@ -62,11 +64,12 @@ ENCODING = "utf-8"
 async def generate_creature_route(plant, element, cached=True):
     # creature randomizer
     this_element = element_dic[element]
-    this_creature = creatures_dic[element][math.floor(random.random() * 4)]
+    this_creature_set = creatures_dic[element]
+    this_creature = random.choice(list(this_creature_set.keys()))
 
     if cached == False:
         url = GENERATOR_GPU_URL + "/sdapi/v1/txt2img"
-        with open(this_creature[template], "rb") as image_file:
+        with open(this_creature_set[this_creature]["template"], "rb") as image_file:
             byte_content = image_file.read()
 
         base64_bytes = b64encode(byte_content)
