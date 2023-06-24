@@ -78,7 +78,7 @@ library Care {
   /** Get growthLevel */
   function getGrowthLevel(bytes32 id) internal view returns (GrowthLevelEnum growthLevel) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return GrowthLevelEnum(uint8(Bytes.slice1(_blob, 0)));
@@ -87,7 +87,7 @@ library Care {
   /** Get growthLevel (using the specified store) */
   function getGrowthLevel(IStore _store, bytes32 id) internal view returns (GrowthLevelEnum growthLevel) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return GrowthLevelEnum(uint8(Bytes.slice1(_blob, 0)));
@@ -96,7 +96,7 @@ library Care {
   /** Set growthLevel */
   function setGrowthLevel(bytes32 id, GrowthLevelEnum growthLevel) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(growthLevel)));
   }
@@ -104,7 +104,7 @@ library Care {
   /** Set growthLevel (using the specified store) */
   function setGrowthLevel(IStore _store, bytes32 id, GrowthLevelEnum growthLevel) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(growthLevel)));
   }
@@ -112,7 +112,7 @@ library Care {
   /** Get checkedAt */
   function getCheckedAt(bytes32 id) internal view returns (uint256 checkedAt) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -121,7 +121,7 @@ library Care {
   /** Get checkedAt (using the specified store) */
   function getCheckedAt(IStore _store, bytes32 id) internal view returns (uint256 checkedAt) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint256(Bytes.slice32(_blob, 0)));
@@ -130,7 +130,7 @@ library Care {
   /** Set checkedAt */
   function setCheckedAt(bytes32 id, uint256 checkedAt) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((checkedAt)));
   }
@@ -138,7 +138,7 @@ library Care {
   /** Set checkedAt (using the specified store) */
   function setCheckedAt(IStore _store, bytes32 id, uint256 checkedAt) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((checkedAt)));
   }
@@ -146,7 +146,7 @@ library Care {
   /** Get the full data */
   function get(bytes32 id) internal view returns (CareData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -155,7 +155,7 @@ library Care {
   /** Get the full data (using the specified store) */
   function get(IStore _store, bytes32 id) internal view returns (CareData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -166,7 +166,7 @@ library Care {
     bytes memory _data = encode(growthLevel, checkedAt);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -176,7 +176,7 @@ library Care {
     bytes memory _data = encode(growthLevel, checkedAt);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -206,13 +206,13 @@ library Care {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 id) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -220,7 +220,7 @@ library Care {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((id));
+    _keyTuple[0] = id;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

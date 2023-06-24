@@ -72,8 +72,8 @@ library Role {
   /** Get value */
   function get(address user, bytes32 matchId) internal view returns (RoleEnum value) {
     bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return RoleEnum(uint8(Bytes.slice1(_blob, 0)));
@@ -82,8 +82,8 @@ library Role {
   /** Get value (using the specified store) */
   function get(IStore _store, address user, bytes32 matchId) internal view returns (RoleEnum value) {
     bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return RoleEnum(uint8(Bytes.slice1(_blob, 0)));
@@ -92,8 +92,8 @@ library Role {
   /** Set value */
   function set(address user, bytes32 matchId, RoleEnum value) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(value)));
   }
@@ -101,8 +101,8 @@ library Role {
   /** Set value (using the specified store) */
   function set(IStore _store, address user, bytes32 matchId, RoleEnum value) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked(uint8(value)));
   }
@@ -115,15 +115,15 @@ library Role {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(address user, bytes32 matchId) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(address user, bytes32 matchId) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -131,8 +131,8 @@ library Role {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, address user, bytes32 matchId) internal {
     bytes32[] memory _keyTuple = new bytes32[](2);
-    _keyTuple[0] = bytes32(uint256(uint160((user))));
-    _keyTuple[1] = bytes32((matchId));
+    _keyTuple[0] = bytes32(uint256(uint160(user)));
+    _keyTuple[1] = matchId;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

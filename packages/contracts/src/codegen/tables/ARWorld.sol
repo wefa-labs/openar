@@ -75,7 +75,7 @@ library ARWorld {
   /** Get id */
   function getId(bytes32 worldId) internal view returns (bytes32 id) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
@@ -84,7 +84,7 @@ library ARWorld {
   /** Get id (using the specified store) */
   function getId(IStore _store, bytes32 worldId) internal view returns (bytes32 id) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
@@ -93,7 +93,7 @@ library ARWorld {
   /** Set id */
   function setId(bytes32 worldId, bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((id)));
   }
@@ -101,7 +101,7 @@ library ARWorld {
   /** Set id (using the specified store) */
   function setId(IStore _store, bytes32 worldId, bytes32 id) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((id)));
   }
@@ -109,7 +109,7 @@ library ARWorld {
   /** Get spaceCount */
   function getSpaceCount(bytes32 worldId) internal view returns (uint32 spaceCount) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 1);
     return (uint32(Bytes.slice4(_blob, 0)));
@@ -118,7 +118,7 @@ library ARWorld {
   /** Get spaceCount (using the specified store) */
   function getSpaceCount(IStore _store, bytes32 worldId) internal view returns (uint32 spaceCount) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 1);
     return (uint32(Bytes.slice4(_blob, 0)));
@@ -127,7 +127,7 @@ library ARWorld {
   /** Set spaceCount */
   function setSpaceCount(bytes32 worldId, uint32 spaceCount) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     StoreSwitch.setField(_tableId, _keyTuple, 1, abi.encodePacked((spaceCount)));
   }
@@ -135,7 +135,7 @@ library ARWorld {
   /** Set spaceCount (using the specified store) */
   function setSpaceCount(IStore _store, bytes32 worldId, uint32 spaceCount) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((spaceCount)));
   }
@@ -143,7 +143,7 @@ library ARWorld {
   /** Get the full data */
   function get(bytes32 worldId) internal view returns (ARWorldData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     bytes memory _blob = StoreSwitch.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -152,7 +152,7 @@ library ARWorld {
   /** Get the full data (using the specified store) */
   function get(IStore _store, bytes32 worldId) internal view returns (ARWorldData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     bytes memory _blob = _store.getRecord(_tableId, _keyTuple, getSchema());
     return decode(_blob);
@@ -163,7 +163,7 @@ library ARWorld {
     bytes memory _data = encode(id, spaceCount);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     StoreSwitch.setRecord(_tableId, _keyTuple, _data);
   }
@@ -173,7 +173,7 @@ library ARWorld {
     bytes memory _data = encode(id, spaceCount);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     _store.setRecord(_tableId, _keyTuple, _data);
   }
@@ -203,13 +203,13 @@ library ARWorld {
   /** Encode keys as a bytes32 array using this table's schema */
   function encodeKeyTuple(bytes32 worldId) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 worldId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -217,7 +217,7 @@ library ARWorld {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 worldId) internal {
     bytes32[] memory _keyTuple = new bytes32[](1);
-    _keyTuple[0] = bytes32((worldId));
+    _keyTuple[0] = worldId;
 
     _store.deleteRecord(_tableId, _keyTuple);
   }
