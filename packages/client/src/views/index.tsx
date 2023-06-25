@@ -18,6 +18,7 @@ import Deck from "./Deck";
 import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
+import { usePlay } from "../hooks/views/usePlay";
 
 type LowerElement = "water" | "earth" | "fire" | "air";
 
@@ -38,6 +39,7 @@ export default function Views() {
   const { isDesktop, setTheme } = useApp();
 
   const deck = useDeck();
+  const play = usePlay();
   const explore = useExplore();
   const profile = useProfile();
 
@@ -63,7 +65,7 @@ export default function Views() {
     >
       <Routes location={location}>
         <Route path="/deck" element={<Deck {...deck} />} />
-        {/* <Route path="/play" element={<Play />} /> */}
+        <Route path="/play" element={<Play {...play} />} />
         <Route path="/explore" element={<Explore {...explore} />} />
         <Route path="/profile" element={<Profile {...profile} />} />
         <Route path="*" element={<Navigate to="/explore" />} />

@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { ARButton, XR } from "@react-three/xr";
 
-// import Board from "../../../components/Game/Board";
+import Board from "../../../components/Game/Board";
 
 export const TicTacToe3D: React.FC = () => {
   return (
@@ -14,10 +14,12 @@ export const TicTacToe3D: React.FC = () => {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%",
+          height: "80dvh",
         }}
       >
-        <XR>{/* <Board position={[0, 0, -1]}></Board> */}</XR>
+        <XR>
+          <Board position={[0, 0, -1]}></Board>
+        </XR>
       </Canvas>
     </>
   );

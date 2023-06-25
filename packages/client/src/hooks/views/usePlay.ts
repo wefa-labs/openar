@@ -21,7 +21,7 @@ export interface PlayDataProps {
 }
 
 export const usePlay = (): PlayDataProps => {
-  const [view, setView] = useState<ViewState>("counter");
+  const [view, setView] = useState<ViewState>("tic-tac-toe");
 
   // const {
   //   systemCalls: { createTicTacToeMatch, joinTicTacToeMatch },

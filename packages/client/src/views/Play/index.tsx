@@ -1,24 +1,13 @@
 import { a, useTransition } from "@react-spring/web";
 
-import { PlayDataProps, usePlay } from "../../hooks/views/usePlay";
+import { PlayDataProps } from "../../hooks/views/usePlay";
 
 import { Counter } from "./Counter";
 import { TicTacToeGame } from "./TicTacToe";
 
 interface PlayProps extends PlayDataProps {}
 
-const Play: React.FC<PlayProps> = () => {
-  const {
-    view,
-    // checkerGames,
-    // tictactoeGames,
-    // setView,
-    // createCheckersGame,
-    // createTicTacToeMatch,
-    // joinCheckersGame,
-    // joinTicTacToeMatch,
-  } = usePlay();
-
+const Play: React.FC<PlayProps> = ({ view }) => {
   const transitions = useTransition(view, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -34,7 +23,7 @@ const Play: React.FC<PlayProps> = () => {
     <a.main className="" style={style}>
       {item === "games" && <div>Games</div>}
       {item === "counter" && <Counter />}
-      {item === "tic-tac-toe" && <TicTacToeGame gameMode="2D" />}
+      {item === "tic-tac-toe" && <TicTacToeGame gameMode="3D" />}
     </a.main>
   ));
 };
