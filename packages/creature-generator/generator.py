@@ -81,7 +81,7 @@ async def generate_creature_route(plant, element, cached=True):
             # 512 by 512 is cheaper but not sd2
             # This is probably the most editable line (needs some work)
             # Some of these prompts are going to cause copyright issues if not filtered
-            "prompt": "an anime (avatar the last airbender) (anthropomorphic) (((cute))) "
+            "prompt": "a (kanto) anime (avatar the last airbender) (anthropomorphic) (((cute))) (insect) "
             + plant
             + " "
             + "textured wings and shell with"

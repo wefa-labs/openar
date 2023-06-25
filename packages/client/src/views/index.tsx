@@ -15,7 +15,7 @@ import { useExplore } from "../hooks/views/useExplore";
 import { useProfile } from "../hooks/views/useProfile";
 
 import Deck from "./Deck";
-// import Play from "./Play";
+import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
 

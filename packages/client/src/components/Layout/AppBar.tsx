@@ -5,6 +5,7 @@ import { useApp } from "../../hooks/app/useApp";
 
 import { RC as CardsIcon } from "../../assets/icons/cards.svg";
 import { RC as WorldIcon } from "../../assets/icons/world.svg";
+import { RC as PlayIcon } from "../../assets/icons/bug.svg";
 import { RC as ProfileIcon } from "../../assets/icons/profile.svg";
 
 const tabs: {
@@ -21,11 +22,11 @@ const tabs: {
     title: "Deck",
     Icon: CardsIcon,
   },
-  // {
-  //   path: "/play",
-  //   title: "Play",
-  //   Icon: CardsIcon,
-  // },
+  {
+    path: "/play",
+    title: "Play",
+    Icon: PlayIcon,
+  },
   {
     path: "/explore",
     title: "Explore",
