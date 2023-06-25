@@ -5,11 +5,11 @@ import { useRef, useState } from "react";
 import DragonflyTicTacToe from "../Creatures/Dragonfly";
 import RolyPolyTicTacToe from "../Creatures/RolyPoly";
 
-import img from "../../assets/tictac.png";
-import winImg from "../../assets/win.png";
-import loseImg from "../../assets/lose.png";
-import theirturnImg from "../assets/theirturn.png";
-import playerturnImg from "../../assets/playerturn.png";
+import img from "../../assets/openar/tictac.png";
+import winImg from "../../assets/openar/win.png";
+import loseImg from "../../assets/openar/lose.png";
+import theirturnImg from "../../assets/openar/theirturn.png";
+import playerturnImg from "../../assets/openar/playerturn.png";
 
 function Tile(props: ThreeElements["mesh"]) {
   // This reference gives us direct access to the THREE.Mesh object
