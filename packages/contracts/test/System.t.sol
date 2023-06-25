@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0;
+pragma solidity >=0.8.18;
 
 import "forge-std/Test.sol";
 import { MudV2Test } from "@latticexyz/std-contracts/src/test/MudV2Test.t.sol";
@@ -22,28 +22,27 @@ contract SystemTest is MudV2Test {
     // assertEq(data, "Test");
   }
 
-  // function testClaimSpace() public {
-  //   bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
-  //   world.claimSpace(worldId);
-  // }
+  function testClaimSpace() public {
+    bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
+    world.claimSpace(worldId);
+  }
 
-  // function testTransferSpace() public {
-  //   bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
-  //   bytes32 spaceId = world.claimSpace(worldId);
-  //   world.transferSpace(worldId, spaceId, address(0));
-  // }
+  function testTransferSpace() public {
+    bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
+    bytes32 spaceId = world.claimSpace(worldId);
+    world.transferSpace(worldId, spaceId, address(0));
+  }
 
-  //  function testSetSpace() public {
-  //   bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
-  //   bytes32 spaceId = world.claimSpace(worldId);
-  //   world.setSpace(worldId, spaceId, StateEnum.Active, "Test", "Test", "Test");
-  // }
+   function testSetSpace() public {
+    bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
+    bytes32 spaceId = world.claimSpace(worldId);
+    world.setSpace(worldId, spaceId, StateEnum.Active, "Test", "Test", "Test");
+  }
 
-  // function testSetCell() public {
-  //   bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
-  //   bytes32 spaceId = world.claimSpace(worldId);
+  function testSetCell() public {
+    bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
+    bytes32 spaceId = world.claimSpace(worldId);
 
-  //   world.setCell(worldId, spaceId, 0, 0, 0, bytes32(uint256(1)));
-  // }
-
+    world.setCell(worldId, spaceId, 0, bytes32(uint256(1)));
+  }
 }

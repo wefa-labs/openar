@@ -70,9 +70,9 @@ library Cell {
   /** Get value */
   function get(bytes32 worldId, bytes32 spaceId, uint8 position) internal view returns (bytes32 value) {
     bytes32[] memory _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
 
     bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
@@ -81,9 +81,9 @@ library Cell {
   /** Get value (using the specified store) */
   function get(IStore _store, bytes32 worldId, bytes32 spaceId, uint8 position) internal view returns (bytes32 value) {
     bytes32[] memory _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
 
     bytes memory _blob = _store.getField(_tableId, _keyTuple, 0);
     return (Bytes.slice32(_blob, 0));
@@ -92,9 +92,9 @@ library Cell {
   /** Set value */
   function set(bytes32 worldId, bytes32 spaceId, uint8 position, bytes32 value) internal {
     bytes32[] memory _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
 
     StoreSwitch.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
   }
@@ -102,9 +102,9 @@ library Cell {
   /** Set value (using the specified store) */
   function set(IStore _store, bytes32 worldId, bytes32 spaceId, uint8 position, bytes32 value) internal {
     bytes32[] memory _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
 
     _store.setField(_tableId, _keyTuple, 0, abi.encodePacked((value)));
   }
@@ -121,17 +121,17 @@ library Cell {
     uint8 position
   ) internal pure returns (bytes32[] memory _keyTuple) {
     _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
   }
 
   /* Delete all data for given keys */
   function deleteRecord(bytes32 worldId, bytes32 spaceId, uint8 position) internal {
     bytes32[] memory _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
 
     StoreSwitch.deleteRecord(_tableId, _keyTuple);
   }
@@ -139,9 +139,9 @@ library Cell {
   /* Delete all data for given keys (using the specified store) */
   function deleteRecord(IStore _store, bytes32 worldId, bytes32 spaceId, uint8 position) internal {
     bytes32[] memory _keyTuple = new bytes32[](3);
-    _keyTuple[0] = bytes32((worldId));
-    _keyTuple[1] = bytes32((spaceId));
-    _keyTuple[2] = bytes32(uint256((position)));
+    _keyTuple[0] = worldId;
+    _keyTuple[1] = spaceId;
+    _keyTuple[2] = bytes32(uint256(position));
 
     _store.deleteRecord(_tableId, _keyTuple);
   }

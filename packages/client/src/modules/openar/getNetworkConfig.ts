@@ -27,8 +27,8 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
   const world = worlds[chain.id.toString()];
   const worldAddress =
     params.get("worldAddress") ||
-    world?.address ||
     import.meta.env.VITE_VERCEL_WORLD_ADDRESS ||
+    world?.address ||
     null;
   if (!worldAddress) {
     throw new Error(
