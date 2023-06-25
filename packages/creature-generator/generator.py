@@ -27,28 +27,28 @@ element_dic = {
 }
 creatures_dic = {
     "WATER": {
-        "dragonfly": {"template": "assets/creatures/dragonfly.png", "id": 1},
-        "water_strider": {"template": "assets/creatures/water_strider.jpeg", "id": 2},
-        "water_scorpion": {"template": "assets/creatures/water_scorpion.png", "id": 3},
-        "boatman": {"template": "assets/creatures/boatman2.webp", "id": 4},
+        "dragonfly": {"template": "assets/creatures/dragonfly.jpeg", "id": 1},
+        # "water_strider": {"template": "assets/creatures/water_strider.jpeg", "id": 2},
+        # "water_scorpion": {"template": "assets/creatures/water_scorpion.png", "id": 3},
+        # "boatman": {"template": "assets/creatures/boatman2.webp", "id": 4},
     },
     "EARTH": {
-        "earthworm": {"template": "assets/creatures/earthworm.jpeg", "id": 5},
-        "millipede": {"template": "assets/creatures/millipede2.jpeg", "id": 6},
-        "rolypoly": {"template": "assets/creatures/rolypoly.png", "id": 7},
-        "ant": {"template": "assets/creatures/ant2.png", "id": 8},
-        "cricket": {"template": "assets/creatures/cricket.jpeg", "id": 9},
+        # "earthworm": {"template": "assets/creatures/earthworm.jpeg", "id": 5},
+        # "millipede": {"template": "assets/creatures/millipede2.jpeg", "id": 6},
+        "rolypoly": {"template": "assets/creatures/rolypoly.jpeg", "id": 7},
+        # "ant": {"template": "assets/creatures/ant2.png", "id": 8},
+        # "cricket": {"template": "assets/creatures/cricket.jpeg", "id": 9},
     },
     "FIRE": {
-        "fire_ant": {"template": "assets/creatures/fire_ant.webp", "id": 10},
-        "black_widow": {"template": "assets/creatures/black_widow.webp", "id": 11},
+        # "fire_ant": {"template": "assets/creatures/fire_ant.webp", "id": 10},
+        # "black_widow": {"template": "assets/creatures/black_widow.webp", "id": 11},
         "firefly": {"template": "assets/creatures/firefly.jpeg", "id": 12},
-        "pincher_bug": {"template": "assets/creatures/pincher_bug.webp", "id": 13},
+        #  "pincher_bug": {"template": "assets/creatures/pincher_bug.webp", "id": 13},
     },
     "AIR": {
-        "bee": {"template": "assets/creatures/bee2.png", "id": 14},
-        "dune_beetle": {"template": "assets/creatures/beetle2.jpeg", "id": 15},
-        "butterfly": {"template": "assets/creatures/butterfly3.jpeg", "id": 16},
+        # "bee": {"template": "assets/creatures/bee2.png", "id": 14},
+        # "dune_beetle": {"template": "assets/creatures/beetle2.jpeg", "id": 15},
+        # "butterfly": {"template": "assets/creatures/butterfly3.jpeg", "id": 16},
         "ladybug": {"template": "assets/creatures/ladybug.jpeg", "id": 17},
     },
     "dragonfly": {"template": "assets/creatures/dragonfly.png", "id": 1},
@@ -58,6 +58,7 @@ creatures_dic = {
 
 GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "htttp://localhost:7879")
 ENCODING = "utf-8"
+
 
 # stable diffusion
 # this is subject to change so maybe use kwargs
