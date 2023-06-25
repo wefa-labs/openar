@@ -19,7 +19,7 @@ health_dic = {
 element_dic = {
     "WATER": {"prompt": "water ocean aqua clear blue", "negativePrompt": "white"},
     "EARTH": {
-        "prompt": "ground soil earth dirt brown green",
+        "prompt": "ground soil earth dirt brown",
         "negativePrompt": "red yellow",
     },
     "FIRE": {"prompt": "flames inferno blaze fire red", "negativePrompt": "yellow"},
@@ -41,15 +41,15 @@ creatures_dic = {
     },
     "FIRE": {
         # "fire_ant": {"template": "assets/creatures/fire_ant.webp", "id": 10},
-        # "black_widow": {"template": "assets/creatures/black_widow.webp", "id": 11},
-        "firefly": {"template": "assets/creatures/firefly.jpeg", "id": 12},
+        "black_widow": {"template": "assets/creatures/black_widow.webp", "id": 11},
+        # "firefly": {"template": "assets/creatures/firefly.jpeg", "id": 12},
         #  "pincher_bug": {"template": "assets/creatures/pincher_bug.webp", "id": 13},
     },
     "AIR": {
         # "bee": {"template": "assets/creatures/bee2.png", "id": 14},
         # "dune_beetle": {"template": "assets/creatures/beetle2.jpeg", "id": 15},
-        # "butterfly": {"template": "assets/creatures/butterfly3.jpeg", "id": 16},
-        "ladybug": {"template": "assets/creatures/ladybug.jpeg", "id": 17},
+        "butterfly": {"template": "assets/creatures/butterfly3.jpeg", "id": 16},
+        # "ladybug": {"template": "assets/creatures/ladybug.jpeg", "id": 17},
     },
     "dragonfly": {"template": "assets/creatures/dragonfly.png", "id": 1},
     "ant": {"template": "assets/creatures/ant.png", "id": 8},
@@ -81,12 +81,15 @@ async def generate_creature_route(plant, element, cached=True):
             # 512 by 512 is cheaper but not sd2
             # This is probably the most editable line (needs some work)
             # Some of these prompts are going to cause copyright issues if not filtered
-            "prompt": "an anime (anthropomorphic) (((cute))) "
+            "prompt": "an anime (avatar the last airbender) (anthropomorphic) (((cute))) "
             + plant
+            + " "
+            + "textured wings and shell with"
             + " "
             + this_element["prompt"]
             + " ",
-            "negative_prompt": "((girl)) ((person)) " + this_element["negativePrompt"],
+            "negative_prompt": "((girl)) ((person)) ((human))"
+            + this_element["negativePrompt"],
             "seed": -1,
             "subseed": -1,
             "subseed_strength": 0,
