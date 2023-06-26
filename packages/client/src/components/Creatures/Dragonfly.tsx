@@ -8,8 +8,8 @@ Command: npx gltfjsx Kugelmonster3.glb --transform
 
 import { useRef, useEffect, useMemo } from "react";
 import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
-import { useLoader, useGraph } from "@react-three/fiber";
-import { TextureLoader, DoubleSide } from "three";
+import { useGraph } from "@react-three/fiber";
+import { DoubleSide } from "three";
 // @ts-ignore
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 

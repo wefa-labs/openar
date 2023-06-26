@@ -13,7 +13,7 @@ import { DoubleSide } from "three";
 // @ts-ignore
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 
-useTexture.preload("/RolyPolyTicTacToeTextureRGB.jpg");
+useTexture.preload("assets/3D/RolyPolyTicTacToeTextureRGB.jpg");
 
 export default function RolypolyTicTacToe(props: any) {
   /**
@@ -21,13 +21,13 @@ export default function RolypolyTicTacToe(props: any) {
    */
   const group = useRef();
   const { scene, animations } = useGLTF(
-    "/RolypolyTicTacToe-transformed.glb"
+    "assets/3D/RolypolyTicTacToe-transformed.glb"
   ) as any;
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes } = useGraph(clone) as any;
   // const { actions } = useAnimations(animations, group)
 
-  const shadowTexture = useTexture("/RolyPolyTicTacToeTextureRGB.jpg");
+  const shadowTexture = useTexture("assets/3D/RolyPolyTicTacToeTextureRGB.jpg");
   shadowTexture.flipY = false;
 
   /**
