@@ -26,6 +26,11 @@ enum ElementEnum {
   AIR
 }
 
+enum ActivityEnum {
+  NONE,
+  TIC_TAC_TOE
+}
+
 enum GrowthLevelEnum {
   SEED,
   BUDDING,

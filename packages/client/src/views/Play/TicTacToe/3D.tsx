@@ -2,8 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import { ARButton, XR } from "@react-three/xr";
 
 import { GameBoard } from "../../../components/Game/Board";
+import { TicTacToeDataProps } from "../../../hooks/games/useTicTacToe";
 
-export const TicTacToe3D: React.FC = () => {
+export const TicTacToe3D: React.FC<TicTacToeDataProps> = ({}) => {
   return (
     <>
       <ARButton />

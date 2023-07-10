@@ -78,7 +78,7 @@ export interface IWorldInterface extends utils.Interface {
     "setRecord(bytes16,bytes16,bytes32[],bytes)": FunctionFragment;
     "setRecord(bytes32,bytes32[],bytes)": FunctionFragment;
     "setSpace(bytes32,bytes32,uint8,string,string,string)": FunctionFragment;
-    "transferSpace(bytes32,bytes32,address)": FunctionFragment;
+    "setSpaceActivity(bytes32,bytes32,uint8,address)": FunctionFragment;
     "updateInField(bytes32,bytes32[],uint8,uint256,bytes)": FunctionFragment;
     "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)": FunctionFragment;
   };
@@ -133,7 +133,7 @@ export interface IWorldInterface extends utils.Interface {
       | "setRecord(bytes16,bytes16,bytes32[],bytes)"
       | "setRecord(bytes32,bytes32[],bytes)"
       | "setSpace"
-      | "transferSpace"
+      | "setSpaceActivity"
       | "updateInField(bytes32,bytes32[],uint8,uint256,bytes)"
       | "updateInField(bytes16,bytes16,bytes32[],uint8,uint256,bytes)"
   ): FunctionFragment;
@@ -496,10 +496,11 @@ export interface IWorldInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferSpace",
+    functionFragment: "setSpaceActivity",
     values: [
       PromiseOrValue<BytesLike>,
       PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>
     ]
   ): string;
@@ -685,7 +686,7 @@ export interface IWorldInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "setSpace", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "transferSpace",
+    functionFragment: "setSpaceActivity",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -1136,10 +1137,11 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    transferSpace(
+    setSpaceActivity(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
+      activity: PromiseOrValue<BigNumberish>,
+      client: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1505,10 +1507,11 @@ export interface IWorld extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transferSpace(
+  setSpaceActivity(
     worldId: PromiseOrValue<BytesLike>,
     spaceId: PromiseOrValue<BytesLike>,
-    to: PromiseOrValue<string>,
+    activity: PromiseOrValue<BigNumberish>,
+    client: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1872,10 +1875,11 @@ export interface IWorld extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    transferSpace(
+    setSpaceActivity(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
+      activity: PromiseOrValue<BigNumberish>,
+      client: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -2288,10 +2292,11 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    transferSpace(
+    setSpaceActivity(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
+      activity: PromiseOrValue<BigNumberish>,
+      client: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -2658,10 +2663,11 @@ export interface IWorld extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    transferSpace(
+    setSpaceActivity(
       worldId: PromiseOrValue<BytesLike>,
       spaceId: PromiseOrValue<BytesLike>,
-      to: PromiseOrValue<string>,
+      activity: PromiseOrValue<BigNumberish>,
+      client: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

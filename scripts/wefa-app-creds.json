@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "wefa-app",
+  "private_key_id": "4b28fc6e6552068c8eda1c9fb232c9eb181dc537",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDOniEb3AnlDGYz\nFdVYoFyeoN9IoqtuqPi71cvCq+pwQxsbpVLM+kERh6YtCA1aRyaoBXsbXQQzNmH2\nJLGs28DOiZfAoRCb5Fu88fdGVQSE2NzpIoViS8xronciqBdzq1U/otIaPEccZfdD\njGgXw5AuIONbzKeIr5im+d55YaLqqxR5GuG5eFBOYx2AWe8eEnYNFGTBrpPipcQH\ndU3iRc7W8VL2au7UWj4Qij1A+1vYCm8dQcwKzpuYNsZPvdkpSMTjWpAtszLZtIYW\nmLFYVRNGFoOzqi+00f9PkZpcYIpsH7/Ipwuz+jXKRSWxBFEZCC8zCDkf3apvsaLM\nY62IZ3lZAgMBAAECggEABilH2AqMSiFkhjhQdFr4aBTWSo1YZjaoRnGlFmtOi4Xi\neQ5JlTxYCz3HJswLPnXuak+tPmXuiiGOKkaW/KCaGGoGh97X+Rc9CaekWlJFjfCX\nSmWWRvFARP6MZceY2SWXXlVIDqA49X2LxFWbhQebUHuvJ2I1OCmo5fZbO/7Po712\nQzk49DK0Jl4B6E6KGY5O7iSQAGzhggBvo8yGh7dnpnAGD08PtF5Jmb6pj6T47CrW\n24BUlR9CzXMknK+uUmlr9ddNm9A2gP2riWz1jPvpUfCjDXwebaIwXOenrbeJMQOM\nWVbbAH1vZ5Hx5vUZEiJboNlCQb/7552swk7zcE6fQQKBgQDtsRXNLLBiWaBYakHD\nRXD+NYaTrKUMwoSi3JxgL2aDriah1TXLigC6mRpSWXjkVHyLUth29O4h3B1I2c1c\nZZCLej7ejuYVWnwe+fSGn+SplLr3OT9shdRwDY94ETsakUreTQjyZqalFX4Ay+BR\nHKC2dxv8sRCE3SZD/p4oGoE5rwKBgQDeiE/WArh2zFtJMxRDVns6oJpV982w4/3i\nCOq87+yNA46rOpX6a4xheovt0iTTSPmVHLUSzJ2Q69N0zM5oup78udJ76ooKxoiA\nh+qp3flRbBYHfAXLyWhp8xwudva4sL3fMiP3tB5IfYI8R+3NVe3nGP/j3GSonna8\nheAD4TQndwKBgEeeeyY2V/NadCEP6z7OVqySLjmi5JyCo/p6pLeqsKXuvH84whvR\nOkT/StoTUYTjHB/S15yIUpRrQXuo/OLhS3trWzQuNI+skwe2YwKJfRnH0coaOs0V\nShx1SYxxDLEFpFx1M8PuQDovzqaox69JA/fWzd0G8SZHiHcmajtFOTjLAoGABv3L\nXFLrjrfu6kbTjSYLaxUepDLL4JHZKR/UmCkFioyhD9ogWiTE3U8nVEp047p4NOoY\n+kU5chMmqpXAqmOqmRARf9knix0frsIWak3SBm/Z5VRNLlDeme2MZh1QtQ7AeGGv\n5ZlgFjDzRYeQ/hGEDu2nJHaJJw8LdfLSzexmYhMCgYEAx8rFo7C/teCFK4nzynjQ\nDqXPx1o3YutxNTywdBpwDtg6ARAPXTAmySsOvlQoAgD7NVN+k0ZhIPS2Jpaz4b2+\nLcfct/CNhaBdx6ZOIAeMvVmUN9/4DPsNvVu+WGjQRO5GIecBgNBQYWHMTZooJQh2\n6ulmfBz4K4+1xmfipoCTf0w=\n-----END PRIVATE KEY-----\n",
+  "client_email": "wefa-admin@wefa-app.iam.gserviceaccount.com",
+  "client_id": "103246175269673974337",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wefa-admin%40wefa-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

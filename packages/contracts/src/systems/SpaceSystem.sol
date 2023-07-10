@@ -4,26 +4,48 @@ pragma solidity >=0.8.18;
 import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
-import { StateEnum } from "../codegen/Types.sol";
-import { ARWorld, Identity, IdentityData, State, Space, Owner } from "../codegen/Tables.sol";
+import { StateEnum, ActivityEnum } from "../codegen/Types.sol";
+import { ARWorld, Identity, IdentityData, State, Space, SpaceData, Owner } from "../codegen/Tables.sol";
 
 contract SpaceSystem is System {
-  function transferSpace(
+  // function transferSpace(
+  //   bytes32 worldId,
+  //   bytes32 spaceId,
+  //   // address from,  // TODO: change from address to
+  //   address to
+  // ) public returns (bytes32) {
+  //   address client = _msgSender();
+
+  //   require(ARWorld.get(worldId).id == worldId, "world not found");
+  //   require(State.get(worldId) == StateEnum.Active, "world not active");
+  //   require(Space.get(worldId, spaceId).id == spaceId, "space not found");
+  //   // require(Owner.get(spaceId) == client, "not space owner");
+  //   require(State.get(spaceId) == StateEnum.Active, "space not active");
+
+  //   Owner.set(spaceId, to);
+    
+  //   return spaceId;
+  // }
+
+  function setSpaceActivity(
     bytes32 worldId,
     bytes32 spaceId,
-    // address from,  // TODO: change from address to
-    address to
+    ActivityEnum activity,
+    address client
   ) public returns (bytes32) {
-    address client = _msgSender();
-
-    require(ARWorld.get(worldId).id == worldId, "world not found");
     require(State.get(worldId) == StateEnum.Active, "world not active");
-    require(Space.get(worldId, spaceId).id == spaceId, "space not found");
-    require(Owner.get(spaceId) == client, "not space owner");
     require(State.get(spaceId) == StateEnum.Active, "space not active");
+    require(Owner.get(spaceId) == client, "not space owner");
 
-    Owner.set(spaceId, to);
-    
+    SpaceData memory space = Space.get(worldId, spaceId);
+
+    require(space.id == spaceId, "space not found");
+    require(space.activity == ActivityEnum.NONE, "activity already set");
+
+    space.activity = activity;
+
+    Space.set(worldId, spaceId, space);
+
     return spaceId;
   }
 
@@ -35,12 +57,12 @@ contract SpaceSystem is System {
     string memory description,
     string memory image
   ) public returns (bytes32) {
-    address client = _msgSender();
+    // address client = _msgSender();
 
     require(ARWorld.get(worldId).id == worldId, "world not found");
     require(State.get(worldId) == StateEnum.Active, "world not active");
     require(Space.get(worldId, spaceId).id == spaceId, "space not found");
-    require(Owner.get(spaceId) == client, "not space owner");
+    // require(Owner.get(spaceId) == client, "not space owner");
     require(State.get(spaceId) == StateEnum.Active, "space not active");
 
     // SpaceData  memory space = Space.get(worldId, spaceId);

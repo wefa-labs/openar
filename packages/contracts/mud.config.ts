@@ -1,12 +1,12 @@
 import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
-  // namespace: "openar",
   enums: {
     RoleEnum: ["O", "X"],
     StateEnum: ["Active", "Frozen"],
     SizeEnum: ["Mini", "Small", "Medium", "Large"],
     ElementEnum: ["WATER", "EARTH", "FIRE", "AIR"],
+    ActivityEnum: ["NONE", "TIC_TAC_TOE"],
     GrowthLevelEnum: ["SEED", "BUDDING", "FLOWERING", "RIPENING"],
   },
   tables: {
@@ -74,6 +74,9 @@ export default mudConfig({
       schema: {
         id: "bytes32",
         position: "uint32",
+        activity: "ActivityEnum",
+        // x: "uint32",
+        // y: "uint32",
         // z: "uint32",
       },
     },

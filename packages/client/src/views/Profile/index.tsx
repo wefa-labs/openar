@@ -1,4 +1,4 @@
-import { a, useTransition } from "@react-spring/web";
+import { a } from "@react-spring/web";
 
 import { avatar } from "../../constants";
 

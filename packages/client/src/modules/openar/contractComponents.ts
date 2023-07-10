@@ -189,6 +189,7 @@ export function defineContractComponents(world: World) {
         {
           id: RecsType.String,
           position: RecsType.Number,
+          activity: RecsType.Number,
         },
         {
           metadata: {

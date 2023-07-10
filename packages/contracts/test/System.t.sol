@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import { MudV2Test } from "@latticexyz/std-contracts/src/test/MudV2Test.t.sol";
 
 import { IWorld } from "../src/codegen/world/IWorld.sol";
-import { SizeEnum, StateEnum } from "../src/codegen/Types.sol";
+import { SizeEnum, StateEnum, ActivityEnum } from "../src/codegen/Types.sol";
 import { Identity, IdentityData, ARWorld, ARWorldData } from "../src/codegen/Tables.sol";
 
 contract SystemTest is MudV2Test {
@@ -27,10 +27,16 @@ contract SystemTest is MudV2Test {
     world.claimSpace(worldId);
   }
 
-  function testTransferSpace() public {
+  // function testTransferSpace() public {
+  //   bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
+  //   bytes32 spaceId = world.claimSpace(worldId);
+  //   world.transferSpace(worldId, spaceId, address(0));
+  // }
+
+  function testSetSpaceActivity() public {
     bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
     bytes32 spaceId = world.claimSpace(worldId);
-    world.transferSpace(worldId, spaceId, address(0));
+    world.setSpaceActivity(worldId, spaceId, ActivityEnum.TIC_TAC_TOE, address(this));
   }
 
    function testSetSpace() public {
@@ -43,6 +49,7 @@ contract SystemTest is MudV2Test {
     bytes32 worldId = world.createWorld("Test", "worldId should be Test", "");
     bytes32 spaceId = world.claimSpace(worldId);
 
+    world.setSpaceActivity(worldId, spaceId, ActivityEnum.TIC_TAC_TOE, address(this));
     world.setCell(worldId, spaceId, 0, bytes32(uint256(1)));
   }
 }

@@ -1,11 +1,30 @@
 import { useRow } from "@latticexyz/react";
+
 import { useMUD } from "../useMud";
+
+export interface TicTacToeDataProps {
+  name: string;
+  description?: string;
+  image?: string;
+  role: string;
+  turnCount: number;
+  currentPlayer: string;
+  matchNumber: number;
+  matchWinner?: string;
+  gameWinner?: string;
+  players: string[];
+  board: number[];
+  claimTicTacToePosition: (
+    gameId: string,
+    matchNumber: number,
+    position: number
+  ) => Promise<void>;
+}
 
 export const useTicTacToe = (
   user: `0x${string}`,
-  id: `0x${string}`,
-  game: TicTacToe
-) => {
+  gameId: string
+): TicTacToeDataProps => {
   const {
     network: { storeCache },
     systemCalls: { claimTicTacToePosition },
@@ -14,22 +33,35 @@ export const useTicTacToe = (
     table: "Identity",
     key: {},
   });
-  const yourRole = useRow(storeCache, {
+  const role = useRow(storeCache, {
     table: "Role",
     key: {},
   });
-
-  // console.log(
-  //   "TicTacToe Game Data",
-  //   identity,
-  //   yourRole,
-  //   claimTicTacToePosition
-  // );
+  const game = useRow(storeCache, {
+    table: "Game",
+    key: {},
+  });
+  const match = useRow(storeCache, {
+    table: "Match",
+    key: {},
+  });
 
   return {
-    identity,
-    yourRole,
-    game,
+    name: "",
+    matchNumber: 0,
+    players: [],
+    board: [],
+    currentPlayer: "",
+    role: "",
+    turnCount: 0,
+    description: "",
+    image: "",
+    matchWinner: "",
+    gameWinner: "",
+    ...identity,
+    ...role,
+    ...game,
+    ...match,
     claimTicTacToePosition,
   };
 };

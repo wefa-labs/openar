@@ -17,20 +17,25 @@ import { EncodeArray } from "@latticexyz/store/src/tightcoder/EncodeArray.sol";
 import { Schema, SchemaLib } from "@latticexyz/store/src/Schema.sol";
 import { PackedCounter, PackedCounterLib } from "@latticexyz/store/src/PackedCounter.sol";
 
+// Import user types
+import { ActivityEnum } from "./../Types.sol";
+
 bytes32 constant _tableId = bytes32(abi.encodePacked(bytes16(""), bytes16("Space")));
 bytes32 constant SpaceTableId = _tableId;
 
 struct SpaceData {
   bytes32 id;
   uint32 position;
+  ActivityEnum activity;
 }
 
 library Space {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](2);
+    SchemaType[] memory _schema = new SchemaType[](3);
     _schema[0] = SchemaType.BYTES32;
     _schema[1] = SchemaType.UINT32;
+    _schema[2] = SchemaType.UINT8;
 
     return SchemaLib.encode(_schema);
   }
@@ -45,9 +50,10 @@ library Space {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](2);
+    string[] memory _fieldNames = new string[](3);
     _fieldNames[0] = "id";
     _fieldNames[1] = "position";
+    _fieldNames[2] = "activity";
     return ("Space", _fieldNames);
   }
 
@@ -149,6 +155,44 @@ library Space {
     _store.setField(_tableId, _keyTuple, 1, abi.encodePacked((position)));
   }
 
+  /** Get activity */
+  function getActivity(bytes32 worldID, bytes32 spaceId) internal view returns (ActivityEnum activity) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = worldID;
+    _keyTuple[1] = spaceId;
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 2);
+    return ActivityEnum(uint8(Bytes.slice1(_blob, 0)));
+  }
+
+  /** Get activity (using the specified store) */
+  function getActivity(IStore _store, bytes32 worldID, bytes32 spaceId) internal view returns (ActivityEnum activity) {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = worldID;
+    _keyTuple[1] = spaceId;
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 2);
+    return ActivityEnum(uint8(Bytes.slice1(_blob, 0)));
+  }
+
+  /** Set activity */
+  function setActivity(bytes32 worldID, bytes32 spaceId, ActivityEnum activity) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = worldID;
+    _keyTuple[1] = spaceId;
+
+    StoreSwitch.setField(_tableId, _keyTuple, 2, abi.encodePacked(uint8(activity)));
+  }
+
+  /** Set activity (using the specified store) */
+  function setActivity(IStore _store, bytes32 worldID, bytes32 spaceId, ActivityEnum activity) internal {
+    bytes32[] memory _keyTuple = new bytes32[](2);
+    _keyTuple[0] = worldID;
+    _keyTuple[1] = spaceId;
+
+    _store.setField(_tableId, _keyTuple, 2, abi.encodePacked(uint8(activity)));
+  }
+
   /** Get the full data */
   function get(bytes32 worldID, bytes32 spaceId) internal view returns (SpaceData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](2);
@@ -170,8 +214,8 @@ library Space {
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 worldID, bytes32 spaceId, bytes32 id, uint32 position) internal {
-    bytes memory _data = encode(id, position);
+  function set(bytes32 worldID, bytes32 spaceId, bytes32 id, uint32 position, ActivityEnum activity) internal {
+    bytes memory _data = encode(id, position, activity);
 
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = worldID;
@@ -181,8 +225,15 @@ library Space {
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 worldID, bytes32 spaceId, bytes32 id, uint32 position) internal {
-    bytes memory _data = encode(id, position);
+  function set(
+    IStore _store,
+    bytes32 worldID,
+    bytes32 spaceId,
+    bytes32 id,
+    uint32 position,
+    ActivityEnum activity
+  ) internal {
+    bytes memory _data = encode(id, position, activity);
 
     bytes32[] memory _keyTuple = new bytes32[](2);
     _keyTuple[0] = worldID;
@@ -193,12 +244,12 @@ library Space {
 
   /** Set the full data using the data struct */
   function set(bytes32 worldID, bytes32 spaceId, SpaceData memory _table) internal {
-    set(worldID, spaceId, _table.id, _table.position);
+    set(worldID, spaceId, _table.id, _table.position, _table.activity);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 worldID, bytes32 spaceId, SpaceData memory _table) internal {
-    set(_store, worldID, spaceId, _table.id, _table.position);
+    set(_store, worldID, spaceId, _table.id, _table.position, _table.activity);
   }
 
   /** Decode the tightly packed blob using this table's schema */
@@ -206,11 +257,13 @@ library Space {
     _table.id = (Bytes.slice32(_blob, 0));
 
     _table.position = (uint32(Bytes.slice4(_blob, 32)));
+
+    _table.activity = ActivityEnum(uint8(Bytes.slice1(_blob, 36)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(bytes32 id, uint32 position) internal view returns (bytes memory) {
-    return abi.encodePacked(id, position);
+  function encode(bytes32 id, uint32 position, ActivityEnum activity) internal view returns (bytes memory) {
+    return abi.encodePacked(id, position, activity);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

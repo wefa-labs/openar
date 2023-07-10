@@ -4,7 +4,7 @@ pragma solidity >=0.8.18;
 import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
-import { RoleEnum } from "../codegen/Types.sol";
+import { RoleEnum, ActivityEnum } from "../codegen/Types.sol";
 import { IWorld } from "../codegen/world/IWorld.sol";
 import { ARWorld, Identity, IdentityData, Game, GameData, Match, MatchData, Role, Owner } from "../codegen/Tables.sol";
 
@@ -20,7 +20,7 @@ contract GameStartSystem is System {
     require(Owner.get(spaceId) == user, "not owner of space");
     require(ARWorld.get(worldId).spaceCount > 0, "no spaces found");
 
-    IWorld(_world()).transferSpace(worldId, spaceId, address(this));
+    IWorld(_world()).setSpaceActivity(worldId, spaceId, ActivityEnum.TIC_TAC_TOE, user);
 
     bytes32 gameId = getUniqueEntity();
 
@@ -59,7 +59,7 @@ contract GameStartSystem is System {
 
     GameData memory gameData = Game.get(gameId);
 
-    require(gameData.players.length <= 1, "game is full");
+    require(gameData.players[1] == address(0), "game full");
     require(gameData.players[0] != user, "already in game");
     require(gameData.matchesPlayed == 0, "game already started");
     require(gameData.winner == address(0), "game already won");

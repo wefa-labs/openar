@@ -1577,12 +1577,17 @@ const _abi = [
         type: "bytes32",
       },
       {
+        internalType: "enum ActivityEnum",
+        name: "activity",
+        type: "uint8",
+      },
+      {
         internalType: "address",
-        name: "to",
+        name: "client",
         type: "address",
       },
     ],
-    name: "transferSpace",
+    name: "setSpaceActivity",
     outputs: [
       {
         internalType: "bytes32",

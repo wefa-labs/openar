@@ -89,9 +89,6 @@ export async function readPlants() {
   const transaction = db?.transaction("plants", "readonly");
   const store = transaction?.objectStore("plants");
   const data = await store?.getAll();
-  // const index = store?.index("spaceId");
-  // const range = IDBKeyRange.only(spaceId);
-  // const cursor = index?.openCursor(range);
 
   if (!data) return [];
 

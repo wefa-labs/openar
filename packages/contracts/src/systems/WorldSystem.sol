@@ -4,7 +4,7 @@ pragma solidity >=0.8.18;
 import { System } from "@latticexyz/world/src/System.sol";
 import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
-import { SizeEnum, StateEnum } from "../codegen/Types.sol";
+import { SizeEnum, StateEnum, ActivityEnum } from "../codegen/Types.sol";
 import { ARWorld, ARWorldData, Identity, IdentityData, Size, State, Owner, Space, SpaceData } from "../codegen/Tables.sol";
 
 contract WorldSystem is System {
@@ -60,7 +60,8 @@ contract WorldSystem is System {
 
     Space.set(worldId, spaceId, SpaceData({
       id: spaceId,
-      position: spaceCount
+      position: spaceCount,
+      activity: ActivityEnum.NONE
     }));
     State.set(spaceId, StateEnum.Active);
     Owner.set(spaceId, client);

@@ -59,7 +59,6 @@ creatures_dic = {
 GENERATOR_GPU_URL = os.environ.get("GENERATOR_GPU_URL", "htttp://localhost:7879")
 ENCODING = "utf-8"
 
-
 # stable diffusion
 # this is subject to change so maybe use kwargs
 async def generate_creature_route(plant, element, cached=True):

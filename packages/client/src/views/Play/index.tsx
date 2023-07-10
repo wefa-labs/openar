@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useXR } from "@react-three/xr";
 import { a, useTransition } from "@react-spring/web";
 
 import { PlayDataProps } from "../../hooks/views/usePlay";
@@ -18,12 +20,21 @@ const Play: React.FC<PlayProps> = ({ view }) => {
       clamp: true,
     },
   });
+  const { session } = useXR();
+
+  useEffect(() => {
+    return () => {
+      session?.end();
+    };
+  }, [session]);
 
   return transitions((style, item) => (
     <a.main className="" style={style}>
       {item === "games" && <div>Games</div>}
       {item === "counter" && <Counter />}
-      {item === "tic-tac-toe" && <TicTacToeGame gameMode="3D" />}
+      {item === "tic-tac-toe" && (
+        <TicTacToeGame gameMode="3D" user="0x" gameId="" />
+      )}
     </a.main>
   ));
 };
