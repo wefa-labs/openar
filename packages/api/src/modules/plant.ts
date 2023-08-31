@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 interface PlantResponse {
   id: number;
   custom_id?: null | string;
@@ -99,6 +101,7 @@ export async function detectPlantType(img?: string | ArrayBuffer | Buffer) {
         }),
       });
 
+      // @ts-ignore
       predictions = await predictionReq.json();
     } else {
       const imageBlob = new Blob([img], { type: "image/jpeg" });
@@ -116,6 +119,7 @@ export async function detectPlantType(img?: string | ArrayBuffer | Buffer) {
         body: formData,
       });
 
+      // @ts-ignore
       predictions = await predictionReq.json();
     }
 
@@ -144,6 +148,7 @@ export async function detectPlantHealth(img: string) {
       }),
     });
 
+    // @ts-ignore
     const predictions: PlantHealth = await predictionRes.json();
 
     return predictions;
